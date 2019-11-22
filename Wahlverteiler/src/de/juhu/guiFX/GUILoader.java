@@ -6,7 +6,9 @@ import static de.juhu.util.References.VERSION;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 
+import de.juhu.util.References;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,6 +34,8 @@ public class GUILoader extends Application {
 //		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI() + "");
 //		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI().toURL() + "");
 
+		Locale german = References.german;
+		
 		Image i;
 
 		if (new File("./resources/assets/textures/logo/KuFA.png").exists())

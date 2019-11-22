@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Locale;
 import java.util.Random;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
@@ -20,6 +21,13 @@ public class References {
 
 	public static StreamHandler sh;
 	public static LoggingFormatter lf;
+	
+	public static Locale german;
+	static {
+		german = Locale.GERMANY;
+		Locale.setDefault(german);
+	}
+	
 	public static final LoggingHandler LOGGING_HANDLER;
 	static {
 		LOGGING_HANDLER = new LoggingHandler();

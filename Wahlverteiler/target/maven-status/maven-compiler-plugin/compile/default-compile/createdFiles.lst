@@ -1,6 +1,7 @@
 de\juhu\gui\frames\GUIFrame$1.class
 de\juhu\distributor\Save.class
 de\juhu\util\Util.class
+de\juhu\guiFX\GUIManager$3.class
 de\juhu\guiFX\FullProgress.class
 de\juhu\gui\action\activations\Content.class
 de\juhu\guiFX\lists\OutputCourseView.class
@@ -70,6 +71,7 @@ de\juhu\util\Interfaces\Renderable.class
 de\juhu\gui\frames\ErrorFrame.class
 de\juhu\guiFX\AboutManager.class
 de\juhu\gui\action\ActionListenerController.class
+de\juhu\guiFX\GUIManager$2.class
 de\juhu\gui\action\actions\OutputSearchAction.class
 de\juhu\distributor\Distributor$3.class
 de\juhu\gui\frames\GUIFrame$2.class

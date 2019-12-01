@@ -9,6 +9,7 @@ import java.util.concurrent.Future;
 
 import de.juhu.dateimanager.WriteableContent;
 import de.juhu.math.Vec2i;
+import de.juhu.util.Config;
 import de.juhu.util.MergeSort;
 import de.juhu.util.References;
 import de.juhu.util.Util;
@@ -30,7 +31,32 @@ public class Save implements Comparable<Save> {
 		this.allStudents = new ArrayList<>(editedStudents);
 		this.allStudents.addAll(ignoredStudents);
 
-		this.allStudents = this.sortStudents((this.allStudents));
+		this.allStudents = Save.sortStudents((this.allStudents));
+
+		this.informations.update();
+	}
+
+	public int getHighestPriority() {
+		int highest = 0;
+		for (Student s : this.allStudents)
+			if (s.getActiveCourse() != null && !s.getActiveCourse().equals(Distributor.getInstance().ignore()))
+				highest = highest >= s.getPriority() ? highest : s.getPriority();
+			else if (s.getActiveCourse() == null)
+				highest = highest >= s.getPriority() ? highest : s.getPriority();
+		return highest;
+	}
+
+	public int rate(int highestPriority) {
+		int count = 0;
+
+		for (Student s : this.allStudents) {
+			if (s.getActiveCourse() != null && s.getActiveCourse().equals(Distributor.getInstance().ignore()))
+				continue;
+
+			count += s.getRate(highestPriority);
+		}
+
+		return count;
 	}
 
 	public int getHighestPriorityWhithoutIntegerMax() {
@@ -154,7 +180,17 @@ public class Save implements Comparable<Save> {
 			int anzahl = 0;
 			for (int i = 0; i < c.size(); i++, anzahl++) {
 				References.LOGGER.info(i + "");
-				parameter[i + lineAdd] = c.getStudent(i).toString();
+				if (Config.firstPrename)
+					if (Config.shortNames)
+						parameter[i + lineAdd] = c.getStudent(i).getPrename().toCharArray()[0] + ". "
+								+ c.getStudent(i).getName();
+					else
+						parameter[i + lineAdd] = c.getStudent(i).getPrename() + " " + c.getStudent(i).getName();
+				else if (Config.shortNames)
+					parameter[i + lineAdd] = c.getStudent(i).getName() + ", "
+							+ c.getStudent(i).getPrename().toCharArray()[0];
+				else
+					parameter[i + lineAdd] = c.getStudent(i).getName() + ", " + c.getStudent(i).getPrename();
 			}
 			parameter[2] = Integer.toString(anzahl);
 
@@ -166,7 +202,19 @@ public class Save implements Comparable<Save> {
 
 	@Override
 	public int compareTo(Save s) {
-		if (this.informations.getHighestPriority() == s.informations.getHighestPriority())
+		if (Config.sortUnallocatedFirstOut)
+			if (this.informations.getHighestPriority() == Integer.MAX_VALUE
+					&& s.getInformation().getHighestPriority() != Integer.MAX_VALUE)
+				return (this.informations.getHighestPriority() - s.informations.getHighestPriority()) * -1;
+			else if (this.informations.getHighestPriority() != Integer.MAX_VALUE
+					&& s.getInformation().getHighestPriority() == Integer.MAX_VALUE)
+				return (this.informations.getHighestPriority() - s.informations.getHighestPriority()) * -1;
+
+		if (Config.compareGuete)
+			return this.informations.getGuete() - s.informations.getGuete() >= 0 ? 1 : -1;
+
+		if (!Config.compareFirstPriority
+				|| this.informations.getHighestPriority() == s.informations.getHighestPriority())
 			return (this.informations.getRate() - s.informations.getRate()) * -1;
 		return (this.informations.getHighestPriority() - s.informations.getHighestPriority()) * -1;
 	}

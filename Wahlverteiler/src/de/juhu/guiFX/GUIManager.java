@@ -121,7 +121,7 @@ public class GUIManager implements Initializable {
 	public TableView<Student> tv0, tv1, tv2, unallocatedStudents, bStudents;
 
 	@FXML
-	public TableView<Entry<String, Integer>> rates;
+	public TableView<Entry<String, Double>> rates;
 
 	@FXML
 	public TableView<Entry<Integer, Integer>> priorities;
@@ -137,7 +137,7 @@ public class GUIManager implements Initializable {
 	public TableColumn<Course, String> subject, teacher, oSubject, oTeacher;
 
 	@FXML
-	public TableColumn<Entry<String, Integer>, String> rate, rateV;
+	public TableColumn<Entry<String, Double>, String> rate, rateV;
 
 	@FXML
 	public TableColumn<Entry<Integer, Integer>, String> priority, swpriority;
@@ -190,7 +190,7 @@ public class GUIManager implements Initializable {
 
 		Parent root = null;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/de/juhu/guiFX/AddCourse.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddCourse.fxml"), References.language);
 		} catch (IOException e) {
 			return;
 		}
@@ -358,7 +358,7 @@ public class GUIManager implements Initializable {
 
 		Parent root = null;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/de/juhu/guiFX/AddCourse.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddCourse.fxml"), References.language);
 		} catch (IOException e) {
 			return;
 		}
@@ -495,7 +495,7 @@ public class GUIManager implements Initializable {
 
 		Parent root = null;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/de/juhu/guiFX/SwitchCourse.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/assets/layouts/SwitchCourse.fxml"), References.language);
 		} catch (IOException e) {
 			return;
 		}
@@ -545,7 +545,7 @@ public class GUIManager implements Initializable {
 
 		Parent root = null;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/de/juhu/guiFX/SwitchCourse.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/assets/layouts/SwitchCourse.fxml"), References.language);
 		} catch (IOException e) {
 			return;
 		}
@@ -595,7 +595,7 @@ public class GUIManager implements Initializable {
 
 		Parent root = null;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/de/juhu/guiFX/AddStudent.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddStudent.fxml"), References.language);
 		} catch (IOException e) {
 			return;
 		}
@@ -651,7 +651,7 @@ public class GUIManager implements Initializable {
 
 			Parent root = null;
 			try {
-				root = FXMLLoader.load(getClass().getResource("/de/juhu/guiFX/AddStudent.fxml"));
+				root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddStudent.fxml"), References.language);
 			} catch (IOException e) {
 				return;
 			}
@@ -718,7 +718,7 @@ public class GUIManager implements Initializable {
 
 		Parent root = null;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/de/juhu/guiFX/AddStudent.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddStudent.fxml"), References.language);
 		} catch (IOException e) {
 			return;
 		}
@@ -789,7 +789,7 @@ public class GUIManager implements Initializable {
 
 		Parent root = null;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/de/juhu/guiFX/About.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/assets/layouts/About.fxml"), References.language);
 		} catch (IOException e) {
 			return;
 		}
@@ -920,7 +920,7 @@ public class GUIManager implements Initializable {
 			i = new Image("/assets/textures/logo/KuFA.png");
 		Parent root = null;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/de/juhu/guiFX/Error.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/assets/layouts/Error.fxml"), References.language);
 		} catch (IOException e) {
 			return;
 		}
@@ -970,13 +970,19 @@ public class GUIManager implements Initializable {
 
 		Distributor.calculate = true;
 
-		p0.setVisible(true);
+		Platform.runLater(new Runnable() {
 
-		GUIManager.getInstance().r1.setDisable(true);
-		GUIManager.getInstance().r2.setDisable(true);
-		GUIManager.getInstance().r3.setDisable(true);
+			@Override
+			public void run() {
+				p0.setVisible(true);
 
-		de.juhu.distributor.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
+				GUIManager.getInstance().r1.setDisable(true);
+				GUIManager.getInstance().r2.setDisable(true);
+				GUIManager.getInstance().r3.setDisable(true);
+
+				de.juhu.distributor.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
+			}
+		});
 
 		Distributor.getInstance().calculated.add(save);
 		String s;
@@ -1021,13 +1027,20 @@ public class GUIManager implements Initializable {
 
 		Distributor.calculate = false;
 
-		de.juhu.distributor.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
+		Platform.runLater(new Runnable() {
 
-		p0.setVisible(false);
+			@Override
+			public void run() {
+				de.juhu.distributor.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
 
-		GUIManager.getInstance().r1.setDisable(false);
-		GUIManager.getInstance().r2.setDisable(false);
-		GUIManager.getInstance().r3.setDisable(false);
+				p0.setVisible(false);
+
+				GUIManager.getInstance().r1.setDisable(false);
+				GUIManager.getInstance().r2.setDisable(false);
+				GUIManager.getInstance().r3.setDisable(false);
+			}
+		});
+
 	}
 
 	public void runAndSaveAction(ActionEvent event) {
@@ -1191,7 +1204,7 @@ public class GUIManager implements Initializable {
 
 		ProgressIndicator pi = new ProgressIndicator();
 
-		this.instance = this;
+		GUIManager.instance = this;
 
 		cb0.setItems(FXCollections.observableArrayList(PrintFormat.values()));
 
@@ -1321,7 +1334,7 @@ public class GUIManager implements Initializable {
 //		};
 //		System.setOut(ps);
 //		System.setErr(ps);
-		this.startPicture();
+		// this.startPicture();
 
 		// INFO: Tabellen Initierung
 
@@ -1536,6 +1549,40 @@ public class GUIManager implements Initializable {
 		i0.setScaleY(1);
 
 		ft.playFromStart();
+	}
+
+	public void onSetEnglish(ActionEvent event) {
+		try {
+			if (Files.exists(
+					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"),
+					LinkOption.NOFOLLOW_LINKS))
+				Files.delete(
+						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+
+			Files.copy(getClass().getResourceAsStream("/assets/language/en.properties"),
+					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		GUIManager.getInstance().startErrorFrame("You have to restart the App!",
+				"The language will be updatet after restarting the App.");
+	}
+
+	public void onSetGerman(ActionEvent event) {
+		try {
+			if (Files.exists(
+					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"),
+					LinkOption.NOFOLLOW_LINKS))
+				Files.delete(
+						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+
+			Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
+					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		GUIManager.getInstance().startErrorFrame("You have to restart the App!",
+				"The language will be updatet after restarting the App.");
 	}
 
 }

@@ -10,6 +10,7 @@ public class InformationSave {
 	Save parent;
 
 	private int highestPriority, rate;
+	private double guete;
 
 	private ArrayList<Student> unallocatedStudents = new ArrayList<Student>();
 	private ArrayList<Student> badPriorityStudents = new ArrayList<Student>();
@@ -101,6 +102,15 @@ public class InformationSave {
 
 	public void update() {
 
+		for (int i = 0; i < this.unallocatedStudents.size();) {
+
+			if (!this.unallocatedStudents.get(i).isMarked())
+				this.unallocatedStudents.remove(i).refreshPriority();
+			else
+				i++;
+
+		}
+
 		if (this.badPriorityStudents.isEmpty()) {
 			this.highestPriority--;
 			this.studentPriorities[this.studentPriorities.length - 2] = 0;
@@ -125,6 +135,14 @@ public class InformationSave {
 				&& this.studentPriorities[this.studentPriorities.length - 2] != this.badPriorityStudents.size())
 			this.studentPriorities[this.studentPriorities.length - 2] = this.badPriorityStudents.size();
 
+		this.highestPriority = parent.getHighestPriority();
+		this.rate = parent.rate(this.highestPriority);
+
+		this.guete = (double) this.parent.getAllStudents().size() / (double) this.rate;
+	}
+
+	public double getGuete() {
+		return this.guete;
 	}
 
 }

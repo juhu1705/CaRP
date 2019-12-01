@@ -175,7 +175,8 @@ public class WriteableContent {
 		for (int y = 0; y <= maxLength.y; y++) {
 			try {
 				for (int x = 0; x <= maxLength.x; x++) {
-					writer.append(cells[x][y] + ";");
+					if(cells[x][y] != null)
+						writer.append(cells[x][y] + ";");
 
 				}
 				writer.newLine();

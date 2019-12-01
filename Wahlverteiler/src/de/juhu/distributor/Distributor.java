@@ -112,9 +112,9 @@ public class Distributor implements Runnable {
 	 */
 	protected Distributor() {
 		if (instance != null && !Config.clear) {
-			this.allStudents = this.getInstance().loadedallStudents;
-			this.allCourses = this.getInstance().loadedallCourses;
-			this.ignoredStudents = this.getInstance().ignoredStudents;
+			this.allStudents = Distributor.getInstance().loadedallStudents;
+			this.allCourses = Distributor.getInstance().loadedallCourses;
+			this.ignoredStudents = Distributor.getInstance().ignoredStudents;
 		}
 
 		instance = this;
@@ -142,13 +142,13 @@ public class Distributor implements Runnable {
 
 		// Lädt, falls gewünscht die Daten aus der alten Instanz in die Neue.
 		if (!Config.clear) {
-			this.allStudents = this.getInstance().loadedallStudents;
-			this.allCourses = this.getInstance().loadedallCourses;
-			this.ignoredStudents = this.getInstance().ignoredStudents;
+			this.allStudents = Distributor.getInstance().loadedallStudents;
+			this.allCourses = Distributor.getInstance().loadedallCourses;
+			this.ignoredStudents = Distributor.getInstance().ignoredStudents;
 		}
 
 		// Setzt die aktuelle Instanz auf diese.
-		this.instance = this;
+		Distributor.instance = this;
 
 		// Ließt die Dateien in das System ein.
 		this.readFile(filename);
@@ -203,6 +203,9 @@ public class Distributor implements Runnable {
 		LOGGER.config("--Basic Student limit: " + Integer.toString(Config.normalStudentLimit));
 		LOGGER.config("--The chooses of the Students: " + Integer.toString(Config.maxChooses));
 		LOGGER.config("--The number of students to Calculate: " + Integer.toString(this.allStudents.size()));
+		LOGGER.config("--Sort by Guete: " + Boolean.toString(Config.compareGuete));
+		LOGGER.config(
+				"--Sort unnallocated Student-Saves out first: " + Boolean.toString(Config.sortUnallocatedFirstOut));
 
 		calculate = true;
 
@@ -210,7 +213,7 @@ public class Distributor implements Runnable {
 
 		this.assigner();
 
-		for (Save s : this.calculated.list)
+		for (Save s : Distributor.calculated.list)
 			s.getInformation().update();
 
 		Platform.runLater(GUIManager.getInstance().outputSView);
@@ -273,6 +276,8 @@ public class Distributor implements Runnable {
 		this.allCourses.clear();
 		this.allStudents.clear();
 
+		this.ignoredStudents.clear();
+
 		this.allCourses = new ArrayList<Course>(save.getAllCourses());
 
 		ArrayList<Student> students = new ArrayList<>(save.getAllStudents());
@@ -283,10 +288,22 @@ public class Distributor implements Runnable {
 //			}
 //		}
 
-		ArrayList[] copiedData = this.copyData(students, (ArrayList) save.getAllCourses());
+		this.ignoredCourse.getStudents().clear();
+
+		ArrayList[] copiedData = this.copyData(students, (ArrayList) save.getAllCourses(), this.ignoredCourse);
 
 		this.allStudents = copiedData[0];
 		this.allCourses = copiedData[1];
+
+		for (int i = 0; i < this.allStudents.size();) {
+
+			if ((this.allStudents.get(i).getActiveCourse() != null
+					&& this.allStudents.get(i).getActiveCourse().equals(this.ignore()))
+					|| this.allStudents.get(i).getCoursesAsList().contains(this.ignore())) {
+				this.ignoredStudents.add(this.allStudents.remove(i));
+			} else
+				i++;
+		}
 	}
 
 	/**
@@ -345,7 +362,7 @@ public class Distributor implements Runnable {
 		this.loadedallStudents = this.allStudents;
 		this.loadedallCourses = this.allCourses;
 
-		ArrayList[] copiedData0 = this.copyData(this.allStudents, this.allCourses);
+		ArrayList[] copiedData0 = this.copyData(this.allStudents, this.allCourses, ignoredCourse);
 
 		loadedallStudents = copiedData0[0];
 		loadedallCourses = copiedData0[1];
@@ -356,7 +373,7 @@ public class Distributor implements Runnable {
 			this.allCourses.clear();
 			this.allStudents.clear();
 
-			ArrayList[] copiedData1 = this.copyData(this.loadedallStudents, this.loadedallCourses);
+			ArrayList[] copiedData1 = this.copyData(this.loadedallStudents, this.loadedallCourses, ignoredCourse);
 
 			allStudents = copiedData1[0];
 			allCourses = copiedData1[1];
@@ -393,10 +410,8 @@ public class Distributor implements Runnable {
 						s.setActiveCourse(s.getCourses()[0]);
 					}
 
-				/*
-				 * TODO - Kurse mischen
-				 */
 				Collections.shuffle(allCourses);
+
 				while (this.isAnyCourseFull()) {
 					for (Course c : this.allCourses) {
 						Student first = null;
@@ -422,6 +437,9 @@ public class Distributor implements Runnable {
 				this.save();
 
 			}
+
+//			for (Save s : Distributor.calculated.list)
+//				s.getInformation().update();
 		}
 		ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
 
@@ -444,7 +462,7 @@ public class Distributor implements Runnable {
 		return false;
 	}
 
-	public ArrayList[] copyData(ArrayList<Student> oldStudents, ArrayList<Course> oldCourses) {
+	public ArrayList[] copyData(ArrayList<Student> oldStudents, ArrayList<Course> oldCourses, Course ignoredCourse2) {
 
 		ArrayList<Student> newStudents = new ArrayList<Student>(oldStudents);
 		ArrayList<Course> newCourses = (ArrayList<Course>) oldCourses.clone();
@@ -455,10 +473,14 @@ public class Distributor implements Runnable {
 					for (Course cc : s.getCourses()) {
 						for (Course c : newCourses) {
 							if (cc.equals(c)) {
+								news.addCourse(s.getPosition(c), c);
 								if (s.getActiveCourse() != null && s.getActiveCourse().equals(c))
 									news.setActiveCourse(c);
-								news.addCourse(s.getPosition(c), c);
 							}
+						}
+						if (cc.equals(ignoredCourse2)) {
+							news.addCourse(s.getPosition(ignoredCourse2), ignoredCourse2);
+							news.setActiveCourse(ignoredCourse2);
 						}
 					}
 				}
@@ -477,7 +499,7 @@ public class Distributor implements Runnable {
 			s.setActiveCourse(this.ignoredCourse);
 		}
 
-		ArrayList[] copiedData = this.copyData(this.allStudents, this.allCourses);
+		ArrayList[] copiedData = this.copyData(this.allStudents, this.allCourses, ignoredCourse);
 
 		students = copiedData[0];
 		courses = copiedData[1];
@@ -500,6 +522,10 @@ public class Distributor implements Runnable {
 
 	private ArrayList<Student> getUnallocatedStudents() {
 		ArrayList<Student> pStudents = new ArrayList<>();
+
+		int highestPriority = this.getHighestPriorityWhithoutIntegerMax();
+
+		this.allStudents.forEach(s -> s.checkMarkt(highestPriority));
 
 		for (Student s : this.allStudents)
 			if (s.isMarked())

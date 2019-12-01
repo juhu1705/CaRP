@@ -39,6 +39,24 @@ public class Config {
 	@ConfigElement(defaultValue = "ALL", elementClass = String.class, description = "The format to display the console with.", name = "Print Format")
 	public static String printFormat;
 
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "If the students are outputet only with the first letter of there first name.", name = "Short names")
+	public static boolean shortNames;
+
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "", name = "First prename")
+	public static boolean firstPrename;
+
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "", name = "Sort out")
+	public static boolean sortUnallocatedFirstOut;
+
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "No funktion yet (placeholder)", name = "NO FUNKTION")
+	public static boolean complexHandling;
+
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "", name = "Compare First Priorities")
+	public static boolean compareFirstPriority;
+
+	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "", name = "Compare First Priorities")
+	public static boolean compareGuete = true;
+
 	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "If all courses and students are reseted, when importing a new file.", name = "Clear Data by importing new File")
 	public static boolean clear;
 

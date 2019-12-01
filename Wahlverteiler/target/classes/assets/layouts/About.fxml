@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="158.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.AboutManager">
+   <center>
+      <TextArea editable="false" prefHeight="103.0" prefWidth="200.0" text="Created by Fabius Mettner&#10;&#10;Release: 0.1&#10;Date: 24.06.2019" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <TextField alignment="CENTER" disable="true" text="CaRP - Assigner" BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+      <SplitPane dividerPositions="0.5" prefHeight="9.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <items>
+            <TextField fx:id="weg" promptText="Help" />
+            <Button mnemonicParsing="false" onAction="#onHelpSearch" text="Search" />
+         </items>
+      </SplitPane>
+   </bottom>
+</BorderPane>

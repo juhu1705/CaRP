@@ -7,6 +7,7 @@ import de.juhu.distributor.Distributor;
 import de.juhu.distributor.Student;
 import de.juhu.guiFX.GUIManager;
 import de.juhu.util.Config;
+import de.juhu.util.References;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
@@ -20,11 +21,14 @@ public class OutputInformationView implements Runnable {
 		GUIManager.getInstance().bStudents.setItems(FXCollections
 				.observableArrayList(Distributor.getInstance().calculated.peek().getInformation().getBStudents()));
 
-		HashMap<String, Integer> ratess = new HashMap<>();
+		HashMap<String, Double> ratess = new HashMap<>();
 
 		ratess.put("Highest Student Priority",
-				Distributor.getInstance().calculated.peek().getInformation().getHighestPriority());
-		ratess.put("Calculation Rate", Distributor.getInstance().calculated.peek().getInformation().getRate());
+				(double) Distributor.getInstance().calculated.peek().getInformation().getHighestPriority());
+		ratess.put("Calculation Rate", (double) Distributor.getInstance().calculated.peek().getInformation().getRate());
+		ratess.put("Kalkulations Güte", Distributor.getInstance().calculated.peek().getInformation().getGuete());
+
+		GUIManager.getInstance().rates.getItems().clear();
 
 		GUIManager.getInstance().rates.setItems(FXCollections.observableArrayList(ratess.entrySet()));
 
@@ -74,13 +78,24 @@ public class OutputInformationView implements Runnable {
 				GUIManager.getInstance().unallocatedStudents.getColumns().add(k);
 			}
 
+			GUIManager.getInstance().unallocatedStudents.getItems().clear();
+
+			// GUIManager.getInstance().unallocatedStudents.setItems(FXCollections.observableArrayList(new
+			// ArrayList<>()));
+
+			References.LOGGER.fine(
+					Distributor.getInstance().calculated.peek().getInformation().getunallocatedStudents().toString());
+
 			GUIManager.getInstance().unallocatedStudents.setItems(FXCollections.observableArrayList(
 					Distributor.getInstance().calculated.peek().getInformation().getunallocatedStudents()));
-		}
+		} else
+			GUIManager.getInstance().unallocatedStudents.getItems().clear();
 	}
 
 	@Override
 	public void run() {
+		References.LOGGER.info("Update Statistics!");
+
 		fill();
 		GUIManager.getInstance().statistics.setDisable(false);
 

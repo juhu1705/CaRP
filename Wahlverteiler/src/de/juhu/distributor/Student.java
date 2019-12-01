@@ -374,6 +374,9 @@ public class Student implements Comparable<Student> {
 	 * @param activeCourse the activeCourse to set
 	 */
 	public void setActiveCourse(Course activeCourse) {
+		if (this.isMarked())
+			this.unmark();
+
 		if (activeCourse == null) {
 			if (this.activeCourse != null && this.activeCourse.contains(this))
 				this.activeCourse.removeStudent(this);
@@ -425,6 +428,11 @@ public class Student implements Comparable<Student> {
 	public int getRate() {
 		return (int) (this.priority == Integer.MAX_VALUE
 				? Math.pow(Distributor.getInstance().getHighestPriority() + 1, Config.powValue)
+				: Math.pow(this.priority, Config.powValue));
+	}
+
+	public int getRate(int highestPriority) {
+		return (int) (this.priority == Integer.MAX_VALUE ? Math.pow(highestPriority + 1, Config.powValue)
 				: Math.pow(this.priority, Config.powValue));
 	}
 
@@ -503,5 +511,12 @@ public class Student implements Comparable<Student> {
 
 	public List<Course> getCoursesAsList() {
 		return this.courses;
+	}
+
+	public void checkMarkt(int highestPriority) {
+
+		if (this.getPriority() > highestPriority || this.getPriority() < 0)
+			this.mark();
+
 	}
 }

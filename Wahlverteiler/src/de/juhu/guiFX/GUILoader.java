@@ -5,8 +5,13 @@ import static de.juhu.util.References.PROJECT_NAME;
 import static de.juhu.util.References.VERSION;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.util.Locale;
+import java.util.PropertyResourceBundle;
 
 import de.juhu.util.References;
 import javafx.application.Application;
@@ -33,8 +38,11 @@ public class GUILoader extends Application {
 		// LOGGER.info(getClass().getResource("/de/juhu/guiFX/GUI.fxml") + "");
 //		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI() + "");
 //		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI().toURL() + "");
-
-		Locale german = References.german;
+		
+		if (!Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"),
+				LinkOption.NOFOLLOW_LINKS))
+			Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"), FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+		this.loadLanguage();
 		
 		Image i;
 
@@ -42,8 +50,8 @@ public class GUILoader extends Application {
 			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
 		else
 			i = new Image("/assets/textures/logo/KuFA.png");
-
-		Parent root = FXMLLoader.load(getClass().getResource("/de/juhu/guiFX/GUI.fxml"));
+		
+		Parent root = FXMLLoader.load(getClass().getResource("/assets/layouts/GUI.fxml"), References.language);
 		Scene s = new Scene(root);
 
 		s.getStylesheets().add("/assets/styles/dark_theme.css");
@@ -62,7 +70,7 @@ public class GUILoader extends Application {
 		primaryStage.getIcons().add(i);
 
 		primaryStage.show();
-		this.primaryStage = primaryStage;
+		GUILoader.primaryStage = primaryStage;
 		scene = s;
 	}
 
@@ -70,15 +78,25 @@ public class GUILoader extends Application {
 
 		secondaryStage.show();
 		primaryStage.close();
-		this.primaryStage = secondaryStage;
+		GUILoader.primaryStage = secondaryStage;
 	}
 
 	public static Stage getPrimaryStage() {
 		return primaryStage;
 	}
+	
+	private void loadLanguage() {
+		
+		try {
+			References.language = new PropertyResourceBundle(new FileReader(System.getenv("localappdata") + "/CaRP/language.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String[] args) {
 		LOGGER.info("Starte: " + PROJECT_NAME + " | Version: " + VERSION);
+		
 		launch(args);
 	}
 

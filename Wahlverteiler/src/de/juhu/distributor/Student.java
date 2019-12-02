@@ -432,7 +432,7 @@ public class Student implements Comparable<Student> {
 	}
 
 	public int getRate(int highestPriority) {
-		return (int) (this.priority == Integer.MAX_VALUE ? Math.pow(highestPriority + 1, Config.powValue)
+		return (int) (this.priority == Integer.MAX_VALUE ? Math.pow(highestPriority + 1, Config.powValue + 3)
 				: Math.pow(this.priority, Config.powValue));
 	}
 

@@ -57,6 +57,9 @@ public class Config {
 	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "", name = "Compare First Priorities")
 	public static boolean compareGuete = true;
 
+	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "", name = "Compare First Priorities")
+	public static boolean newImproving = true;
+
 	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "If all courses and students are reseted, when importing a new file.", name = "Clear Data by importing new File")
 	public static boolean clear;
 

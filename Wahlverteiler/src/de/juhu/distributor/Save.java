@@ -56,6 +56,8 @@ public class Save implements Comparable<Save> {
 			count += s.getRate(highestPriority);
 		}
 
+		if (count > Integer.MAX_VALUE || count < 0)
+			return Integer.MAX_VALUE;
 		return count;
 	}
 
@@ -205,13 +207,13 @@ public class Save implements Comparable<Save> {
 		if (Config.sortUnallocatedFirstOut)
 			if (this.informations.getHighestPriority() == Integer.MAX_VALUE
 					&& s.getInformation().getHighestPriority() != Integer.MAX_VALUE)
-				return (this.informations.getHighestPriority() - s.informations.getHighestPriority()) * -1;
+				return -1;
 			else if (this.informations.getHighestPriority() != Integer.MAX_VALUE
 					&& s.getInformation().getHighestPriority() == Integer.MAX_VALUE)
-				return (this.informations.getHighestPriority() - s.informations.getHighestPriority()) * -1;
+				return 1;
 
 		if (Config.compareGuete)
-			return this.informations.getGuete() - s.informations.getGuete() >= 0 ? 1 : -1;
+			return this.informations.getGuete() - s.informations.getGuete() >= 0 ? -1 : 1;
 
 		if (!Config.compareFirstPriority
 				|| this.informations.getHighestPriority() == s.informations.getHighestPriority())

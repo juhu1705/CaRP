@@ -111,6 +111,8 @@ public class InformationSave {
 
 		}
 
+		parent.getAllStudents().forEach(s -> s.refreshPriority());
+
 		if (this.badPriorityStudents.isEmpty()) {
 			this.highestPriority--;
 			this.studentPriorities[this.studentPriorities.length - 2] = 0;

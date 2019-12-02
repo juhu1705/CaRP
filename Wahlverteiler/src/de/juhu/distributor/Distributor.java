@@ -412,28 +412,44 @@ public class Distributor implements Runnable {
 
 				Collections.shuffle(allCourses);
 
-				while (this.isAnyCourseFull()) {
-					for (Course c : this.allCourses) {
-						Student first = null;
-						while (c.isFull()) {
-							ArrayList<Student> students = new ArrayList<Student>(c.getStudents());
-							Collections.shuffle(students);
-							for (Student s : students) {
-								if (first == null)
-									first = s;
-								if (first.equals(s) && c.isFull()) {
-									if (!s.next())
+				if (Config.newImproving) {
+					while (this.isAnyCourseFull()) {
+						for (Course c : this.allCourses) {
+							if (c.isFull()) {
+								ArrayList<Student> students = new ArrayList<Student>(c.getStudents());
+								Collections.shuffle(students);
+
+								for (Student s : students)
+									if (!s.onlyNext())
 										s.mark();
-									first = null;
-								}
+							}
+
+						}
+					}
+
+				} else
+					while (this.isAnyCourseFull()) {
+						for (Course c : this.allCourses) {
+							Student first = null;
+							while (c.isFull()) {
+								ArrayList<Student> students = new ArrayList<Student>(c.getStudents());
+								Collections.shuffle(students);
+								for (Student s : students) {
+									if (first == null)
+										first = s;
+									if (first.equals(s) && c.isFull()) {
+										if (!s.next())
+											s.mark();
+										first = null;
+									}
 //								if (!s.onlyNext())
 //									s.mark();
-								if (!c.isFull())
-									break;
+									if (!c.isFull())
+										break;
+								}
 							}
 						}
 					}
-				}
 				this.save();
 
 			}

@@ -207,10 +207,10 @@ public class Save implements Comparable<Save> {
 		if (Config.sortUnallocatedFirstOut)
 			if (this.informations.getHighestPriority() == Integer.MAX_VALUE
 					&& s.getInformation().getHighestPriority() != Integer.MAX_VALUE)
-				return -1;
+				return (this.informations.getHighestPriority() - s.informations.getHighestPriority()) * -1;
 			else if (this.informations.getHighestPriority() != Integer.MAX_VALUE
 					&& s.getInformation().getHighestPriority() == Integer.MAX_VALUE)
-				return 1;
+				return (this.informations.getHighestPriority() - s.informations.getHighestPriority()) * -1;
 
 		if (Config.compareGuete)
 			return this.informations.getGuete() - s.informations.getGuete() >= 0 ? -1 : 1;

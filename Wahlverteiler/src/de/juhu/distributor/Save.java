@@ -61,6 +61,14 @@ public class Save implements Comparable<Save> {
 		return count;
 	}
 
+	public Course getCourseByName(String name) {
+		for (Course c : this.allCourses) {
+			if (name.equalsIgnoreCase(c.toString()))
+				return c;
+		}
+		return null;
+	}
+
 	public int getHighestPriorityWhithoutIntegerMax() {
 		int highest = 0;
 		for (Student s : this.allStudents)
@@ -119,6 +127,15 @@ public class Save implements Comparable<Save> {
 
 	public List<Course> getAllCourses() {
 		return this.allCourses;
+	}
+
+	public Course[] getAllCoursesAsArray() {
+		Course[] courses = new Course[this.allCourses.size()];
+		int i = 0;
+		for (Course c : this.allCourses)
+			courses[i++] = c;
+
+		return courses;
 	}
 
 	public InformationSave getInformation() {
@@ -223,6 +240,26 @@ public class Save implements Comparable<Save> {
 
 	public int compareTo(int rate) {
 		return (this.informations.getHighestPriority() - rate) * -1;
+	}
+
+	public void addCourse(Course c) {
+		if (this.allCourses.contains(c))
+			this.allCourses.remove(c);
+		this.allCourses.add(c);
+	}
+
+	public Student getStudentByID(int studentID) {
+		for (Student s : this.allStudents)
+			if (s.idequals(studentID))
+				return s;
+		return null;
+	}
+
+	public boolean addStudent(Student student) {
+		if (student == null || this.allStudents.contains(student))
+			return false;
+
+		return this.allStudents.add(student);
 	}
 
 }

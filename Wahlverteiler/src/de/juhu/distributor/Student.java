@@ -39,7 +39,7 @@ public class Student implements Comparable<Student> {
 	 * </p>
 	 * Kann über {@link #refreshPriority()} aktualisiert werden.
 	 */
-	private int priority;
+	protected int priority;
 
 	/**
 	 * Die ID des Schülers. Sie ist für jeden unterschiedlichen Schüler einzigartig.

@@ -1,8 +1,10 @@
 de\juhu\gui\frames\GUIFrame$1.class
+de\juhu\guiFX\AddCourseToSaveManager.class
 de\juhu\distributor\Save.class
 de\juhu\util\Util.class
 de\juhu\guiFX\GUIManager$3.class
 de\juhu\guiFX\FullProgress.class
+de\juhu\distributor\Distributor$6.class
 de\juhu\gui\action\activations\Content.class
 de\juhu\guiFX\lists\OutputCourseView.class
 de\juhu\util\CellStyles.class
@@ -23,6 +25,7 @@ de\juhu\gui\action\actions\RunAndSave.class
 de\juhu\dateimanager\ConfigElement.class
 de\juhu\util\References.class
 de\juhu\dateimanager\CSVImporter.class
+de\juhu\guiFX\GUIManager$5.class
 de\juhu\distributor\Distributor$1.class
 de\juhu\dateimanager\ConfigManager.class
 de\juhu\guiFX\GUIManager.class
@@ -59,6 +62,7 @@ de\juhu\gui\action\actions\InputSearchAction.class
 de\juhu\util\input\InputEvent.class
 de\juhu\distributor\Distributor$5.class
 de\juhu\gui\GUIManager.class
+de\juhu\guiFX\GUIManager$4.class
 de\juhu\distributor\ProgressIndicator.class
 de\juhu\guiFX\GUIManager$1.class
 de\juhu\util\LoggingHandler.class
@@ -79,5 +83,7 @@ de\juhu\util\Interfaces\Updateable.class
 de\juhu\util\input\Keyboard.class
 de\juhu\gui\filter\TableFileFilter.class
 de\juhu\guiFX\lists\CourseView.class
+de\juhu\guiFX\AddStudentToSaveManager$1.class
 de\juhu\distributor\Student.class
+de\juhu\guiFX\AddStudentToSaveManager.class
 de\juhu\guiFX\ErrorGuiController.class

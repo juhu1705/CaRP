@@ -79,7 +79,7 @@ public class SwitchCourseManager implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		if (student == null)
-			Thread.interrupted();
+			Thread.currentThread().interrupt();
 
 		References.LOGGER.info("Student: " + student.toString());
 

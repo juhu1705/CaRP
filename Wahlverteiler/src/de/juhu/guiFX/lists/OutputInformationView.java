@@ -3,7 +3,6 @@ package de.juhu.guiFX.lists;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.juhu.distributor.Distributor;
 import de.juhu.distributor.Student;
 import de.juhu.guiFX.GUIManager;
 import de.juhu.util.Config;
@@ -18,21 +17,20 @@ public class OutputInformationView implements Runnable {
 
 	public void fill() {
 
-		GUIManager.getInstance().bStudents.setItems(FXCollections
-				.observableArrayList(Distributor.getInstance().calculated.peek().getInformation().getBStudents()));
+		GUIManager.getInstance().bStudents
+				.setItems(FXCollections.observableArrayList(GUIManager.actual.getInformation().getBStudents()));
 
 		HashMap<String, Double> ratess = new HashMap<>();
 
-		ratess.put("Highest Student Priority",
-				(double) Distributor.getInstance().calculated.peek().getInformation().getHighestPriority());
-		ratess.put("Calculation Rate", (double) Distributor.getInstance().calculated.peek().getInformation().getRate());
-		ratess.put("Kalkulations Güte", Distributor.getInstance().calculated.peek().getInformation().getGuete());
+		ratess.put("Highest Student Priority", (double) GUIManager.actual.getInformation().getHighestPriority());
+		ratess.put("Calculation Rate", (double) GUIManager.actual.getInformation().getRate());
+		ratess.put("Kalkulations Güte", GUIManager.actual.getInformation().getGuete());
 
 		GUIManager.getInstance().rates.getItems().clear();
 
 		GUIManager.getInstance().rates.setItems(FXCollections.observableArrayList(ratess.entrySet()));
 
-		int[] priorities = Distributor.getInstance().calculated.peek().getInformation().getStudentPriorities();
+		int[] priorities = GUIManager.actual.getInformation().getStudentPriorities();
 		HashMap<Integer, Integer> p = new HashMap<>();
 
 		for (int i = 0; i < priorities.length - 1; i++)
@@ -42,7 +40,7 @@ public class OutputInformationView implements Runnable {
 
 		GUIManager.getInstance().priorities.setItems(FXCollections.observableArrayList(p.entrySet()));
 
-		if (!Distributor.getInstance().calculated.peek().getInformation().getunallocatedStudents().isEmpty()) {
+		if (!GUIManager.actual.getInformation().getunallocatedStudents().isEmpty()) {
 
 			if (!this.scourses.isEmpty()) {
 				this.scourses.forEach(c -> GUIManager.getInstance().unallocatedStudents.getColumns().remove(c));
@@ -83,11 +81,10 @@ public class OutputInformationView implements Runnable {
 			// GUIManager.getInstance().unallocatedStudents.setItems(FXCollections.observableArrayList(new
 			// ArrayList<>()));
 
-			References.LOGGER.fine(
-					Distributor.getInstance().calculated.peek().getInformation().getunallocatedStudents().toString());
+			References.LOGGER.fine(GUIManager.actual.getInformation().getunallocatedStudents().toString());
 
-			GUIManager.getInstance().unallocatedStudents.setItems(FXCollections.observableArrayList(
-					Distributor.getInstance().calculated.peek().getInformation().getunallocatedStudents()));
+			GUIManager.getInstance().unallocatedStudents.setItems(
+					FXCollections.observableArrayList(GUIManager.actual.getInformation().getunallocatedStudents()));
 		} else
 			GUIManager.getInstance().unallocatedStudents.getItems().clear();
 	}
@@ -104,6 +101,12 @@ public class OutputInformationView implements Runnable {
 		GUIManager.getInstance().r1.setDisable(false);
 		GUIManager.getInstance().r2.setDisable(false);
 		GUIManager.getInstance().r3.setDisable(false);
+
+		GUIManager.getInstance().b1.setDisable(false);
+		GUIManager.getInstance().b2.setDisable(false);
+		GUIManager.getInstance().b3.setDisable(false);
+		GUIManager.getInstance().b4.setDisable(false);
+		GUIManager.getInstance().b5.setDisable(false);
 	}
 
 }

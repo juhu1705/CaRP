@@ -32,6 +32,25 @@ public class PriorityQueue<T extends Comparable<T>> implements List<T> {
 		return this.get(0);
 	}
 
+	public T previous(T actual) {
+		int newPosition = this.list.indexOf(actual) - 1;
+		if (newPosition < 0)
+			return actual;
+		return this.list.get(newPosition);
+
+	}
+
+	public T next(T actual) {
+		int newPosition = this.list.indexOf(actual) + 1;
+		if (newPosition < 0 || newPosition >= this.list.size())
+			return actual;
+		return this.list.get(newPosition);
+	}
+
+	public int indexOf(T actual) {
+		return this.list.indexOf(actual);
+	}
+
 	@Override
 	public int size() {
 		return this.list.size();

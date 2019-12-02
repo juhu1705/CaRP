@@ -216,6 +216,17 @@ public class Distributor implements Runnable {
 		for (Save s : Distributor.calculated.list)
 			s.getInformation().update();
 
+		GUIManager.actual = Distributor.calculated.peek();
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				GUIManager.getInstance().counter
+						.setText(Integer.toString(Distributor.calculated.indexOf(GUIManager.actual)));
+			}
+		});
+
 		Platform.runLater(GUIManager.getInstance().outputSView);
 		Platform.runLater(GUIManager.getInstance().outputCView);
 		Platform.runLater(GUIManager.getInstance().outputIView);

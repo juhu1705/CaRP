@@ -93,6 +93,8 @@ public class GUIManager implements Initializable {
 		return instance;
 	}
 
+	public static Save actual;
+
 	@FXML
 	public ImageView i0;
 
@@ -103,10 +105,13 @@ public class GUIManager implements Initializable {
 	public TextArea ta1;
 
 	@FXML
+	public Label counter;
+
+	@FXML
 	public TextField t1, t2;
 
 	@FXML
-	public Button r1, r2, r3, r4, r5;
+	public Button r1, r2, r3, r4, r5, b1, b2, b3, b4, b5;
 
 	@FXML
 	public ComboBox<Level> cb1;
@@ -118,7 +123,7 @@ public class GUIManager implements Initializable {
 	public ComboBox<PrintFormat> cb0;
 
 	@FXML
-	public TableView<Student> tv0, tv1, tv2, unallocatedStudents, bStudents;
+	public TableView<Student> tv0, tv1, unallocatedStudents, bStudents;
 
 	@FXML
 	public TableView<Entry<String, Double>> rates;
@@ -127,7 +132,7 @@ public class GUIManager implements Initializable {
 	public TableView<Entry<Integer, Integer>> priorities;
 
 	@FXML
-	public TableView<Course> tvc;
+	public TableView<Course> tvc, tv2;
 
 	@FXML
 	public TableColumn<Student, String> vtc, ntc, k1tc, k1stc, k1ttc, cvtc, cntc, cptc, ckstc, ckttc, unallocatedName,
@@ -168,6 +173,166 @@ public class GUIManager implements Initializable {
 	public CheckMenuItem mb0, mb1;
 
 	private CheckMenuItem last, lastSwitch;
+
+	public void onAddStudentToActualSave(ActionEvent event) {
+		if (Distributor.calculate) {
+			GUIManager.getInstance().startErrorFrame("Cannot add student while calculating!",
+					"Please wait until the actual running calculation is finished.");
+			return;
+		}
+
+		LOGGER.config("Starting Add Student Window");
+
+		Stage primaryStage = new Stage();
+
+		Image i;
+
+		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
+			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
+		else
+			i = new Image("/assets/textures/logo/KuFA.png");
+
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddStudentToCalculation.fxml"),
+					References.language);
+		} catch (IOException e) {
+			References.LOGGER.log(Level.SEVERE, "", e);
+			return;
+		}
+		Scene s = new Scene(root);
+
+		if (mb1.isSelected()) {
+			s.getStylesheets().add("/assets/styles/dark_theme.css");
+		}
+
+		primaryStage.setMinWidth(200);
+		primaryStage.setMinHeight(158);
+		primaryStage.setTitle("Add Student");
+		primaryStage.setScene(s);
+		primaryStage.initModality(Modality.WINDOW_MODAL);
+		primaryStage.initOwner(GUILoader.getPrimaryStage());
+
+		primaryStage.getIcons().add(i);
+
+		primaryStage.show();
+	}
+
+	public void onEditCourseActualSave(ActionEvent event) {
+		if (Distributor.calculate) {
+			GUIManager.getInstance().startErrorFrame("Cannot modify course data while calculating!",
+					"Please wait until the actual running calculation is finished.");
+			return;
+		}
+
+		Course course = this.tv2.getSelectionModel().getSelectedItem();
+
+		if (course == null || (course.getSubject() == null || course.getTeacher() == null)
+				|| (course.getSubject().isEmpty() && course.getTeacher().isEmpty()))
+			return;
+
+		LOGGER.config("Starting Add Student Window");
+
+		AddCourseManager.s = course.getSubject();
+		AddCourseManager.t = course.getTeacher();
+		AddCourseManager.mS = course.getMaxStudentCount();
+
+		Stage primaryStage = new Stage();
+
+		Image i;
+
+		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
+			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
+		else
+			i = new Image("/assets/textures/logo/KuFA.png");
+
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddCourseToCalculation.fxml"),
+					References.language);
+		} catch (IOException e) {
+			return;
+		}
+		Scene s = new Scene(root);
+
+		if (mb1.isSelected()) {
+			s.getStylesheets().add("/assets/styles/dark_theme.css");
+		}
+
+		primaryStage.setMinWidth(200);
+		primaryStage.setMinHeight(158);
+		primaryStage.setTitle("Add Course");
+		primaryStage.setScene(s);
+		primaryStage.initModality(Modality.WINDOW_MODAL);
+		primaryStage.initOwner(GUILoader.getPrimaryStage());
+
+		primaryStage.getIcons().add(i);
+
+		primaryStage.show();
+	}
+
+	public void onAddCourseToActualSave(ActionEvent event) {
+		if (Distributor.calculate) {
+			GUIManager.getInstance().startErrorFrame("Cannot add course while calculating!",
+					"Please wait until the actual running calculation is finished.");
+			return;
+		}
+
+		LOGGER.config("Starting Add Student Window");
+
+		Stage primaryStage = new Stage();
+
+		Image i;
+
+		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
+			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
+		else
+			i = new Image("/assets/textures/logo/KuFA.png");
+
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddCourseToCalculation.fxml"),
+					References.language);
+		} catch (IOException e) {
+			return;
+		}
+		Scene s = new Scene(root);
+
+		if (mb1.isSelected()) {
+			s.getStylesheets().add("/assets/styles/dark_theme.css");
+		}
+
+		primaryStage.setMinWidth(200);
+		primaryStage.setMinHeight(158);
+		primaryStage.setTitle("Add Course");
+		primaryStage.setScene(s);
+		primaryStage.initModality(Modality.WINDOW_MODAL);
+		primaryStage.initOwner(GUILoader.getPrimaryStage());
+
+		primaryStage.getIcons().add(i);
+
+		primaryStage.show();
+	}
+
+	public void onNextSave(ActionEvent event) {
+		GUIManager.actual = Distributor.calculated.next(actual);
+
+		Platform.runLater(GUIManager.getInstance().outputSView);
+		Platform.runLater(GUIManager.getInstance().outputCView);
+		Platform.runLater(GUIManager.getInstance().outputIView);
+
+		this.counter.setText(Integer.toString(Distributor.calculated.indexOf(actual)));
+	}
+
+	public void onPreviousSave(ActionEvent event) {
+		GUIManager.actual = Distributor.calculated.previous(actual);
+
+		Platform.runLater(GUIManager.getInstance().outputSView);
+		Platform.runLater(GUIManager.getInstance().outputCView);
+		Platform.runLater(GUIManager.getInstance().outputIView);
+
+		this.counter.setText(Integer.toString(Distributor.calculated.indexOf(actual)));
+	}
 
 	public void addCourse(ActionEvent event) {
 
@@ -227,6 +392,11 @@ public class GUIManager implements Initializable {
 		GUIManager.getInstance().teachers.setDisable(true);
 		GUIManager.getInstance().students.setDisable(true);
 		GUIManager.getInstance().statistics.setDisable(true);
+		GUIManager.getInstance().b1.setDisable(true);
+		GUIManager.getInstance().b2.setDisable(true);
+		GUIManager.getInstance().b3.setDisable(true);
+		GUIManager.getInstance().b4.setDisable(true);
+		GUIManager.getInstance().b5.setDisable(true);
 	}
 
 	public void onThemeChange(ActionEvent event) {
@@ -944,6 +1114,15 @@ public class GUIManager implements Initializable {
 
 	}
 
+	public void addCourseToActual(ActionEvent event) {
+		if (GUIManager.actual == null) {
+			GUIManager.getInstance().startErrorFrame("Cannot Add Course to non existing Save!",
+					"Please calculate something, or load a save.");
+			return;
+		}
+
+	}
+
 	public void onClearDistributor(ActionEvent event) {
 		Distributor.getInstance().clear();
 
@@ -961,7 +1140,99 @@ public class GUIManager implements Initializable {
 		LOGGER.info("Start Saving files");
 		LOGGER.info("Try to save to " + Config.outputFile + Config.outputFileType);
 
-		Save save = Distributor.getInstance().calculated.poll();
+		Save save = Distributor.getInstance().calculated.peek();
+		if (save == null) {
+			this.startErrorFrame("No calculation found!",
+					"There are no data in the distributor. \n Please ensure, to run the calculator and assign the given data, before exporting them!");
+			return;
+		}
+
+		Distributor.calculate = true;
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				p0.setVisible(true);
+
+				GUIManager.getInstance().r1.setDisable(true);
+				GUIManager.getInstance().r2.setDisable(true);
+				GUIManager.getInstance().r3.setDisable(true);
+
+				de.juhu.distributor.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
+			}
+		});
+
+		Distributor.getInstance().calculated.add(save);
+		String s;
+		if (Util.isBlank((s = Config.outputFile)) || s.endsWith("/") || s.endsWith("\\"))
+			return;
+
+		boolean xls = false, xlsx = false, csv = false;
+
+		switch (Config.outputFileType) {
+		case ".xls":
+			xls = true;
+			break;
+		case ".xlsx":
+			xlsx = true;
+			break;
+		case ".csv":
+			csv = true;
+			break;
+		case "FOLDER":
+			ExcelExporter.writeXLS(s + "/Excel_OLD", save.writeInformation());
+			ExcelExporter.writeXLSX(s + "/KuFA-Zuweiser Ergebnisse", save.writeInformation());
+			CSVExporter.writeCSV(s + "/course", save.writeCourseInformation());
+			CSVExporter.writeCSV(s + "/student", save.writeStudentInformation());
+			LogWriter.writeLog(s + "/logging");
+			break;
+		default:
+			xlsx = true;
+			break;
+		}
+
+		if (xls) {
+			ExcelExporter.writeXLS(s, save.writeInformation());
+		}
+		if (xlsx) {
+			ExcelExporter.writeXLSX(s, save.writeInformation());
+		}
+		if (csv) {
+			CSVExporter.writeCSV(s + "course", save.writeCourseInformation());
+			CSVExporter.writeCSV(s + "student", save.writeStudentInformation());
+		}
+		LOGGER.info("Finished Saving files");
+
+		Distributor.calculate = false;
+
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				de.juhu.distributor.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
+
+				p0.setVisible(false);
+
+				GUIManager.getInstance().r1.setDisable(false);
+				GUIManager.getInstance().r2.setDisable(false);
+				GUIManager.getInstance().r3.setDisable(false);
+			}
+		});
+
+	}
+
+	public void saveActualAction(ActionEvent event) {
+		if (Distributor.calculate) {
+			GUIManager.getInstance().startErrorFrame("Cannot save calculation while calculating!",
+					"Please wait until the actual running calculation is finished.");
+			return;
+		}
+
+		LOGGER.info("Start Saving files");
+		LOGGER.info("Try to save to " + Config.outputFile + Config.outputFileType);
+
+		Save save = actual;
 		if (save == null) {
 			this.startErrorFrame("No calculation found!",
 					"There are no data in the distributor. \n Please ensure, to run the calculator and assign the given data, before exporting them!");

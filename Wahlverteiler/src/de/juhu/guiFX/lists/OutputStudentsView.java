@@ -1,6 +1,5 @@
 package de.juhu.guiFX.lists;
 
-import de.juhu.distributor.Distributor;
 import de.juhu.distributor.Student;
 import de.juhu.guiFX.GUIManager;
 import de.juhu.util.References;
@@ -19,8 +18,7 @@ public class OutputStudentsView implements Runnable {
 
 		References.LOGGER.config("Loading Output Data to the Preview!");
 
-		this.tv.setItems(
-				FXCollections.observableArrayList(Distributor.getInstance().calculated.peek().getAllStudents()));
+		this.tv.setItems(FXCollections.observableArrayList(GUIManager.actual.getAllStudents()));
 	}
 
 	@Override

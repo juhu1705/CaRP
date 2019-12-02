@@ -3,8 +3,6 @@ package de.juhu.guiFX.lists;
 import java.util.ArrayList;
 
 import de.juhu.distributor.Course;
-import de.juhu.distributor.Distributor;
-import de.juhu.distributor.Student;
 import de.juhu.guiFX.GUIManager;
 import de.juhu.util.References;
 import de.juhu.util.Util;
@@ -19,15 +17,14 @@ public class OutputCourseView implements Runnable {
 
 	ArrayList<TableColumn<Course, String>> students = new ArrayList<>();
 
-	public OutputCourseView(TableView<Student> inputTable) {
+	public OutputCourseView(TableView<Course> inputTable) {
 		this.tv = inputTable;
 	}
 
 	public void fill() {
 		References.LOGGER.config("Loading Output Data to the Preview!");
 
-		this.tv.setItems(
-				FXCollections.observableArrayList(Distributor.getInstance().calculated.peek().getAllCourses()));
+		this.tv.setItems(FXCollections.observableArrayList(GUIManager.actual.getAllCourses()));
 	}
 
 	private void loadMaxStudents() {
@@ -36,7 +33,7 @@ public class OutputCourseView implements Runnable {
 		}
 		students.clear();
 
-		int maxCount = Util.maxStudentCount(Distributor.getInstance().calculated.peek().getAllCourses());
+		int maxCount = Util.maxStudentCount(GUIManager.actual.getAllCourses());
 
 		for (int i = 0; i < maxCount; i++) {
 			TableColumn<Course, String> prename = new TableColumn<>("Prename");

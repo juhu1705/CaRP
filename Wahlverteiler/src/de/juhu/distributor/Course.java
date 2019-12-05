@@ -1,5 +1,6 @@
 package de.juhu.distributor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import de.juhu.util.Config;
@@ -14,7 +15,7 @@ import de.juhu.util.Config;
  * @implNote Ist {@link Comparable vergleichbar} mit anderen {@link Course
  *           Kursen}.
  */
-public class Course implements Comparable<Course> {
+public class Course implements Comparable<Course>, Serializable {
 
 	private ArrayList<Student> students = new ArrayList<>();
 

@@ -11,7 +11,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
@@ -22,7 +21,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
@@ -78,19 +76,6 @@
                                           <Insets left="10.0" top="10.0" />
                                        </VBox.margin>
                                     </Label>
-                                    <HBox prefHeight="18.0" prefWidth="391.0" spacing="40.0">
-                                       <children>
-                                          <RadioButton fx:id="cf1" mnemonicParsing="false" selected="true" text="%createfolder.text">
-                                             <toggleGroup>
-                                                <ToggleGroup fx:id="OutputToggle" />
-                                             </toggleGroup>
-                                          </RadioButton>
-                                          <RadioButton fx:id="cf2" mnemonicParsing="false" text="%createfile.text" toggleGroup="$OutputToggle" />
-                                       </children>
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </VBox.margin>
-                                    </HBox>
                                     <SplitPane dividerPositions="0.5, 0.5" focusTraversable="false" prefHeight="16.0" prefWidth="369.0">
                                        <items>
                                           <Button fx:id="r4" minWidth="60.0" mnemonicParsing="false" onAction="#searchActionOutput" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" text="%search.text" />
@@ -374,7 +359,7 @@
                                                    <children>
                                                       <Label fx:id="counter" text="0" />
                                                       <Button fx:id="b1" disable="true" mnemonicParsing="false" onAction="#onPreviousSave" text="%previous.text" />
-                                                      <Button fx:id="b2" disable="true" mnemonicParsing="false" onAction="#onAddStudentToActualSave" text="%addstudent.text" />
+                                                      <Button fx:id="b2" disable="true" mnemonicParsing="false" text="%addstudent.text" />
                                                       <Button fx:id="b5" disable="true" mnemonicParsing="false" onAction="#onAddCourseToActualSave" text="%addcourse.text" />
                                                       <Button fx:id="b3" disable="true" mnemonicParsing="false" onAction="#saveActualAction" text="%saveactual.text" />
                                                       <Button fx:id="b4" disable="true" mnemonicParsing="false" onAction="#onNextSave" text="%next.text" />
@@ -402,6 +387,8 @@
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#onNew" text="%new.text" />
+                        <MenuItem mnemonicParsing="false" onAction="#onLoad" text="%open.text" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#searchActionInput" text="%input.text">
                            <accelerator>
@@ -411,9 +398,6 @@
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator></MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#saveAction" text="%savefile.text" />
-                        <MenuItem mnemonicParsing="false" onAction="#onSaveLog" text="%savelog.text" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#onShowInExcel" text="%showinspreadsheedprogramm.text">
                            <accelerator>
@@ -442,9 +426,6 @@
                            </accelerator></MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#runAndSaveAction" text="%ras.text" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#onClearCalculations" text="%clearcalculations.text" />
-                        <MenuItem mnemonicParsing="false" onAction="#onClearDistributor" text="%cleardata.text" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <Menu mnemonicParsing="false" text="%add.text">
                           <items>
@@ -489,6 +470,15 @@
                         </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="%help.text" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="%extendedfunktions.text">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#saveAction" text="%savefile.text" />
+                        <MenuItem mnemonicParsing="false" onAction="#onSaveLog" text="%savelog.text" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClearDistributor" text="%cleardata.text" />
+                        <MenuItem mnemonicParsing="false" onAction="#onClearCalculations" text="%clearcalculations.text" />
                      </items>
                   </Menu>
                </menus>

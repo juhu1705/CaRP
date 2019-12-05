@@ -42,6 +42,7 @@ de\juhu\distributor\InformationSave.class
 de\juhu\gui\action\activations\IsNotCalculating.class
 de\juhu\gui\frames\GUIFrame.class
 de\juhu\guiFX\SwitchCourseManager.class
+de\juhu\guiFX\GUIManager$6.class
 de\juhu\gui\action\actions\RunAction$1.class
 de\juhu\dateimanager\ExcelImporter$1.class
 de\juhu\gui\action\activations\ActivationAction.class

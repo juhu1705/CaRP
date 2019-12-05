@@ -1,11 +1,12 @@
 package de.juhu.distributor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import de.juhu.dateimanager.WriteableContent;
 import de.juhu.math.Vec2i;
 
-public class InformationSave {
+public class InformationSave implements Serializable {
 
 	Save parent;
 
@@ -43,7 +44,7 @@ public class InformationSave {
 				new String[] { "Highest Priority: ", Integer.toString(this.highestPriority) });
 		information.addLine(new Vec2i(0, ++line), new String[] { "Calculation Rate: ", Integer.toString(this.rate) });
 
-		line += 2;
+		line -= -2;
 
 		information.addLine(new Vec2i(0, line++), new String[] { "Priority", "Count of Students with Priority" });
 		for (int i = 0; i < studentPriorities.length - 1; i++) {
@@ -51,7 +52,7 @@ public class InformationSave {
 					new String[] { Integer.toString(i + 1), Integer.toString(this.studentPriorities[i]) });
 		}
 
-		line++;
+		line += 1;
 
 		if (this.studentPriorities[this.studentPriorities.length - 1] != 0) {
 			information.addLine(new Vec2i(0, line++), new String[] { "Unallocated Students",

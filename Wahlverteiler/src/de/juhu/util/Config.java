@@ -12,8 +12,8 @@ public class Config {
 	@ConfigElement(defaultValue = "", elementClass = String.class, description = "The filename of the input file.", name = "Input File")
 	public static String inputFile;
 
-	@ConfigElement(defaultValue = "FOLDER", elementClass = String.class, description = "Sets the ending of the output file.", name = "Ending of Outputfile")
-	public static String outputFileType;
+	@ConfigElement(defaultValue = ".xlsx", elementClass = String.class, description = "Sets the ending of the output file.", name = "Ending of Outputfile")
+	public static String outputFileType = ".xlsx";
 
 //	@ConfigElement(defaultValue = "config.cfg", elementClass = String.class, description = "The location of the config file.", name = "Config File")
 //	public static String configFile;

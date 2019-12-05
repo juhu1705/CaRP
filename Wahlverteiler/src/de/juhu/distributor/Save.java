@@ -1,5 +1,6 @@
 package de.juhu.distributor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -14,7 +15,7 @@ import de.juhu.util.MergeSort;
 import de.juhu.util.References;
 import de.juhu.util.Util;
 
-public class Save implements Comparable<Save> {
+public class Save implements Comparable<Save>, Serializable {
 
 	private InformationSave informations;
 

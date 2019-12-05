@@ -158,6 +158,39 @@ public class Distributor implements Runnable {
 	}
 
 	/**
+	 * Lädt die Daten des ersten mitgegebenen {@link Save Speichers} in den
+	 * {@link Distributor Berechner}. Fügt die anderen beiden Speicherungen und die
+	 * geladene in die {@link Distributor#calculated Liste der Kalkulationen} ein.
+	 * 
+	 * @implNote Alle vorherigen Daten werden gelöscht.
+	 * @param actual      Der {@link Save Speicher}, welcher geladen und dann in die
+	 *                    {@link Distributor#calculated Liste der Kalkulationen}
+	 *                    eingefügt wird.
+	 * @param readObject  Der erste {@link Save Speicher}, der in die
+	 *                    {@link Distributor#calculated Liste der Kalkulationen}
+	 *                    eingefügt wird.
+	 * @param readObject2 Der zweite {@link Save Speicher}, der in die
+	 *                    {@link Distributor#calculated Liste der Kalkulationen}
+	 *                    eingefügt wird.
+	 */
+	public Distributor(Save actual, Save readObject, Save readObject2) {
+		this.loadReaders();
+
+		// Setzt die aktuelle Instanz auf diese.
+		Distributor.instance = this;
+
+		// Ließt die Saves in das System ein.
+		this.loadDataFromSave(actual);
+		this.loadedallStudents = this.allStudents;
+		this.loadedallCourses = this.allCourses;
+
+		// Fügt alle drei Speicherungen zu den Kalkulationen hinzu.
+		Distributor.calculated.add(actual);
+		Distributor.calculated.add(readObject);
+		Distributor.calculated.add(readObject2);
+	}
+
+	/**
 	 * Startet den Gewünschten Berechnungs- und Zuweisungsprozess. Überwacht, dass
 	 * nur eine Berechnung zur gleichen Zeit abläuft.
 	 */
@@ -170,6 +203,9 @@ public class Distributor implements Runnable {
 				public void run() {
 					GUIManager.getInstance().startErrorFrame("Cannot start calculation while calculating!",
 							"Please wait until the actual running calculation is finished.");
+					GUIManager.getInstance().r1.setDisable(false);
+					GUIManager.getInstance().r2.setDisable(false);
+					GUIManager.getInstance().r3.setDisable(false);
 				}
 			});
 			return;
@@ -193,6 +229,9 @@ public class Distributor implements Runnable {
 					public void run() {
 						GUIManager.getInstance().startErrorFrame("No Data for Calculating!",
 								"Please import data in the programm.");
+						GUIManager.getInstance().r1.setDisable(false);
+						GUIManager.getInstance().r2.setDisable(false);
+						GUIManager.getInstance().r3.setDisable(false);
 					}
 				});
 

@@ -5,12 +5,16 @@ import static de.juhu.util.References.LOGGING_HANDLER;
 
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -54,7 +58,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tab;
@@ -993,47 +996,47 @@ public class GUIManager implements Initializable {
 		LOGGING_HANDLER.updateLog();
 	}
 
-	@FXML
-	public RadioButton cf1, cf2;
+//	@FXML
+//	public RadioButton cf1, cf2;
 
 	public void searchActionOutput(ActionEvent event) {
-		if (cf1.isSelected()) {
-			DirectoryChooser fc = new DirectoryChooser();
-			fc.setTitle("Choose Directory");
-			if (!Util.isBlank(t2.getText()) && new File(t1.getText()).exists()
-					&& new File(new File(t2.getText()).getParent()).exists())
-				fc.setInitialDirectory(new File(t2.getText()));
+//		if (cf1.isSelected()) {
+		DirectoryChooser fc = new DirectoryChooser();
+		fc.setTitle("Choose Directory");
+		if (!Util.isBlank(t2.getText()) && new File(t1.getText()).exists()
+				&& new File(new File(t2.getText()).getParent()).exists())
+			fc.setInitialDirectory(new File(t2.getText()));
 
-			File selected = fc.showDialog(null);
+		File selected = fc.showDialog(null);
 
-			t2.setText(selected.getParent() + "\\" + selected.getName());
-			cb2.setValue("FOLDER");
-			Config.outputFile = selected.getParent() + "\\" + selected.getName();
-			Config.outputFileType = "FOLDER";
-		}
+		t2.setText(selected.getParent() + "\\" + selected.getName());
 
-		if (cf2.isSelected()) {
-			FileChooser fc = new FileChooser();
-			fc.getExtensionFilters().addAll(new ExtensionFilter("Grid Data", "*.csv", "*.xls", "*.xlsx"));
-			fc.setTitle("Choose File");
+		Config.outputFile = selected.getParent() + "\\" + selected.getName();
 
-			File toAdd = new File(t2.getText());
+//		}
 
-			if (!Util.isBlank(t2.getText()) && new File(t1.getText()).exists()
-					&& new File(new File(t2.getText()).getParent()).exists())
-				fc.setInitialDirectory(new File(new File(t2.getText()).getParent()));
-
-			File selected = fc.showSaveDialog(null);
-
-			if (selected.getParentFile().exists() && Util.endsWith(selected.getPath(), ".csv", ".xlsx", ".xls")) {
-				t2.setText(selected.getParent());
-
-				LOGGER.config(selected.getName());
-				String[] strings = selected.getName().split("\\.");
-				t2.setText(selected.getParent() + "\\" + strings[0]);
-				cb2.setValue("." + strings[1]);
-			}
-		}
+//		if (cf2.isSelected()) {
+//			FileChooser fc = new FileChooser();
+//			fc.getExtensionFilters().addAll(new ExtensionFilter("Grid Data", "*.csv", "*.xls", "*.xlsx"));
+//			fc.setTitle("Choose File");
+//
+//			File toAdd = new File(t2.getText());
+//
+//			if (!Util.isBlank(t2.getText()) && new File(t1.getText()).exists()
+//					&& new File(new File(t2.getText()).getParent()).exists())
+//				fc.setInitialDirectory(new File(new File(t2.getText()).getParent()));
+//
+//			File selected = fc.showSaveDialog(null);
+//
+//			if (selected.getParentFile().exists() && Util.endsWith(selected.getPath(), ".csv", ".xlsx", ".xls")) {
+//				t2.setText(selected.getParent());
+//
+//				LOGGER.config(selected.getName());
+//				String[] strings = selected.getName().split("\\.");
+//				t2.setText(selected.getParent() + "\\" + strings[0]);
+//				cb2.setValue("." + strings[1]);
+//			}
+//		}
 	}
 
 	public void onDragDroppedOutput(DragEvent event) {
@@ -1045,17 +1048,15 @@ public class GUIManager implements Initializable {
 					cb2.setValue("FOLDER");
 					Config.outputFile = f.getParent() + "\\" + f.getName();
 					Config.outputFileType = "FOLDER";
-				} else {
-					if (f.exists() && Util.endsWith(f.getPath(), ".csv", ".xlsx", ".xls")) {
-						// t2.setText(f.getParent());
-
-						LOGGER.config(f.getName());
-						String[] strings = f.getName().split("\\.");
-
-						t2.setText(f.getParent() + "\\" + strings[0]);
-						cb2.setValue("." + strings[1]);
-					}
-				}
+				} /**
+					 * else { if (f.exists() && Util.endsWith(f.getPath(), ".csv", ".xlsx", ".xls"))
+					 * { // t2.setText(f.getParent());
+					 * 
+					 * LOGGER.config(f.getName()); String[] strings = f.getName().split("\\.");
+					 * 
+					 * t2.setText(f.getParent() + "\\" + strings[0]); cb2.setValue("." +
+					 * strings[1]); } }
+					 */
 			}
 		}
 
@@ -1137,6 +1138,8 @@ public class GUIManager implements Initializable {
 			return;
 		}
 
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
 		LOGGER.info("Start Saving files");
 		LOGGER.info("Try to save to " + Config.outputFile + Config.outputFileType);
 
@@ -1193,15 +1196,19 @@ public class GUIManager implements Initializable {
 		}
 
 		if (xls) {
-			ExcelExporter.writeXLS(s, save.writeInformation());
+			ExcelExporter.writeXLS(s + "/calculation" + timestamp.getTime(), save.writeInformation());
 		}
 		if (xlsx) {
-			ExcelExporter.writeXLSX(s, save.writeInformation());
+			ExcelExporter.writeXLSX(s + "/calculation" + timestamp.getTime(), save.writeInformation());
 		}
 		if (csv) {
-			CSVExporter.writeCSV(s + "course", save.writeCourseInformation());
-			CSVExporter.writeCSV(s + "student", save.writeStudentInformation());
+			CSVExporter.writeCSV(s + "/course" + timestamp.getTime(), save.writeCourseInformation());
+			CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
 		}
+
+		LogWriter.writeLog(s + "/logging" + timestamp.getTime());
+		this.save(s + "/save" + timestamp.getTime());
+
 		LOGGER.info("Finished Saving files");
 
 		Distributor.calculate = false;
@@ -1481,7 +1488,7 @@ public class GUIManager implements Initializable {
 
 		cb1.setItems(FXCollections.observableArrayList(Level.ALL, Level.FINEST, Level.FINER, Level.FINE, Level.CONFIG,
 				Level.INFO, Level.WARNING, Level.SEVERE, Level.OFF));
-		cb2.setItems(FXCollections.observableArrayList(".csv", ".xlsx", ".xls", "FOLDER"));
+		cb2.setItems(FXCollections.observableArrayList(".csv", ".xlsx", ".xls"));
 
 		p0.progressProperty().bind(FullProgress.getInstance().progressProperty());
 		p0.setVisible(false);
@@ -1820,6 +1827,73 @@ public class GUIManager implements Initializable {
 		i0.setScaleY(1);
 
 		ft.playFromStart();
+	}
+
+	public void save(String location) {
+		ObjectOutputStream objOut;
+		try {
+			objOut = new ObjectOutputStream(new FileOutputStream(location + ".carp"));
+			objOut.writeObject(GUIManager.actual);
+			objOut.writeObject(GUIManager.actual);
+			objOut.writeObject(GUIManager.actual);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void onNew(ActionEvent event) {
+		this.onClearCalculations(event);
+		this.onClearDistributor(event);
+	}
+
+	public void onLoad(ActionEvent event) {
+		if (Distributor.calculate) {
+			GUIManager.getInstance().startErrorFrame("Cannot import data while calculating!",
+					"Please wait until the actual running calculation is finished.");
+			return;
+		}
+
+		FileChooser fc = new FileChooser();
+		fc.getExtensionFilters().addAll(new ExtensionFilter("Grid Data", "*.carp"));
+		fc.setTitle("Choose File");
+
+		File toAdd = new File(t1.getText());
+
+		if (!Util.isBlank(t1.getText()) && new File(t1.getText()).exists()
+				&& new File(new File(t1.getText()).getParent()).exists())
+			fc.setInitialDirectory(new File(new File(t1.getText()).getParent()));
+
+		File selected = fc.showOpenDialog(null);
+
+		if (selected.exists() && Util.endsWith(selected.getPath(), ".carp")) {
+			this.load(selected.getPath());
+			this.inputView.fill();
+			this.cView.fill();
+		}
+	}
+
+	public void load(String location) {
+		ObjectInputStream objIn;
+		try {
+			objIn = new ObjectInputStream(new File(location).toURI().toURL().openConnection().getInputStream());
+			GUIManager.actual = (Save) objIn.readObject();
+			new Distributor(GUIManager.actual, (Save) objIn.readObject(), (Save) objIn.readObject());
+
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					GUIManager.getInstance().counter
+							.setText(Integer.toString(Distributor.calculated.indexOf(GUIManager.actual)));
+				}
+			});
+
+			Platform.runLater(GUIManager.getInstance().outputSView);
+			Platform.runLater(GUIManager.getInstance().outputCView);
+			Platform.runLater(GUIManager.getInstance().outputIView);
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void onSetEnglish(ActionEvent event) {

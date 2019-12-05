@@ -7,6 +7,7 @@ import static de.juhu.util.References.VERSION;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -49,9 +50,57 @@ public class GUILoader extends Application {
 						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
 			}
 		} catch (Exception e) {
-			References.language = new PropertyResourceBundle(new FileReader("/assets/language/de.properties"));
+			FileReader reader;
+			References.language = new PropertyResourceBundle(reader = new FileReader("/assets/language/de.properties"));
+			reader.close();
 		}
 		this.loadLanguage();
+
+		if (References.language.containsKey("version")) {
+			FileReader reader = null;
+			InputStreamReader reader2 = null;
+			if (References.language.getString("version").equalsIgnoreCase(
+					new PropertyResourceBundle((new File("./resources/assets/language/de.properties").exists()
+							? reader = new FileReader("./resources/assets/language/de.properties")
+							: (reader2 = new InputStreamReader(
+									References.class.getResourceAsStream("/assets/language/de.properties")))))
+											.getString("version"))) {
+				if (reader != null)
+					reader.close();
+				if (reader2 != null)
+					reader2.close();
+
+				if (!Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/"),
+						LinkOption.NOFOLLOW_LINKS))
+					new File(System.getenv("localappdata") + "/CaRP/").mkdir();
+
+				if (Files.exists(
+						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"),
+						LinkOption.NOFOLLOW_LINKS))
+					Files.delete(FileSystems.getDefault()
+							.getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+
+				Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
+						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+
+				this.loadLanguage();
+			}
+		} else {
+			if (!Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/"),
+					LinkOption.NOFOLLOW_LINKS))
+				new File(System.getenv("localappdata") + "/CaRP/").mkdir();
+
+			if (Files.exists(
+					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"),
+					LinkOption.NOFOLLOW_LINKS))
+				Files.delete(
+						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+
+			Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
+					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+
+			this.loadLanguage();
+		}
 
 		Image i;
 
@@ -59,8 +108,8 @@ public class GUILoader extends Application {
 			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
 		else
 			i = new Image("/assets/textures/logo/KuFA.png");
-
 		Parent root = FXMLLoader.load(getClass().getResource("/assets/layouts/GUI.fxml"), References.language);
+
 		Scene s = new Scene(root);
 
 		s.getStylesheets().add("/assets/styles/dark_theme.css");
@@ -99,8 +148,10 @@ public class GUILoader extends Application {
 		if (References.language != null)
 			return;
 		try {
+			FileReader reader;
 			References.language = new PropertyResourceBundle(
-					new FileReader(System.getenv("localappdata") + "/CaRP/language.properties"));
+					reader = new FileReader(System.getenv("localappdata") + "/CaRP/language.properties"));
+			reader.close();
 		} catch (IOException e) {
 			try {
 				References.language = new PropertyResourceBundle(new FileReader("/assets/language/de.properties"));

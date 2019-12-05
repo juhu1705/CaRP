@@ -1,5 +1,6 @@
 package de.juhu.distributor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import de.juhu.util.Config;
  * @implNote Ist {@link Comparable vergleichbar} mit anderen {@link Student
  *           Schülern}.
  */
-public class Student implements Comparable<Student> {
+public class Student implements Comparable<Student>, Serializable {
 
 	// INFO: Attribute
 

@@ -6,79 +6,73 @@ import de.juhu.dateimanager.ConfigElement;
 
 public class Config {
 
-	@ConfigElement(defaultValue = "OFF", elementClass = Level.class, description = "What kind of messages are printed in the log.", name = "Log Level")
+	@ConfigElement(defaultValue = "OFF", elementClass = Level.class, description = "loglevel.description", name = "loglevel.text")
 	public static Level maxPrintLevel = Level.ALL;
 
-	@ConfigElement(defaultValue = "", elementClass = String.class, description = "The filename of the input file.", name = "Input File")
+	@ConfigElement(defaultValue = "", elementClass = String.class, description = "inputfile.description", name = "inputfile.text")
 	public static String inputFile;
 
-	@ConfigElement(defaultValue = ".xlsx", elementClass = String.class, description = "Sets the ending of the output file.", name = "Ending of Outputfile")
+	@ConfigElement(defaultValue = ".xlsx", elementClass = String.class, description = "outputfiletype.description", name = "outputfiletype.text")
 	public static String outputFileType = ".xlsx";
 
 //	@ConfigElement(defaultValue = "config.cfg", elementClass = String.class, description = "The location of the config file.", name = "Config File")
 //	public static String configFile;
 
-	@ConfigElement(defaultValue = "%localappdata%\\Local\\CaRP", elementClass = String.class, description = "The directory of the output file.", name = "Output Directory")
+	@ConfigElement(defaultValue = "%localappdata%\\Local\\CaRP", elementClass = String.class, description = "outputdirectory.description", name = "outputdirectory.text")
 	public static String outputFile;
 	static {
 		outputFile = (System.getenv("localappdata") + "\\CaRP\\");
 	}
 
-	@ConfigElement(defaultValue = "@PJK", elementClass = String.class, description = "The mark for the programm to ignore the student with it as course.", name = "Ignore Mark")
+	@ConfigElement(defaultValue = "@PJK", elementClass = String.class, description = "ignoremark.description", name = "ignoremark.text")
 	public static String ignoreStudent;
 
-	@ConfigElement(defaultValue = "@Course", elementClass = String.class, description = "The mark to handle the readed line as Course.", name = "Course Mark")
+	@ConfigElement(defaultValue = "@Course", elementClass = String.class, description = "coursemark.description", name = "coursemark.text")
 	public static String newCourse;
 
-	@ConfigElement(defaultValue = "Student", elementClass = String.class, description = "The mark to handle the readed line as Student.", name = "Student Mark")
+	@ConfigElement(defaultValue = "Student", elementClass = String.class, description = "studentmark.description", name = "studentmark.text")
 	public static String newStudent;
 
-	@ConfigElement(defaultValue = "#", elementClass = String.class, description = "The mark to handle the readed line as comment.", name = "Comment Mark")
+	@ConfigElement(defaultValue = "#", elementClass = String.class, description = "commentmark.description", name = "commentmark.text")
 	public static String commentLine;
 
-	@ConfigElement(defaultValue = "ALL", elementClass = String.class, description = "The format to display the console with.", name = "Print Format")
+	@ConfigElement(defaultValue = "ALL", elementClass = String.class, description = "printformat.description", name = "printformat.text")
 	public static String printFormat;
 
-	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "If the students are outputet only with the first letter of there first name.", name = "Short names")
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "shortnames.description", name = "shortnames.text")
 	public static boolean shortNames;
 
-	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "", name = "First prename")
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "firstprename.description", name = "firstprename.text")
 	public static boolean firstPrename;
 
-	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "", name = "Sort out")
-	public static boolean sortUnallocatedFirstOut;
-
-	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "No funktion yet (placeholder)", name = "NO FUNKTION")
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "complexhandling.description", name = "complexhandling.text")
 	public static boolean complexHandling;
 
-	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "", name = "Compare First Priorities")
-	public static boolean compareFirstPriority;
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "usenewgoodness.description", name = "usenewgoodness.text")
+	public static boolean useNewGoodness = false;
 
-	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "", name = "Compare First Priorities")
-	public static boolean compareGuete = true;
-
-	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "", name = "Compare First Priorities")
+	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "newimproving.description", name = "newimproving.text")
 	public static boolean newImproving = true;
 
-	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "If all courses and students are reseted, when importing a new file.", name = "Clear Data by importing new File")
+	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "clearcalculationdata.description", name = "clearcalculationdata.text")
 	public static boolean clear;
 
-	@ConfigElement(defaultValue = "100", elementClass = Integer.class, description = "The amount of sorting tries in one run.", name = "Run Count")
+	@ConfigElement(defaultValue = "100", elementClass = Integer.class, description = "runcount.description", name = "runcount.text")
 	public static int runs = 100;
 
-	@ConfigElement(defaultValue = "5", elementClass = Integer.class, description = "How often the first part of one run progress of the calculation is repeated.", name = "Calculation 1 Count")
+	@ConfigElement(defaultValue = "5", elementClass = Integer.class, description = "newcalculating.description", name = "newcalculating.text")
 	public static int newCalculating = 5;
 
-	@ConfigElement(defaultValue = "5", elementClass = Integer.class, description = "How often the second part of one run progress of the calculation is repeated.", name = "Calculation 2 Count")
+	@ConfigElement(defaultValue = "5", elementClass = Integer.class, description = "improvecalculation.description", name = "improvecalculation.text")
 	public static int improvingOfCalculation = 5;
 
-	@ConfigElement(defaultValue = "3", elementClass = Integer.class, description = "The maximum of courses a student could choose.", name = "Choose Maximum")
+	@ConfigElement(defaultValue = "3", elementClass = Integer.class, description = "coosemaximum.description", name = "coosemaximum.text")
 	public static int maxChooses = 3;
 
-	@ConfigElement(defaultValue = "3", elementClass = Integer.class, description = "The maximum amount of students that should be in one course.", name = "Student Limit")
+	@ConfigElement(defaultValue = "3", elementClass = Integer.class, description = "studentlimit.description", name = "studentlimit.text")
 	public static int normalStudentLimit = 3;
 
-	@ConfigElement(defaultValue = "3", elementClass = Integer.class, description = "How often the pow was used on the priority to get the students rate.", name = "Rate Index")
+	@ConfigElement(defaultValue = "3", elementClass = Integer.class, description = "rateindex.description", name = "rateindex.text")
 	public static int powValue = 3;
 
 }

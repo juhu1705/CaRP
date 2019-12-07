@@ -236,9 +236,9 @@ public class GUIManager implements Initializable {
 
 		LOGGER.config("Starting Add Student Window");
 
-		AddCourseManager.s = course.getSubject();
-		AddCourseManager.t = course.getTeacher();
-		AddCourseManager.mS = course.getMaxStudentCount();
+		AddCourseToSaveManager.s = course.getSubject();
+		AddCourseToSaveManager.t = course.getTeacher();
+		AddCourseToSaveManager.mS = course.getMaxStudentCount();
 
 		Stage primaryStage = new Stage();
 
@@ -1106,7 +1106,7 @@ public class GUIManager implements Initializable {
 		primaryStage.setScene(s);
 		primaryStage.initModality(Modality.WINDOW_MODAL);
 		primaryStage.initOwner(GUILoader.getPrimaryStage());
-		primaryStage.initStyle(StageStyle.UNDECORATED);
+		primaryStage.initStyle(StageStyle.DECORATED);
 
 		primaryStage.getIcons().add(i);
 
@@ -1166,7 +1166,6 @@ public class GUIManager implements Initializable {
 			}
 		});
 
-		Distributor.getInstance().calculated.add(save);
 		String s;
 		if (Util.isBlank((s = Config.outputFile)) || s.endsWith("/") || s.endsWith("\\"))
 			return;
@@ -1236,6 +1235,8 @@ public class GUIManager implements Initializable {
 			return;
 		}
 
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
 		LOGGER.info("Start Saving files");
 		LOGGER.info("Try to save to " + Config.outputFile + Config.outputFileType);
 
@@ -1262,7 +1263,6 @@ public class GUIManager implements Initializable {
 			}
 		});
 
-		Distributor.getInstance().calculated.add(save);
 		String s;
 		if (Util.isBlank((s = Config.outputFile)) || s.endsWith("/") || s.endsWith("\\"))
 			return;
@@ -1292,15 +1292,19 @@ public class GUIManager implements Initializable {
 		}
 
 		if (xls) {
-			ExcelExporter.writeXLS(s, save.writeInformation());
+			ExcelExporter.writeXLS(s + "/calculation" + timestamp.getTime(), save.writeInformation());
 		}
 		if (xlsx) {
-			ExcelExporter.writeXLSX(s, save.writeInformation());
+			ExcelExporter.writeXLSX(s + "/calculation" + timestamp.getTime(), save.writeInformation());
 		}
 		if (csv) {
-			CSVExporter.writeCSV(s + "course", save.writeCourseInformation());
-			CSVExporter.writeCSV(s + "student", save.writeStudentInformation());
+			CSVExporter.writeCSV(s + "/course" + timestamp.getTime(), save.writeCourseInformation());
+			CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
 		}
+
+		LogWriter.writeLog(s + "/logging" + timestamp.getTime());
+		this.save(s + "/save" + timestamp.getTime());
+
 		LOGGER.info("Finished Saving files");
 
 		Distributor.calculate = false;
@@ -1381,6 +1385,28 @@ public class GUIManager implements Initializable {
 		System.exit(0);
 	}
 
+	public void onHelp(ActionEvent event) {
+
+		try {
+			if (!Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/"),
+					LinkOption.NOFOLLOW_LINKS))
+				new File(System.getenv("localappdata") + "/CaRP/").mkdir();
+
+			if (Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/help.pdf"),
+					LinkOption.NOFOLLOW_LINKS))
+				Files.delete(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/help.pdf"));
+
+			Files.copy(getClass().getResourceAsStream("/assets/Der Course and Research Paper Assinger.pdf"),
+					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/help.pdf"));
+
+			Desktop.getDesktop()
+					.browse(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/help.pdf").toUri());
+		} catch (IOException e) {
+
+		}
+
+	}
+
 	public void onShowInExcel(ActionEvent event) {
 
 		if (Distributor.calculate) {
@@ -1389,7 +1415,7 @@ public class GUIManager implements Initializable {
 			return;
 		}
 
-		Save save = Distributor.getInstance().calculated.peek();
+		Save save = GUIManager.actual;
 
 		if (save == null) {
 			GUIManager.getInstance().startErrorFrame("Cannot show data without calculating before!",
@@ -1410,8 +1436,10 @@ public class GUIManager implements Initializable {
 		while (Config.maxChooses > this.atci.size() / 3) {
 			int number = (this.atci.size() / 3 + 1);
 
-			TableColumn<Student, String> k = new TableColumn<>("Course " + number), s = new TableColumn<>("Subject"),
-					t = new TableColumn<>("Teacher");
+			TableColumn<Student, String> k = new TableColumn<>(
+					References.language.getString("course.text") + " " + number),
+					s = new TableColumn<>(References.language.getString("subject.text")),
+					t = new TableColumn<>(References.language.getString("teacher.text"));
 			k.getColumns().addAll(s, t);
 			this.atci.add(k);
 			this.atci.add(s);
@@ -1445,8 +1473,10 @@ public class GUIManager implements Initializable {
 			while (3 > this.atci.size() / 3) {
 				int number = (this.atci.size() / 3 + 1);
 
-				TableColumn<Student, String> k = new TableColumn<>("Course " + number),
-						s = new TableColumn<>("Subject"), t = new TableColumn<>("Teacher");
+				TableColumn<Student, String> k = new TableColumn<>(
+						References.language.getString("course.text") + " " + number),
+						s = new TableColumn<>(References.language.getString("subject.text")),
+						t = new TableColumn<>(References.language.getString("teacher.text"));
 				k.getColumns().addAll(s, t);
 				this.atci.add(k);
 				this.atci.add(s);
@@ -1510,7 +1540,7 @@ public class GUIManager implements Initializable {
 
 			if (e.elementClass().equals(Boolean.class)) {
 				CheckBox cb = new CheckBox(f.getName());
-				cb.setTooltip(new Tooltip(e.description()));
+				cb.setTooltip(new Tooltip(References.language.getString(e.description())));
 				cb.addEventHandler(ActionEvent.ANY, r -> {
 					this.onConfigChanged();
 				});
@@ -1530,10 +1560,10 @@ public class GUIManager implements Initializable {
 						e1.printStackTrace();
 					}
 				});
-				this.config.getChildren().addAll(new Label(e.name() + ":"), cb);
+				this.config.getChildren().addAll(new Label((References.language.getString(e.name()) + ":")), cb);
 			} else if (e.elementClass().equals(Integer.class)) {
 				Spinner cb = new Spinner();
-				cb.setTooltip(new Tooltip(e.description()));
+				cb.setTooltip(new Tooltip(References.language.getString(e.description())));
 				cb.setEditable(true);
 				try {
 					if (f.getName().equals("runs") || f.getName().equals("newCalculating")
@@ -1556,10 +1586,10 @@ public class GUIManager implements Initializable {
 				} catch (IllegalArgumentException | IllegalAccessException e3) {
 					e3.printStackTrace();
 				}
-				this.config.getChildren().addAll(new Label(e.name() + ":"), cb);
+				this.config.getChildren().addAll(new Label((References.language.getString(e.name()) + ":")), cb);
 			} else if (e.elementClass().equals(String.class)) {
 				TextField cb = new TextField();
-				cb.setTooltip(new Tooltip(e.description()));
+				cb.setTooltip(new Tooltip(References.language.getString(e.description())));
 
 				try {
 					cb.setText((String) f.get(null));
@@ -1580,7 +1610,7 @@ public class GUIManager implements Initializable {
 					}
 				});
 
-				this.config.getChildren().addAll(new Label(e.name() + ":"), cb);
+				this.config.getChildren().addAll(new Label((References.language.getString(e.name()) + ":")), cb);
 			}
 
 		}
@@ -1834,8 +1864,8 @@ public class GUIManager implements Initializable {
 		try {
 			objOut = new ObjectOutputStream(new FileOutputStream(location + ".carp"));
 			objOut.writeObject(GUIManager.actual);
-			objOut.writeObject(GUIManager.actual);
-			objOut.writeObject(GUIManager.actual);
+			objOut.writeObject(Distributor.calculated.next(actual));
+			objOut.writeObject(Distributor.calculated.next(Distributor.calculated.next(actual)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

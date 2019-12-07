@@ -86,6 +86,7 @@ public class PriorityQueue<T extends Comparable<T>> implements List<T> {
 	public boolean add(T e) {
 		if (e == null)
 			return false;
+
 		if (this.list == null)
 			return (this.list = new ArrayList<>()).add(e);
 		if (this.list.isEmpty())

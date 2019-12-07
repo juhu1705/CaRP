@@ -19,8 +19,8 @@
          <children>
             <TableView fx:id="courses" layoutX="20.0" layoutY="24.0" prefHeight="168.0" prefWidth="561.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
               <columns>
-                <TableColumn fx:id="teacher" prefWidth="75.0" text="Teacher" />
-                  <TableColumn fx:id="subject" prefWidth="75.0" text="Subject" />
+                <TableColumn fx:id="teacher" prefWidth="75.0" text="%teacher.text" />
+                  <TableColumn fx:id="subject" prefWidth="75.0" text="%subject.text" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -39,20 +39,20 @@
    <bottom>
       <StackPane prefHeight="84.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#onFinished" text="Finished" />
+            <Button mnemonicParsing="false" onAction="#onFinished" text="%finished.text" />
          </children>
       </StackPane>
    </bottom>
    <top>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
          <children>
-            <Label text="Prename:" />
+            <Label text="%firstname.text" />
             <TextField fx:id="prename" prefHeight="25.0" prefWidth="102.0">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </TextField>
-            <Label text="Name:" />
+            <Label text="%familyname.text" />
             <TextField fx:id="name" />
          </children>
          <BorderPane.margin>

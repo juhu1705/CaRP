@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import de.juhu.dateimanager.WriteableContent;
 import de.juhu.math.Vec2i;
+import de.juhu.util.Config;
 
 public class InformationSave implements Serializable {
 
@@ -141,7 +142,41 @@ public class InformationSave implements Serializable {
 		this.highestPriority = parent.getHighestPriority();
 		this.rate = parent.rate(this.highestPriority);
 
-		this.guete = (double) this.parent.getAllStudents().size() / (double) this.rate;
+		this.studentPriorities = this.parent.getStudentPriorities();
+
+		this.updateGuete();
+	}
+
+	private void updateGuete() {
+		if (Config.useNewGoodness)
+			this.guete = (double) this.parent.getAllStudents().size() / (double) this.rate;
+		else {
+			int i = 0;
+
+			for (Student s : this.parent.getAllStudents())
+				if (s.getActiveCourse() == null || !s.getActiveCourse().equals(Distributor.getInstance().ignoredCourse))
+					i += this.translatePriority(s.getPriority());
+
+			int highest = this.parent.getHighestPriority();
+			if (highest == Integer.MAX_VALUE)
+				highest = this.parent.getHighestPriorityWhithoutIntegerMax() + 1;
+
+			int studentCount = 0;
+			for (Student s : this.parent.getAllStudents())
+				if (s.getActiveCourse() == null || !s.getActiveCourse().equals(Distributor.getInstance().ignoredCourse))
+					studentCount++;
+
+			this.guete = i / ((double) highest * (double) studentCount);
+
+		}
+	}
+
+	private int translatePriority(int priority) {
+		if (priority == Integer.MAX_VALUE)
+			return 1;
+
+		return this.parent.getHighestPriority() == Integer.MAX_VALUE ? this.parent.getHighestPriority() - priority + 2
+				: this.parent.getHighestPriority() - priority + 1;
 	}
 
 	public double getGuete() {

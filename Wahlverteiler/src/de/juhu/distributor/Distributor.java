@@ -242,9 +242,6 @@ public class Distributor implements Runnable {
 		LOGGER.config("--Basic Student limit: " + Integer.toString(Config.normalStudentLimit));
 		LOGGER.config("--The chooses of the Students: " + Integer.toString(Config.maxChooses));
 		LOGGER.config("--The number of students to Calculate: " + Integer.toString(this.allStudents.size()));
-		LOGGER.config("--Sort by Guete: " + Boolean.toString(Config.compareGuete));
-		LOGGER.config(
-				"--Sort unnallocated Student-Saves out first: " + Boolean.toString(Config.sortUnallocatedFirstOut));
 
 		calculate = true;
 
@@ -1053,6 +1050,7 @@ public class Distributor implements Runnable {
 					lineNumber++;
 					return;
 				}
+				// TODO - Mehrere Ignor MArks möglich machen
 				if (line[2].equals(Config.ignoreStudent)) {
 					Distributor.getInstance().ignoredStudents
 							.add(new Student(line[0], line[1], Distributor.getInstance().ignore()));

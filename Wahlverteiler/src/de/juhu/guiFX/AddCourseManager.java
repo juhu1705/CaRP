@@ -33,11 +33,11 @@ public class AddCourseManager implements Initializable {
 	public void onAdd(ActionEvent event) {
 		boolean missingInformation = false;
 		if (this.subject.getText().isEmpty()) {
-			this.subject.setPromptText("Value Missing");
+			this.subject.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
 		if (this.teacher.getText().isEmpty()) {
-			this.teacher.setPromptText("Value Missing");
+			this.teacher.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
 		if (missingInformation)

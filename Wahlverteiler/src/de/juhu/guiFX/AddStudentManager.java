@@ -42,19 +42,19 @@ public class AddStudentManager implements Initializable {
 	public void onAdd(ActionEvent event) {
 		boolean missingInformation = false;
 		if (prename.getText().isEmpty()) {
-			prename.setPromptText("Value Missing");
+			prename.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
 		if (name.getText().isEmpty()) {
-			name.setPromptText("Value Missing");
+			name.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
 		if (c1f.getText().isEmpty()) {
-			c1f.setPromptText("Value Missing");
+			c1f.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
 		if (c1t.getText().isEmpty() && !c1f.getText().contains(Config.ignoreStudent)) {
-			c1t.setPromptText("Value Missing");
+			c1t.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
 		if (missingInformation)
@@ -114,8 +114,9 @@ public class AddStudentManager implements Initializable {
 			i++;
 			HBox hBox = new HBox(10);
 			hBox.setPadding(new Insets(10));
-			Label label = new Label("Course " + i + ":"), subject = new Label("Subject:"),
-					teacher = new Label("Teacher:");
+			Label label = new Label(References.language.getString("course.text") + " " + i + ":"),
+					subject = new Label(References.language.getString("subject.text") + ":"),
+					teacher = new Label(References.language.getString("teacher.text") + ":");
 			TextField st = new TextField(), tt = new TextField();
 			this.cources.add(st);
 			this.cources.add(tt);

@@ -10,18 +10,17 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.AddCourseManager">
    <center>
       <ScrollPane prefHeight="244.0" prefWidth="580.0" BorderPane.alignment="CENTER">
          <content>
             <VBox prefHeight="205.0" prefWidth="560.0" spacing="10.0">
                <children>
-                  <Label text="Subject:" />
+                  <Label text="%subjects.text" />
                   <TextField fx:id="subject" />
-                  <Label text="Teacher:" />
+                  <Label text="%teachers.text" />
                   <TextField fx:id="teacher" />
-                  <Label text="Max Students:" />
+                  <Label text="%maxstudentss.text" />
                   <Spinner fx:id="maxStudents" prefHeight="25.0" prefWidth="597.0" />
                </children>
                <padding>
@@ -40,7 +39,7 @@
    <bottom>
       <StackPane prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#onAdd" text="Finished" />
+            <Button mnemonicParsing="false" onAction="#onAdd" text="%finished.text" />
          </children>
       </StackPane>
    </bottom>

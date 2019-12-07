@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -32,6 +33,7 @@ public class GUILoader extends Application {
 	private static Stage primaryStage;
 	public static Stage secondaryStage;
 	public static Scene scene;
+	private static File toLoad;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -59,7 +61,7 @@ public class GUILoader extends Application {
 		if (References.language.containsKey("version")) {
 			FileReader reader = null;
 			InputStreamReader reader2 = null;
-			if (References.language.getString("version").equalsIgnoreCase(
+			if (!References.language.getString("version").equalsIgnoreCase(
 					new PropertyResourceBundle((new File("./resources/assets/language/de.properties").exists()
 							? reader = new FileReader("./resources/assets/language/de.properties")
 							: (reader2 = new InputStreamReader(
@@ -130,6 +132,9 @@ public class GUILoader extends Application {
 		primaryStage.show();
 		GUILoader.primaryStage = primaryStage;
 		scene = s;
+
+		if (GUILoader.toLoad != null)
+			GUIManager.getInstance().load(GUILoader.toLoad.getPath());
 	}
 
 	public void starting2() throws IOException {
@@ -148,13 +153,18 @@ public class GUILoader extends Application {
 		if (References.language != null)
 			return;
 		try {
-			FileReader reader;
+			Reader reader;
+			References.LOGGER.info("OK");
 			References.language = new PropertyResourceBundle(
 					reader = new FileReader(System.getenv("localappdata") + "/CaRP/language.properties"));
 			reader.close();
 		} catch (IOException e) {
 			try {
-				References.language = new PropertyResourceBundle(new FileReader("/assets/language/de.properties"));
+				Reader reader;
+				References.LOGGER.info("Failed");
+				References.language = new PropertyResourceBundle(
+						reader = new FileReader("/assets/language/de.properties"));
+				reader.close();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -163,6 +173,11 @@ public class GUILoader extends Application {
 
 	public static void main(String[] args) {
 		LOGGER.info("Starte: " + PROJECT_NAME + " | Version: " + VERSION);
+
+		for (String arg : args) {
+			if (new File(arg).exists())
+				GUILoader.toLoad = new File(arg);
+		}
 
 		launch(args);
 	}

@@ -54,11 +54,11 @@ public class SwitchCourseManager implements Initializable {
 	public void onFinished(ActionEvent event) {
 		boolean missingInformation = false;
 		if (this.prename.getText().isEmpty()) {
-			this.prename.setPromptText("Value Missing");
+			this.prename.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
 		if (this.name.getText().isEmpty()) {
-			this.name.setPromptText("Value Missing");
+			this.name.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
 		if (missingInformation)

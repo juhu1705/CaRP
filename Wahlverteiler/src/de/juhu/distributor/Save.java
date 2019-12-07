@@ -47,6 +47,22 @@ public class Save implements Comparable<Save>, Serializable {
 		return highest;
 	}
 
+	public int[] getStudentPriorities() {
+		int[] studentPriorities = new int[this.getHighestPriorityWhithoutIntegerMax() + 1];
+		int i1 = 0;
+		for (Student s : this.getStudentsWithPriority(1))
+			if (!s.getActiveCourse().equals(Distributor.getInstance().ignoredCourse))
+				i1++;
+
+		studentPriorities[0] = i1;
+
+		for (int i = 1; i < studentPriorities.length - 1; i++) {
+			studentPriorities[i] = this.getStudentsWithPriority(i + 1).size();
+		}
+		studentPriorities[studentPriorities.length - 1] = this.getInformation().getunallocatedStudents().size();
+		return studentPriorities;
+	}
+
 	public int rate(int highestPriority) {
 		int count = 0;
 
@@ -222,25 +238,11 @@ public class Save implements Comparable<Save>, Serializable {
 
 	@Override
 	public int compareTo(Save s) {
-		if (Config.sortUnallocatedFirstOut)
-			if (this.informations.getHighestPriority() == Integer.MAX_VALUE
-					&& s.getInformation().getHighestPriority() != Integer.MAX_VALUE)
-				return (this.informations.getHighestPriority() - s.informations.getHighestPriority()) * -1;
-			else if (this.informations.getHighestPriority() != Integer.MAX_VALUE
-					&& s.getInformation().getHighestPriority() == Integer.MAX_VALUE)
-				return (this.informations.getHighestPriority() - s.informations.getHighestPriority()) * -1;
-
-		if (Config.compareGuete)
-			return this.informations.getGuete() - s.informations.getGuete() >= 0 ? -1 : 1;
-
-		if (!Config.compareFirstPriority
-				|| this.informations.getHighestPriority() == s.informations.getHighestPriority())
-			return (this.informations.getRate() - s.informations.getRate()) * -1;
-		return (this.informations.getHighestPriority() - s.informations.getHighestPriority()) * -1;
+		return this.informations.getGuete() - s.informations.getGuete() >= 0 ? -1 : 1;
 	}
 
-	public int compareTo(int rate) {
-		return (this.informations.getHighestPriority() - rate) * -1;
+	public int compareTo(int guete) {
+		return this.informations.getGuete() - guete >= 0 ? -1 : 1;
 	}
 
 	public void addCourse(Course c) {

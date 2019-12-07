@@ -14,7 +14,7 @@
    <bottom>
       <StackPane prefHeight="78.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#onAdd" text="Finished" />
+            <Button mnemonicParsing="false" onAction="#onAdd" text="%finished.text" />
          </children>
       </StackPane>
    </bottom>
@@ -26,16 +26,16 @@
          <content>
             <VBox fx:id="vBox" prefHeight="298.0" prefWidth="578.0" spacing="10.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="58.0" text="First name:" />
+                  <Label prefHeight="17.0" prefWidth="58.0" text="%firstname.text" />
                   <TextField fx:id="prename" />
-                  <Label text="Family name:" />
+                  <Label text="%familyname.text" />
                   <TextField fx:id="name" />
-                  <Label text="Course 1:" />
+                  <Label text="%course1s.text" />
                   <HBox prefHeight="39.0" prefWidth="560.0" spacing="10.0">
                      <children>
-                        <Label text="Subject:" />
+                        <Label text="%subjects.text" />
                         <TextField fx:id="c1f" />
-                        <Label text="Teacher:" />
+                        <Label text="%teachers.text" />
                         <TextField fx:id="c1t" onKeyReleased="#filled" />
                      </children>
                      <padding>

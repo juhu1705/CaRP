@@ -567,10 +567,12 @@ public class Distributor implements Runnable {
 		students = copiedData[0];
 		courses = copiedData[1];
 
-		Distributor.calculated.add(new Save(students, ignorestudents, courses,
+		Save save = new Save(students, ignorestudents, courses,
 				new InformationSave(this.getHighestPriority(), this.rate(), this.getPriorities(),
 						this.getUnallocatedStudents(),
-						this.getStudentsWithPriority(this.getHighestPriorityWhithoutIntegerMax()))));
+						this.getStudentsWithPriority(this.getHighestPriorityWhithoutIntegerMax())));
+
+		Distributor.calculated.add(save);
 	}
 
 	private ArrayList<Student> getStudentsWithPriority(int priority) {

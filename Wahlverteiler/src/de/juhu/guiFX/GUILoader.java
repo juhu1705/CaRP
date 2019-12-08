@@ -140,8 +140,11 @@ public class GUILoader extends Application {
 		GUILoader.primaryStage = primaryStage;
 		scene = s;
 
-		if (GUILoader.toLoad != null)
+		if (GUILoader.toLoad != null) {
 			GUIManager.getInstance().load(GUILoader.toLoad.getPath());
+			GUIManager.getInstance().inputView.fill();
+			GUIManager.getInstance().cView.fill();
+		}
 	}
 
 	public void starting2() throws IOException {

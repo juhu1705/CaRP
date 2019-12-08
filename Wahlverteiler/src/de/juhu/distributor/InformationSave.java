@@ -162,8 +162,10 @@ public class InformationSave implements Serializable {
 			int i = 0;
 
 			for (Student s : this.parent.getAllStudents()) {
-				if (s.getActiveCourse() == null)
+				if (s.getActiveCourse() == null) {
 					i += 1;
+					continue;
+				}
 
 				if (s.getActiveCourse() == null || !s.getActiveCourse().equals(Distributor.getInstance().ignoredCourse))
 					i += this.translatePriority(s.getPriority());

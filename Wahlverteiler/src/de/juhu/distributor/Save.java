@@ -240,6 +240,7 @@ public class Save implements Comparable<Save>, Serializable {
 	public int compareTo(Save s) {
 		if (s.getInformation().getGuete() > 1)
 			return 1;
+
 		if (this.informations.getGuete() > 1)
 			return -1;
 
@@ -256,7 +257,9 @@ public class Save implements Comparable<Save>, Serializable {
 		if (this.getHighestPriority() == s.getHighestPriority()) {
 			int[] thispriorities = this.getStudentPriorities();
 			int[] spriorities = s.getStudentPriorities();
-			for (int i = 0; i < thispriorities.length && i < spriorities.length; i++)
+			if (thispriorities.length != spriorities.length)
+				return false;
+			for (int i = 0; i < thispriorities.length; i++)
 				if (thispriorities[i] != spriorities[i])
 					return false;
 

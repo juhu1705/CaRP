@@ -527,8 +527,22 @@ public class Distributor implements Runnable {
 
 	public ArrayList[] copyData(ArrayList<Student> oldStudents, ArrayList<Course> oldCourses, Course ignoredCourse2) {
 
-		ArrayList<Student> newStudents = new ArrayList<Student>(oldStudents);
-		ArrayList<Course> newCourses = (ArrayList<Course>) oldCourses.clone();
+		ArrayList<Student> newStudents = new ArrayList<Student>();
+		ArrayList<Course> newCourses = new ArrayList<Course>();
+
+		for (Student s : oldStudents)
+			try {
+				newStudents.add((Student) s.clone());
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
+
+		for (Course c : oldCourses)
+			try {
+				newCourses.add((Course) c.clone());
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
 
 		for (Student s : oldStudents) {
 			for (Student news : newStudents) {

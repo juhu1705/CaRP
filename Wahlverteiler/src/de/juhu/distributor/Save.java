@@ -265,4 +265,26 @@ public class Save implements Comparable<Save>, Serializable {
 		return this.allStudents.add(student);
 	}
 
+	public void removeStudent(Student student) {
+		if (student == null)
+			return;
+		if (this.allStudents.contains(student)) {
+			student.getActiveCourse().removeStudent(student);
+			this.allStudents.remove(this.allStudents.indexOf(student));
+		}
+	}
+
+	public void removeCourse(Course course) {
+		if (course == null)
+			return;
+		if (this.allCourses.contains(course)) {
+			for (Student s : course.getStudents()) {
+				s.setActiveCourse(null);
+				s.refreshPriority();
+				s.mark();
+			}
+			this.allCourses.remove(this.allCourses.indexOf(course));
+		}
+	}
+
 }

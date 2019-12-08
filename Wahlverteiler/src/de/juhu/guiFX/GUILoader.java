@@ -56,6 +56,7 @@ public class GUILoader extends Application {
 			References.language = new PropertyResourceBundle(reader = new FileReader("/assets/language/de.properties"));
 			reader.close();
 		}
+
 		this.loadLanguage();
 
 		if (References.language.containsKey("version")) {
@@ -85,7 +86,10 @@ public class GUILoader extends Application {
 				Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
 						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
 
-				this.loadLanguage();
+				Reader reader3;
+				References.language = new PropertyResourceBundle(
+						reader3 = new FileReader(System.getenv("localappdata") + "/CaRP/language.properties"));
+				reader3.close();
 			}
 		} else {
 			if (!Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/"),
@@ -101,7 +105,10 @@ public class GUILoader extends Application {
 			Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
 					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
 
-			this.loadLanguage();
+			Reader reader;
+			References.language = new PropertyResourceBundle(
+					reader = new FileReader(System.getenv("localappdata") + "/CaRP/language.properties"));
+			reader.close();
 		}
 
 		Image i;

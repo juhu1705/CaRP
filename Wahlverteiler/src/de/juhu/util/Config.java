@@ -45,8 +45,8 @@ public class Config {
 	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "firstprename.description", name = "firstprename.text")
 	public static boolean firstPrename;
 
-	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "complexhandling.description", name = "complexhandling.text")
-	public static boolean complexHandling;
+//	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "complexhandling.description", name = "complexhandling.text")
+//	public static boolean complexHandling;
 
 	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "usenewgoodness.description", name = "usenewgoodness.text")
 	public static boolean useNewGoodness = false;

@@ -382,7 +382,7 @@ public class Student implements Comparable<Student>, Serializable {
 			if (this.activeCourse != null && this.activeCourse.contains(this))
 				this.activeCourse.removeStudent(this);
 			this.activeCourse = activeCourse;
-			this.priority = 0;
+			this.refreshPriority();
 			return;
 		}
 

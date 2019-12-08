@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.juhu</groupId>
   <artifactId>Course_and_Research_Paper-Assigner</artifactId>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
   <name>CaRP Assigner</name>
   <description>Ein Programm, welches zum Zuordnen von Kurs und Facharbeitswahlen gedacht ist</description>
   
@@ -129,7 +129,7 @@
                         <configuration>
                             <headerType>gui</headerType>
                             <outfile>target/CarpAssigner.exe</outfile>
-                            <jar>target/${artifactId}-${version}-shaded.jar</jar>
+                            <jar>target/${project.artifactId}-${project.version}-shaded.jar</jar>
                             <errTitle>App Err</errTitle>
                             <classPath>
                                 <mainClass>de.juhu.guiFX.GUILoader</mainClass>

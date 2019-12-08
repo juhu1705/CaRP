@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import de.juhu.distributor.Course;
-import de.juhu.distributor.Distributor;
 import de.juhu.distributor.Student;
 import de.juhu.guiFX.lists.SwitchCourseView;
 import de.juhu.util.References;
@@ -69,7 +68,7 @@ public class AddStudentToSaveManager implements Initializable {
 
 		GUIManager.actual.addStudent(student);
 
-		Distributor.calculated.peek().getInformation().update();
+		GUIManager.actual.getInformation().update();
 		Platform.runLater(GUIManager.getInstance().outputSView);
 		Platform.runLater(GUIManager.getInstance().outputCView);
 		Platform.runLater(GUIManager.getInstance().outputIView);

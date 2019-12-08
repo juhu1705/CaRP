@@ -238,7 +238,32 @@ public class Save implements Comparable<Save>, Serializable {
 
 	@Override
 	public int compareTo(Save s) {
+		if (s.getInformation().getGuete() > 1)
+			return 1;
+		if (this.informations.getGuete() > 1)
+			return -1;
+
+		if (this.getInformation().getGuete() == s.getInformation().getGuete())
+			return 0;
+
+		if (this.sameCalculation(s))
+			return 0;
+
 		return this.informations.getGuete() - s.informations.getGuete() >= 0 ? -1 : 1;
+	}
+
+	private boolean sameCalculation(Save s) {
+		if (this.getHighestPriority() == s.getHighestPriority()) {
+			int[] thispriorities = this.getStudentPriorities();
+			int[] spriorities = s.getStudentPriorities();
+			for (int i = 0; i < thispriorities.length && i < spriorities.length; i++)
+				if (thispriorities[i] != spriorities[i])
+					return false;
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public int compareTo(int guete) {

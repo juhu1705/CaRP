@@ -22,9 +22,12 @@ public class OutputInformationView implements Runnable {
 
 		HashMap<String, Double> ratess = new HashMap<>();
 
-		ratess.put("Highest Student Priority", (double) GUIManager.actual.getInformation().getHighestPriority());
-		ratess.put("Calculation Rate", (double) GUIManager.actual.getInformation().getRate());
-		ratess.put("Kalkulations Güte", GUIManager.actual.getInformation().getGuete());
+		ratess.put(References.language.getString("highestpriority.text"),
+				Double.valueOf(GUIManager.actual.getInformation().getHighestPriority()));
+		ratess.put(References.language.getString("calculationrate.text"),
+				Double.valueOf(GUIManager.actual.getInformation().getRate()));
+		ratess.put(References.language.getString("calculationgoodness.text"),
+				Double.valueOf(GUIManager.actual.getInformation().getGuete()));
 
 		GUIManager.getInstance().rates.getItems().clear();
 

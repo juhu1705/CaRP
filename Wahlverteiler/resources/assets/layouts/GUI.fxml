@@ -84,7 +84,7 @@
                                                 <Tooltip text="Here you can find the path of your output file" />
                                              </tooltip>
                                           </TextField>
-                                          <ComboBox fx:id="cb2" minWidth="65.0" onAction="#onFileTypeChanged" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="70.0" promptText="%filetype.text">
+                                          <ComboBox fx:id="cb2" minWidth="65.0" onAction="#onFileTypeChanged" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="130.0" promptText="%filetype.text">
                                              <tooltip>
                                                 <Tooltip text="Here you select the type of output file" />
                                              </tooltip>

@@ -1188,7 +1188,7 @@ public class GUIManager implements Initializable {
 		LOGGER.info("Start Saving files");
 		LOGGER.info("Try to save to " + Config.outputFile + Config.outputFileType);
 
-		Save save = Distributor.getInstance().calculated.peek();
+		Save save = this.actual;
 		if (save == null) {
 			this.startErrorFrame("No calculation found!",
 					"There are no data in the distributor. \n Please ensure, to run the calculator and assign the given data, before exporting them!");
@@ -1311,41 +1311,41 @@ public class GUIManager implements Initializable {
 		String s;
 		if (Util.isBlank((s = Config.outputFile)) || s.endsWith("/") || s.endsWith("\\"))
 			return;
-
-		boolean xls = false, xlsx = false, csv = false;
-
-		switch (Config.outputFileType) {
-		case ".xls":
-			xls = true;
-			break;
-		case ".xlsx":
-			xlsx = true;
-			break;
-		case ".csv":
-			csv = true;
-			break;
-		case "FOLDER":
-			ExcelExporter.writeXLS(s + "/Excel_OLD", save.writeInformation());
-			ExcelExporter.writeXLSX(s + "/KuFA-Zuweiser Ergebnisse", save.writeInformation());
-			CSVExporter.writeCSV(s + "/course", save.writeCourseInformation());
-			CSVExporter.writeCSV(s + "/student", save.writeStudentInformation());
-			LogWriter.writeLog(s + "/logging");
-			break;
-		default:
-			xlsx = true;
-			break;
-		}
-
-		if (xls) {
-			ExcelExporter.writeXLS(s + "/calculation" + timestamp.getTime(), save.writeInformation());
-		}
-		if (xlsx) {
-			ExcelExporter.writeXLSX(s + "/calculation" + timestamp.getTime(), save.writeInformation());
-		}
-		if (csv) {
-			CSVExporter.writeCSV(s + "/course" + timestamp.getTime(), save.writeCourseInformation());
-			CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
-		}
+//
+//		boolean xls = false, xlsx = false, csv = false;
+//
+//		switch (Config.outputFileType) {
+//		case ".xls":
+//			xls = true;
+//			break;
+//		case ".xlsx":
+//			xlsx = true;
+//			break;
+//		case ".csv":
+//			csv = true;
+//			break;
+//		case "FOLDER":
+//			ExcelExporter.writeXLS(s + "/Excel_OLD", save.writeInformation());
+//			ExcelExporter.writeXLSX(s + "/KuFA-Zuweiser Ergebnisse", save.writeInformation());
+//			CSVExporter.writeCSV(s + "/course", save.writeCourseInformation());
+//			CSVExporter.writeCSV(s + "/student", save.writeStudentInformation());
+//			LogWriter.writeLog(s + "/logging");
+//			break;
+//		default:
+//			xlsx = true;
+//			break;
+//		}
+//
+//		if (xls) {
+//			ExcelExporter.writeXLS(s + "/calculation" + timestamp.getTime(), save.writeInformation());
+//		}
+//		if (xlsx) {
+//			ExcelExporter.writeXLSX(s + "/calculation" + timestamp.getTime(), save.writeInformation());
+//		}
+//		if (csv) {
+//			CSVExporter.writeCSV(s + "/course" + timestamp.getTime(), save.writeCourseInformation());
+//			CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
+//		}
 
 		LogWriter.writeLog(s + "/logging" + timestamp.getTime());
 		this.save(s + "/save" + timestamp.getTime());

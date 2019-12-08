@@ -18,7 +18,7 @@
          </items>
       </SplitPane>
    </bottom>
-   <right>
+   <center>
       <TextArea editable="false" prefHeight="103.0" prefWidth="200.0" text="Created by Fabius Mettner&#10;under Administration of Christian Wolf&#10;&#10;Used Libaries:&#10;POI - https://mvnrepository.com/artifact/org.apache.poi/poi&#10;POI-OOXML - &#10;SAX - &#10;XMLPULL - https://mvnrepository.com/artifact/xmlpull/xmlpull&#10;JavaFX-MAven-Plugin - &#10;maven-model - &#10;&#10;Release: 0.2.1&#10;Release date: 08.12.2019&#10;&#10;Contact: fabius1705@live.de" BorderPane.alignment="CENTER" />
-   </right>
+   </center>
 </BorderPane>

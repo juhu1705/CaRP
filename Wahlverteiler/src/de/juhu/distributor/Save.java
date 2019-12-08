@@ -244,13 +244,19 @@ public class Save implements Comparable<Save>, Serializable {
 		if (this.informations.getGuete() > 1)
 			return -1;
 
+		if (this.informations.getGuete() < 0)
+			return -1;
+
+		if (s.getInformation().getGuete() < 0)
+			return 1;
+
 		if (this.getInformation().getGuete() == s.getInformation().getGuete())
 			return 0;
 
 		if (this.sameCalculation(s))
 			return 0;
 
-		return this.informations.getGuete() - s.informations.getGuete() >= 0 ? -1 : 1;
+		return this.informations.getGuete() - s.informations.getGuete() >= 0 ? 1 : -1;
 	}
 
 	private boolean sameCalculation(Save s) {

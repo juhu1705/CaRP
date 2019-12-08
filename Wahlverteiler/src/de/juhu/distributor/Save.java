@@ -238,7 +238,35 @@ public class Save implements Comparable<Save>, Serializable {
 
 	@Override
 	public int compareTo(Save s) {
+		if (s.getInformation().getGuete() > 1)
+			return 1;
+
+		if (this.informations.getGuete() > 1)
+			return -1;
+
+		if (this.getInformation().getGuete() == s.getInformation().getGuete())
+			return 0;
+
+		if (this.sameCalculation(s))
+			return 0;
+
 		return this.informations.getGuete() - s.informations.getGuete() >= 0 ? -1 : 1;
+	}
+
+	private boolean sameCalculation(Save s) {
+		if (this.getHighestPriority() == s.getHighestPriority()) {
+			int[] thispriorities = this.getStudentPriorities();
+			int[] spriorities = s.getStudentPriorities();
+			if (thispriorities.length != spriorities.length)
+				return false;
+			for (int i = 0; i < thispriorities.length; i++)
+				if (thispriorities[i] != spriorities[i])
+					return false;
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public int compareTo(int guete) {
@@ -263,6 +291,28 @@ public class Save implements Comparable<Save>, Serializable {
 			return false;
 
 		return this.allStudents.add(student);
+	}
+
+	public void removeStudent(Student student) {
+		if (student == null)
+			return;
+		if (this.allStudents.contains(student)) {
+			student.getActiveCourse().removeStudent(student);
+			this.allStudents.remove(this.allStudents.indexOf(student));
+		}
+	}
+
+	public void removeCourse(Course course) {
+		if (course == null)
+			return;
+		if (this.allCourses.contains(course)) {
+			for (Student s : course.getStudents()) {
+				s.setActiveCourse(null);
+				s.refreshPriority();
+				s.mark();
+			}
+			this.allCourses.remove(this.allCourses.indexOf(course));
+		}
 	}
 
 }

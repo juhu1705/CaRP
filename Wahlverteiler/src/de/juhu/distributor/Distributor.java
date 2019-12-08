@@ -567,10 +567,12 @@ public class Distributor implements Runnable {
 		students = copiedData[0];
 		courses = copiedData[1];
 
-		Distributor.calculated.add(new Save(students, ignorestudents, courses,
+		Save save = new Save(students, ignorestudents, courses,
 				new InformationSave(this.getHighestPriority(), this.rate(), this.getPriorities(),
 						this.getUnallocatedStudents(),
-						this.getStudentsWithPriority(this.getHighestPriorityWhithoutIntegerMax()))));
+						this.getStudentsWithPriority(this.getHighestPriorityWhithoutIntegerMax())));
+
+		Distributor.calculated.add(save);
 	}
 
 	private ArrayList<Student> getStudentsWithPriority(int priority) {
@@ -973,17 +975,6 @@ public class Distributor implements Runnable {
 
 			final boolean isCommand = this.isReaderKey(line[0]);
 
-			LOGGER.info("INFORMATION " + isCommand);
-
-			for (Reader r : readers) {
-				LOGGER.config(line[0] + " | " + r.key);
-
-				if (r.isKey(line[0]))
-					r.read(Util.removeFirst(line), lineNumber);
-				else if (r.isKey(gridName) && !isCommand)
-					r.read(line, lineNumber);
-			}
-
 			if (line[0].startsWith(Config.commentLine)) {
 				String information = "";
 				for (String s : line) {
@@ -992,6 +983,17 @@ public class Distributor implements Runnable {
 				}
 				LOGGER.info(
 						"The commentation-Line was ignored. Here the information of this Commentation: " + information);
+				lineNumber++;
+				continue;
+			}
+
+			for (Reader r : readers) {
+				LOGGER.config(line[0] + " | " + r.key);
+
+				if (r.isKey(line[0]))
+					r.read(Util.removeFirst(line), lineNumber);
+				else if (r.isKey(gridName) && !isCommand)
+					r.read(line, lineNumber);
 			}
 
 			lineNumber++;
@@ -1073,7 +1075,7 @@ public class Distributor implements Runnable {
 		this.addReader(new Reader(Config.newCourse) {
 			@Override
 			public void read(String[] line, int lineNumber) {
-				LOGGER.info("Hi");
+				LOGGER.info("Try to Add Course " + lineNumber);
 				if (line.length <= 2) {
 					LOGGER.info("Not enough arguments for a new Course. This line will be skiped: [Line: " + lineNumber
 							+ "]");
@@ -1088,8 +1090,10 @@ public class Distributor implements Runnable {
 							+ ". The limit is set to the default value " + Config.normalStudentLimit + "!");
 					countStudents = Config.normalStudentLimit;
 				}
-				Course c = new Course(line[0].replaceAll(" ", ""), line[1].replaceAll(" ", ""), countStudents);
-				Distributor.getInstance().allCourses.add(c);
+				Course c = Distributor.getInstance()
+						.getOrCreateCourseByName(line[0].replaceAll(" ", "") + "|" + line[1].replaceAll(" ", ""));
+				c.setStudentMax(countStudents);
+
 				LOGGER.fine("The course " + c.toString() + " was added to the courses with the student limit "
 						+ countStudents + ".");
 			}

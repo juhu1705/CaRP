@@ -84,7 +84,7 @@
                                                 <Tooltip text="Here you can find the path of your output file" />
                                              </tooltip>
                                           </TextField>
-                                          <ComboBox fx:id="cb2" minWidth="65.0" onAction="#onFileTypeChanged" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="70.0" promptText="%filetype.text">
+                                          <ComboBox fx:id="cb2" minWidth="65.0" onAction="#onFileTypeChanged" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="130.0" promptText="%filetype.text">
                                              <tooltip>
                                                 <Tooltip text="Here you select the type of output file" />
                                              </tooltip>
@@ -187,7 +187,7 @@
                                                       </TableView>
                                                    </content>
                                                 </Tab>
-                                                <Tab closable="false" text="%course.text">
+                                                <Tab closable="false" text="%courses.text">
                                                    <content>
                                                       <TableView fx:id="tvc" prefHeight="200.0" prefWidth="411.0" tableMenuButtonVisible="true">
                                                          <columns>
@@ -235,8 +235,8 @@
                                                                <contextMenu>
                                                                   <ContextMenu>
                                                                     <items>
-                                                                      <MenuItem mnemonicParsing="false" text="%remove.text" />
                                                                         <MenuItem mnemonicParsing="false" onAction="#onSwitchCourse" text="%edit.text" />
+                                                                      <MenuItem mnemonicParsing="false" onAction="#onDeleteStudentFromActualSave" text="%remove.text" />
                                                                     </items>
                                                                   </ContextMenu>
                                                                </contextMenu>
@@ -246,7 +246,7 @@
                                                             </TableView>
                                                          </content>
                                                       </Tab>
-                                                      <Tab fx:id="teachers" closable="false" disable="true" text="%teacher.text">
+                                                      <Tab fx:id="teachers" closable="false" disable="true" text="%courses.text">
                                                          <content>
                                                             <TableView fx:id="tv2" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true">
                                                                <columns>
@@ -257,6 +257,7 @@
                                                                   <ContextMenu>
                                                                     <items>
                                                                       <MenuItem mnemonicParsing="false" onAction="#onEditCourseActualSave" text="%edit.text" />
+                                                                        <MenuItem mnemonicParsing="false" onAction="#onDeleteCourseFromActualSave" text="%remove.text" />
                                                                     </items>
                                                                   </ContextMenu>
                                                                </contextMenu>
@@ -361,6 +362,7 @@
                                                       <Button fx:id="b1" disable="true" mnemonicParsing="false" onAction="#onPreviousSave" text="%previous.text" />
                                                       <Button fx:id="b2" disable="true" mnemonicParsing="false" onAction="#onAddStudentToActualSave" text="%addstudent.text" />
                                                       <Button fx:id="b5" disable="true" mnemonicParsing="false" onAction="#onAddCourseToActualSave" text="%addcourse.text" />
+                                                      <Button fx:id="b6" disable="true" mnemonicParsing="false" onAction="#onRemoveUnusedCourses" text="%removeunusedcourses.text" />
                                                       <Button fx:id="b3" disable="true" mnemonicParsing="false" onAction="#saveActualAction" text="%saveactual.text" />
                                                       <Button fx:id="b4" disable="true" mnemonicParsing="false" onAction="#onNextSave" text="%next.text" />
                                                    </children>

@@ -92,12 +92,22 @@ public class PriorityQueue<T extends Comparable<T>> implements List<T> {
 		if (this.list.isEmpty())
 			return this.list.add(e);
 
+		boolean found = false;
+
 		for (int i = 0; i < this.list.size(); i++) {
+			if (e.compareTo(this.get(i)) == 0) {
+				found = true;
+				break;
+			}
+
 			if (e.compareTo(this.get(i)) > 0) {
 				this.list.add(i, e);
+				found = true;
 				break;
 			}
 		}
+		if (!found)
+			this.list.add(e);
 
 		return true;
 	}

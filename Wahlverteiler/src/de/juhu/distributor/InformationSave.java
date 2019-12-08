@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import de.juhu.dateimanager.WriteableContent;
 import de.juhu.math.Vec2i;
 import de.juhu.util.Config;
+import de.juhu.util.References;
 
 public class InformationSave implements Serializable {
 
@@ -39,15 +40,20 @@ public class InformationSave implements Serializable {
 
 		int line = 0;
 
-		information.addLine(new Vec2i(0, line++), new String[] { "Information", "Value" });
+		information.addLine(new Vec2i(0, line++), new String[] { References.language.getString("informations.text"),
+				References.language.getString("value.text") });
 
-		information.addLine(new Vec2i(0, ++line),
-				new String[] { "Highest Priority: ", Integer.toString(this.highestPriority) });
-		information.addLine(new Vec2i(0, ++line), new String[] { "Calculation Rate: ", Integer.toString(this.rate) });
+		information.addLine(new Vec2i(0, ++line), new String[] {
+				References.language.getString("highestpriority.text") + ": ", Integer.toString(this.highestPriority) });
+		information.addLine(new Vec2i(0, ++line), new String[] {
+				References.language.getString("calculationrate.text") + ": ", Integer.toString(this.rate) });
+		information.addLine(new Vec2i(0, ++line), new String[] {
+				References.language.getString("calculationgoodness.text") + ": ", Double.toString(this.guete) });
 
 		line -= -2;
 
-		information.addLine(new Vec2i(0, line++), new String[] { "Priority", "Count of Students with Priority" });
+		information.addLine(new Vec2i(0, line++), new String[] { References.language.getString("priorities.text"),
+				References.language.getString("countofstudents.text") });
 		for (int i = 0; i < studentPriorities.length - 1; i++) {
 			information.addLine(new Vec2i(0, line++),
 					new String[] { Integer.toString(i + 1), Integer.toString(this.studentPriorities[i]) });
@@ -56,8 +62,9 @@ public class InformationSave implements Serializable {
 		line += 1;
 
 		if (this.studentPriorities[this.studentPriorities.length - 1] != 0) {
-			information.addLine(new Vec2i(0, line++), new String[] { "Unallocated Students",
-					Integer.toString(this.studentPriorities[this.studentPriorities.length - 1]) });
+			information.addLine(new Vec2i(0, line++),
+					new String[] { References.language.getString("unallocatedstudents.text"),
+							Integer.toString(this.studentPriorities[this.studentPriorities.length - 1]) });
 
 			information.addLine(new Vec2i(0, line++), new String[] { "Name", "First Choice" });
 
@@ -72,7 +79,8 @@ public class InformationSave implements Serializable {
 
 		line++;
 
-		information.addLine(new Vec2i(0, line++), new String[] { "Students with bad priority" });
+		information.addLine(new Vec2i(0, line++),
+				new String[] { References.language.getString("studentswithbadpriority") });
 		information.addLine(new Vec2i(0, line++), new String[] { "Name", "First Choice" });
 
 		for (Student s : this.badPriorityStudents)
@@ -153,9 +161,16 @@ public class InformationSave implements Serializable {
 		else {
 			int i = 0;
 
-			for (Student s : this.parent.getAllStudents())
+			for (Student s : this.parent.getAllStudents()) {
+				if (s.getActiveCourse() == null) {
+					i += 1;
+					continue;
+				}
+
 				if (s.getActiveCourse() == null || !s.getActiveCourse().equals(Distributor.getInstance().ignoredCourse))
 					i += this.translatePriority(s.getPriority());
+
+			}
 
 			int highest = this.parent.getHighestPriority();
 			if (highest == Integer.MAX_VALUE)

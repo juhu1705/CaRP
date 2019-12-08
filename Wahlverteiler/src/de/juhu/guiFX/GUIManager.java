@@ -86,10 +86,6 @@ import javafx.util.Duration;
 
 public class GUIManager implements Initializable {
 
-	/*
-	 * TODO - Write a Save
-	 */
-
 	private static GUIManager instance;
 
 	public static GUIManager getInstance() {
@@ -114,7 +110,7 @@ public class GUIManager implements Initializable {
 	public TextField t1, t2;
 
 	@FXML
-	public Button r1, r2, r3, r4, r5, b1, b2, b3, b4, b5;
+	public Button r1, r2, r3, r4, r5, b1, b2, b3, b4, b5, b6;
 
 	@FXML
 	public ComboBox<Level> cb1;
@@ -176,6 +172,54 @@ public class GUIManager implements Initializable {
 	public CheckMenuItem mb0, mb1;
 
 	private CheckMenuItem last, lastSwitch;
+
+	public void onDeleteStudentFromActualSave(ActionEvent event) {
+		if (actual == null)
+			return;
+
+		Student student = this.tv1.getSelectionModel().getSelectedItem();
+
+		this.actual.removeStudent(student);
+
+		GUIManager.actual.getInformation().update();
+		Platform.runLater(GUIManager.getInstance().outputSView);
+		Platform.runLater(GUIManager.getInstance().outputCView);
+		Platform.runLater(GUIManager.getInstance().outputIView);
+	}
+
+	public void onRemoveUnusedCourses(ActionEvent event) {
+		if (actual == null)
+			return;
+
+		for (Course c : actual.getAllCoursesAsArray())
+			if (c.getStudents().isEmpty())
+				this.actual.removeCourse(c);
+
+		GUIManager.actual.getInformation().update();
+		Platform.runLater(GUIManager.getInstance().outputSView);
+		Platform.runLater(GUIManager.getInstance().outputCView);
+		Platform.runLater(GUIManager.getInstance().outputIView);
+	}
+
+	public void onDeleteCourseFromActualSave(ActionEvent event) {
+		if (actual == null)
+			return;
+
+		Course course = this.tv2.getSelectionModel().getSelectedItem();
+
+		if (!course.getStudents().isEmpty()) {
+			this.startErrorFrame("Cannot remove a course with students inside!",
+					"Please ensure that there are no students in this course. Remove them, or replace their course with some other course!");
+			return;
+		}
+
+		this.actual.removeCourse(course);
+
+		GUIManager.actual.getInformation().update();
+		Platform.runLater(GUIManager.getInstance().outputSView);
+		Platform.runLater(GUIManager.getInstance().outputCView);
+		Platform.runLater(GUIManager.getInstance().outputIView);
+	}
 
 	public void onAddStudentToActualSave(ActionEvent event) {
 		if (Distributor.calculate) {
@@ -400,6 +444,7 @@ public class GUIManager implements Initializable {
 		GUIManager.getInstance().b3.setDisable(true);
 		GUIManager.getInstance().b4.setDisable(true);
 		GUIManager.getInstance().b5.setDisable(true);
+		GUIManager.getInstance().b6.setDisable(true);
 	}
 
 	public void onThemeChange(ActionEvent event) {
@@ -1143,7 +1188,7 @@ public class GUIManager implements Initializable {
 		LOGGER.info("Start Saving files");
 		LOGGER.info("Try to save to " + Config.outputFile + Config.outputFileType);
 
-		Save save = Distributor.getInstance().calculated.peek();
+		Save save = this.actual;
 		if (save == null) {
 			this.startErrorFrame("No calculation found!",
 					"There are no data in the distributor. \n Please ensure, to run the calculator and assign the given data, before exporting them!");
@@ -1266,41 +1311,41 @@ public class GUIManager implements Initializable {
 		String s;
 		if (Util.isBlank((s = Config.outputFile)) || s.endsWith("/") || s.endsWith("\\"))
 			return;
-
-		boolean xls = false, xlsx = false, csv = false;
-
-		switch (Config.outputFileType) {
-		case ".xls":
-			xls = true;
-			break;
-		case ".xlsx":
-			xlsx = true;
-			break;
-		case ".csv":
-			csv = true;
-			break;
-		case "FOLDER":
-			ExcelExporter.writeXLS(s + "/Excel_OLD", save.writeInformation());
-			ExcelExporter.writeXLSX(s + "/KuFA-Zuweiser Ergebnisse", save.writeInformation());
-			CSVExporter.writeCSV(s + "/course", save.writeCourseInformation());
-			CSVExporter.writeCSV(s + "/student", save.writeStudentInformation());
-			LogWriter.writeLog(s + "/logging");
-			break;
-		default:
-			xlsx = true;
-			break;
-		}
-
-		if (xls) {
-			ExcelExporter.writeXLS(s + "/calculation" + timestamp.getTime(), save.writeInformation());
-		}
-		if (xlsx) {
-			ExcelExporter.writeXLSX(s + "/calculation" + timestamp.getTime(), save.writeInformation());
-		}
-		if (csv) {
-			CSVExporter.writeCSV(s + "/course" + timestamp.getTime(), save.writeCourseInformation());
-			CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
-		}
+//
+//		boolean xls = false, xlsx = false, csv = false;
+//
+//		switch (Config.outputFileType) {
+//		case ".xls":
+//			xls = true;
+//			break;
+//		case ".xlsx":
+//			xlsx = true;
+//			break;
+//		case ".csv":
+//			csv = true;
+//			break;
+//		case "FOLDER":
+//			ExcelExporter.writeXLS(s + "/Excel_OLD", save.writeInformation());
+//			ExcelExporter.writeXLSX(s + "/KuFA-Zuweiser Ergebnisse", save.writeInformation());
+//			CSVExporter.writeCSV(s + "/course", save.writeCourseInformation());
+//			CSVExporter.writeCSV(s + "/student", save.writeStudentInformation());
+//			LogWriter.writeLog(s + "/logging");
+//			break;
+//		default:
+//			xlsx = true;
+//			break;
+//		}
+//
+//		if (xls) {
+//			ExcelExporter.writeXLS(s + "/calculation" + timestamp.getTime(), save.writeInformation());
+//		}
+//		if (xlsx) {
+//			ExcelExporter.writeXLSX(s + "/calculation" + timestamp.getTime(), save.writeInformation());
+//		}
+//		if (csv) {
+//			CSVExporter.writeCSV(s + "/course" + timestamp.getTime(), save.writeCourseInformation());
+//			CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
+//		}
 
 		LogWriter.writeLog(s + "/logging" + timestamp.getTime());
 		this.save(s + "/save" + timestamp.getTime());

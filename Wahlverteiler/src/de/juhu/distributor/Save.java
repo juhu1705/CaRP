@@ -176,7 +176,7 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	public WriteableContent writeStudentInformation() {
-		WriteableContent students = new WriteableContent("Students");
+		WriteableContent students = new WriteableContent(References.language.getString("coursedistribution.text"));
 
 		students.addLine(new Vec2i(0, 0), new String[] { "Name", "Vorname", "Kurs", "Lehrer", "Priorität" });
 
@@ -199,7 +199,7 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	public WriteableContent writeCourseInformation() {
-		WriteableContent courses = new WriteableContent("Courses");
+		WriteableContent courses = new WriteableContent(References.language.getString("studentdistribution.text"));
 
 		courses.addLine(new Vec2i(0, 0), new String[] { "Kurs", "Lehrer", "Anzahl Schüler", "Schüler" });
 

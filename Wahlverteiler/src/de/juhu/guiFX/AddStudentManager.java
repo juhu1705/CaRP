@@ -132,6 +132,8 @@ public class AddStudentManager implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		References.LOGGER.info("Initialize Add Student Manager");
+
 		this.last = c1t;
 
 		Student s = Distributor.getInstance().getStudentByID(studentID);
@@ -147,6 +149,9 @@ public class AddStudentManager implements Initializable {
 					c1t.setText(c.getTeacher());
 					filled(null);
 				} else {
+					if (this.cources.size() < i + 1)
+						break;
+
 					if (this.cources.get(i) == null || this.cources.get(i + 1) == null)
 						break;
 

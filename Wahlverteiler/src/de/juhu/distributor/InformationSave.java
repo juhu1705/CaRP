@@ -36,7 +36,7 @@ public class InformationSave implements Serializable {
 	public WriteableContent write() {
 		this.update();
 
-		WriteableContent information = new WriteableContent("Information");
+		WriteableContent information = new WriteableContent(References.language.getString("statistics.text"));
 
 		int line = 0;
 
@@ -112,16 +112,16 @@ public class InformationSave implements Serializable {
 
 	public void update() {
 
-		for (int i = 0; i < this.unallocatedStudents.size();) {
-
-			if (!this.unallocatedStudents.get(i).isMarked())
-				this.unallocatedStudents.remove(i).refreshPriority();
-			else
-				i++;
-
-		}
-
 		parent.getAllStudents().forEach(s -> s.refreshPriority());
+
+		this.unallocatedStudents.clear();
+
+		for (Student s : this.parent.getAllStudents())
+			if (s.isMarked() || s.getPriority() > this.parent.getHighestPriorityWhithoutIntegerMax()
+					|| s.getPriority() < 0) {
+				s.mark();
+				this.unallocatedStudents.add(s);
+			}
 
 		if (this.badPriorityStudents.isEmpty()) {
 			this.highestPriority--;
@@ -163,7 +163,6 @@ public class InformationSave implements Serializable {
 
 			for (Student s : this.parent.getAllStudents()) {
 				if (s.getActiveCourse() == null) {
-					i += 1;
 					continue;
 				}
 
@@ -173,8 +172,8 @@ public class InformationSave implements Serializable {
 			}
 
 			int highest = this.parent.getHighestPriority();
-			if (highest == Integer.MAX_VALUE)
-				highest = this.parent.getHighestPriorityWhithoutIntegerMax() + 1;
+			if (highest > this.parent.getHighestPriorityWhithoutIntegerMax() || highest < 0)
+				highest = this.parent.getHighestPriorityWhithoutIntegerMax() + 10;
 
 			int studentCount = 0;
 			for (Student s : this.parent.getAllStudents())
@@ -187,11 +186,13 @@ public class InformationSave implements Serializable {
 	}
 
 	private int translatePriority(int priority) {
-		if (priority == Integer.MAX_VALUE)
-			return 1;
+		if (priority > this.parent.getHighestPriorityWhithoutIntegerMax() || priority < 0)
+			return 0;
 
-		return this.parent.getHighestPriority() == Integer.MAX_VALUE ? this.parent.getHighestPriority() - priority + 2
-				: this.parent.getHighestPriority() - priority + 1;
+		return this.parent.getHighestPriority() > this.parent.getHighestPriorityWhithoutIntegerMax()
+				|| this.parent.getHighestPriority() < 0
+						? this.parent.getHighestPriorityWhithoutIntegerMax() - priority + 2
+						: this.parent.getHighestPriority() - priority + 1;
 	}
 
 	public double getGuete() {

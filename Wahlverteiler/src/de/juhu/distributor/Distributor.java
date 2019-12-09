@@ -173,7 +173,7 @@ public class Distributor implements Runnable {
 	 *                    {@link Distributor#calculated Liste der Kalkulationen}
 	 *                    eingefügt wird.
 	 */
-	public Distributor(Save actual, Save readObject, Save readObject2) {
+	public Distributor(Save actual, Save... readObject) {
 		this.loadReaders();
 
 		// Setzt die aktuelle Instanz auf diese.
@@ -186,8 +186,8 @@ public class Distributor implements Runnable {
 
 		// Fügt alle drei Speicherungen zu den Kalkulationen hinzu.
 		Distributor.calculated.add(actual);
-		Distributor.calculated.add(readObject);
-		Distributor.calculated.add(readObject2);
+		for (Save s : readObject)
+			Distributor.calculated.add(s);
 	}
 
 	/**

@@ -45,6 +45,7 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -56,11 +57,13 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -110,7 +113,8 @@ public class GUIManager implements Initializable {
 	public TextField t1, t2;
 
 	@FXML
-	public Button r1, r2, r3, r4, r5, b1, b2, b3, b4, b5, b6;
+	public Button r1, r2, r3, r4, r5, b1, b2, /** b3, */
+			b4, b5, b6;
 
 	@FXML
 	public ComboBox<Level> cb1;
@@ -147,7 +151,13 @@ public class GUIManager implements Initializable {
 	public TableColumn<Entry<Integer, Integer>, String> priority, swpriority;
 
 	@FXML
-	public Tab students, teachers, statistics;
+	public Tab students, teachers, statistics, tabStudents, tabCourses, tabInput;
+
+	@FXML
+	public TabPane masterTabPane;
+
+	@FXML
+	public Menu menuStudent, menuCourse;
 
 	public ArrayList<TableColumn<Student, String>> atci = new ArrayList<TableColumn<Student, String>>();
 
@@ -255,7 +265,7 @@ public class GUIManager implements Initializable {
 
 		primaryStage.setMinWidth(200);
 		primaryStage.setMinHeight(158);
-		primaryStage.setTitle("Add Student");
+		primaryStage.setTitle(References.language.getString("addstudent.text"));
 		primaryStage.setScene(s);
 		primaryStage.initModality(Modality.WINDOW_MODAL);
 		primaryStage.initOwner(GUILoader.getPrimaryStage());
@@ -368,7 +378,7 @@ public class GUIManager implements Initializable {
 		Platform.runLater(GUIManager.getInstance().outputCView);
 		Platform.runLater(GUIManager.getInstance().outputIView);
 
-		this.counter.setText(Integer.toString(Distributor.calculated.indexOf(actual)));
+		this.counter.setText(Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
 	}
 
 	public void onPreviousSave(ActionEvent event) {
@@ -378,7 +388,7 @@ public class GUIManager implements Initializable {
 		Platform.runLater(GUIManager.getInstance().outputCView);
 		Platform.runLater(GUIManager.getInstance().outputIView);
 
-		this.counter.setText(Integer.toString(Distributor.calculated.indexOf(actual)));
+		this.counter.setText(Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
 	}
 
 	public void addCourse(ActionEvent event) {
@@ -441,7 +451,7 @@ public class GUIManager implements Initializable {
 		GUIManager.getInstance().statistics.setDisable(true);
 		GUIManager.getInstance().b1.setDisable(true);
 		GUIManager.getInstance().b2.setDisable(true);
-		GUIManager.getInstance().b3.setDisable(true);
+//		GUIManager.getInstance().b3.setDisable(true);
 		GUIManager.getInstance().b4.setDisable(true);
 		GUIManager.getInstance().b5.setDisable(true);
 		GUIManager.getInstance().b6.setDisable(true);
@@ -725,7 +735,7 @@ public class GUIManager implements Initializable {
 
 		primaryStage.setMinWidth(200);
 		primaryStage.setMinHeight(158);
-		primaryStage.setTitle("Add Student");
+		primaryStage.setTitle(References.language.getString("addstudent.text"));
 		primaryStage.setScene(s);
 		primaryStage.initModality(Modality.WINDOW_MODAL);
 		primaryStage.initOwner(GUILoader.getPrimaryStage());
@@ -775,7 +785,7 @@ public class GUIManager implements Initializable {
 
 		primaryStage.setMinWidth(200);
 		primaryStage.setMinHeight(158);
-		primaryStage.setTitle("Add Student");
+		primaryStage.setTitle(References.language.getString("addstudent.text"));
 		primaryStage.setScene(s);
 		primaryStage.initModality(Modality.WINDOW_MODAL);
 		primaryStage.initOwner(GUILoader.getPrimaryStage());
@@ -815,6 +825,8 @@ public class GUIManager implements Initializable {
 		try {
 			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddStudent.fxml"), References.language);
 		} catch (IOException e) {
+			References.LOGGER.log(Level.SEVERE, "Cannot open window", e);
+
 			return;
 		}
 		Scene s = new Scene(root);
@@ -825,7 +837,7 @@ public class GUIManager implements Initializable {
 
 		primaryStage.setMinWidth(200);
 		primaryStage.setMinHeight(158);
-		primaryStage.setTitle("Add Student");
+		primaryStage.setTitle(References.language.getString("addstudent.text"));
 		primaryStage.setScene(s);
 		primaryStage.initModality(Modality.WINDOW_MODAL);
 		primaryStage.initOwner(GUILoader.getPrimaryStage());
@@ -881,7 +893,7 @@ public class GUIManager implements Initializable {
 
 			primaryStage.setMinWidth(200);
 			primaryStage.setMinHeight(158);
-			primaryStage.setTitle("Add Student");
+			primaryStage.setTitle(References.language.getString("addstudent.text"));
 			primaryStage.setScene(s);
 			primaryStage.initModality(Modality.WINDOW_MODAL);
 			primaryStage.initOwner(GUILoader.getPrimaryStage());
@@ -948,7 +960,7 @@ public class GUIManager implements Initializable {
 
 		primaryStage.setMinWidth(200);
 		primaryStage.setMinHeight(158);
-		primaryStage.setTitle("Add Student");
+		primaryStage.setTitle(References.language.getString("addstudent.text"));
 		primaryStage.setScene(s);
 		primaryStage.initModality(Modality.WINDOW_MODAL);
 		primaryStage.initOwner(GUILoader.getPrimaryStage());
@@ -963,6 +975,39 @@ public class GUIManager implements Initializable {
 
 	public void onFileTypeChanged(ActionEvent event) {
 		Config.outputFileType = cb2.getValue();
+	}
+
+	boolean trick1, trick2;
+
+	public void onSelectionChangedCourse(Event event) {
+		References.LOGGER.info("LOL");
+
+		if (tabCourses == null) {
+			References.LOGGER.info("LOL1");
+			return;
+		}
+
+		References.LOGGER.info("" + tabCourses.isSelected() + "|" + ((Tab) event.getSource()).isSelected());
+
+		if (((Tab) event.getSource()).isSelected())
+			menuCourse.setDisable(true);
+		else
+			menuCourse.setDisable(false);
+
+	}
+
+	public void onShowImportedData(ActionEvent event) {
+		masterTabPane.getSelectionModel().select(tabInput);
+	}
+
+	public void onSelectionChangedStudent(Event event) {
+		if (tabStudents == null)
+			return;
+
+		if (!((Tab) event.getSource()).isSelected())
+			menuStudent.setDisable(false);
+		else
+			menuStudent.setDisable(true);
 	}
 
 	public void searchActionInput(ActionEvent event) {
@@ -1227,13 +1272,13 @@ public class GUIManager implements Initializable {
 		case ".csv":
 			csv = true;
 			break;
-		case "FOLDER":
-			ExcelExporter.writeXLS(s + "/Excel_OLD", save.writeInformation());
-			ExcelExporter.writeXLSX(s + "/KuFA-Zuweiser Ergebnisse", save.writeInformation());
-			CSVExporter.writeCSV(s + "/course", save.writeCourseInformation());
-			CSVExporter.writeCSV(s + "/student", save.writeStudentInformation());
-			LogWriter.writeLog(s + "/logging");
-			break;
+//		case "FOLDER":
+//			ExcelExporter.writeXLS(s + "/Excel_OLD", save.writeInformation());
+//			ExcelExporter.writeXLSX(s + "/KuFA-Zuweiser Ergebnisse", save.writeInformation());
+//			CSVExporter.writeCSV(s + "/course", save.writeCourseInformation());
+//			CSVExporter.writeCSV(s + "/student", save.writeStudentInformation());
+//			LogWriter.writeLog(s + "/logging");
+//			break;
 		default:
 			xlsx = true;
 			break;
@@ -1907,10 +1952,13 @@ public class GUIManager implements Initializable {
 	public void save(String location) {
 		ObjectOutputStream objOut;
 		try {
+			Save next = GUIManager.actual;
 			objOut = new ObjectOutputStream(new FileOutputStream(location + ".carp"));
-			objOut.writeObject(GUIManager.actual);
-			objOut.writeObject(Distributor.calculated.next(actual));
-			objOut.writeObject(Distributor.calculated.next(Distributor.calculated.next(actual)));
+			objOut.writeObject(next);
+			objOut.writeObject(next = Distributor.calculated.next(next));
+			objOut.writeObject(next = Distributor.calculated.next(next));
+			objOut.writeObject(next = Distributor.calculated.next(next));
+			objOut.writeObject(next = Distributor.calculated.next(next));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -1951,8 +1999,9 @@ public class GUIManager implements Initializable {
 		ObjectInputStream objIn;
 		try {
 			objIn = new ObjectInputStream(new File(location).toURI().toURL().openConnection().getInputStream());
-			GUIManager.actual = (Save) objIn.readObject();
-			new Distributor(GUIManager.actual, (Save) objIn.readObject(), (Save) objIn.readObject());
+
+			new Distributor((GUIManager.actual = (Save) objIn.readObject()), (Save) objIn.readObject(),
+					(Save) objIn.readObject(), (Save) objIn.readObject(), (Save) objIn.readObject());
 
 			Platform.runLater(new Runnable() {
 

@@ -318,7 +318,7 @@ public class GUIManager implements Initializable {
 
 		primaryStage.setMinWidth(200);
 		primaryStage.setMinHeight(158);
-		primaryStage.setTitle("Add Course");
+		primaryStage.setTitle(References.language.getString("addcourse.text"));
 		primaryStage.setScene(s);
 		primaryStage.initModality(Modality.WINDOW_MODAL);
 		primaryStage.initOwner(GUILoader.getPrimaryStage());
@@ -361,7 +361,7 @@ public class GUIManager implements Initializable {
 
 		primaryStage.setMinWidth(200);
 		primaryStage.setMinHeight(158);
-		primaryStage.setTitle("Add Course");
+		primaryStage.setTitle(References.language.getString("addcourse.text"));
 		primaryStage.setScene(s);
 		primaryStage.initModality(Modality.WINDOW_MODAL);
 		primaryStage.initOwner(GUILoader.getPrimaryStage());
@@ -424,7 +424,7 @@ public class GUIManager implements Initializable {
 
 		primaryStage.setMinWidth(200);
 		primaryStage.setMinHeight(158);
-		primaryStage.setTitle("Add Course");
+		primaryStage.setTitle(References.language.getString("addcourse.text"));
 		primaryStage.setScene(s);
 		primaryStage.initModality(Modality.WINDOW_MODAL);
 		primaryStage.initOwner(GUILoader.getPrimaryStage());
@@ -598,7 +598,7 @@ public class GUIManager implements Initializable {
 
 		primaryStage.setMinWidth(200);
 		primaryStage.setMinHeight(158);
-		primaryStage.setTitle("Add Course");
+		primaryStage.setTitle(References.language.getString("addcourse.text"));
 		primaryStage.setScene(s);
 		primaryStage.initModality(Modality.WINDOW_MODAL);
 		primaryStage.initOwner(GUILoader.getPrimaryStage());
@@ -662,7 +662,7 @@ public class GUIManager implements Initializable {
 
 			primaryStage.setMinWidth(200);
 			primaryStage.setMinHeight(158);
-			primaryStage.setTitle("Add Course");
+			primaryStage.setTitle(References.language.getString("addcourse.text"));
 			primaryStage.setScene(s);
 			primaryStage.initModality(Modality.WINDOW_MODAL);
 			primaryStage.initOwner(GUILoader.getPrimaryStage());
@@ -980,18 +980,18 @@ public class GUIManager implements Initializable {
 	boolean tabS = true;
 
 	public void onSelectionChangedCourse(Event event) {
-		References.LOGGER.info("LOL");
 
 		if (tabCourses == null) {
-			References.LOGGER.info("LOL1");
 			return;
 		}
 
 		if (((Tab) event.getSource()).isSelected()) {
 			menuCourse.setDisable(true);
+			tabS = true;
+		} else {
 			tabS = false;
-		} else
 			menuCourse.setDisable(false);
+		}
 
 	}
 
@@ -1025,6 +1025,7 @@ public class GUIManager implements Initializable {
 			menuStudent.setDisable(false);
 		else
 			menuStudent.setDisable(true);
+
 	}
 
 	public void searchActionInput(ActionEvent event) {
@@ -1036,7 +1037,7 @@ public class GUIManager implements Initializable {
 
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().addAll(new ExtensionFilter("Grid Data", "*.csv", "*.xls", "*.xlsx"));
-		fc.setTitle("Choose File");
+		fc.setTitle(References.language.getString("choosefile.text"));
 
 		File toAdd = new File(t1.getText());
 
@@ -1081,7 +1082,7 @@ public class GUIManager implements Initializable {
 
 		primaryStage.setMinWidth(200);
 		primaryStage.setMinHeight(158);
-		primaryStage.setTitle("About");
+		primaryStage.setTitle(References.language.getString("about.text"));
 		primaryStage.setScene(s);
 
 		primaryStage.getIcons().add(i);
@@ -1109,7 +1110,7 @@ public class GUIManager implements Initializable {
 	public void searchActionOutput(ActionEvent event) {
 //		if (cf1.isSelected()) {
 		DirectoryChooser fc = new DirectoryChooser();
-		fc.setTitle("Choose Directory");
+		fc.setTitle(References.language.getString("choosedirectory.text"));
 		if (!Util.isBlank(t2.getText()) && new File(t1.getText()).exists()
 				&& new File(new File(t2.getText()).getParent()).exists())
 			fc.setInitialDirectory(new File(t2.getText()));

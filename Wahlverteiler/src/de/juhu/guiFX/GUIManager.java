@@ -977,7 +977,7 @@ public class GUIManager implements Initializable {
 		Config.outputFileType = cb2.getValue();
 	}
 
-	boolean trick1, trick2;
+	boolean tabS = true;
 
 	public void onSelectionChangedCourse(Event event) {
 		References.LOGGER.info("LOL");
@@ -987,13 +987,30 @@ public class GUIManager implements Initializable {
 			return;
 		}
 
-		References.LOGGER.info("" + tabCourses.isSelected() + "|" + ((Tab) event.getSource()).isSelected());
-
-		if (((Tab) event.getSource()).isSelected())
+		if (((Tab) event.getSource()).isSelected()) {
 			menuCourse.setDisable(true);
-		else
+			tabS = false;
+		} else
 			menuCourse.setDisable(false);
 
+	}
+
+	public void onTabIn(Event event) {
+
+		if (tabInput == null)
+			return;
+
+		if (((Tab) event.getSource()).isSelected()) {
+			if (tabS)
+				menuStudent.setDisable(false);
+			else
+				menuCourse.setDisable(false);
+		} else {
+
+			menuCourse.setDisable(true);
+
+			menuStudent.setDisable(true);
+		}
 	}
 
 	public void onShowImportedData(ActionEvent event) {

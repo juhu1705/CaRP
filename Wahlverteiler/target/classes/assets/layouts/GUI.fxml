@@ -105,7 +105,7 @@
                         </BorderPane>
                      </content>
                   </Tab>
-                  <Tab fx:id="tabInput" closable="false" text="%input.text">
+                  <Tab fx:id="tabInput" closable="false" onSelectionChanged="#onTabIn" text="%input.text">
                      <content>
                         <TabPane>
                            <tabs>
@@ -433,7 +433,7 @@
                               <MenuItem mnemonicParsing="false" onAction="#onDeleteCourse" text="%remove.text" />
                            </items>
                         </Menu>
-                        <Menu fx:id="menuStudent" mnemonicParsing="false" text="%student.text">
+                        <Menu fx:id="menuStudent" disable="true" mnemonicParsing="false" text="%student.text">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#addStudent" text="%addstudent.text" />
                               <MenuItem mnemonicParsing="false" onAction="#onEditStudent" text="%edit.text" />

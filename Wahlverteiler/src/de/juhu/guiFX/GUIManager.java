@@ -113,8 +113,7 @@ public class GUIManager implements Initializable {
 	public TextField t1, t2;
 
 	@FXML
-	public Button r1, r2, r3, r4, r5, b1, b2, /** b3, */
-			b4, b5, b6;
+	public Button r1, r2, r3, r4, r5, b1, b2, b3, b4, b5, b6;
 
 	@FXML
 	public ComboBox<Level> cb1;
@@ -142,7 +141,7 @@ public class GUIManager implements Initializable {
 			unallocatedPrename, bName, bPrename, bSubject, bTeacher, bPriority;
 
 	@FXML
-	public TableColumn<Course, String> subject, teacher, oSubject, oTeacher;
+	public TableColumn<Course, String> subject, teacher, oSubject, oTeacher, maxStudentCount;
 
 	@FXML
 	public TableColumn<Entry<String, Double>, String> rate, rateV;
@@ -451,7 +450,7 @@ public class GUIManager implements Initializable {
 		GUIManager.getInstance().statistics.setDisable(true);
 		GUIManager.getInstance().b1.setDisable(true);
 		GUIManager.getInstance().b2.setDisable(true);
-//		GUIManager.getInstance().b3.setDisable(true);
+		GUIManager.getInstance().b3.setDisable(true);
 		GUIManager.getInstance().b4.setDisable(true);
 		GUIManager.getInstance().b5.setDisable(true);
 		GUIManager.getInstance().b6.setDisable(true);
@@ -1789,6 +1788,10 @@ public class GUIManager implements Initializable {
 
 		this.teacher.setCellValueFactory(c -> {
 			return new SimpleStringProperty(c.getValue().getTeacher());
+		});
+
+		this.maxStudentCount.setCellValueFactory(c -> {
+			return new SimpleStringProperty(Integer.toString(c.getValue().getMaxStudentCount()));
 		});
 
 //		this.k1tc.setCellValueFactory(s -> {

@@ -259,7 +259,7 @@ public class Distributor implements Runnable {
 			@Override
 			public void run() {
 				GUIManager.getInstance().counter
-						.setText(Integer.toString(Distributor.calculated.indexOf(GUIManager.actual)));
+						.setText(Integer.toString(Distributor.calculated.indexOf(GUIManager.actual) + 1));
 			}
 		});
 

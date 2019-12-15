@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ContextMenu?>
@@ -39,7 +40,10 @@
    <bottom>
       <StackPane prefHeight="84.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#onFinished" text="%finished.text" />
+            <Button mnemonicParsing="false" onAction="#onFinished" text="%finished.text">
+               <graphic>
+                  <FontAwesomeIconView glyphName="SAVE" />
+               </graphic></Button>
          </children>
       </StackPane>
    </bottom>

@@ -1301,15 +1301,19 @@ public class GUIManager implements Initializable {
 			break;
 		}
 
-		if (xls) {
-			ExcelExporter.writeXLS(s + "/calculation" + timestamp.getTime(), save.writeInformation());
-		}
-		if (xlsx) {
-			ExcelExporter.writeXLSX(s + "/calculation" + timestamp.getTime(), save.writeInformation());
-		}
-		if (csv) {
-			CSVExporter.writeCSV(s + "/course" + timestamp.getTime(), save.writeCourseInformation());
-			CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
+		try {
+			if (xls) {
+				ExcelExporter.writeXLS(s + "/calculation" + timestamp.getTime(), save.writeInformation());
+			}
+			if (xlsx) {
+				ExcelExporter.writeXLSX(s + "/calculation" + timestamp.getTime(), save.writeInformation());
+			}
+			if (csv) {
+				CSVExporter.writeCSV(s + "/course" + timestamp.getTime(), save.writeCourseInformation());
+				CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
+			}
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, "Fehler beim Exportieren der Datei", e);
 		}
 
 		LogWriter.writeLog(s + "/logging" + timestamp.getTime());
@@ -1530,12 +1534,12 @@ public class GUIManager implements Initializable {
 			return;
 		}
 
-		ExcelExporter.writeXLSX("test", save.writeInformation());
-
 		try {
+			ExcelExporter.writeXLSX("test", save.writeInformation());
+
 			Desktop.getDesktop().browse(new File("test.xlsx").toURI());
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Fehler beim öffnen der Prewiev Datei.");
 		}
 	}
 
@@ -1981,7 +1985,7 @@ public class GUIManager implements Initializable {
 			objOut.writeObject(next = Distributor.calculated.next(next));
 			objOut.writeObject(next = Distributor.calculated.next(next));
 		} catch (IOException e) {
-			e.printStackTrace();
+			References.LOGGER.warning("Can not save the save, please try another location!");
 		}
 	}
 

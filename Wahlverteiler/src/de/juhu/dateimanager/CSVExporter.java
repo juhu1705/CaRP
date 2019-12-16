@@ -10,7 +10,7 @@ import java.util.logging.Level;
 
 public class CSVExporter {
 
-	public static void writeCSV(String pathfile, WriteableContent toWrite) {
+	public static void writeCSV(String pathfile, WriteableContent toWrite) throws IOException {
 
 		FileWriter fileWriter = null;
 		BufferedWriter writer = null;
@@ -24,14 +24,11 @@ public class CSVExporter {
 
 		toWrite.writeCSV(writer);
 
-		try {
-			writer.close();
-		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "Fehler beim Verarbeiten einer .csv Datei", e);
-		}
+		writer.close();
+
 	}
 
-	public static void writeCSV(String pathfile, WriteableContent... toWrite) {
+	public static void writeCSV(String pathfile, WriteableContent... toWrite) throws IOException {
 
 		FileWriter fileWriter = null;
 		BufferedWriter writer = null;
@@ -54,11 +51,8 @@ public class CSVExporter {
 
 		}
 
-		try {
-			writer.close();
-		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "Fehler beim Verarbeiten einer .csv Datei", e);
-		}
+		writer.close();
+
 	}
 
 }

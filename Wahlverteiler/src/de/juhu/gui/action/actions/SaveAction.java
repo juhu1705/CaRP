@@ -2,6 +2,7 @@ package de.juhu.gui.action.actions;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import de.juhu.dateimanager.CSVExporter;
 import de.juhu.dateimanager.ExcelExporter;
@@ -46,14 +47,34 @@ public class SaveAction implements ActionListener, HasName {
 		}
 
 		if (xls) {
-			ExcelExporter.writeXLS(s, save.writeInformation());
+			try {
+				ExcelExporter.writeXLS(s, save.writeInformation());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		if (xlsx) {
-			ExcelExporter.writeXLSX(s, save.writeInformation());
+			try {
+				ExcelExporter.writeXLSX(s, save.writeInformation());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		if (csv) {
-			CSVExporter.writeCSV(s + "course", save.writeCourseInformation());
-			CSVExporter.writeCSV(s + "student", save.writeStudentInformation());
+			try {
+				CSVExporter.writeCSV(s + "course", save.writeCourseInformation());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				CSVExporter.writeCSV(s + "student", save.writeStudentInformation());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 	}

@@ -93,7 +93,7 @@ public class ExcelExporter {
 		}
 	}
 
-	public static void writeXLS(String pathfile, List<WriteableContent> toWrite) {
+	public static void writeXLS(String pathfile, List<WriteableContent> toWrite) throws IOException {
 		HSSFWorkbook workbook = new HSSFWorkbook();
 
 		int rownumber = 0;
@@ -113,14 +113,11 @@ public class ExcelExporter {
 			LOGGER.log(Level.SEVERE, "Fehler beim Exportieren einer .xls Datei", e);
 		}
 
-		try {
-			workbook.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		workbook.close();
+
 	}
 
-	public static void writeXLSX(String pathfile, WriteableContent... toWrite) {
+	public static void writeXLSX(String pathfile, WriteableContent... toWrite) throws IOException {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		int rownumber = 0;
@@ -140,14 +137,11 @@ public class ExcelExporter {
 			LOGGER.log(Level.SEVERE, "Fehler beim Exportieren einer .xlsx Datei", e);
 		}
 
-		try {
-			workbook.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		workbook.close();
+
 	}
 
-	public static void writeXLSX(String pathfile, List<WriteableContent> toWrite) {
+	public static void writeXLSX(String pathfile, List<WriteableContent> toWrite) throws IOException {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		int rownumber = 0;
@@ -169,10 +163,8 @@ public class ExcelExporter {
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Fehler beim Exportieren einer .xlsx Datei", e);
 		}
-		try {
-			workbook.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
+		workbook.close();
+
 	}
 }

@@ -4,6 +4,14 @@ import java.util.logging.Level;
 
 import de.juhu.dateimanager.ConfigElement;
 
+/**
+ * Diese Klasse enthält alle Konfigurationsattribute des Kurs- und
+ * Facharbeitszuweisers
+ * 
+ * @author Fabius
+ * @category Config
+ * @version 2.3
+ */
 public class Config {
 
 	@ConfigElement(defaultValue = "OFF", elementClass = Level.class, description = "loglevel.description", name = "loglevel.text")
@@ -14,9 +22,6 @@ public class Config {
 
 	@ConfigElement(defaultValue = ".xlsx", elementClass = String.class, description = "outputfiletype.description", name = "outputfiletype.text")
 	public static String outputFileType = ".xlsx";
-
-//	@ConfigElement(defaultValue = "config.cfg", elementClass = String.class, description = "The location of the config file.", name = "Config File")
-//	public static String configFile;
 
 	@ConfigElement(defaultValue = "%localappdata%\\Local\\CaRP", elementClass = String.class, description = "outputdirectory.description", name = "outputdirectory.text")
 	public static String outputFile;
@@ -44,9 +49,6 @@ public class Config {
 
 	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "firstprename.description", name = "firstprename.text")
 	public static boolean firstPrename;
-
-//	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "complexhandling.description", name = "complexhandling.text")
-//	public static boolean complexHandling;
 
 	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "usenewgoodness.description", name = "usenewgoodness.text")
 	public static boolean useNewGoodness = false;

@@ -490,14 +490,20 @@
                         <MenuItem mnemonicParsing="false" onAction="#onNew" text="%new.text">
                            <graphic>
                               <MaterialDesignIconView glyphName="OPEN_IN_NEW" />
-                           </graphic></MenuItem>
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="N" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
                         <MenuItem mnemonicParsing="false" onAction="#onLoad" text="%open.text">
                            <graphic>
                               <FontAwesomeIconView glyphName="FOLDER_OPEN_ALT" />
-                           </graphic></MenuItem>
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
                         <MenuItem mnemonicParsing="false" onAction="#onNew" text="%close.text">
                            <accelerator>
-                              <KeyCodeCombination alt="UP" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                              <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator>
                            <graphic>
                               <MaterialDesignIconView glyphName="CLOSE" />
@@ -512,7 +518,7 @@
                            </graphic></MenuItem>
                         <MenuItem mnemonicParsing="false" onAction="#searchActionOutput" text="%searchoutput.text">
                            <accelerator>
-                              <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                              <KeyCodeCombination alt="UP" code="A" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator>
                            <graphic>
                               <FontAwesomeIconView glyphName="FOLDER_OPEN_ALT" />
@@ -529,7 +535,10 @@
                         <MenuItem mnemonicParsing="false" onAction="#close" text="%end.text">
                            <graphic>
                               <OctIconView glyphName="CIRCLE_SLASH" />
-                           </graphic></MenuItem>
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
                      </items>
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -558,14 +567,14 @@
                         <MenuItem mnemonicParsing="false" onAction="#runAndSaveAction" text="%ras.text">
                            <graphic>
                               <MaterialDesignIconView glyphName="DOWNLOAD" />
-                           </graphic></MenuItem>
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <Menu fx:id="menuCourse" disable="true" mnemonicParsing="false" text="%course.text">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#addCourse" text="%addcourse.text">
-                                 <accelerator>
-                                    <KeyCodeCombination alt="UP" code="C" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                                 </accelerator>
                                  <graphic>
                                     <FontAwesomeIconView glyphName="PLUS" />
                                  </graphic>
@@ -579,6 +588,9 @@
                                     <FontAwesomeIconView glyphName="TRASH" />
                                  </graphic></MenuItem>
                            </items>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="BOOK" />
+                           </graphic>
                         </Menu>
                         <Menu fx:id="menuStudent" disable="true" mnemonicParsing="false" text="%student.text">
                            <items>
@@ -595,6 +607,9 @@
                                     <FontAwesomeIconView glyphName="TRASH" />
                                  </graphic></MenuItem>
                            </items>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="GROUP" />
+                           </graphic>
                         </Menu>
                      </items>
                      <graphic>
@@ -603,23 +618,35 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="%extendedfunktions.text">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#saveAction" text="%savefile.text">
+                        <MenuItem mnemonicParsing="false" onAction="#saveActualAction" text="%savefile.text">
                            <graphic>
                               <MaterialDesignIconView glyphName="CONTENT_SAVE_ALL" />
-                           </graphic></MenuItem>
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
                         <MenuItem mnemonicParsing="false" onAction="#onSaveLog" text="%savelog.text">
                            <graphic>
                               <MaterialDesignIconView glyphName="CONTENT_SAVE_ALL" />
-                           </graphic></MenuItem>
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#onClearDistributor" text="%cleardata.text">
                            <graphic>
                               <MaterialDesignIconView glyphName="DELETE" />
-                           </graphic></MenuItem>
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="C" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
                         <MenuItem mnemonicParsing="false" onAction="#onClearCalculations" text="%clearcalculations.text">
                            <graphic>
                               <MaterialDesignIconView glyphName="DELETE" />
-                           </graphic></MenuItem>
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="B" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#onSaveConfig" text="%saveconfig.text">
                            <accelerator>
@@ -665,8 +692,14 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="%language.text">
                            <items>
-                              <MenuItem mnemonicParsing="false" onAction="#onSetGerman" text="%german.text" />
-                              <MenuItem mnemonicParsing="false" onAction="#onSetEnglish" text="%english.text" />
+                              <MenuItem mnemonicParsing="false" onAction="#onSetGerman" text="%german.text">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="DOWN" code="D" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                 </accelerator></MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onSetEnglish" text="%english.text">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="DOWN" code="E" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                 </accelerator></MenuItem>
                            </items>
                            <graphic>
                               <FontAwesomeIconView glyphName="GLOBE" />
@@ -676,7 +709,10 @@
                         <MenuItem mnemonicParsing="false" onAction="#onHelp" text="%help.text">
                            <graphic>
                               <FontAwesomeIconView glyphName="QUESTION" />
-                           </graphic></MenuItem>
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
                      </items>
                      <graphic>
                         <FontAwesomeIconView glyphName="QUESTION_CIRCLE" />

@@ -49,6 +49,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.CacheHint;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -236,6 +237,8 @@ public class GUIManager implements Initializable {
 					"Please wait until the actual running calculation is finished.");
 			return;
 		}
+
+		AddStudentToSaveManager.student = null;
 
 		LOGGER.config("Starting Add Student Window");
 
@@ -472,13 +475,13 @@ public class GUIManager implements Initializable {
 			GUILoader.scene.getStylesheets().add("/assets/styles/dark_theme.css");
 			last = mb1;
 		} else {
-			if (lastSwitch.equals(mb0)) {
+			if (last.equals(mb0)) {
 
 				GUILoader.scene.getStylesheets().clear();
 				// GUILoader.scene.getStylesheets().add(StyleSheet.DEFAULT_STYLE);
 				last = mb0;
 				mb1.setSelected(true);
-			} else if (lastSwitch.equals(mb1)) {
+			} else if (last.equals(mb1)) {
 
 				GUILoader.scene.getStylesheets().add("/assets/styles/dark_theme.css");
 				last = mb1;
@@ -937,6 +940,8 @@ public class GUIManager implements Initializable {
 		LOGGER.config("Starting Add Student Window");
 
 		Stage primaryStage = new Stage();
+
+		AddStudentManager.studentID = -1;
 
 		Image i;
 
@@ -1625,6 +1630,8 @@ public class GUIManager implements Initializable {
 
 		GUIManager.instance = this;
 
+		this.ta1.setCacheHint(CacheHint.SPEED);
+
 		cb0.setItems(FXCollections.observableArrayList(PrintFormat.values()));
 
 		cb1.setItems(FXCollections.observableArrayList(Level.ALL, Level.FINEST, Level.FINER, Level.FINE, Level.CONFIG,
@@ -1984,6 +1991,8 @@ public class GUIManager implements Initializable {
 			objOut.writeObject(next = Distributor.calculated.next(next));
 			objOut.writeObject(next = Distributor.calculated.next(next));
 			objOut.writeObject(next = Distributor.calculated.next(next));
+
+			objOut.close();
 		} catch (IOException e) {
 			References.LOGGER.warning("Can not save the save, please try another location!");
 		}
@@ -2003,7 +2012,7 @@ public class GUIManager implements Initializable {
 
 		FileChooser fc = new FileChooser();
 		fc.getExtensionFilters().addAll(new ExtensionFilter("Grid Data", "*.carp"));
-		fc.setTitle("Choose File");
+		fc.setTitle(References.language.getString("choosefile.text"));
 
 		File toAdd = new File(t1.getText());
 
@@ -2040,6 +2049,9 @@ public class GUIManager implements Initializable {
 			Platform.runLater(GUIManager.getInstance().outputSView);
 			Platform.runLater(GUIManager.getInstance().outputCView);
 			Platform.runLater(GUIManager.getInstance().outputIView);
+
+			objIn.close();
+
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}

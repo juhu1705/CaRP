@@ -6,6 +6,7 @@ import static java.util.logging.Level.WARNING;
 
 import java.util.ArrayList;
 import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import javafx.scene.control.TextArea;
@@ -55,9 +56,9 @@ public class LoggingHandler extends Handler implements Runnable {
 			}
 
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				References.LOGGER.log(Level.WARNING, "Error while sleeping!", e);
 			}
 		}
 		this.isRunning = false;

@@ -82,10 +82,15 @@ public class Distributor implements Runnable {
 
 	/**
 	 * Enthält alle nicht zuteilbaren Schüler.
+	 * 
+	 * @deprecated Unused - Nur in älteren Fehlerhaften Zuweisungsmethoden benutzt,
+	 *             die nicht mehr aufgerufen werden
 	 */
+	@Deprecated
 	ArrayList<Student> problems = new ArrayList<>();
 
 	// INFO: Instance
+
 	/**
 	 * Die Aktuelle Instanz dieser Klasse, auf die Zugegriffen werden kann.
 	 */
@@ -192,21 +197,24 @@ public class Distributor implements Runnable {
 
 	/**
 	 * Startet den Gewünschten Berechnungs- und Zuweisungsprozess. Überwacht, dass
-	 * nur eine Berechnung zur gleichen Zeit abläuft.
+	 * nur eine Berechnung zur gleichen Zeit abläuft. Lädt, wenn keine Schülerdaten
+	 * vorhanden sind und ein Pfad angegeben ist, welcher auf eine existierende
+	 * Tabellen-Datei verweist diese Tabellen-Datei in das Programm und berechnet
+	 * für die neu geladenen Daten eine Zuweisung.
 	 */
 	@Override
 	public void run() {
+		/*
+		 * Überprüft, ob bereits eine Instanz geöfnet ist und bricht, wenn bereits eine
+		 * Instanz geöffnet ist den Prozess ab.
+		 */
 		if (calculate) {
-			Platform.runLater(new Runnable() {
-
-				@Override
-				public void run() {
-					GUIManager.getInstance().startErrorFrame("Cannot start calculation while calculating!",
-							"Please wait until the actual running calculation is finished.");
-					GUIManager.getInstance().r1.setDisable(false);
-					GUIManager.getInstance().r2.setDisable(false);
-					GUIManager.getInstance().r3.setDisable(false);
-				}
+			Platform.runLater(() -> {
+				GUIManager.getInstance().startErrorFrame("Cannot start calculation while calculating!",
+						"Please wait until the actual running calculation is finished.");
+//				GUIManager.getInstance().r1.setDisable(false);
+//				GUIManager.getInstance().r2.setDisable(false);
+//				GUIManager.getInstance().r3.setDisable(false);
 			});
 			return;
 		}
@@ -417,6 +425,8 @@ public class Distributor implements Runnable {
 		ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
 		for (int ij = 0; ij < Config.runs; ij++, ProgressIndicator.getInstance().addfProgressValue(1)) {
 
+			LOGGER.info("Start calculation " + ij + " of " + Config.runs);
+
 			this.allCourses.clear();
 			this.allStudents.clear();
 
@@ -440,12 +450,13 @@ public class Distributor implements Runnable {
 			}
 
 			for (int i = 0; i < Config.improvingOfCalculation; i++) {
-				this.loadDataFromSave(Distributor.calculated.get(0));
+				this.loadDataFromSave(
+						Distributor.calculated.get(References.RAND_GEN.nextInt(Distributor.calculated.size())));
 
 				int priority = 0;
 
 				for (Student s : this.allStudents)
-					if (s.isMarked())
+					if (s.isMarked() || s.getPriority() == Integer.MAX_VALUE)
 						s.setActiveCourse(s.getCourses()[0]);
 					else
 						priority = priority < s.getPriority() ? s.getPriority() : priority;
@@ -482,6 +493,7 @@ public class Distributor implements Runnable {
 								ArrayList<Student> students = new ArrayList<Student>(c.getStudents());
 								Collections.shuffle(students);
 								for (Student s : students) {
+
 									if (first == null)
 										first = s;
 									if (first.equals(s) && c.isFull()) {

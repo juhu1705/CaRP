@@ -17,16 +17,41 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+/**
+ * Hier werden alle {@link ConfigElement Konfigurations Elemente} gespeichert
+ * und verwaltet. Diese Klasse ermöglicht das Laden der initialisierten Werte,
+ * einer Konfigurations-Datei, sowie das Schreiben einer Konfigurationsdatei.
+ * 
+ * @author Fabius
+ * @category Config
+ * @version 1.0
+ */
 public class ConfigManager {
 
+	/**
+	 * Die Instanz des {@link ConfigManager Konfigurations Managers}.
+	 */
 	private static ConfigManager instance;
 
+	/**
+	 * @return Die aktive Instanz des Konfigurations-Managers.
+	 */
 	public static ConfigManager getInstance() {
 		return instance == null ? instance = new ConfigManager() : instance;
 	}
 
+	/**
+	 * Alle {@link ConfigElement Konfigurations-Elemente}.
+	 */
 	private ArrayList<Field> fields = new ArrayList<>();
 
+	/**
+	 * Gibt das {@code Field} was für den
+	 * 
+	 * @param name Die Bennenung des {@link ConfigElement Konfigurations-Element}
+	 * @return Das gleichnamige {@link ConfigElement Konfigurations-Element}, oder
+	 *         {@code null}, falls keines Vorhanden.
+	 */
 	public Field getField(String name) {
 		for (Field f : fields) {
 			if (f.getName().equals(name))

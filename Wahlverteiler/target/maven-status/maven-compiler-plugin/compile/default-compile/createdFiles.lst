@@ -4,7 +4,6 @@ de\juhu\distributor\Save.class
 de\juhu\util\Util.class
 de\juhu\guiFX\GUIManager$3.class
 de\juhu\guiFX\FullProgress.class
-de\juhu\distributor\Distributor$6.class
 de\juhu\gui\action\activations\Content.class
 de\juhu\guiFX\lists\OutputCourseView.class
 de\juhu\util\CellStyles.class

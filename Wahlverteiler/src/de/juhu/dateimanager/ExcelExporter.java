@@ -29,6 +29,7 @@ public class ExcelExporter {
 		try {
 			FileOutputStream outFile = new FileOutputStream(file);
 			workbook.write(outFile);
+			outFile.close();
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Fehler beim Exportieren einer .xls Datei", e);
 		}
@@ -55,6 +56,7 @@ public class ExcelExporter {
 		try {
 			FileOutputStream outFile = new FileOutputStream(file);
 			workbook.write(outFile);
+			outFile.close();
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Fehler beim Exportieren einer .xlsx Datei", e);
 		}
@@ -82,6 +84,7 @@ public class ExcelExporter {
 		try {
 			FileOutputStream outFile = new FileOutputStream(file);
 			workbook.write(outFile);
+			outFile.close();
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Fehler beim Exportieren einer .xls Datei", e);
 		}
@@ -109,6 +112,7 @@ public class ExcelExporter {
 		try {
 			FileOutputStream outFile = new FileOutputStream(file);
 			workbook.write(outFile);
+			outFile.close();
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Fehler beim Exportieren einer .xls Datei", e);
 		}
@@ -133,6 +137,7 @@ public class ExcelExporter {
 		try {
 			FileOutputStream outFile = new FileOutputStream(file);
 			workbook.write(outFile);
+			outFile.close();
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Fehler beim Exportieren einer .xlsx Datei", e);
 		}
@@ -160,6 +165,7 @@ public class ExcelExporter {
 		try {
 			FileOutputStream outFile = new FileOutputStream(file);
 			workbook.write(outFile);
+			outFile.close();
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Fehler beim Exportieren einer .xlsx Datei", e);
 		}

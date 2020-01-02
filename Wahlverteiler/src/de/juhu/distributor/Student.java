@@ -58,8 +58,7 @@ public class Student implements Comparable<Student>, Serializable {
 	private String prename;
 
 	/**
-	 * Ein Indikator, der anzeigt, ob diesem Schüler ein Kurs zugeordnet werden
-	 * konnte.
+	 * Ein Indikator, der anzeigt, ob dieser Schüler einem Kurs zugeordnet ist.
 	 */
 	private boolean mark;
 

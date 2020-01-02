@@ -760,7 +760,7 @@ public class Distributor implements Runnable {
 	 * 
 	 * @return Die höchste Priorität, ohne nicht zugewiesende Schüler.
 	 */
-	private int getHighestPriorityWhithoutIntegerMax() {
+	public int getHighestPriorityWhithoutIntegerMax() {
 		int highest = 0;
 		for (Student s : this.allStudents)
 			if (s.getPriority() != Integer.MAX_VALUE)

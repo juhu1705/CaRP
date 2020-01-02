@@ -65,11 +65,25 @@ public class Student implements Comparable<Student>, Serializable {
 
 	// INFO: Konstruktoren
 
-	public Student() {
+	/**
+	 * Erzeugt einen Schüler mit einer neuen ID, der noch keinen Namen besitzt.
+	 */
+	protected Student() {
 		this.generateID();
 		this.unmark();
 	}
 
+	/**
+	 * Erzeugt einen neuen Schüler, mit einer neuen ID. Der Name und der Vorname
+	 * werden gespeichert und die mitgegebenen Kurse werden in gleicher Reihenfolge
+	 * in die {@link #courses Liste der gewünschten Kurse} gespeichert. Der erste
+	 * Kurs der Liste wird dabei zum {@link #activeCourse aktiven Kurs} des
+	 * Schülers.
+	 * 
+	 * @param name    Der Nachname des Schülers
+	 * @param prename Der Vorname des Schülers
+	 * @param courses Die Kurswünsche des Schülers
+	 */
 	public Student(String name, String prename, Course... courses) {
 		this();
 		for (Course courseName : courses) {
@@ -84,6 +98,16 @@ public class Student implements Comparable<Student>, Serializable {
 		this.priority = 0;
 	}
 
+	/**
+	 * Erstellt einen Schüler mit dem mitgegebenen Vor- und Nachnamen, sowie der
+	 * mitgegebenen ID. Nur zum Kopieren verwendet. Kurse müssen manuell eingefügt,
+	 * oder beim kopieren synchronisiert werden. Hierzu eignet sich die Methode
+	 * {@link Distributor#copyData(ArrayList, ArrayList, Course)}
+	 * 
+	 * @param name    Der Nachname des Schülers
+	 * @param prename Der Vorname des Schülers
+	 * @param id      Die ID des Schülers
+	 */
 	private Student(String name, String prename, int id) {
 		this.setName(name);
 		this.setPrename(prename);
@@ -248,7 +272,17 @@ public class Student implements Comparable<Student>, Serializable {
 		this.courses.add(course);
 	}
 
-	public void addCourse(int index, Course course) {
+	/**
+	 * Fügt einen Kurs an der gewünschten Stelle zu den {@link #courses
+	 * Wunschkursen} hinzu. Dabei werden die nachfolgenden Kurse und der Kurs an
+	 * diesem Index um einen Listenplatz nach hinten verschoben.
+	 * 
+	 * @param index  Der Listenplatz, an den der Kurs eingefügt werden soll.
+	 * @param course Der Kurs, der eingefügt werden soll.
+	 * @throws IndexOutOfBoundsException Wenn der Index nicht innerhalb der Liste
+	 *                                   liegt.
+	 */
+	public void addCourse(int index, Course course) throws IndexOutOfBoundsException {
 		if (course == null)
 			return;
 		if (this.courses.contains(course)) {
@@ -278,9 +312,11 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
+	 * Setzt den {@link #activeCourse aktiven Kurs} auf den gewünschten Kurs. Dabei
+	 * wird der letzte aktive Kurs in einen entfernt.
 	 * 
-	 * @param course
-	 * @return
+	 * @param course Der Kurs der zum aktiven Kurs werden soll.
+	 * @return Der aktive Kurs.
 	 */
 	private Course setCourse(Course course) {
 		if (this.activeCourse.contains(this))
@@ -350,9 +386,13 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
+	 * Ermittelt den Index an dem der Kurs in der {@link #courses Liste der
+	 * gewünschten Kurse} steht multipliziert mit 2.
 	 * 
-	 * @param course
-	 * @return
+	 * @param course Der Kurs dessen Wert ermittelt werden soll
+	 * @return Der Index multipliziert mit 2, oder {@link Integer#MAX_VALUE}, wenn
+	 *         der Kurs nicht in der {@link #courses Liste der gewünschten Kurse}
+	 *         existiert.
 	 */
 	public int getCourseAmount(Course course) {
 		for (int i = 0; i < this.courses.size(); i++) {
@@ -365,14 +405,22 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * @return the activeCourse
+	 * @return Den {@link #activeCourse aktiven Kurs} des Schülers
 	 */
 	public Course getActiveCourse() {
 		return activeCourse;
 	}
 
 	/**
-	 * @param activeCourse the activeCourse to set
+	 * Setzt den aktiven Kurs des Schülers auf den gewünschten Kurs, wenn dieser in
+	 * der {@link #courses Liste der Wunschkurse} vorhanden ist. Danach sorgt die
+	 * Methode dafür, das die {@link #priority Priorität} des Kurses aktualisiert
+	 * wird.
+	 * 
+	 * @param activeCourse Der Kurs, welcher zum aktiven Kurs gemacht werden soll.
+	 *                     Wenn er {@code null} entspricht wird der
+	 *                     {@link #activeCourse aktive Kurs} auf {@link null}
+	 *                     gesetzt.
 	 */
 	public void setActiveCourse(Course activeCourse) {
 		if (this.isMarked())
@@ -407,8 +455,11 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
+	 * Berechnet die Priorität die der {@link #activeCourse aktive Kurs} besitzt.
 	 * 
-	 * @return
+	 * @return Die Priorität die der aktive Kurs besitzt, oder
+	 *         {@link Integer#MAX_VALUE} wenn der aktive Kurs {@code null} ist, oder
+	 *         nicht in der {@link #courses Liste der Wunschkurse} existiert.
 	 */
 	private int calculatePriority() {
 		if (this.activeCourse == null)
@@ -426,12 +477,29 @@ public class Student implements Comparable<Student>, Serializable {
 		return this.priority;
 	}
 
+	/**
+	 * Ermittelt die Rate, die dieser Schüler besitzt: {@link #priority Priorität}
+	 * hoch {@link Config#powValue}. Sollte die Priorität {@link Integer#MAX_VALUE}
+	 * entsprechen, wird die durch
+	 * {@link Distributor#getHighestPriorityWhithoutIntegerMax()} ermittelte
+	 * Priorität plus eins als Priorität angenommen.
+	 * 
+	 * @return Die Rate des Schülers
+	 */
 	public int getRate() {
 		return (int) (this.priority == Integer.MAX_VALUE
-				? Math.pow(Distributor.getInstance().getHighestPriority() + 1, Config.powValue)
+				? Math.pow(Distributor.getInstance().getHighestPriorityWhithoutIntegerMax() + 1, Config.powValue)
 				: Math.pow(this.priority, Config.powValue));
 	}
 
+	/**
+	 * Ermittelt die Rate, die dieser Schüler besitzt: {@link #priority Priorität}
+	 * hoch {@link Config#powValue}. Sollte die Priorität {@link Integer#MAX_VALUE}
+	 * entsprechen, wird die durch highestPriority plus eins ersetzt.
+	 * 
+	 * @param highestPriority Die höchste Priorität der Berechnung
+	 * @return Die Rate des Schülers
+	 */
 	public int getRate(int highestPriority) {
 		return (int) (this.priority == Integer.MAX_VALUE ? Math.pow(highestPriority + 1, Config.powValue + 3)
 				: Math.pow(this.priority, Config.powValue));
@@ -500,25 +568,48 @@ public class Student implements Comparable<Student>, Serializable {
 		return s;
 	}
 
+	/**
+	 * Der Index des Kurses in der {@link #courses Liste der Wunschkurse}
+	 * 
+	 * @see {@link ArrayList#indexOf(Object)}
+	 */
 	public int getPosition(Course c) {
 		return this.courses.indexOf(c);
 	}
 
+	/**
+	 * Überprüft, ob die ID mit der ID dieses Schülers übereinstimmt.
+	 * 
+	 * @param studentID Die ID, deren Übereinstimmung geprüft wird.
+	 * @return Ob die ID mit der {@link #id ID} dieses Schülers übereinstimmt.
+	 */
 	public boolean idequals(int studentID) {
 		return this.id == studentID;
 	}
 
+	/**
+	 * @return Die ID dieses Schülers
+	 */
 	public int getID() {
 		return this.id;
 	}
 
+	/**
+	 * Fügt die mitgegebene Kurse in gleicher Reihenfolge ans Ende der
+	 * {@link #courses Liste der Wunschkurse} des Schülers an.
+	 * 
+	 * @param c Die Kurse sie eingefügt werden sollen.
+	 */
 	public void setCourses(Course... c) {
 		this.courses.clear();
 
-		for (Course courseName : c)
-			this.addCourse(courseName);
+		for (Course course : c)
+			this.addCourse(course);
 	}
 
+	/**
+	 * @return Die {@link #courses Wunschkurse} dieses Schülers.
+	 */
 	public List<Course> getCoursesAsList() {
 		return this.courses;
 	}

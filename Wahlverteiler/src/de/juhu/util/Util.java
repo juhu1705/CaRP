@@ -1,14 +1,10 @@
 package de.juhu.util;
 
-import static de.juhu.util.References.RAND_GEN;
-
 import java.awt.Component;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.juhu.distributor.Course;
-import de.juhu.distributor.Student;
 
 public class Util {
 
@@ -53,6 +49,7 @@ public class Util {
 				windowBounds.height);
 	}
 
+	@Deprecated
 	public static void setPositionWithStartPosition(Component c, Rectangle startPosition, Rectangle windowPosition,
 			Rectangle startWindow) {
 		double x = ((double) startPosition.x / (double) startWindow.width) * windowPosition.width,
@@ -60,19 +57,6 @@ public class Util {
 				width = ((double) startPosition.width / (double) startWindow.width) * windowPosition.width,
 				height = ((double) startPosition.height / (double) startWindow.height) * windowPosition.height;
 		c.setBounds((int) x, (int) y, (int) width, (int) height);
-	}
-
-	public static ArrayList<Student> randomize(ArrayList<Student> s) {
-
-		int size = s.size();
-
-		ArrayList<Student> randomized = new ArrayList<>(size);
-
-		for (int i = 0; i < size; i++) {
-			randomized.add(s.remove(RAND_GEN.nextInt(s.size())));
-		}
-
-		return randomized;
 	}
 
 	public static int quad(int i, int height) {
@@ -116,10 +100,12 @@ public class Util {
 		return maxCount;
 	}
 
-	public static boolean isIgnoreCourse(String name) {
-		for (String s : Config.ignoreStudent.split("|"))
-			if (s.equalsIgnoreCase(name))
-				return true;
+	public static boolean isIgnoreCourse(String... name) {
+
+		for (String s : Config.ignoreStudent.split("\\|"))
+			for (String s1 : name)
+				if (s.equalsIgnoreCase(s1))
+					return true;
 
 		return false;
 	}

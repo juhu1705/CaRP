@@ -20,6 +20,8 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 
+import org.xml.sax.SAXException;
+
 import de.juhu.dateimanager.CSVExporter;
 import de.juhu.dateimanager.ConfigElement;
 import de.juhu.dateimanager.ConfigManager;
@@ -148,7 +150,7 @@ public class GUIManager implements Initializable {
 	public TableColumn<Entry<String, Double>, String> rate, rateV;
 
 	@FXML
-	public TableColumn<Entry<Integer, Integer>, String> priority, swpriority;
+	public TableColumn<Entry<Integer, Integer>, String> priority, swpriority, percentualPriorities;
 
 	@FXML
 	public Tab students, teachers, statistics, tabStudents, tabCourses, tabInput;
@@ -1084,8 +1086,8 @@ public class GUIManager implements Initializable {
 			s.getStylesheets().add("/assets/styles/dark_theme.css");
 		}
 
-		primaryStage.setMinWidth(200);
-		primaryStage.setMinHeight(158);
+		primaryStage.setMinWidth(450);
+		primaryStage.setMinHeight(650);
 		primaryStage.setTitle(References.language.getString("about.text"));
 		primaryStage.setScene(s);
 
@@ -1489,7 +1491,11 @@ public class GUIManager implements Initializable {
 				LinkOption.NOFOLLOW_LINKS))
 			new File(System.getenv("localappdata") + "/CaRP/").mkdir();
 
-		ConfigManager.getInstance().save(new File(System.getenv("localappdata") + "/CaRP/config.cfg"));
+		try {
+			ConfigManager.getInstance().save(new File(System.getenv("localappdata") + "/CaRP/config.cfg"));
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, "Fehler beim schreiben der Config datei!", e);
+		}
 
 		LOGGER.info("Finished saving config");
 	}
@@ -1643,13 +1649,21 @@ public class GUIManager implements Initializable {
 
 		// Config Stuff
 
-		ConfigManager.getInstance().register(Config.class);
+		try {
+			ConfigManager.getInstance().register(Config.class);
+		} catch (IOException e4) {
+			LOGGER.log(Level.SEVERE, "Error while register Configuration Elements", e4);
+		}
 
 		if (!Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/config.cfg"),
 				LinkOption.NOFOLLOW_LINKS))
 			ConfigManager.getInstance().loadDefault();
 		else
-			ConfigManager.getInstance().load(System.getenv("localappdata") + "/CaRP/config.cfg");
+			try {
+				ConfigManager.getInstance().load(System.getenv("localappdata") + "/CaRP/config.cfg");
+			} catch (SAXException | IOException e4) {
+				LOGGER.log(Level.SEVERE, "Error while loading Config", e4);
+			}
 
 		for (Field f : Config.class.getFields()) {
 			if (f.getAnnotation(ConfigElement.class) == null)
@@ -1910,6 +1924,9 @@ public class GUIManager implements Initializable {
 		this.swpriority.setCellValueFactory(s -> {
 			return new SimpleStringProperty(s.getValue().getValue().toString());
 		});
+
+		this.percentualPriorities.setCellValueFactory(s -> new SimpleStringProperty(Double
+				.toString(s.getValue().getValue().doubleValue() / this.actual.getInformation().getStudentCount())));
 
 		this.unallocatedPrename.setCellValueFactory(s -> {
 			return new SimpleStringProperty(s.getValue().getPrename());

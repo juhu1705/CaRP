@@ -33,7 +33,7 @@ import javafx.application.Platform;
  */
 public class Distributor implements Runnable {
 
-	// Ausgabe
+	// INFO: Ausgabe
 	/**
 	 * Diese Liste stellt die besten Ergebnisse zum Auslesen bereit.
 	 */
@@ -44,7 +44,7 @@ public class Distributor implements Runnable {
 	 */
 	public static boolean calculate = false;
 
-	// Berechnungsinformationen
+	// INFO: Berechnungsinformationen
 	/**
 	 * Speichert die zu berechnenden Schüler.
 	 */
@@ -201,6 +201,8 @@ public class Distributor implements Runnable {
 	 * vorhanden sind und ein Pfad angegeben ist, welcher auf eine existierende
 	 * Tabellen-Datei verweist diese Tabellen-Datei in das Programm und berechnet
 	 * für die neu geladenen Daten eine Zuweisung.
+	 * 
+	 * Macht zuletzt die fertige Berechnung im GUI sichtbar.
 	 */
 	@Override
 	public void run() {
@@ -219,6 +221,10 @@ public class Distributor implements Runnable {
 			return;
 		}
 
+		/**
+		 * Lädt falls keine Daten geladen sind und eine Datei angegeben ist, diese in
+		 * den Zuweiser.
+		 */
 		if (this.allStudents.isEmpty()) {
 			File file = new File(Config.inputFile);
 			if (file.exists()) {
@@ -246,6 +252,9 @@ public class Distributor implements Runnable {
 			return;
 		}
 
+		/**
+		 * Gibt relevante Informationen in den Log aus.
+		 */
 		LOGGER.config("Distributor Started whith this specificies: ");
 		LOGGER.config("--Basic Student limit: " + Integer.toString(Config.normalStudentLimit));
 		LOGGER.config("--The chooses of the Students: " + Integer.toString(Config.maxChooses));
@@ -255,20 +264,23 @@ public class Distributor implements Runnable {
 
 		calculated = new PriorityQueue<>();
 
-		this.assigner();
+		for (Student s : this.allStudents)
+			s.setActiveCourse(null);
+
+		this.assign();
 
 		for (Save s : Distributor.calculated.list)
 			s.getInformation().update();
 
 		GUIManager.actual = Distributor.calculated.peek();
 
-		Platform.runLater(new Runnable() {
+		/**
+		 * Lädt die Daten in die Ausgabe-Vorschau
+		 */
 
-			@Override
-			public void run() {
-				GUIManager.getInstance().counter
-						.setText(Integer.toString(Distributor.calculated.indexOf(GUIManager.actual) + 1));
-			}
+		Platform.runLater(() -> {
+			GUIManager.getInstance().counter
+					.setText(Integer.toString(Distributor.calculated.indexOf(GUIManager.actual) + 1));
 		});
 
 		Platform.runLater(GUIManager.getInstance().outputSView);
@@ -278,55 +290,11 @@ public class Distributor implements Runnable {
 		calculate = false;
 	}
 
-	private void alg1() {
-
-		LOGGER.info("Count: " + this.allCourses.size() + 1 + "; " + this.allStudents.size()
-				+ this.ignoredStudents.size() + 2 + ";");
-
-		ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
-
-		this.loadedallStudents = this.allStudents;
-		this.loadedallCourses = this.allCourses;
-
-		for (int i = 0; i < Config.runs; i++, ProgressIndicator.getInstance().addfProgressValue(1)) {
-
-			this.allCourses = (ArrayList<Course>) this.loadedallCourses.clone();
-			this.allStudents = (ArrayList<Student>) this.loadedallStudents.clone();
-
-			this.synchroniseStudentAndCourses();
-
-			LOGGER.info("Start Calculation Number " + (i + 1));
-
-			this.allgorithmus1();
-
-			this.printRate();
-
-			Save toSave;
-			if (!calculated.isEmpty() && calculated.size() > 5) {
-				Save best = calculated.peek();
-				int rate = this.rate();
-				if (best.compareTo(rate) > 0) {
-					toSave = best;
-				} else {
-					toSave = new Save((List<Student>) allStudents.clone(), (List<Student>) ignoredStudents.clone(),
-							(List<Course>) allCourses.clone(), new InformationSave(rate, 0, null));
-				}
-			} else {
-				toSave = new Save(allStudents, ignoredStudents, allCourses, new InformationSave(this.rate(), 0, null));
-			}
-			LOGGER.info("Finished Calculation with rate " + (this.rate()));
-			this.print();
-			calculated.add(toSave);
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		calculate = false;
-		ProgressIndicator.getInstance().setfProgressMax(1).setfProgressValue(0);
-	}
-
+	/**
+	 * Lädt die Daten eines {@link Save Speichers} in den {@link Distributor}.
+	 * 
+	 * @param save Der zu ladene {@link Save Speicher}.
+	 */
 	private void loadDataFromSave(Save save) {
 		this.allCourses.clear();
 		this.allStudents.clear();
@@ -371,10 +339,10 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Ermittelt die Anzahl der Schüler mit der entsprechenden Rate
+	 * Ermittelt die Anzahl der Schüler mit der entsprechenden Rate.
 	 * 
-	 * @param rate Die Rate nach der gesucht wird TODO - Besser Formulieren
-	 * @return Die Anzahl der Schüler mit der entsprechenden Rate
+	 * @param rate Die Rate nach der gesucht wird.
+	 * @return Die Anzahl der Schüler mit der entsprechenden Rate.
 	 */
 	public int getStudentsWithRate(int rate) {
 		rate *= 2;
@@ -407,11 +375,76 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * TODO - Programm Method
+	 * <p>
+	 * Weißt die im {@link Distributor} hinterlegten Daten bestmöglich zu. Dabei
+	 * wird versucht die {@link Student Schüler} aus der {@link #allStudents Liste
+	 * der Schüler} so auf die {@link Course Kurse} aus der {@link #allCourses Liste
+	 * der Kurse} zu verteilen, dass möglichst viele Schüler einen möglichst guten
+	 * Kurs aus ihren {@link Student#courses Kurswahlen} zugewiesen bekommen.
+	 * </p>
+	 * <p>
+	 * Um die bestmögliche Verteilung zu erreichen wird nach einem kontrollierten
+	 * Zufalls und Verbesserungsprinzip vorgegangen. Daher besteht jeder der unter
+	 * {@link Config#runs} angegebenen durchläufe aus folgenden zwei Schritten:
+	 * <ul>
+	 * <li>Dem neu Zuweisen</li>
+	 * <li>und dem Verbessern.</li>
+	 * </ul>
+	 * </p>
+	 * <p>
+	 * Bevor die Berechnung starten kann, werden die Schüler und Kursdaten zunächst
+	 * einmal in die {@link #loadedallStudents} und {@link #loadedallCourses} Listen
+	 * gesichert, so dass diese Daten immer zur unverfälschten neuberechnung genutzt
+	 * werden können.
+	 * </p>
+	 * <p>
+	 * Um eine graphische Übersicht zu bekommen wird die {@link ProgressIndicator
+	 * Prozess Leiste} mit den entsprechenden Werten initialisiert.
+	 * </p>
+	 * <p>
+	 * Nun werden die {@link Config#runs} vielen Versuche gestartet. Mit jedem
+	 * durchlaufendem Versuch wird die {@link ProgressIndicator Prozess Leiste} um
+	 * einen Wert erhöht, sowie eine Nachricht mit der aktuellen Durchlaufsnummer
+	 * ausgegeben.
+	 * </p>
+	 * <p>
+	 * Dann werden versuche einer Neuzuweisung gestartet. Die Menge dieser neu
+	 * Zuweisungsversuche ist über {@link Config#newCalculating} einstellbar.
+	 * 
+	 * Zur Neuzuweisung werden die Daten aus den Sicherheitsspeichern des
+	 * {@link Distributor Berechners} geladen und dann wird die {@link #allStudents
+	 * Liste der Schüler} gemischt. Für jeden Schüler wird dann über die Methode
+	 * {@link Student#next()} versucht ein Kurs zu finden. Kann kein Kurs gefunden
+	 * werden wird der Schüler über {@link Student#mark()} markiert. Nach dieser
+	 * Zuweisung werden die Daten über {@link #save()} gespeichert.
+	 * </p>
+	 * <p>
+	 * Nach den Versuchen der Neuzuweisung werden noch
+	 * {@link Config#improvingOfCalculation} viele Versuche unternommen eine
+	 * zufällig ausgewählte Kalkulation zu verbessern. Hierzu wird eine Zufällige
+	 * gespeicherte Zuweisung aus der {@link #calculated Liste der Speicher} geladen
+	 * und dann eine Neuberechnung an diesem durchgeführt. Dazu wird allen nicht
+	 * zugewiesenden (also markierten) Schüler deren erster Kurs gewährt und im
+	 * Anschluss allen Schülern mit der schlechtesten Priorität das Gleiche gewährt.
+	 * Nach dem Mischen der Kurse wird nun überprüft, welche Kurse zu voll sind.
+	 * Sollte ein Kurs zu viele Schüler beinhalten werden, wenn
+	 * {@link Config#newImproving} aktiviert ist, Schüler aus diesem Kurs zufällig
+	 * in deren nächsten Gewünschten Kurs verschoben. Ist
+	 * {@link Config#newImproving} deaktiviert, so werden aus dem Kurs zufällig
+	 * Schüler in deren nächsten Freien Kurs verschoben.
+	 * </p>
+	 * <p>
+	 * Nach Beendigung der {@link Config#runs} vielen durchläufe wird noch die
+	 * {@link ProgressIndicator Prozess Leiste} zurückgesetzt.
+	 * </p>
+	 * 
 	 * 
 	 * @since BETA-0.1.0
+	 * @implNote Diese Methode wird in Verknüpfung mit der graphischen Oberfläche
+	 *           und weiteren kleinen Zusätzlichen Eigenschaften über {@link #run()}
+	 *           ausgeführt.
 	 */
-	public void assigner() {
+	public void assign() {
 		LOGGER.info("Start Calculating");
 
 		this.loadedallStudents = this.allStudents;
@@ -427,24 +460,25 @@ public class Distributor implements Runnable {
 
 			LOGGER.info("Start calculation " + ij + " of " + Config.runs);
 
-			this.allCourses.clear();
-			this.allStudents.clear();
-
-			ArrayList[] copiedData1 = this.copyData(this.loadedallStudents, this.loadedallCourses, ignoredCourse);
-
-			allStudents = copiedData1[0];
-			allCourses = copiedData1[1];
-
 			// this.synchroniseStudentAndCourses();
 
 			for (int i = 0; i < Config.newCalculating; i++) {
+				this.allCourses.clear();
+				this.allStudents.clear();
+
+				ArrayList[] copiedData1 = this.copyData(this.loadedallStudents, this.loadedallCourses, ignoredCourse);
+
+				allStudents = copiedData1[0];
+				allCourses = copiedData1[1];
+
 				ProgressIndicator.getInstance().setaProgressMax(this.allCourses.size()).setaProgressValue(0);
+
 				Collections.shuffle(this.allStudents);
 				for (Student s : this.allStudents)
 					if (!s.next())
 						s.mark();
 
-				int priority = this.rate();
+				// int priority = this.rate();
 
 				this.save();
 			}
@@ -522,7 +556,7 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Geht die {@link #allCourses List aller Kurse} durch und überprüft, ob die
+	 * Geht die {@link #allCourses Liste aller Kurse} durch und überprüft, ob die
 	 * Methode {@link Course#isFull()} {@code true} zurückgibt. Sollte dies der Fall
 	 * sein, so wird {@code true} zurückgegeben, ansonsten wird {@code false}
 	 * zurückgegeben.
@@ -537,25 +571,59 @@ public class Distributor implements Runnable {
 		return false;
 	}
 
+	/**
+	 * Erzeugt zwei von den alten {@link Student Schüler} und {@link Course Kurs}
+	 * Listen unabhängige Listen, die in selber Weise verknüpft sind. Dabei ist das
+	 * erste Element im Array, die kopierte Liste der Schüler und das zweite die
+	 * kopierte Liste der Lehrer.
+	 * 
+	 * @param oldStudents    Die Liste der Schüler die Kopiert werden soll.
+	 * @param oldCourses     Die verknüpfte Liste der Kurse die Kopiert werden soll.
+	 * @param ignoredCourse2 Der Kurs für nicht zugeordnete Schüler.
+	 * @return Die Kopierten Daten.
+	 *         <ul>
+	 *         <li>Element 1: Liste der Schüler (kopiert)</li>
+	 *         <li>Element 2: Liste der Kurse (kopiert)</li>
+	 *         </ul>
+	 */
 	public ArrayList[] copyData(ArrayList<Student> oldStudents, ArrayList<Course> oldCourses, Course ignoredCourse2) {
 
+		/*
+		 * Erzeugung der neuen Arrays
+		 */
+		/**
+		 * Die neue Schüler-Liste, in die die Kurse Kopiert werden.
+		 */
 		ArrayList<Student> newStudents = new ArrayList<Student>();
+
+		/**
+		 * Die neue Kurs-Liste, in die die Kurse Kopiert werden.
+		 */
 		ArrayList<Course> newCourses = new ArrayList<Course>();
 
+		/*
+		 * Kopieren der Schüler ohne Verknüpfungen.
+		 */
 		for (Student s : oldStudents)
 			try {
 				newStudents.add((Student) s.clone());
 			} catch (CloneNotSupportedException e) {
-				e.printStackTrace();
+				LOGGER.log(Level.SEVERE, "Error while copy Student Data", e);
 			}
 
+		/*
+		 * Kopieren der Kurse ohne Verknüpfungen
+		 */
 		for (Course c : oldCourses)
 			try {
 				newCourses.add((Course) c.clone());
 			} catch (CloneNotSupportedException e) {
-				e.printStackTrace();
+				LOGGER.log(Level.SEVERE, "Error while copy Course Data", e);
 			}
 
+		/*
+		 * Erstellen der benötigten Verknüpfungen
+		 */
 		for (Student s : oldStudents) {
 			for (Student news : newStudents) {
 				if (s.equals(news)) {
@@ -575,9 +643,21 @@ public class Distributor implements Runnable {
 				}
 			}
 		}
+
+		/*
+		 * Rückgabe der neu erstellten Listen
+		 */
 		return new ArrayList[] { newStudents, newCourses };
 	}
 
+	/**
+	 * Speichert die aktuellen Daten im Distributor in einen {@link Save neuen
+	 * Speicher} und fügt diesen in {@link #calculated Liste der Speicher} ein.
+	 * Dabei werden die Daten über
+	 * {@link Distributor#copyData(ArrayList, ArrayList, Course)} kopiert und die
+	 * Kopierten Daten in den Speicher geladen, so dass die im Speicher enthaltenen
+	 * Daten nicht mehr mit den Daten im {@link Distributor} verknüpft sind.
+	 */
 	public void save() {
 		ArrayList<Student> students = new ArrayList();
 		ArrayList<Student> ignorestudents = (ArrayList<Student>) this.ignoredStudents.clone();
@@ -601,6 +681,15 @@ public class Distributor implements Runnable {
 		Distributor.calculated.add(save);
 	}
 
+	/**
+	 * Ermittelt alle Schüler aus der {@link #allStudents Liste der zu berechnenden
+	 * Schüler}, deren {@link Student#priority Priorität} mit der mitgegebenen
+	 * Priorität übereinstimmt.
+	 * 
+	 * @param priority Die Priorität, nach der gesucht wird.
+	 * @return Eine Liste aller Schüler, deren {@link Student#priority Priorität}
+	 *         mit der gegebenen Priorität übereinstimmt.
+	 */
 	private ArrayList<Student> getStudentsWithPriority(int priority) {
 		ArrayList<Student> pStudents = new ArrayList<>();
 
@@ -611,6 +700,12 @@ public class Distributor implements Runnable {
 		return pStudents;
 	}
 
+	/**
+	 * Ermittelt alle Schüler aus der {@link #allStudents Liste der zu berechnenden
+	 * Schüler}, die keinem Kurs zugeordnet sind.
+	 * 
+	 * @return Eine Liste aller nicht zugewiesenden Schüler
+	 */
 	private ArrayList<Student> getUnallocatedStudents() {
 		ArrayList<Student> pStudents = new ArrayList<>();
 
@@ -625,6 +720,14 @@ public class Distributor implements Runnable {
 		return pStudents;
 	}
 
+	/**
+	 * Ermittelt die Anzahl der Schüler jeder Priorität. Dabei ist der letzte Index
+	 * der Liste gefüllt mit der Anzahl der Schüler, die nicht zugewiesen werden
+	 * konnten.
+	 * 
+	 * @return Eine Liste mit der (Priorität - 1) und der Zugehörigen Anzahl der
+	 *         Schüler.
+	 */
 	private int[] getPriorities() {
 		int[] priorities = new int[this.getHighestPriorityWhithoutIntegerMax() + 1];
 
@@ -635,6 +738,14 @@ public class Distributor implements Runnable {
 		return priorities;
 	}
 
+	/**
+	 * Gibt die Anzahl der Schüler aus der {@link #allStudents Liste aller Schüler}
+	 * zurück, deren {@link Student#priority Priorität} mit der gegebenen Priorität
+	 * übereinstimmt.
+	 * 
+	 * @param priority Die Priorität, nach der gesucht wird.
+	 * @return Die Anzahl der Schüler mit der mitgegebenden Priorität.
+	 */
 	private int countPriority(int priority) {
 		int count = 0;
 		for (Student s : this.allStudents)
@@ -644,9 +755,10 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * TODO Comment
+	 * Ermittelt die höchste Priorität, wobei alle nicht Zugewiesenden Schüler
+	 * unbeachtet bleiben.
 	 * 
-	 * @return
+	 * @return Die höchste Priorität, ohne nicht zugewiesende Schüler.
 	 */
 	private int getHighestPriorityWhithoutIntegerMax() {
 		int highest = 0;
@@ -656,6 +768,13 @@ public class Distributor implements Runnable {
 		return highest;
 	}
 
+	/**
+	 * Ermittelt die höchste Priorität
+	 * 
+	 * @return Die höchste Priorität
+	 * @implNote {@link Integer#MAX_VALUE}, wenn Schüler nicht zugewiesen werden
+	 *           konnten.
+	 */
 	public int getHighestPriority() {
 		int highest = 0;
 		for (Student s : this.allStudents)
@@ -665,7 +784,9 @@ public class Distributor implements Runnable {
 
 	/**
 	 * @since 0.1
+	 * @deprecated Alte Version, nutze {@link #assign()}!
 	 */
+	@Deprecated
 	private void allgorithmus1() {
 		ProgressIndicator.getInstance().setaProgressMax(this.allCourses.size()).setaProgressValue(0);
 
@@ -675,7 +796,8 @@ public class Distributor implements Runnable {
 			int iterator = 1;
 			boolean active = true, shouldRun = c.isFull();
 			while (shouldRun) {
-				ArrayList<Student> students = Util.randomize(c.getStudents());
+				ArrayList<Student> students;
+				Collections.shuffle((students = c.getStudents()));
 				boolean testActive = false;
 				for (Student s : students) {
 
@@ -714,12 +836,13 @@ public class Distributor implements Runnable {
 		ProgressIndicator.getInstance().setaProgressMax(1).setaProgressValue(0);
 	}
 
-	private void allgorithm3() {
-		ArrayList<Student> randomized = Util.randomize(this.allStudents);
-		presort(randomized);
-
-	}
-
+	/**
+	 * Überprüft, ob ein Kurs zu voll ist.
+	 * 
+	 * @return
+	 * @deprecated Unused
+	 */
+	@Deprecated
 	public int areCoursesCorrect() {
 		int toReturn = 0;
 		boolean all = true;
@@ -818,7 +941,7 @@ public class Distributor implements Runnable {
 
 		// Überprüft ob der Kurs dem ignoredCourse entspricht.
 
-		if (Util.isIgnoreCourse(name.replace("|", "")))
+		if (Util.isIgnoreCourse(name.split("\\|")))
 			return this.ignoredCourse;
 
 		Course c = this.getCourseByName(name);
@@ -1130,6 +1253,9 @@ public class Distributor implements Runnable {
 		for (Student s : this.allStudents)
 			if (s.idequals(studentID))
 				return s;
+		for (Student s : this.ignoredStudents)
+			if (s.idequals(studentID))
+				return s;
 		return null;
 	}
 
@@ -1157,13 +1283,27 @@ public class Distributor implements Runnable {
 		Config.clear = clear;
 	}
 
+	/**
+	 * Entfernt einen Schüler aus der {@link Liste aller zu Berechnenden Schüler},
+	 * oder aus der {@link #ignoredStudents Liste aller nicht zu berechnenden
+	 * Schüler}.
+	 * 
+	 * @param student Der zu entfernende Schüler
+	 */
 	public void removeStudent(Student student) {
 		if (student == null)
 			return;
 		if (this.allStudents.contains(student))
 			this.allStudents.remove(this.allStudents.indexOf(student));
+		if (this.ignoredStudents.contains(student))
+			this.ignoredStudents.remove(this.ignoredStudents.indexOf(student));
 	}
 
+	/**
+	 * Entfernt einen Kurs aus der {@link #allCourses Liste aller Kurse}.
+	 * 
+	 * @param course Der zu entfernende Kurs.
+	 */
 	public void removeCourse(Course course) {
 		if (course == null)
 			return;

@@ -28,6 +28,7 @@ public class SwitchCourseView implements Runnable {
 		References.LOGGER.config("Loading Courses Data!");
 
 		this.tv.setItems(FXCollections.observableArrayList(this.student.getCoursesAsList()));
+		this.tv.sort();
 	}
 
 	private void loadMaxStudents() {

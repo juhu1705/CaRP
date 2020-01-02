@@ -20,6 +20,8 @@ public class OutputInformationView implements Runnable {
 		GUIManager.getInstance().bStudents
 				.setItems(FXCollections.observableArrayList(GUIManager.actual.getInformation().getBStudents()));
 
+		GUIManager.getInstance().bStudents.sort();
+
 		HashMap<String, Double> ratess = new HashMap<>();
 
 		ratess.put(References.language.getString("highestpriority.text"),
@@ -28,10 +30,18 @@ public class OutputInformationView implements Runnable {
 				Double.valueOf(GUIManager.actual.getInformation().getRate()));
 		ratess.put(References.language.getString("calculationgoodness.text"),
 				Double.valueOf(GUIManager.actual.getInformation().getGuete()));
+		ratess.put(References.language.getString("studentcount.text"),
+				Double.valueOf(GUIManager.actual.getAllStudents().size()));
+		ratess.put(References.language.getString("calculatedstudentcount.text"),
+				Double.valueOf(GUIManager.actual.getInformation().getStudentCount()));
+		ratess.put(References.language.getString("coursecount.text"),
+				Double.valueOf(GUIManager.actual.getAllCourses().size()));
 
 		GUIManager.getInstance().rates.getItems().clear();
 
 		GUIManager.getInstance().rates.setItems(FXCollections.observableArrayList(ratess.entrySet()));
+
+		GUIManager.getInstance().rates.sort();
 
 		int[] priorities = GUIManager.actual.getInformation().getStudentPriorities();
 		HashMap<Integer, Integer> p = new HashMap<>();
@@ -42,6 +52,8 @@ public class OutputInformationView implements Runnable {
 		p.put(Integer.valueOf(-1), Integer.valueOf(priorities[priorities.length - 1]));
 
 		GUIManager.getInstance().priorities.setItems(FXCollections.observableArrayList(p.entrySet()));
+
+		GUIManager.getInstance().priorities.sort();
 
 		if (!GUIManager.actual.getInformation().getunallocatedStudents().isEmpty()) {
 
@@ -88,6 +100,8 @@ public class OutputInformationView implements Runnable {
 
 			GUIManager.getInstance().unallocatedStudents.setItems(
 					FXCollections.observableArrayList(GUIManager.actual.getInformation().getunallocatedStudents()));
+
+			GUIManager.getInstance().unallocatedStudents.sort();
 		} else
 			GUIManager.getInstance().unallocatedStudents.getItems().clear();
 	}

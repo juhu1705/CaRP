@@ -351,12 +351,12 @@ public class Student implements Comparable<Student>, Serializable {
 
 	/**
 	 * 
-	 * @param string
+	 * @param course
 	 * @return
 	 */
-	public int getCourseAmount(Course string) {
+	public int getCourseAmount(Course course) {
 		for (int i = 0; i < this.courses.size(); i++) {
-			if (this.courses.get(i).equals(string)) {
+			if (this.courses.get(i).equals(course)) {
 				// References.LOGGER.info(this.toString() + ": " + i);
 				return i * 2;
 			}
@@ -437,14 +437,23 @@ public class Student implements Comparable<Student>, Serializable {
 				: Math.pow(this.priority, Config.powValue));
 	}
 
+	/**
+	 * Setzt die {@link #mark Markierung} des Schülers auf {@code true}.
+	 */
 	public void mark() {
 		this.mark = true;
 	}
 
+	/**
+	 * Setzt die {@link #mark Markierung} des Schülers auf {@code false}.
+	 */
 	public void unmark() {
 		this.mark = false;
 	}
 
+	/**
+	 * @return Die {@link #mark Markierung} des Schülers.
+	 */
 	public boolean isMarked() {
 		return this.mark;
 	}
@@ -514,10 +523,21 @@ public class Student implements Comparable<Student>, Serializable {
 		return this.courses;
 	}
 
+	/**
+	 * Aktualisiert die Marke des Schülers in Bezug auf dessen {@link #priority
+	 * Priorität}. Ist die {@link #priority Priorität} des Schülers kleiner 0, oder
+	 * größer als die highestPriority wird der Schüler {@link #mark() markiert}, ist
+	 * der Schüler {@link #mark markiert}, obwohl die vornestehenden Bedingungen
+	 * nicht erfüllt sind, wird die {@link #unmark() markierung zurückgezogen}.
+	 * 
+	 * @param highestPriority Die höchste Priorität, die in dem zu vergleichenden
+	 *                        Prozess vorliegt.
+	 */
 	public void checkMarkt(int highestPriority) {
 
 		if (this.getPriority() > highestPriority || this.getPriority() < 0)
 			this.mark();
-
+		else if (this.mark)
+			this.unmark();
 	}
 }

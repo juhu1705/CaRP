@@ -27,5 +27,6 @@ public class InputView {
 
 		this.inputTable.getItems().clear();
 		this.inputTable.setItems(FXCollections.observableArrayList(allStudents));
+		this.inputTable.sort();
 	}
 }

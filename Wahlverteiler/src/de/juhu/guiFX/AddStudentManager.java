@@ -53,7 +53,7 @@ public class AddStudentManager implements Initializable {
 			c1f.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
-		if (c1t.getText().isEmpty() && !c1f.getText().contains(Config.ignoreStudent)) {
+		if (c1t.getText().isEmpty() && !Util.isIgnoreCourse(c1f.getText())) {
 			c1t.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}

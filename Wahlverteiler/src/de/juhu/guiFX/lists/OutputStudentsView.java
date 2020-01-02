@@ -19,6 +19,7 @@ public class OutputStudentsView implements Runnable {
 		References.LOGGER.config("Loading Output Data to the Preview!");
 
 		this.tv.setItems(FXCollections.observableArrayList(GUIManager.actual.getAllStudents()));
+		this.tv.sort();
 	}
 
 	@Override

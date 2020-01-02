@@ -25,6 +25,7 @@ public class OutputCourseView implements Runnable {
 		References.LOGGER.config("Loading Output Data to the Preview!");
 
 		this.tv.setItems(FXCollections.observableArrayList(GUIManager.actual.getAllCourses()));
+		this.tv.sort();
 	}
 
 	private void loadMaxStudents() {

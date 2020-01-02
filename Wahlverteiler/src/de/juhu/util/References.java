@@ -92,7 +92,7 @@ public class References {
 	}
 
 	/**
-	 * Random Generator
+	 * Zufallsgenerator
 	 */
 	public static final Random RAND_GEN = new Random();
 

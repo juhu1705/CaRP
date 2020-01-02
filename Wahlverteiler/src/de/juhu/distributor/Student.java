@@ -10,7 +10,7 @@ import de.juhu.util.Config;
  * Diese Klasse bildet einen Schüler ab und beinhaltet alle diesbezüglich
  * wichtigen Informationen.
  * 
- * @version 1.0
+ * @version 1.1
  * @category Distribution
  * @author Juhu1705
  * @implNote Ist {@link Comparable vergleichbar} mit anderen {@link Student

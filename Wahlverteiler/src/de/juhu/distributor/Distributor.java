@@ -28,7 +28,7 @@ import javafx.application.Platform;
  * @version 2.0
  * @category Distribution
  * @author Juhu1705
- * @implements Runnable
+ * @implements {@link Runnable}
  * @since BETA-0.0.1
  */
 public class Distributor implements Runnable {
@@ -56,13 +56,14 @@ public class Distributor implements Runnable {
 	ArrayList<Course> loadedallCourses = new ArrayList<>();
 
 	/**
-	 * Diese Liste hält alle für die Kalkulation irrelevanten Schüler fest und
-	 * stellt sie zur Nachträglichen Einfügung in das Ergebnis bereit.
+	 * Diese Liste hält alle für die Berechnung irrelevanten Schüler fest und stellt
+	 * sie zum nachträglichen Einfügen in das Ergebnis bereit.
 	 */
 	ArrayList<Student> ignoredStudents = new ArrayList<>();
 
 	/**
-	 * Dieser Kurs beinhaltet alle ignore Students
+	 * Dieser Kurs beinhaltet alle ignore Students. Er dient als Referenzkurs für
+	 * diese.
 	 */
 	Course ignoredCourse = new Course(Config.ignoreStudent, "", -1);
 
@@ -221,7 +222,7 @@ public class Distributor implements Runnable {
 			return;
 		}
 
-		/**
+		/*
 		 * Lädt falls keine Daten geladen sind und eine Datei angegeben ist, diese in
 		 * den Zuweiser.
 		 */
@@ -252,7 +253,7 @@ public class Distributor implements Runnable {
 			return;
 		}
 
-		/**
+		/*
 		 * Gibt relevante Informationen in den Log aus.
 		 */
 		LOGGER.config("Distributor Started whith this specificies: ");
@@ -274,7 +275,7 @@ public class Distributor implements Runnable {
 
 		GUIManager.actual = Distributor.calculated.peek();
 
-		/**
+		/*
 		 * Lädt die Daten in die Ausgabe-Vorschau
 		 */
 
@@ -588,15 +589,14 @@ public class Distributor implements Runnable {
 	 */
 	public ArrayList[] copyData(ArrayList<Student> oldStudents, ArrayList<Course> oldCourses, Course ignoredCourse2) {
 
+		// Erzeugung der neuen Arrays
+
 		/*
-		 * Erzeugung der neuen Arrays
-		 */
-		/**
 		 * Die neue Schüler-Liste, in die die Kurse Kopiert werden.
 		 */
 		ArrayList<Student> newStudents = new ArrayList<Student>();
 
-		/**
+		/*
 		 * Die neue Kurs-Liste, in die die Kurse Kopiert werden.
 		 */
 		ArrayList<Course> newCourses = new ArrayList<Course>();
@@ -865,35 +865,8 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * 
-	 * @since 1.0
+	 * Gibt alle Kurse mit ihren Schüler im {@link References#LOGGER Log} aus.
 	 */
-	public void algorithmus3() {
-		for (Course c : allCourses) {
-			if (!c.isFull())
-				continue;
-
-		}
-	}
-
-	private void presort(ArrayList<Student> students) {
-		for (Student s : students) {
-			if (!s.next()) {
-				this.problems.add(s);
-				this.allStudents.remove(s);
-			}
-		}
-	}
-
-	private void synchroniseStudentAndCourses() {
-		this.allStudents.forEach(s -> {
-			for (Course c : s.getCourses()) {
-				if (!this.allCourses.contains(c))
-					this.allCourses.add(c);
-			}
-		});
-	}
-
 	private void print() {
 		for (Course c : this.allCourses) {
 			LOGGER.info(c.toString());
@@ -901,6 +874,14 @@ public class Distributor implements Runnable {
 		}
 	}
 
+	/**
+	 * Überprüft, ob ein Kurs mit dem gleichen Namen ({@link Course#getSubject()
+	 * Fach}{@code  + "|" + }{@link Course#getTeacher() Lehrer}) bereits unter den
+	 * vorhandenen Kursen existiert.
+	 * 
+	 * @param name Der Name des Kurses.
+	 * @return Ob der Kurs existiert.
+	 */
 	private boolean doesCourseExist(String name) {
 		for (Course c : this.allCourses) {
 			if (name.equals(c.toString()))
@@ -909,18 +890,34 @@ public class Distributor implements Runnable {
 		return false;
 	}
 
+	/**
+	 * @return Die {@link #allStudents Liste der Schüler}.
+	 */
 	public ArrayList getCalcStudents() {
 		return this.allStudents;
 	}
 
+	/**
+	 * @return Die {@link #ignoredStudents Liste der für die Berechnung irrelevanten
+	 *         Schüler}
+	 */
 	public ArrayList getIgnoreStudents() {
 		return this.ignoredStudents;
 	}
 
+	/**
+	 * Die nächste Freie ID, die an einen Schüler vergeben werden kann.
+	 */
 	private static int nextID = 0;
 
+	/**
+	 * Gibt die {@link #nextID nächste freie ID} zurück und zählt diese um einen
+	 * Wert hoch.
+	 * 
+	 * @return Die ID, die angefordert wurde
+	 */
 	public static int getStudentID() {
-		References.LOGGER.info(nextID + "");
+		// References.LOGGER.info(nextID + "");
 		return Distributor.nextID++;
 	}
 
@@ -1249,6 +1246,15 @@ public class Distributor implements Runnable {
 		});
 	}
 
+	/**
+	 * Sucht einen {@link Student Schüler} in der {@link #allStudents Liste aller
+	 * Schüler} und {@link #ignoredStudents Liste aller für die Berechnung
+	 * irrelevanten Schüler} nach übereinstimmung mit der mitgegebenen ID heraus.
+	 * 
+	 * @param studentID Die ID, dessen Schüler gesucht werden soll.
+	 * @return Der gefundene Schüler, {@code null}, wenn kein Schüler mit dieser ID
+	 *         existiert.
+	 */
 	public Student getStudentByID(int studentID) {
 		for (Student s : this.allStudents)
 			if (s.idequals(studentID))
@@ -1259,17 +1265,31 @@ public class Distributor implements Runnable {
 		return null;
 	}
 
+	/**
+	 * Fügt einen {@link Course Kurs} in die {@link #allCourses Liste aller Kurse}
+	 * ein. Falls der Kurs bereits existiert, wird dieser aus der Liste gelöscht und
+	 * dann der neue Kurs eingefügt.
+	 * 
+	 * @param c Der Kurs der eingefügt werden soll.
+	 */
 	public void addCourse(Course c) {
 		if (this.allCourses.contains(c))
 			this.allCourses.remove(c);
 		this.allCourses.add(c);
 	}
 
+	/**
+	 * Setzt den aktiven Kurs aller Schüler auf {@code null}.
+	 */
 	public void reset() {
 		for (Student s : this.allStudents)
 			s.setActiveCourse(null);
 	}
 
+	/**
+	 * Leert alle Eingabedaten dieser Klasse. Die berechneten Saves bleiben
+	 * erhalten.
+	 */
 	public void clear() {
 		boolean clear = Config.clear;
 
@@ -1309,6 +1329,16 @@ public class Distributor implements Runnable {
 			return;
 		if (this.allCourses.contains(course))
 			this.allCourses.remove(this.allCourses.indexOf(course));
+	}
+
+	/**
+	 * Überschreibt die ignorier Marke im {@link #ignoredCourse Referenzkurs des
+	 * nicht berechneten Schüler}.
+	 * 
+	 * @param ignoreStudent die neue ignorier Marke
+	 */
+	public void setIgnoreMark(String ignoreStudent) {
+		this.ignoredCourse.setSubject(ignoreStudent);
 	}
 
 }

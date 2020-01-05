@@ -15,19 +15,60 @@ import de.juhu.util.MergeSort;
 import de.juhu.util.References;
 import de.juhu.util.Util;
 
+/**
+ * Diese Klasse dient zur Speicherung berechneter Zuweisungen des
+ * {@link Distributor Berechners} im Arbeitsspeicher und stellt zudem noch
+ * Methoden zur Bearbeitung der gespeicherten Daten, sowie zum Exportieren der
+ * Daten bereit.
+ * 
+ * 
+ * @version 1.0
+ * @category Distribution
+ * @author Juhu1705
+ * @implements {@link Comparable}, {@link Serializable}
+ * @since 0.0.2
+ */
 public class Save implements Comparable<Save>, Serializable {
 
+	/**
+	 * Der {@link InformationSave Informationsspeicher} dieser Klasse, hier werden
+	 * interressante Zusatzinformationen hinterlegt.
+	 */
 	private InformationSave informations;
 
+	/**
+	 * Die Liste aller Schüler einer Berechnung inklusive der ignorierten Schüler.
+	 */
 	private List<Student> allStudents;
+
+	/**
+	 * Die Liste aller Kurse einer Berechnung.
+	 */
 	private List<Course> allCourses;
 
+	/**
+	 * Erzeugt einen neuen Speicher, indem die "editedStudents" mit den
+	 * "ignoredStudents" gekreuzt und dann in die {@link #allStudents Liste aller
+	 * Schüler} dieses Speichers gespeichert werden. Dabei wird die mitgegebenen
+	 * Listen über einen MergeSort allgorithmus sortiert. Dem {@link #informations
+	 * Informations Speicher} wird dieser Speicher als {@link InformationSave#parent
+	 * Elternklasse} gesetzt und dieser wird noch einmal
+	 * {@link InformationSave#update() aktualisiert}.
+	 * 
+	 * @param editedStudents  Alle berechneten Schüler -
+	 *                        {@link Distributor#allStudents}
+	 * @param ignoredStudents Alle nicht mitberechneten Schüler -
+	 *                        {@link Distributor#ignoredStudents}
+	 * @param allCourses      Alle Kurse - {@link Distributor#allCourses}
+	 * @param informations    Weitere Informationen über die Berechnung -
+	 *                        {@link InformationSave#InformationSave(int, int, int[], ArrayList, ArrayList)}
+	 */
 	public Save(List<Student> editedStudents, List<Student> ignoredStudents, List<Course> allCourses,
 			InformationSave informations) {
 		this.informations = informations;
 		this.informations.parent = this;
 
-		this.allCourses = this.sortCourse((allCourses));
+		this.allCourses = Save.sortCourse((allCourses));
 
 		this.allStudents = new ArrayList<>(editedStudents);
 		this.allStudents.addAll(ignoredStudents);
@@ -37,6 +78,10 @@ public class Save implements Comparable<Save>, Serializable {
 		this.informations.update();
 	}
 
+	/**
+	 * @return Die höchste Priorität der in diesem Speicher gespeicherten
+	 *         Berechnung.
+	 */
 	public int getHighestPriority() {
 		int highest = 0;
 		for (Student s : this.allStudents)
@@ -47,6 +92,10 @@ public class Save implements Comparable<Save>, Serializable {
 		return highest;
 	}
 
+	/**
+	 * @return Die Anzahl der Schüler mit den einzelnen Prioritäten der in diesem
+	 *         Speicher gespeicherten Berechnung.
+	 */
 	public int[] getStudentPriorities() {
 		int[] studentPriorities = new int[this.getHighestPriorityWhithoutIntegerMax() + 1];
 		int i1 = 0;
@@ -104,7 +153,7 @@ public class Save implements Comparable<Save>, Serializable {
 		return pStudents;
 	}
 
-	private List<Course> sortCourse(List<Course> courseToSort) {
+	private static List<Course> sortCourse(List<Course> courseToSort) {
 		ExecutorService pool = Executors.newFixedThreadPool(courseToSort.size() / 2 + 10);
 		Future<ArrayList<Course>> sortedStudents = pool
 				.submit(new MergeSort<Course>((ArrayList<Course>) courseToSort, pool));

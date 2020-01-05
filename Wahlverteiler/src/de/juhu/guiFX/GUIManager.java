@@ -1627,6 +1627,8 @@ public class GUIManager implements Initializable {
 
 	public void onConfigChanged() {
 		this.updateIV();
+		if (!Distributor.getInstance().ignore().toString().equalsIgnoreCase(Config.ignoreStudent + "|"))
+			Distributor.getInstance().setIgnoreMark(Config.ignoreStudent);
 	}
 
 	@Override

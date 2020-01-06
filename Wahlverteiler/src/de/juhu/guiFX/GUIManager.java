@@ -1487,12 +1487,11 @@ public class GUIManager implements Initializable {
 	public void onSaveConfig(ActionEvent event) {
 		LOGGER.info("Start saving config");
 
-		if (!Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/"),
-				LinkOption.NOFOLLOW_LINKS))
-			new File(System.getenv("localappdata") + "/CaRP/").mkdir();
+		if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER), LinkOption.NOFOLLOW_LINKS))
+			new File(References.HOME_FOLDER).mkdir();
 
 		try {
-			ConfigManager.getInstance().save(new File(System.getenv("localappdata") + "/CaRP/config.cfg"));
+			ConfigManager.getInstance().save(new File(References.HOME_FOLDER + "config.cfg"));
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Fehler beim schreiben der Config datei!", e);
 		}
@@ -1510,19 +1509,17 @@ public class GUIManager implements Initializable {
 	public void onHelp(ActionEvent event) {
 
 		try {
-			if (!Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/"),
-					LinkOption.NOFOLLOW_LINKS))
-				new File(System.getenv("localappdata") + "/CaRP/").mkdir();
+			if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER), LinkOption.NOFOLLOW_LINKS))
+				new File(References.HOME_FOLDER).mkdir();
 
-			if (Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/help.pdf"),
+			if (Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf"),
 					LinkOption.NOFOLLOW_LINKS))
-				Files.delete(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/help.pdf"));
+				Files.delete(FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf"));
 
 			Files.copy(getClass().getResourceAsStream("/assets/Der Course and Research Paper Assinger.pdf"),
-					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/help.pdf"));
+					FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf"));
 
-			Desktop.getDesktop()
-					.browse(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/help.pdf").toUri());
+			Desktop.getDesktop().browse(FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf").toUri());
 		} catch (IOException e) {
 
 		}
@@ -1657,12 +1654,12 @@ public class GUIManager implements Initializable {
 			LOGGER.log(Level.SEVERE, "Error while register Configuration Elements", e4);
 		}
 
-		if (!Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/config.cfg"),
+		if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "config.cfg"),
 				LinkOption.NOFOLLOW_LINKS))
 			ConfigManager.getInstance().loadDefault();
 		else
 			try {
-				ConfigManager.getInstance().load(System.getenv("localappdata") + "/CaRP/config.cfg");
+				ConfigManager.getInstance().load(References.HOME_FOLDER + "config.cfg");
 			} catch (SAXException | IOException e4) {
 				LOGGER.log(Level.SEVERE, "Error while loading Config", e4);
 			}
@@ -2078,14 +2075,12 @@ public class GUIManager implements Initializable {
 
 	public void onSetEnglish(ActionEvent event) {
 		try {
-			if (Files.exists(
-					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"),
+			if (Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"),
 					LinkOption.NOFOLLOW_LINKS))
-				Files.delete(
-						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+				Files.delete(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
 
 			Files.copy(getClass().getResourceAsStream("/assets/language/en.properties"),
-					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+					FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -2095,14 +2090,12 @@ public class GUIManager implements Initializable {
 
 	public void onSetGerman(ActionEvent event) {
 		try {
-			if (Files.exists(
-					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"),
+			if (Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"),
 					LinkOption.NOFOLLOW_LINKS))
-				Files.delete(
-						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+				Files.delete(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
 
 			Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
-					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+					FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

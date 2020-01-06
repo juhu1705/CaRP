@@ -29,6 +29,11 @@ public class References {
 		LOGGING_HANDLER = new LoggingHandler();
 	}
 
+	public static final String HOME_FOLDER;
+	static {
+		HOME_FOLDER = System.getProperty("user.home") + "/.CaRP/";
+	}
+
 	public static final Logger LOGGER;
 	static {
 		LOGGER = Logger.getLogger("Wahlverteiler");

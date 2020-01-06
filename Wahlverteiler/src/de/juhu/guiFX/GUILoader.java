@@ -41,15 +41,13 @@ public class GUILoader extends Application {
 //		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI() + "");
 //		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI().toURL() + "");
 		try {
-			if (!Files.exists(
-					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"),
+			if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"),
 					LinkOption.NOFOLLOW_LINKS)) {
-				if (!Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/"),
-						LinkOption.NOFOLLOW_LINKS))
-					new File(System.getenv("localappdata") + "/CaRP/").mkdir();
+				if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER), LinkOption.NOFOLLOW_LINKS))
+					new File(References.HOME_FOLDER).mkdir();
 
 				Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
-						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+						FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
 			}
 		} catch (Exception e) {
 			FileReader reader;
@@ -73,41 +71,35 @@ public class GUILoader extends Application {
 				if (reader2 != null)
 					reader2.close();
 
-				if (!Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/"),
-						LinkOption.NOFOLLOW_LINKS))
-					new File(System.getenv("localappdata") + "/CaRP/").mkdir();
+				if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER), LinkOption.NOFOLLOW_LINKS))
+					new File(References.HOME_FOLDER).mkdir();
 
-				if (Files.exists(
-						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"),
+				if (Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"),
 						LinkOption.NOFOLLOW_LINKS))
-					Files.delete(FileSystems.getDefault()
-							.getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+					Files.delete(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
 
 				Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
-						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+						FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
 
 				Reader reader3;
 				References.language = new PropertyResourceBundle(
-						reader3 = new FileReader(System.getenv("localappdata") + "/CaRP/language.properties"));
+						reader3 = new FileReader(References.HOME_FOLDER + "language.properties"));
 				reader3.close();
 			}
 		} else {
-			if (!Files.exists(FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/"),
-					LinkOption.NOFOLLOW_LINKS))
-				new File(System.getenv("localappdata") + "/CaRP/").mkdir();
+			if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER), LinkOption.NOFOLLOW_LINKS))
+				new File(References.HOME_FOLDER).mkdir();
 
-			if (Files.exists(
-					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"),
+			if (Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"),
 					LinkOption.NOFOLLOW_LINKS))
-				Files.delete(
-						FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+				Files.delete(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
 
 			Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
-					FileSystems.getDefault().getPath(System.getenv("localappdata") + "/CaRP/language.properties"));
+					FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
 
 			Reader reader;
 			References.language = new PropertyResourceBundle(
-					reader = new FileReader(System.getenv("localappdata") + "/CaRP/language.properties"));
+					reader = new FileReader(References.HOME_FOLDER + "language.properties"));
 			reader.close();
 		}
 
@@ -166,7 +158,7 @@ public class GUILoader extends Application {
 			Reader reader;
 			References.LOGGER.info("OK");
 			References.language = new PropertyResourceBundle(
-					reader = new FileReader(System.getenv("localappdata") + "/CaRP/language.properties"));
+					reader = new FileReader(References.HOME_FOLDER + "language.properties"));
 			reader.close();
 		} catch (IOException e) {
 			try {

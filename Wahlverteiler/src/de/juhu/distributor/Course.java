@@ -120,6 +120,12 @@ public class Course implements Comparable<Course>, Serializable {
 		return ((this.maxStudents < this.students.size()) && (this.maxStudents != -1));
 	}
 
+	/**
+	 * Gibt den Kurs als String zurück. Dazu wird das {@link #subject Fach} durch
+	 * einen "|" vom {@link #teacher Lehrer} getrennt. Der zurückgegebene String
+	 * sieht dann wiefolgt aus: {@link #subject
+	 * Fach}{@code  + "|" + }{@link #teacher Lehrer}.
+	 */
 	@Override
 	public String toString() {
 		return this.subject + "|" + this.teacher;

@@ -9,6 +9,17 @@ import de.juhu.math.Vec2i;
 import de.juhu.util.Config;
 import de.juhu.util.References;
 
+/**
+ * Diese Klasse hällt alle weiteren für eine Verteilung interressanten von dem
+ * ihr zugeordneten {@link #parent Speicher} zum abrufen bereit.
+ *
+ * @version 1.0
+ * @category Distribution
+ * @author Juhu1705
+ * @implements {@link Serializable}
+ * @since 0.0.2
+ *
+ */
 public class InformationSave implements Serializable {
 
 	Save parent;

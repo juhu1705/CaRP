@@ -530,7 +530,7 @@ public class Student implements Comparable<Student>, Serializable {
 		int i = this.getName().compareToIgnoreCase(s.getName());
 
 		if (i == 0)
-			i = this.prename.compareToIgnoreCase(s.prename);
+			i = this.getPrename().compareToIgnoreCase(s.getPrename());
 
 		return i;
 	}

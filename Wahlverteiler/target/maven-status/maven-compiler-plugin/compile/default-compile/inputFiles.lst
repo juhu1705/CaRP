@@ -30,6 +30,7 @@ C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\util\input\InputEventListener.
 C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\guiFX\SwitchCourseManager.java
 C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\guiFX\lists\OutputInformationView.java
 C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\math\Vec2i.java
+C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\guiFX\ProgressIndicator.java
 C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\util\input\Keyboard.java
 C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\guiFX\lists\SwitchCourseView.java
 C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\guiFX\AddCourseToSaveManager.java
@@ -44,7 +45,6 @@ C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\dateimanager\ConfigManager.jav
 C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\distributor\InformationSave.java
 C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\util\CellStyles.java
 C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\guiFX\AddCourseManager.java
-C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\distributor\ProgressIndicator.java
 C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\dateimanager\FieldHandler.java
 C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\util\Util.java
 C:\Users\Fabiu\git\KuFA\Wahlverteiler\src\de\juhu\dateimanager\CSVExporter.java

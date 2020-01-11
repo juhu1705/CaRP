@@ -63,10 +63,7 @@ public class Save implements Comparable<Save>, Serializable {
 	 * @param informations    Weitere Informationen über die Berechnung -
 	 *                        {@link InformationSave#InformationSave(int, int, int[], ArrayList, ArrayList)}
 	 */
-	public Save(List<Student> editedStudents, List<Student> ignoredStudents, List<Course> allCourses,
-			InformationSave informations) {
-		this.informations = informations;
-		this.informations.parent = this;
+	public Save(List<Student> editedStudents, List<Student> ignoredStudents, List<Course> allCourses) {
 
 		this.allCourses = Save.sortCourse((allCourses));
 
@@ -75,7 +72,7 @@ public class Save implements Comparable<Save>, Serializable {
 
 		this.allStudents = Save.sortStudents((this.allStudents));
 
-		this.informations.update();
+		(this.informations = new InformationSave(this)).update();
 	}
 
 	/**
@@ -108,7 +105,7 @@ public class Save implements Comparable<Save>, Serializable {
 		for (int i = 1; i < studentPriorities.length - 1; i++) {
 			studentPriorities[i] = this.getStudentsWithPriority(i + 1).size();
 		}
-		studentPriorities[studentPriorities.length - 1] = this.getInformation().getunallocatedStudents().size();
+		studentPriorities[studentPriorities.length - 1] = this.getInformation().getUStudents().size();
 		return studentPriorities;
 	}
 

@@ -21,7 +21,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * und verwaltet. Diese Klasse ermöglicht das Laden der initialisierten Werte,
  * einer Konfigurations-Datei, sowie das Schreiben einer Konfigurationsdatei.
  * 
- * @author Fabius
+ * @author Juhu1705
  * @category Config
  * @version 1.0
  */

@@ -19,7 +19,7 @@ import java.lang.annotation.Target;
  * registrierten Konfigelements werden in der Config-Datei unter
  * "%localappdata%/CaRP/config.cfg" gespeichert.
  * 
- * @author Fabius
+ * @author Juhu1705
  * @category Config
  * @version 1.0
  */

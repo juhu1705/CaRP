@@ -535,7 +535,7 @@ public class GUIManager implements Initializable {
 		if (s.getCourses().length > 0)
 			s.setActiveCourse(s.getCourses()[0]);
 
-		Distributor.calculated.peek().getInformation().getunallocatedStudents().remove(s);
+		Distributor.calculated.peek().getInformation().getUStudents().remove(s);
 		Distributor.calculated.peek().getInformation().update();
 		Platform.runLater(GUIManager.getInstance().outputSView);
 		Platform.runLater(GUIManager.getInstance().outputCView);
@@ -1276,7 +1276,7 @@ public class GUIManager implements Initializable {
 				GUIManager.getInstance().r2.setDisable(true);
 				GUIManager.getInstance().r3.setDisable(true);
 
-				de.juhu.distributor.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
+				de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
 			}
 		});
 
@@ -1334,7 +1334,7 @@ public class GUIManager implements Initializable {
 
 			@Override
 			public void run() {
-				de.juhu.distributor.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
+				de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
 
 				p0.setVisible(false);
 
@@ -1377,7 +1377,7 @@ public class GUIManager implements Initializable {
 				GUIManager.getInstance().r2.setDisable(true);
 				GUIManager.getInstance().r3.setDisable(true);
 
-				de.juhu.distributor.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
+				de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
 			}
 		});
 
@@ -1431,7 +1431,7 @@ public class GUIManager implements Initializable {
 
 			@Override
 			public void run() {
-				de.juhu.distributor.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
+				de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
 
 				p0.setVisible(false);
 
@@ -1626,6 +1626,8 @@ public class GUIManager implements Initializable {
 		this.updateIV();
 		if (!Distributor.getInstance().ignore().toString().equalsIgnoreCase(Config.ignoreStudent + "|"))
 			Distributor.getInstance().setIgnoreMark(Config.ignoreStudent);
+
+		Distributor.getInstance().updateStandartReaders();
 	}
 
 	@Override

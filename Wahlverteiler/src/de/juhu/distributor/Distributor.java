@@ -15,6 +15,7 @@ import java.util.logging.Level;
 
 import de.juhu.dateimanager.WriteableContent;
 import de.juhu.guiFX.GUIManager;
+import de.juhu.guiFX.ProgressIndicator;
 import de.juhu.util.Config;
 import de.juhu.util.PriorityQueue;
 import de.juhu.util.References;
@@ -114,7 +115,8 @@ public class Distributor implements Runnable {
 	/**
 	 * Erstellt eine Instanz dieser Klasse ohne weitere Eigenschaften. Wird nur
 	 * ausgeführt, wenn noch keine Instanz vorhanden ist und {@link #getInstance()}
-	 * aufgerufen wird.
+	 * aufgerufen wird, oder alle Berechnungen geleert werden sollen, sowie die
+	 * eingelesenden Daten.
 	 */
 	protected Distributor() {
 		if (instance != null && !Config.clear) {
@@ -122,12 +124,15 @@ public class Distributor implements Runnable {
 			this.allCourses = Distributor.getInstance().loadedallCourses;
 			this.ignoredStudents = Distributor.getInstance().ignoredStudents;
 		}
+		if (instance != null)
+			this.readers = instance.readers;
+		else
+			this.loadReaders();
 
 		instance = this;
 
 		this.loadedallStudents = this.allStudents;
 		this.loadedallCourses = this.allCourses;
-		this.loadReaders();
 	}
 
 	/**
@@ -144,7 +149,10 @@ public class Distributor implements Runnable {
 	 *                 herausgelesen werden.
 	 */
 	public Distributor(String filename) {
-		this.loadReaders();
+		if (instance != null)
+			this.readers = instance.readers;
+		else
+			this.loadReaders();
 
 		// Lädt, falls gewünscht die Daten aus der alten Instanz in die Neue.
 		if (!Config.clear) {
@@ -180,7 +188,10 @@ public class Distributor implements Runnable {
 	 *                    eingefügt wird.
 	 */
 	public Distributor(Save actual, Save... readObject) {
-		this.loadReaders();
+		if (instance != null)
+			this.readers = instance.readers;
+		else
+			this.loadReaders();
 
 		// Setzt die aktuelle Instanz auf diese.
 		Distributor.instance = this;
@@ -673,10 +684,12 @@ public class Distributor implements Runnable {
 		students = copiedData[0];
 		courses = copiedData[1];
 
-		Save save = new Save(students, ignorestudents, courses,
-				new InformationSave(this.getHighestPriority(), this.rate(), this.getPriorities(),
-						this.getUnallocatedStudents(),
-						this.getStudentsWithPriority(this.getHighestPriorityWhithoutIntegerMax())));
+		Save save = new Save(students, ignorestudents, courses
+		/*
+		 * new InformationSave(this.getHighestPriority(), this.rate(),
+		 * this.getPriorities(), this.getUnallocatedStudents(),
+		 * this.getStudentsWithPriority(this.getHighestPriorityWhithoutIntegerMax()))
+		 */);
 
 		Distributor.calculated.add(save);
 	}
@@ -1107,7 +1120,7 @@ public class Distributor implements Runnable {
 		 */
 		int lineNumber = 0;
 
-		this.loadReaders();
+		this.updateStandartReaders();
 
 		/*
 		 * Hauptschleife:
@@ -1189,7 +1202,7 @@ public class Distributor implements Runnable {
 	 * Lädt die Standart {@link Reader} in {@link #readers}.
 	 */
 	private void loadReaders() {
-		this.addReader(new Reader(Config.newStudent) {
+		this.readers.add(0, new Reader(Config.newStudent) {
 			@Override
 			public void read(String[] line, int lineNumber) {
 				if (line.length < 2) {
@@ -1218,7 +1231,7 @@ public class Distributor implements Runnable {
 			}
 		});
 
-		this.addReader(new Reader(Config.newCourse) {
+		this.readers.add(1, new Reader(Config.newCourse) {
 			@Override
 			public void read(String[] line, int lineNumber) {
 				LOGGER.info("Try to Add Course " + lineNumber);
@@ -1244,6 +1257,21 @@ public class Distributor implements Runnable {
 						+ countStudents + ".");
 			}
 		});
+	}
+
+	/**
+	 * Aktualisiert die Standartmäßig eingefügten Leser.
+	 */
+	public void updateStandartReaders() {
+		if (this.readers.size() < 2) {
+			this.loadReaders();
+			return;
+		}
+
+		this.readers.remove(1);
+		this.readers.remove(0);
+
+		this.loadReaders();
 	}
 
 	/**

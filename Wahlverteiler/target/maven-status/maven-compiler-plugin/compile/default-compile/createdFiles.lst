@@ -44,10 +44,10 @@ de\juhu\guiFX\lists\SwitchCourseView.class
 de\juhu\dateimanager\FieldHandler.class
 de\juhu\util\input\InputEvent.class
 de\juhu\guiFX\GUIManager$4.class
-de\juhu\distributor\ProgressIndicator.class
 de\juhu\guiFX\GUIManager$1.class
 de\juhu\util\LoggingHandler.class
 de\juhu\guiFX\lists\OutputInformationView.class
+de\juhu\guiFX\ProgressIndicator.class
 de\juhu\distributor\Distributor$4.class
 de\juhu\util\Interfaces\Renderable.class
 de\juhu\guiFX\AboutManager.class

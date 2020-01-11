@@ -55,7 +55,7 @@ public class OutputInformationView implements Runnable {
 
 		GUIManager.getInstance().priorities.sort();
 
-		if (!GUIManager.actual.getInformation().getunallocatedStudents().isEmpty()) {
+		if (!GUIManager.actual.getInformation().getUStudents().isEmpty()) {
 
 			if (!this.scourses.isEmpty()) {
 				this.scourses.forEach(c -> GUIManager.getInstance().unallocatedStudents.getColumns().remove(c));
@@ -96,10 +96,10 @@ public class OutputInformationView implements Runnable {
 			// GUIManager.getInstance().unallocatedStudents.setItems(FXCollections.observableArrayList(new
 			// ArrayList<>()));
 
-			References.LOGGER.fine(GUIManager.actual.getInformation().getunallocatedStudents().toString());
+			References.LOGGER.fine(GUIManager.actual.getInformation().getUStudents().toString());
 
 			GUIManager.getInstance().unallocatedStudents.setItems(
-					FXCollections.observableArrayList(GUIManager.actual.getInformation().getunallocatedStudents()));
+					FXCollections.observableArrayList(GUIManager.actual.getInformation().getUStudents()));
 
 			GUIManager.getInstance().unallocatedStudents.sort();
 		} else

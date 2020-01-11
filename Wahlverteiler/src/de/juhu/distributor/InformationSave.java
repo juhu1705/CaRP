@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import de.juhu.dateimanager.WriteableContent;
-import de.juhu.guiFX.GUIManager;
 import de.juhu.math.Vec2i;
 import de.juhu.util.Config;
 import de.juhu.util.References;
@@ -22,31 +21,82 @@ import de.juhu.util.References;
  */
 public class InformationSave implements Serializable {
 
+	/**
+	 * Der diesem Informationsspeicher zugeordnete {@link Save Speicher}.
+	 */
 	Save parent;
 
-	private int highestPriority, rate;
+	/**
+	 * Die höchste Priorität, die im {@link #parent zugeordneten Speicher} vergeben
+	 * wurde.
+	 */
+	private int highestPriority;
+
+	/**
+	 * Die Rate der Berechnung des {@link #parent zugeordneten Speichers}.
+	 */
+	private int rate;
+
+	/**
+	 * Die Guete der Berechnung des {@link #parent zugeordneten Speicher}.
+	 */
 	private double guete;
 
+	/**
+	 * Die Anzahl der zugewiesenden Schüler, die im {@link #parent zugeordneten
+	 * Speicher} gespeichert sind. Alle Schüler, die nicht verteilt werden mussten
+	 * werden hier nicht mit aufgeführt.
+	 */
 	private int studentCount;
 
+	/**
+	 * Alle Schüler aus dem {@link #parent zugeordneten Speicher}, die nicht
+	 * zugewiesen werden konnten.
+	 */
 	private ArrayList<Student> unallocatedStudents = new ArrayList<Student>();
+
+	/**
+	 * Alle Schüler aus dem {@link #parent zugeordneten Speicher}, die die
+	 * schlechteste Priorität besitzen, aber zugeordnet werden konnten.
+	 */
 	private ArrayList<Student> badPriorityStudents = new ArrayList<Student>();
+
+	/**
+	 * <p>
+	 * Die Anzahl der Schüler aus dem {@link #parent zugeordneten Speicher} mit den
+	 * entsprechenden Prioritäten.
+	 * </p>
+	 * <ul>
+	 * <li>Prio 1: studentPriorities[0]</li>
+	 * <li>Prio 2: studentPriorities[1]</li>
+	 * <li>Prio n: studentPriorities[n - 1]</li>
+	 * <li>Anzahl der nicht zugewiesenden Schüler:
+	 * studentPriorities[studentPriorities.lenght - 1]</li>
+	 * </ul>
+	 * 
+	 */
 	private int[] studentPriorities;
 
-	public InformationSave(int highestPriority, int rate, int[] studentPriorities) {
-		this.highestPriority = highestPriority;
-		this.rate = rate;
-		this.studentPriorities = studentPriorities;
+	/**
+	 * Erzeugt einen Informationsspeicher, der an den mitgegebenen Speicher gebunden
+	 * ist. Nach dem erstellen dieses Speichers, kann die {@link #update()} funktion
+	 * genutzt werden, um alle anderen gespeicherten Werte den Werten des Speichers
+	 * anzugleichen.
+	 * 
+	 * @param parent Der diesem Informationsspeicher zugeordnete {@link Save
+	 *               Speicher}.
+	 */
+	InformationSave(Save parent) {
+		this.parent = parent;
 	}
 
-	public InformationSave(int highestPriority, int rate, int[] priorities, ArrayList<Student> unallocatedStudents,
-			ArrayList<Student> studentsWithBadPriority) {
-		this(highestPriority, rate, priorities);
-
-		this.unallocatedStudents = unallocatedStudents;
-		this.badPriorityStudents = studentsWithBadPriority;
-	}
-
+	/**
+	 * Schreibt die im Informationsspeicher gespeicherten Daten in eine
+	 * {@link WriteableContent exportierbare Tabelle} und gibt diese zurück.
+	 * 
+	 * @return Eine exportierbare Tabelle mit den im Informationsspeicher
+	 *         gespeicherten Daten.
+	 */
 	public WriteableContent write() {
 		this.update();
 
@@ -65,13 +115,13 @@ public class InformationSave implements Serializable {
 				References.language.getString("calculationgoodness.text") + ": ", Double.toString(this.guete) });
 		information.addLine(new Vec2i(0, ++line),
 				new String[] { References.language.getString("studentcount.text") + ": ",
-						Integer.toString(GUIManager.actual.getAllStudents().size()) });
+						Integer.toString(this.parent.getAllStudents().size()) });
 		information.addLine(new Vec2i(0, ++line),
 				new String[] { References.language.getString("coursecount.text") + ": ",
-						Integer.toString(GUIManager.actual.getAllCourses().size()) });
+						Integer.toString(this.parent.getAllCourses().size()) });
 		information.addLine(new Vec2i(0, ++line),
 				new String[] { References.language.getString("calculatedstudentcount.text") + ": ",
-						Integer.toString(GUIManager.actual.getInformation().getStudentCount()) });
+						Integer.toString(this.getStudentCount()) });
 
 		line -= -2;
 
@@ -117,34 +167,67 @@ public class InformationSave implements Serializable {
 		return information;
 	}
 
+	/**
+	 * @return {@link #highestPriority Die höchste Priorität} der gespeicherten
+	 *         Berechnung.
+	 */
 	public int getHighestPriority() {
 		return this.highestPriority;
 	}
 
+	/**
+	 * @return {@link #rate Die Rate} der gespeicherten Berechnung
+	 */
 	public int getRate() {
 		return this.rate;
 	}
 
+	/**
+	 * @return Die Anzahl der Schüler mit den zugeordneten Prioritäten.
+	 * @see Save#getStudentPriorities()
+	 * @see InformationSave#studentPriorities
+	 */
 	public int[] getStudentPriorities() {
 		return this.studentPriorities;
 	}
 
+	/**
+	 * @return Gibt alle Schüler mit der schlechtesten Priorität der gespeicherten
+	 *         Berechnung zurück.
+	 */
 	public ArrayList<Student> getBStudents() {
 		return this.badPriorityStudents;
 	}
 
-	public ArrayList<Student> getunallocatedStudents() {
+	/**
+	 * @return Gibt alle Schüler zurück, die nicht zugewiesen werden konnten.
+	 */
+	public ArrayList<Student> getUStudents() {
 		return this.unallocatedStudents;
 	}
 
+	/**
+	 * @return Gibt die Anzahl der Berechneten Schüler zurück.
+	 */
 	public int getStudentCount() {
 		return this.studentCount;
 	}
 
+	/**
+	 * Aktualisiert die Daten dieses Inforationsspeichers mit den im {@link #parent
+	 * zugeordneten Speicher zu findenden Daten}.
+	 */
 	public void update() {
 
+		/*
+		 * Aktualisiert die Prioritäten aller Schüler.
+		 */
 		parent.getAllStudents().forEach(s -> s.refreshPriority());
 
+		/*
+		 * Aktualisiert die Liste der nicht zugewiesenden Schüler und berechnet die Zahö
+		 * der Schüler, die verteilt wurden.
+		 */
 		this.unallocatedStudents.clear();
 
 		int sCount = 0;
@@ -163,23 +246,29 @@ public class InformationSave implements Serializable {
 
 		this.studentCount = sCount;
 
-		if (this.badPriorityStudents.isEmpty()) {
-			this.highestPriority--;
-			this.studentPriorities[this.studentPriorities.length - 2] = 0;
+		/*
+		 * Aktualisiert die Anzahlen der Schüler mit den jeweiligen Prioritäten.
+		 */
+		this.studentPriorities = this.parent.getStudentPriorities();
 
-			int[] newSP = new int[this.studentPriorities.length - 1];
+		/*
+		 * Aktualisiert die höchste Priorität dieser Verteilung.
+		 */
+		this.highestPriority = parent.getHighestPriority();
 
-			for (int i = 0; i < newSP.length - 1; i++) {
-				newSP[i] = this.studentPriorities[i];
-			}
+		/*
+		 * Aktualisiert die Rate dieser Verteilung.
+		 */
+		this.rate = parent.rate(this.highestPriority);
 
-			newSP[newSP.length - 1] = this.studentPriorities[this.highestPriority - 1];
-
-			this.studentPriorities = newSP;
-		}
-
+		/*
+		 * Aktualisiert die Liste der Schüler mit der schlechtesten Priorität.
+		 */
 		this.badPriorityStudents = parent.getStudentsWithPriority(parent.getHighestPriorityWhithoutIntegerMax());
 
+		/*
+		 * Gleicht die Anzahl der Schüler mit den Prioritäten veränderten Werten an.
+		 */
 		if (this.unallocatedStudents.size() != this.studentPriorities[this.studentPriorities.length - 1])
 			this.studentPriorities[this.studentPriorities.length - 1] = this.unallocatedStudents.size();
 
@@ -187,19 +276,23 @@ public class InformationSave implements Serializable {
 				&& this.studentPriorities[this.studentPriorities.length - 2] != this.badPriorityStudents.size())
 			this.studentPriorities[this.studentPriorities.length - 2] = this.badPriorityStudents.size();
 
-		this.highestPriority = parent.getHighestPriority();
-		this.rate = parent.rate(this.highestPriority);
-
-		this.studentPriorities = this.parent.getStudentPriorities();
-
+		/*
+		 * Aktualisiert die Güte der Verteilung.
+		 */
 		this.updateGuete();
 	}
 
+	/**
+	 * Aktualisiert die Güte dieses Speichers.
+	 */
 	private void updateGuete() {
 		if (Config.useNewGoodness)
 			this.guete = (double) this.parent.getAllStudents().size() / (double) this.rate;
 		else {
-			int i = 0;
+			/*
+			 * Addiert die Prioritäten der Schüler mit umgekehrten Prioritätszuordnung.
+			 */
+			int studentPriorities = 0;
 
 			for (Student s : this.parent.getAllStudents()) {
 				if (s.getActiveCourse() == null) {
@@ -207,24 +300,40 @@ public class InformationSave implements Serializable {
 				}
 
 				if (s.getActiveCourse() == null || !s.getActiveCourse().equals(Distributor.getInstance().ignoredCourse))
-					i += this.translatePriority(s.getPriority());
+					studentPriorities += this.translatePriority(s.getPriority());
 
 			}
 
+			/*
+			 * Ermittelt die genutzte höchste Priorität.
+			 */
 			int highest = this.parent.getHighestPriority();
 			if (highest > this.parent.getHighestPriorityWhithoutIntegerMax() || highest < 0)
 				highest = this.parent.getHighestPriorityWhithoutIntegerMax() + 10;
 
+			/*
+			 * Ermittelt die Anzahl der Schüler.
+			 */
 			int studentCount = 0;
 			for (Student s : this.parent.getAllStudents())
 				if (s.getActiveCourse() == null || !s.getActiveCourse().equals(Distributor.getInstance().ignoredCourse))
 					studentCount++;
 
-			this.guete = i / ((double) highest * (double) studentCount);
+			/*
+			 * Berechnet die Güte aus den ermittelten Werten.
+			 */
+			this.guete = studentPriorities / ((double) highest * (double) studentCount);
 
 		}
 	}
 
+	/**
+	 * Wandelt die gegebene Priorität um. Die kleinste Prioritätszahl wird dabei zum
+	 * größten Wert und umgekehrt.
+	 * 
+	 * @param priority Die Priorität, die umgewandelt werden soll.
+	 * @return Die umgewandelte Priorität.
+	 */
 	private int translatePriority(int priority) {
 		if (priority > this.parent.getHighestPriorityWhithoutIntegerMax() || priority < 0)
 			return 0;
@@ -235,6 +344,9 @@ public class InformationSave implements Serializable {
 						: this.parent.getHighestPriority() - priority + 1;
 	}
 
+	/**
+	 * @return Die Güte dieser Berechnung.
+	 */
 	public double getGuete() {
 		return this.guete;
 	}

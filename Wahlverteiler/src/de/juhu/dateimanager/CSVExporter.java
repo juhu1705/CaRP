@@ -8,6 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 
+/**
+ * 
+ * @author Juhu1705
+ *
+ */
 public class CSVExporter {
 
 	public static void writeCSV(String pathfile, WriteableContent toWrite) throws IOException {

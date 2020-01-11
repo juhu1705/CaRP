@@ -6,9 +6,9 @@ import de.juhu.dateimanager.ConfigElement;
 
 /**
  * Diese Klasse enthält alle Konfigurationsattribute des Kurs- und
- * Facharbeitszuweisers
+ * Facharbeitszuweisers.
  * 
- * @author Fabius
+ * @author Juhu1705
  * @category Config
  * @version 2.3
  */

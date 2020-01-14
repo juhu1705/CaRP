@@ -212,7 +212,7 @@
                         <MaterialDesignIconView glyphName="FORMAT_LIST_BULLETED" />
                      </graphic>
                   </Tab>
-                  <Tab closable="false" text="%distribution.text">
+                  <Tab fx:id="tabOutput" closable="false" text="%distribution.text">
                      <content>
                         <BorderPane>
                            <center>
@@ -655,6 +655,15 @@
                            </accelerator>
                            <graphic>
                               <FontAwesomeIconView glyphName="SLIDERS" />
+                           </graphic>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#onFullScreen" text="%fullscreen.text">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="F11" control="UP" meta="UP" shift="UP" shortcut="ANY" />
+                           </accelerator>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="EXPAND" />
                            </graphic>
                         </MenuItem>
                      </items>

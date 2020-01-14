@@ -29,7 +29,7 @@
                <contextMenu>
                   <ContextMenu>
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#onSetActive" text="Set Active" />
+                      <MenuItem mnemonicParsing="false" onAction="#onSetActive" text="%setactive.text" />
                     </items>
                   </ContextMenu>
                </contextMenu>

@@ -153,7 +153,7 @@ public class GUIManager implements Initializable {
 	public TableColumn<Entry<Integer, Integer>, String> priority, swpriority, percentualPriorities;
 
 	@FXML
-	public Tab students, teachers, statistics, tabStudents, tabCourses, tabInput;
+	public Tab students, teachers, statistics, tabStudents, tabCourses, tabInput, tabOutput;
 
 	@FXML
 	public TabPane masterTabPane;
@@ -184,6 +184,10 @@ public class GUIManager implements Initializable {
 	public CheckMenuItem mb0, mb1;
 
 	private CheckMenuItem last, lastSwitch;
+
+	public void onFullScreen(ActionEvent event) {
+		GUILoader.getPrimaryStage().setFullScreen(!GUILoader.getPrimaryStage().isFullScreen());
+	}
 
 	public void onDeleteStudentFromActualSave(ActionEvent event) {
 		if (actual == null)
@@ -382,6 +386,10 @@ public class GUIManager implements Initializable {
 		Platform.runLater(GUIManager.getInstance().outputCView);
 		Platform.runLater(GUIManager.getInstance().outputIView);
 
+		if (GUIManager.actual.equals(Distributor.calculated.next(actual)))
+			this.b4.setDisable(true);
+		this.b1.setDisable(false);
+
 		this.counter.setText(Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
 	}
 
@@ -391,6 +399,10 @@ public class GUIManager implements Initializable {
 		Platform.runLater(GUIManager.getInstance().outputSView);
 		Platform.runLater(GUIManager.getInstance().outputCView);
 		Platform.runLater(GUIManager.getInstance().outputIView);
+
+		if (GUIManager.actual.equals(Distributor.calculated.previous(actual)))
+			this.b1.setDisable(true);
+		this.b4.setDisable(false);
 
 		this.counter.setText(Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
 	}
@@ -1053,6 +1065,9 @@ public class GUIManager implements Initializable {
 
 		File selected = fc.showOpenDialog(null);
 
+		if (selected == null)
+			return;
+
 		if (selected.exists() && Util.endsWith(selected.getPath(), ".csv", ".xlsx", ".xls")) {
 			Config.inputFile = selected.getPath();
 			new Distributor(selected.getPath());
@@ -1123,6 +1138,9 @@ public class GUIManager implements Initializable {
 
 		File selected = fc.showDialog(null);
 
+		if (selected == null)
+			return;
+
 		t2.setText(selected.getParent() + "\\" + selected.getName());
 
 		Config.outputFile = selected.getParent() + "\\" + selected.getName();
@@ -1159,9 +1177,9 @@ public class GUIManager implements Initializable {
 			for (File f : d.getFiles()) {
 				if (f.isDirectory()) {
 					t2.setText(f.getParent() + "\\" + f.getName());
-					cb2.setValue("FOLDER");
+					// cb2.setValue("FOLDER");
 					Config.outputFile = f.getParent() + "\\" + f.getName();
-					Config.outputFileType = "FOLDER";
+					// Config.outputFileType = "FOLDER";
 				} /**
 					 * else { if (f.exists() && Util.endsWith(f.getPath(), ".csv", ".xlsx", ".xls"))
 					 * { // t2.setText(f.getParent());
@@ -1474,6 +1492,9 @@ public class GUIManager implements Initializable {
 
 		File selected = fc.showDialog(null);
 
+		if (selected == null)
+			return;
+
 		LogWriter.writeLog(selected.getPath() + "/logging");
 	}
 
@@ -1747,6 +1768,8 @@ public class GUIManager implements Initializable {
 			}
 
 		}
+
+		GUILoader.getPrimaryStage().setMaximized(Config.shouldMaximize);
 
 		t2.setText(Config.outputFile);
 
@@ -2039,6 +2062,9 @@ public class GUIManager implements Initializable {
 			fc.setInitialDirectory(new File(new File(t1.getText()).getParent()));
 
 		File selected = fc.showOpenDialog(null);
+
+		if (selected == null)
+			return;
 
 		if (selected.exists() && Util.endsWith(selected.getPath(), ".carp")) {
 			this.load(selected.getPath());

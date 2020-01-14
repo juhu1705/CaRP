@@ -44,6 +44,9 @@ public class Config {
 	@ConfigElement(defaultValue = "ALL", elementClass = String.class, description = "printformat.description", name = "printformat.text")
 	public static String printFormat;
 
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "shouldMaximize.description", name = "shouldMaximize.text")
+	public static boolean shouldMaximize = false;
+
 	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "shortnames.description", name = "shortnames.text")
 	public static boolean shortNames;
 

@@ -98,8 +98,8 @@ public class OutputInformationView implements Runnable {
 
 			References.LOGGER.fine(GUIManager.actual.getInformation().getUStudents().toString());
 
-			GUIManager.getInstance().unallocatedStudents.setItems(
-					FXCollections.observableArrayList(GUIManager.actual.getInformation().getUStudents()));
+			GUIManager.getInstance().unallocatedStudents
+					.setItems(FXCollections.observableArrayList(GUIManager.actual.getInformation().getUStudents()));
 
 			GUIManager.getInstance().unallocatedStudents.sort();
 		} else
@@ -119,10 +119,10 @@ public class OutputInformationView implements Runnable {
 		GUIManager.getInstance().r2.setDisable(false);
 		GUIManager.getInstance().r3.setDisable(false);
 
-		GUIManager.getInstance().b1.setDisable(false);
+		// GUIManager.getInstance().b1.setDisable(false);
 		GUIManager.getInstance().b2.setDisable(false);
 		GUIManager.getInstance().b3.setDisable(false);
-		GUIManager.getInstance().b4.setDisable(false);
+		// GUIManager.getInstance().b4.setDisable(false);
 		GUIManager.getInstance().b5.setDisable(false);
 		GUIManager.getInstance().b6.setDisable(false);
 	}

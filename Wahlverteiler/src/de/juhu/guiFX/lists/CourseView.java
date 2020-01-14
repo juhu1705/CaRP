@@ -16,7 +16,6 @@ public class CourseView {
 	public void fill() {
 
 		References.LOGGER.config("Loading Input Data to the Preview!");
-		References.LOGGER.config(Distributor.getInstance().getCourses().toString());
 		this.inputTable.getItems().clear();
 		this.inputTable.setItems(FXCollections.observableArrayList(Distributor.getInstance().getCourses()));
 		this.inputTable.sort();

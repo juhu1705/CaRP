@@ -63,12 +63,10 @@ public class AddStudentManager implements Initializable {
 		if (studentID == -1) {
 			Course[] c = new Course[cources.size() / 2 + 1];
 
-			References.LOGGER.info(c1f.getText() + "|" + c1t.getText());
 			c[0] = Distributor.getInstance().getOrCreateCourseByName(c1f.getText() + "|" + c1t.getText());
 			for (int i = 0, n = 1; i + 1 < cources.size(); i += 2, n++) {
 				if (Util.isBlank(cources.get(i).getText() + cources.get(i + 1).getText()))
 					continue;
-				References.LOGGER.info(cources.get(i).getText() + "|" + cources.get(i + 1).getText());
 				c[n] = Distributor.getInstance()
 						.getOrCreateCourseByName(cources.get(i).getText() + "|" + cources.get(i + 1).getText());
 			}
@@ -86,12 +84,10 @@ public class AddStudentManager implements Initializable {
 
 			Course[] c = new Course[cources.size() / 2 + 1];
 
-			References.LOGGER.info(c1f.getText() + "|" + c1t.getText());
 			c[0] = Distributor.getInstance().getOrCreateCourseByName(c1f.getText() + "|" + c1t.getText());
 			for (int i = 0, n = 1; i + 1 < cources.size(); i += 2, n++) {
 				if (Util.isBlank(cources.get(i).getText() + cources.get(i + 1).getText()))
 					continue;
-				References.LOGGER.info(cources.get(i).getText() + "|" + cources.get(i + 1).getText());
 				c[n] = Distributor.getInstance()
 						.getOrCreateCourseByName(cources.get(i).getText() + "|" + cources.get(i + 1).getText());
 			}

@@ -293,6 +293,9 @@ public class Distributor implements Runnable {
 		Platform.runLater(() -> {
 			GUIManager.getInstance().counter
 					.setText(Integer.toString(Distributor.calculated.indexOf(GUIManager.actual) + 1));
+			GUIManager.getInstance().b1.setDisable(true);
+			GUIManager.getInstance().b4.setDisable(false);
+			GUIManager.getInstance().masterTabPane.getSelectionModel().select(GUIManager.getInstance().tabOutput);
 		});
 
 		Platform.runLater(GUIManager.getInstance().outputSView);
@@ -956,7 +959,7 @@ public class Distributor implements Runnable {
 
 		Course c = this.getCourseByName(name);
 		if (c == null)
-			this.allCourses.add(c = new Course(name.split("\\|")));
+			this.addCourse(c = new Course(name.split("\\|")));
 		return c;
 	}
 
@@ -995,8 +998,6 @@ public class Distributor implements Runnable {
 		return this.ignoredCourse;
 	}
 
-	// INFO: DEPRECATED
-
 	/**
 	 * Fügt einen {@link Student Schüler} zur {@link #allStudents Liste der Schüler}
 	 * hinzu.
@@ -1004,16 +1005,18 @@ public class Distributor implements Runnable {
 	 * @param s Der {@link Student Schüler} der hinzugefügt werden soll.
 	 */
 	public void addStudent(Student s) {
-		// FIXME
 		if (s == null)
 			return;
 
 		if (this.allStudents.contains(s))
 			this.allStudents.remove(s);
 
-		this.allStudents.add(s);
+		if (this.allStudents.add(s))
+			LOGGER.fine("The Student with the name " + s.getPrename() + " " + s.getName() + " was added.");
 
 	}
+
+	// INFO: DEPRECATED
 
 	/**
 	 * @deprecated Directly add the Student to the course instead of use this Method
@@ -1074,6 +1077,9 @@ public class Distributor implements Runnable {
 //		this.synchroniseStudentAndCourses();
 //		LOGGER.info("Finish matching data!");
 		LOGGER.config("Finished importing Data in the Distributor!");
+
+		LOGGER.info("All Courses: " + this.allCourses.toString());
+		LOGGER.info("All Students: " + this.allStudents.toString());
 	}
 
 	/**
@@ -1147,8 +1153,6 @@ public class Distributor implements Runnable {
 			}
 
 			for (Reader r : readers) {
-				LOGGER.config(line[0] + " | " + r.key);
-
 				if (r.isKey(line[0]))
 					r.read(Util.removeFirst(line), lineNumber);
 				else if (r.isKey(gridName) && !isCommand)
@@ -1211,7 +1215,6 @@ public class Distributor implements Runnable {
 					lineNumber++;
 					return;
 				}
-				// TODO - Mehrere Ignor MArks möglich machen
 				if (line[2].equals(Config.ignoreStudent)) {
 					Distributor.getInstance().ignoredStudents
 							.add(new Student(line[0], line[1], Distributor.getInstance().ignore()));
@@ -1226,7 +1229,7 @@ public class Distributor implements Runnable {
 					}
 					Student s = new Student(line[0], line[1], chooses);
 					Distributor.getInstance().allStudents.add(s);
-					LOGGER.fine("Student with name " + line[2] + " " + line[1] + " was created.");
+					LOGGER.fine("Student with name " + line[1] + " " + line[0] + " was created.");
 				}
 			}
 		});
@@ -1303,7 +1306,8 @@ public class Distributor implements Runnable {
 	public void addCourse(Course c) {
 		if (this.allCourses.contains(c))
 			this.allCourses.remove(c);
-		this.allCourses.add(c);
+		if (this.allCourses.add(c))
+			LOGGER.fine("The " + c.getSubject() + "-Course teached by " + c.getTeacher() + " was added.");
 	}
 
 	/**

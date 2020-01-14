@@ -40,6 +40,8 @@ public class GUILoader extends Application {
 		// LOGGER.info(getClass().getResource("/de/juhu/guiFX/GUI.fxml") + "");
 //		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI() + "");
 //		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI().toURL() + "");
+		GUILoader.primaryStage = primaryStage;
+
 		try {
 			if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"),
 					LinkOption.NOFOLLOW_LINKS)) {
@@ -124,12 +126,13 @@ public class GUILoader extends Application {
 		});
 
 		primaryStage.centerOnScreen();
+
 		primaryStage.initStyle(StageStyle.DECORATED);
 
 		primaryStage.getIcons().add(i);
 
 		primaryStage.show();
-		GUILoader.primaryStage = primaryStage;
+
 		scene = s;
 
 		if (GUILoader.toLoad != null) {
@@ -156,14 +159,13 @@ public class GUILoader extends Application {
 			return;
 		try {
 			Reader reader;
-			References.LOGGER.info("OK");
 			References.language = new PropertyResourceBundle(
 					reader = new FileReader(References.HOME_FOLDER + "language.properties"));
 			reader.close();
 		} catch (IOException e) {
 			try {
 				Reader reader;
-				References.LOGGER.info("Failed");
+				References.LOGGER.info("Failed to load language, backup language was loaded");
 				References.language = new PropertyResourceBundle(
 						reader = new FileReader("/assets/language/de.properties"));
 				reader.close();

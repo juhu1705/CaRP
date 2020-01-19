@@ -43,6 +43,9 @@
  /*Menu */
  
 *.menu-bar {
+    -fx-font-size:12px;
+    -fx-alignment: CENTER_LEFT;
+    
      -fx-color: secondary;
      -fx-background-color:default1;
 }

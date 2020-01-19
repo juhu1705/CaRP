@@ -4,10 +4,10 @@
  
 /* Colors */
 * {
-    dark1: #616161;
-    default1: #9E9E9E;
+    dark1: #FFFFFF;
+    default1: #031ee0;
     light1: #F5F5F5;
-    text1: #212121;
+    text1: #034de0;
     accent1: #607D8B;
     primary1: #212121;
     secondary1: #757575;
@@ -16,24 +16,34 @@
  
 /*Root Color*/
 *.root {
-     -fx-color:lightgrey;
-     
+     -fx-color:text1;
+     -fx-text-color:text1;
      -fx-background-color:dark1;
 }
  
 /*Tab */
  
+*.tab-pane {
+    -fx-tab-min-height:22px;
+    -fx-tab-min-width:20%;
+}
+ 
 *.tab {
-     -fx-background-color:lightgrey;
+     -fx-background-color:#03d3e0;
+     
+     -fx-tab-min-height:20px;
+    -fx-tab-min-width:20%;
 }
  
 *.tab:hover {
-     -fx-background-color:default1;
+    -fx-text-color:text1;
+
+    -fx-background-color:default1;
 }
  
 *.tab:selected {
-     -fx-background-color:dark1;
-     -fx-focus-color: divider1;
+     -fx-background-color:#030ae0;
+     -fx-focus-color:#FFFFFF;
 }
  
 *.tab-header-background {
@@ -43,28 +53,33 @@
  /*Menu */
  
 *.menu-bar {
-    -fx-font-size:12px;
-    -fx-alignment: CENTER_LEFT;
+    -fx-alignment: CENTER;
+
+    -fx-tab-min-height:60px;
+    -fx-tab-min-width:100px;
+    -fx-font-size:40px;
     
-     -fx-color: secondary;
-     -fx-background-color:default1;
+
+    -fx-background-color:default1;
 }
  
 *.menu:showing {
-    -fx-background-color: dark1;
+    -fx-background-color: #033fe0;
     -fx-background-radius: 6;
 }
 
 *.menu:hover {
-    -fx-color: default1;
-    -fx-font-fill: default1;
-    -fx-background-color: dark1;
+    -fx-color: #033fe0;
+    -fx-font-fill: #FFFFFF;
+    -fx-background-color: #033fe0;
     -fx-background-radius: 6;
 }
 
 /*Menu Bar */
 *.menu-bar:focused {
-    -fx-background-color: dark1;
+    -fx-color: #033fe0;
+    -fx-text-fill: #e00339;
+    -fx-background-color: #033fe0;
     -fx-background-radius: 6;
 }
  
@@ -74,26 +89,29 @@
 }
 
 *.menu-item:focused {
-    -fx-background-color: dark1;
+    -fx-color: #033fe0;
+    -fx-font-fill: #e00339;
+    -fx-background-color: #033fe0;
     -fx-background-radius: 6;
 }
 
 *.menu-item:hover {
-    -fx-color: light1;
-    -fx-background-color: default1;
+    -fx-color: #033fe0;
+    -fx-font-fill: #e00339;
+    -fx-background-color: #03d3e0;
     -fx-background-radius: 6;
 }
 
 /*Menu Seperator */
 *.menu-seperator:hover {
-    -fx-background-color: default1;
+    -fx-background-color: #03d3e0;
     -fx-background-radius: 6;
 }
 
 /*Menu Button */
 *.menu-button {
     -fx-text-fill: light1;
-    -fx-background-color:default1
+    -fx-background-color:#03d3e0;
 }
 
 *.menu-button>*.label {

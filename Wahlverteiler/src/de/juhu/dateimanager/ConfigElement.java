@@ -56,4 +56,13 @@ public @interface ConfigElement {
 	 *           Sprachdateien hinterlegt sein.
 	 */
 	public String name();
+
+	/**
+	 * @return Die Position im Baumsystem, unter der die Config zu finden ist.
+	 * @implNote Der hintelegte String muss, damit dass Programm läuft in den
+	 *           Sprachdateien hinterlegt sein. Ein "." trennt die Strings. Jeder
+	 *           einzelstring wird mit "String".location gesucht.
+	 */
+	public String location();
+
 }

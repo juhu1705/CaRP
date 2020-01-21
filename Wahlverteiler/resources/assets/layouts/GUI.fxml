@@ -25,6 +25,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
@@ -423,15 +424,24 @@
                   </Tab>
                   <Tab text="%options.tab">
                      <content>
-                        <ScrollPane>
-                           <content>
-                              <VBox fx:id="config" prefHeight="200.0" prefWidth="383.0" spacing="10.0">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding>
-                              </VBox>
-                           </content>
-                        </ScrollPane>
+                        <BorderPane>
+                           <center>
+                              <SplitPane dividerPositions="0.5" BorderPane.alignment="CENTER">
+                                 <items>
+                                    <TreeView fx:id="configurationTree" editable="true" onMouseClicked="#onChangeShownPage" prefHeight="176.0" prefWidth="248.0" />
+                                    <ScrollPane>
+                                       <content>
+                                          <VBox fx:id="config" prefHeight="200.0" prefWidth="533.0" spacing="10.0">
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </items>
+                              </SplitPane>
+                           </center>
+                        </BorderPane>
                      </content>
                      <graphic>
                         <OctIconView glyphName="GEAR" />

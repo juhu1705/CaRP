@@ -286,7 +286,7 @@ public class InformationSave implements Serializable {
 	 * Aktualisiert die Güte dieses Speichers.
 	 */
 	private void updateGuete() {
-		if (Config.useNewGoodness)
+		if (!Config.useNewGoodness)
 			this.guete = (double) this.parent.getAllStudents().size() / (double) this.rate;
 		else {
 			/*

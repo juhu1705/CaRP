@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.eclipse.jdt.annotation.Nullable;
-
 import de.juhu.distributor.Course;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -121,7 +119,7 @@ public class Util {
 		return false;
 	}
 
-	public static void openWindow(String resourceLocation, String title, @Nullable Stage parent, boolean darkTheme) {
+	public static void openWindow(String resourceLocation, String title, Stage parent, boolean darkTheme) {
 		Stage primaryStage = new Stage();
 
 		Image i;

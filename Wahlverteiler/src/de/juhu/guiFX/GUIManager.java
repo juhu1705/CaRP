@@ -90,7 +90,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 public class GUIManager implements Initializable {
@@ -940,10 +939,12 @@ public class GUIManager implements Initializable {
 		if (d.hasFiles()) {
 			for (File f : d.getFiles()) {
 				if (Util.endsWith(f.getPath(), ".csv", ".xlsx", ".xls")) {
-					new Distributor(f.getPath());
-					this.inputView.fill();
-					this.cView.fill();
-					t1.setText(f.getPath());
+					new Thread(() -> {
+						new Distributor(f.getPath());
+						this.inputView.fill();
+						this.cView.fill();
+						t1.setText(f.getPath());
+					}).start();
 				}
 			}
 		}
@@ -1076,10 +1077,12 @@ public class GUIManager implements Initializable {
 
 		if (selected.exists() && Util.endsWith(selected.getPath(), ".csv", ".xlsx", ".xls")) {
 			Config.inputFile = selected.getPath();
-			new Distributor(selected.getPath());
-			this.inputView.fill();
-			this.cView.fill();
-			t1.setText(selected.getPath());
+			new Thread(() -> {
+				new Distributor(selected.getPath());
+				this.inputView.fill();
+				this.cView.fill();
+				t1.setText(selected.getPath());
+			}).start();
 		}
 	}
 
@@ -1220,36 +1223,8 @@ public class GUIManager implements Initializable {
 
 		ErrorGuiController.headline = headline;
 		ErrorGuiController.information = message;
-		Stage primaryStage = new Stage();
 
-		Image i;
-
-		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-		else
-			i = new Image("/assets/textures/logo/KuFA.png");
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource("/assets/layouts/Error.fxml"), References.language);
-		} catch (IOException e) {
-			return;
-		}
-		Scene s = new Scene(root);
-		if (mb1.isSelected()) {
-			s.getStylesheets().add("/assets/styles/dark_theme.css");
-		}
-
-		primaryStage.setMinWidth(200);
-		primaryStage.setMinHeight(158);
-		primaryStage.setTitle("ERROR");
-		primaryStage.setScene(s);
-		primaryStage.initModality(Modality.WINDOW_MODAL);
-		primaryStage.initOwner(GUILoader.getPrimaryStage());
-		primaryStage.initStyle(StageStyle.DECORATED);
-
-		primaryStage.getIcons().add(i);
-
-		primaryStage.show();
+		Util.openWindow("/assets/layouts/Error.fxml", "ERROR", GUILoader.getPrimaryStage(), mb1.isSelected());
 		LOGGER.info("Error Window Started");
 
 	}

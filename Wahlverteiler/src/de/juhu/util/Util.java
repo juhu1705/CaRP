@@ -2,9 +2,20 @@ package de.juhu.util;
 
 import java.awt.Component;
 import java.awt.Rectangle;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 import de.juhu.distributor.Course;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Util {
 
@@ -108,6 +119,41 @@ public class Util {
 					return true;
 
 		return false;
+	}
+
+	public static void openWindow(String resourceLocation, String title, @Nullable Stage parent, boolean darkTheme) {
+		Stage primaryStage = new Stage();
+
+		Image i;
+
+		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
+			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
+		else
+			i = new Image("/assets/textures/logo/KuFA.png");
+		Parent root = null;
+
+		try {
+			root = FXMLLoader.load(Util.class.getClass().getResource(resourceLocation), References.language);
+		} catch (IOException e) {
+			return;
+		}
+		Scene s = new Scene(root);
+		if (darkTheme) {
+			s.getStylesheets().add("/assets/styles/dark_theme.css");
+		}
+
+		primaryStage.setMinWidth(200);
+		primaryStage.setMinHeight(158);
+		primaryStage.setTitle(title);
+		primaryStage.setScene(s);
+		primaryStage.initModality(Modality.WINDOW_MODAL);
+		if (parent != null)
+			primaryStage.initOwner(parent);
+		primaryStage.initStyle(StageStyle.DECORATED);
+
+		primaryStage.getIcons().add(i);
+
+		primaryStage.show();
 	}
 
 }

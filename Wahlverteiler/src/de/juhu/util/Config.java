@@ -50,17 +50,23 @@ public class Config {
 	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "shortnames.description", name = "shortnames.text", location = "config.export")
 	public static boolean shortNames;
 
-	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "firstprename.description", name = "firstprename.text", location = "config.export")
+	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "firstprename.description", name = "firstprename.text", location = "config.export")
 	public static boolean firstPrename;
 
-	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "usenewgoodness.description", name = "usenewgoodness.text", location = "config.calculation")
-	public static boolean useNewGoodness = false;
+	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "usenewgoodness.description", name = "usenewgoodness.text", location = "config.calculation")
+	public static boolean useNewGoodness = true;
 
 	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "newimproving.description", name = "newimproving.text", location = "config.calculation")
 	public static boolean newImproving = true;
 
 	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "clearcalculationdata.description", name = "clearcalculationdata.text", location = "config.import")
-	public static boolean clear;
+	public static boolean clear = true;
+
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "dontask.description", name = "dontask.text", location = "config.import")
+	public static boolean rememberDecision = false;
+
+	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "allowDoubles.description", name = "allowDoubles.text", location = "config.import")
+	public static boolean allowDoubleStudents = true;
 
 	@ConfigElement(defaultValue = "100", elementClass = Integer.class, description = "runcount.description", name = "runcount.text", location = "config.calculation")
 	public static int runs = 100;

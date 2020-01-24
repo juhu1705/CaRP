@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.logging.Level;
 
 import de.juhu.dateimanager.WriteableContent;
+import de.juhu.guiFX.GUIDoubleStudentManager;
+import de.juhu.guiFX.GUILoader;
 import de.juhu.guiFX.GUIManager;
 import de.juhu.guiFX.ProgressIndicator;
 import de.juhu.util.Config;
@@ -1215,6 +1217,42 @@ public class Distributor implements Runnable {
 					lineNumber++;
 					return;
 				}
+
+				for (Student s : Distributor.getInstance().allStudents) {
+					if (s.getPrename().equalsIgnoreCase(line[1]) && s.getName().equalsIgnoreCase(line[0])) {
+
+						if (!Config.rememberDecision) {
+
+							GUIDoubleStudentManager.finished = false;
+
+							Platform.runLater(() -> {
+								GUIDoubleStudentManager.sName = s.getName();
+								GUIDoubleStudentManager.sPrename = s.getPrename();
+
+								Util.openWindow("/assets/layouts/DoubleStudent.fxml",
+										References.language.getString("doubleStudent.text"),
+										GUILoader.getPrimaryStage(), GUIManager.getInstance().mb1.isSelected());
+							});
+
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								LOGGER.log(Level.SEVERE, "Error during sleeping!", e);
+							}
+
+							while (!GUIDoubleStudentManager.finished) {
+								try {
+									Thread.sleep(100);
+								} catch (InterruptedException e) {
+									LOGGER.log(Level.SEVERE, "Error during sleeping!", e);
+								}
+							}
+						}
+						if (!Config.allowDoubleStudents)
+							return;
+					}
+				}
+
 				if (line[2].equals(Config.ignoreStudent)) {
 					Distributor.getInstance().ignoredStudents
 							.add(new Student(line[0], line[1], Distributor.getInstance().ignore()));

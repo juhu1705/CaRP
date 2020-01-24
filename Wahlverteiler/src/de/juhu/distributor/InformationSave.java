@@ -153,7 +153,7 @@ public class InformationSave implements Serializable {
 					new String[] { References.language.getString("nounallocated.text") });
 		}
 
-		line++;
+		line = line % 2 != 0 ? line + (line - 1) % 2 : line + line % 2;
 
 		information.addLine(new Vec2i(0, line++),
 				new String[] { References.language.getString("studentswithbadpriority") });

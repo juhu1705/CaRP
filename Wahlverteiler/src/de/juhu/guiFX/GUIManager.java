@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Field;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -22,9 +21,8 @@ import java.util.logging.Level;
 
 import org.xml.sax.SAXException;
 
+import de.juhu.config.ConfigManager;
 import de.juhu.dateimanager.CSVExporter;
-import de.juhu.dateimanager.ConfigElement;
-import de.juhu.dateimanager.ConfigManager;
 import de.juhu.dateimanager.ExcelExporter;
 import de.juhu.dateimanager.LogWriter;
 import de.juhu.distributor.Course;
@@ -49,13 +47,9 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.CacheHint;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -63,23 +57,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.control.cell.CheckBoxTreeCell;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
@@ -88,8 +75,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class GUIManager implements Initializable {
@@ -253,39 +238,8 @@ public class GUIManager implements Initializable {
 
 		LOGGER.config("Starting Add Student Window");
 
-		Stage primaryStage = new Stage();
-
-		Image i;
-
-		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-		else
-			i = new Image("/assets/textures/logo/KuFA.png");
-
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddStudentToCalculation.fxml"),
-					References.language);
-		} catch (IOException e) {
-			References.LOGGER.log(Level.SEVERE, "", e);
-			return;
-		}
-		Scene s = new Scene(root);
-
-		if (mb1.isSelected()) {
-			s.getStylesheets().add("/assets/styles/dark_theme.css");
-		}
-
-		primaryStage.setMinWidth(200);
-		primaryStage.setMinHeight(158);
-		primaryStage.setTitle(References.language.getString("addstudent.text"));
-		primaryStage.setScene(s);
-		primaryStage.initModality(Modality.WINDOW_MODAL);
-		primaryStage.initOwner(GUILoader.getPrimaryStage());
-
-		primaryStage.getIcons().add(i);
-
-		primaryStage.show();
+		Util.openWindow("/assets/layouts/AddStudentToCalculation.fxml",
+				References.language.getString("addstudent.text"), GUILoader.getPrimaryStage(), mb1.isSelected());
 	}
 
 	public void onEditCourseActualSave(ActionEvent event) {
@@ -301,44 +255,14 @@ public class GUIManager implements Initializable {
 				|| (course.getSubject().isEmpty() && course.getTeacher().isEmpty()))
 			return;
 
-		LOGGER.config("Starting Add Student Window");
+		LOGGER.config("Starting Add Course Window");
 
 		AddCourseToSaveManager.s = course.getSubject();
 		AddCourseToSaveManager.t = course.getTeacher();
 		AddCourseToSaveManager.mS = course.getMaxStudentCount();
 
-		Stage primaryStage = new Stage();
-
-		Image i;
-
-		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-		else
-			i = new Image("/assets/textures/logo/KuFA.png");
-
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddCourseToCalculation.fxml"),
-					References.language);
-		} catch (IOException e) {
-			return;
-		}
-		Scene s = new Scene(root);
-
-		if (mb1.isSelected()) {
-			s.getStylesheets().add("/assets/styles/dark_theme.css");
-		}
-
-		primaryStage.setMinWidth(200);
-		primaryStage.setMinHeight(158);
-		primaryStage.setTitle(References.language.getString("addcourse.text"));
-		primaryStage.setScene(s);
-		primaryStage.initModality(Modality.WINDOW_MODAL);
-		primaryStage.initOwner(GUILoader.getPrimaryStage());
-
-		primaryStage.getIcons().add(i);
-
-		primaryStage.show();
+		Util.openWindow("/assets/layouts/AddCourseToCalculation.fxml", References.language.getString("addcourse.text"),
+				GUILoader.getPrimaryStage(), mb1.isSelected());
 	}
 
 	public void onAddCourseToActualSave(ActionEvent event) {
@@ -348,40 +272,14 @@ public class GUIManager implements Initializable {
 			return;
 		}
 
-		LOGGER.config("Starting Add Student Window");
+		AddCourseToSaveManager.s = null;
+		AddCourseToSaveManager.t = null;
+		AddCourseToSaveManager.mS = Config.normalStudentLimit;
 
-		Stage primaryStage = new Stage();
+		LOGGER.config("Starting Add Course Window");
 
-		Image i;
-
-		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-		else
-			i = new Image("/assets/textures/logo/KuFA.png");
-
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddCourseToCalculation.fxml"),
-					References.language);
-		} catch (IOException e) {
-			return;
-		}
-		Scene s = new Scene(root);
-
-		if (mb1.isSelected()) {
-			s.getStylesheets().add("/assets/styles/dark_theme.css");
-		}
-
-		primaryStage.setMinWidth(200);
-		primaryStage.setMinHeight(158);
-		primaryStage.setTitle(References.language.getString("addcourse.text"));
-		primaryStage.setScene(s);
-		primaryStage.initModality(Modality.WINDOW_MODAL);
-		primaryStage.initOwner(GUILoader.getPrimaryStage());
-
-		primaryStage.getIcons().add(i);
-
-		primaryStage.show();
+		Util.openWindow("/assets/layouts/AddCourseToCalculation.fxml", References.language.getString("addcourse.text"),
+				GUILoader.getPrimaryStage(), mb1.isSelected());
 	}
 
 	public void onNextSave(ActionEvent event) {
@@ -422,37 +320,12 @@ public class GUIManager implements Initializable {
 
 		LOGGER.config("Starting Add Student Window");
 
-		Stage primaryStage = new Stage();
+		AddCourseManager.mS = -2;
+		AddCourseManager.s = null;
+		AddCourseManager.t = null;
 
-		Image i;
-
-		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-		else
-			i = new Image("/assets/textures/logo/KuFA.png");
-
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddCourse.fxml"), References.language);
-		} catch (IOException e) {
-			return;
-		}
-		Scene s = new Scene(root);
-
-		if (mb1.isSelected()) {
-			s.getStylesheets().add("/assets/styles/dark_theme.css");
-		}
-
-		primaryStage.setMinWidth(200);
-		primaryStage.setMinHeight(158);
-		primaryStage.setTitle(References.language.getString("addcourse.text"));
-		primaryStage.setScene(s);
-		primaryStage.initModality(Modality.WINDOW_MODAL);
-		primaryStage.initOwner(GUILoader.getPrimaryStage());
-
-		primaryStage.getIcons().add(i);
-
-		primaryStage.show();
+		Util.openWindow("/assets/layouts/AddCourse.fxml", References.language.getString("addcourse.text"),
+				GUILoader.getPrimaryStage(), mb1.isSelected());
 	}
 
 	public void onClearCalculations(ActionEvent event) {
@@ -596,37 +469,8 @@ public class GUIManager implements Initializable {
 		AddCourseManager.t = course.getTeacher();
 		AddCourseManager.mS = course.getMaxStudentCount();
 
-		Stage primaryStage = new Stage();
-
-		Image i;
-
-		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-		else
-			i = new Image("/assets/textures/logo/KuFA.png");
-
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddCourse.fxml"), References.language);
-		} catch (IOException e) {
-			return;
-		}
-		Scene s = new Scene(root);
-
-		if (mb1.isSelected()) {
-			s.getStylesheets().add("/assets/styles/dark_theme.css");
-		}
-
-		primaryStage.setMinWidth(200);
-		primaryStage.setMinHeight(158);
-		primaryStage.setTitle(References.language.getString("addcourse.text"));
-		primaryStage.setScene(s);
-		primaryStage.initModality(Modality.WINDOW_MODAL);
-		primaryStage.initOwner(GUILoader.getPrimaryStage());
-
-		primaryStage.getIcons().add(i);
-
-		primaryStage.show();
+		Util.openWindow("/assets/layouts/AddCourse.fxml", References.language.getString("addcourse.text"),
+				GUILoader.getPrimaryStage(), mb1.isSelected());
 	}
 
 	public void onCourseChangeRequest(MouseEvent event) {
@@ -660,37 +504,9 @@ public class GUIManager implements Initializable {
 			AddCourseManager.t = course.getTeacher();
 			AddCourseManager.mS = course.getMaxStudentCount();
 
-			Stage primaryStage = new Stage();
+			Util.openWindow("/assets/layouts/AddCourse.fxml", References.language.getString("addcourse.text"),
+					GUILoader.getPrimaryStage(), mb1.isSelected());
 
-			Image i;
-
-			if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-				i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-			else
-				i = new Image("/assets/textures/logo/KuFA.png");
-
-			Parent root = null;
-			try {
-				root = FXMLLoader.load(getClass().getResource("/de/juhu/guiFX/AddCourse.fxml"));
-			} catch (IOException e) {
-				return;
-			}
-			Scene s = new Scene(root);
-
-			if (mb1.isSelected()) {
-				s.getStylesheets().add("/assets/styles/dark_theme.css");
-			}
-
-			primaryStage.setMinWidth(200);
-			primaryStage.setMinHeight(158);
-			primaryStage.setTitle(References.language.getString("addcourse.text"));
-			primaryStage.setScene(s);
-			primaryStage.initModality(Modality.WINDOW_MODAL);
-			primaryStage.initOwner(GUILoader.getPrimaryStage());
-
-			primaryStage.getIcons().add(i);
-
-			primaryStage.show();
 		}
 	}
 
@@ -733,37 +549,9 @@ public class GUIManager implements Initializable {
 
 		LOGGER.config("Starting Switch Course Window");
 
-		Stage primaryStage = new Stage();
+		Util.openWindow("/assets/layouts/SwitchCourse.fxml", References.language.getString("addstudent.text"),
+				GUILoader.getPrimaryStage(), mb1.isSelected());
 
-		Image i;
-
-		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-		else
-			i = new Image("/assets/textures/logo/KuFA.png");
-
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource("/assets/layouts/SwitchCourse.fxml"), References.language);
-		} catch (IOException e) {
-			return;
-		}
-		Scene s = new Scene(root);
-
-		if (mb1.isSelected()) {
-			s.getStylesheets().add("/assets/styles/dark_theme.css");
-		}
-
-		primaryStage.setMinWidth(200);
-		primaryStage.setMinHeight(158);
-		primaryStage.setTitle(References.language.getString("addstudent.text"));
-		primaryStage.setScene(s);
-		primaryStage.initModality(Modality.WINDOW_MODAL);
-		primaryStage.initOwner(GUILoader.getPrimaryStage());
-
-		primaryStage.getIcons().add(i);
-
-		primaryStage.show();
 	}
 
 	public void onSwitchCourseUnallocatedStudent(ActionEvent event) {
@@ -783,37 +571,8 @@ public class GUIManager implements Initializable {
 
 		LOGGER.config("Starting Switch Course Window");
 
-		Stage primaryStage = new Stage();
-
-		Image i;
-
-		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-		else
-			i = new Image("/assets/textures/logo/KuFA.png");
-
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource("/assets/layouts/SwitchCourse.fxml"), References.language);
-		} catch (IOException e) {
-			return;
-		}
-		Scene s = new Scene(root);
-
-		if (mb1.isSelected()) {
-			s.getStylesheets().add("/assets/styles/dark_theme.css");
-		}
-
-		primaryStage.setMinWidth(200);
-		primaryStage.setMinHeight(158);
-		primaryStage.setTitle(References.language.getString("addstudent.text"));
-		primaryStage.setScene(s);
-		primaryStage.initModality(Modality.WINDOW_MODAL);
-		primaryStage.initOwner(GUILoader.getPrimaryStage());
-
-		primaryStage.getIcons().add(i);
-
-		primaryStage.show();
+		Util.openWindow("/assets/layouts/SwitchCourse.fxml", References.language.getString("addstudent.text"),
+				GUILoader.getPrimaryStage(), mb1.isSelected());
 	}
 
 	public void onEditStudent(ActionEvent event) {
@@ -833,41 +592,8 @@ public class GUIManager implements Initializable {
 
 		LOGGER.config("Starting Add Student Window");
 
-		Stage primaryStage = new Stage();
-
-		Image i;
-
-		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-		else
-			i = new Image("/assets/textures/logo/KuFA.png");
-
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddStudent.fxml"), References.language);
-		} catch (IOException e) {
-			References.LOGGER.log(Level.SEVERE, "Cannot open window", e);
-
-			return;
-		}
-		Scene s = new Scene(root);
-
-		if (mb1.isSelected()) {
-			s.getStylesheets().add("/assets/styles/dark_theme.css");
-		}
-
-		primaryStage.setMinWidth(200);
-		primaryStage.setMinHeight(158);
-		primaryStage.setTitle(References.language.getString("addstudent.text"));
-		primaryStage.setScene(s);
-		primaryStage.initModality(Modality.WINDOW_MODAL);
-		primaryStage.initOwner(GUILoader.getPrimaryStage());
-
-		primaryStage.getIcons().add(i);
-
-		AddStudentManager.stage = primaryStage;
-
-		primaryStage.show();
+		Util.openWindow("/assets/layouts/AddStudent.fxml", References.language.getString("addstudent.text"),
+				GUILoader.getPrimaryStage(), mb1.isSelected());
 	}
 
 	public void onStudentChangeRequest(MouseEvent event) {
@@ -891,40 +617,10 @@ public class GUIManager implements Initializable {
 
 			LOGGER.config("Starting Add Student Window");
 
-			Stage primaryStage = new Stage();
-
-			Image i;
-
-			if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-				i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-			else
-				i = new Image("/assets/textures/logo/KuFA.png");
-
-			Parent root = null;
-			try {
-				root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddStudent.fxml"), References.language);
-			} catch (IOException e) {
-				return;
-			}
-			Scene s = new Scene(root);
-
-			if (mb1.isSelected()) {
-				s.getStylesheets().add("/assets/styles/dark_theme.css");
-			}
-
-			primaryStage.setMinWidth(200);
-			primaryStage.setMinHeight(158);
-			primaryStage.setTitle(References.language.getString("addstudent.text"));
-			primaryStage.setScene(s);
-			primaryStage.initModality(Modality.WINDOW_MODAL);
-			primaryStage.initOwner(GUILoader.getPrimaryStage());
-
-			primaryStage.getIcons().add(i);
-
-			AddStudentManager.stage = primaryStage;
 			AddStudentManager.studentID = student.getID();
 
-			primaryStage.show();
+			Util.openWindow("/assets/layouts/AddStudent.fxml", References.language.getString("addstudent.text"),
+					GUILoader.getPrimaryStage(), mb1.isSelected());
 		}
 	}
 
@@ -960,42 +656,10 @@ public class GUIManager implements Initializable {
 
 		LOGGER.config("Starting Add Student Window");
 
-		Stage primaryStage = new Stage();
-
 		AddStudentManager.studentID = -1;
 
-		Image i;
-
-		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-		else
-			i = new Image("/assets/textures/logo/KuFA.png");
-
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource("/assets/layouts/AddStudent.fxml"), References.language);
-		} catch (IOException e) {
-			return;
-		}
-		Scene s = new Scene(root);
-
-		if (mb1.isSelected()) {
-			s.getStylesheets().add("/assets/styles/dark_theme.css");
-		}
-
-		primaryStage.setMinWidth(200);
-		primaryStage.setMinHeight(158);
-		primaryStage.setTitle(References.language.getString("addstudent.text"));
-		primaryStage.setScene(s);
-		primaryStage.initModality(Modality.WINDOW_MODAL);
-		primaryStage.initOwner(GUILoader.getPrimaryStage());
-
-		primaryStage.getIcons().add(i);
-
-		AddStudentManager.stage = primaryStage;
-		AddStudentManager.studentID = -1;
-
-		primaryStage.show();
+		Util.openWindow("/assets/layouts/AddStudent.fxml", References.language.getString("addstudent.text"),
+				GUILoader.getPrimaryStage(), mb1.isSelected());
 	}
 
 	public void onFileTypeChanged(ActionEvent event) {
@@ -1089,35 +753,8 @@ public class GUIManager implements Initializable {
 	public void onAbout(ActionEvent event) {
 		LOGGER.config("Starting About Window");
 
-		Stage primaryStage = new Stage();
-
-		Image i;
-
-		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-		else
-			i = new Image("/assets/textures/logo/KuFA.png");
-
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource("/assets/layouts/About.fxml"), References.language);
-		} catch (IOException e) {
-			return;
-		}
-		Scene s = new Scene(root);
-
-		if (mb1.isSelected()) {
-			s.getStylesheets().add("/assets/styles/dark_theme.css");
-		}
-
-		primaryStage.setMinWidth(450);
-		primaryStage.setMinHeight(650);
-		primaryStage.setTitle(References.language.getString("about.text"));
-		primaryStage.setScene(s);
-
-		primaryStage.getIcons().add(i);
-
-		primaryStage.show();
+		Util.openWindow("/assets/layouts/About.fxml", References.language.getString("about.text"),
+				GUILoader.getPrimaryStage(), mb1.isSelected());
 	}
 
 	public void clearConsole(ActionEvent event) {
@@ -1190,7 +827,7 @@ public class GUIManager implements Initializable {
 					Config.outputFile = f.getParent() + "\\" + f.getName();
 					// Config.outputFileType = "FOLDER";
 				}
-				/**
+				/*
 				 * else { if (f.exists() && Util.endsWith(f.getPath(), ".csv", ".xlsx", ".xls"))
 				 * { // t2.setText(f.getParent());
 				 * 
@@ -1503,7 +1140,7 @@ public class GUIManager implements Initializable {
 	}
 
 	public void close(ActionEvent event) {
-		this.onConfigChanged();
+		ConfigManager.getInstance().onConfigChanged();
 
 		this.onSaveConfig(null);
 
@@ -1556,35 +1193,7 @@ public class GUIManager implements Initializable {
 		}
 	}
 
-	public void updateItems(TreeItem item) {
-		for (Object object : item.getChildren()) {
-			TreeItem ti = (TreeItem) object;
-
-			if (ti instanceof CheckBoxTreeItem) {
-				CheckBoxTreeItem cbti1 = (CheckBoxTreeItem) ti;
-				CheckBoxTreeItem cbti2 = (CheckBoxTreeItem) item;
-
-				for (Field f : Config.class.getFields()) {
-					ConfigElement e = f.getAnnotation(ConfigElement.class);
-					if (e != null) {
-						if (((String) cbti1.getValue()).equalsIgnoreCase(References.language.getString(e.name()))) {
-							try {
-								f.set(null, cbti1.isSelected());
-							} catch (IllegalArgumentException | IllegalAccessException e1) {
-
-							}
-						}
-					}
-				}
-			}
-
-			this.updateItems(ti);
-
-		}
-	}
-
-	public void updateIV() {
-
+	public void updateInputView() {
 		while (Config.maxChooses > this.atci.size() / 3) {
 			int number = (this.atci.size() / 3 + 1);
 
@@ -1655,134 +1264,6 @@ public class GUIManager implements Initializable {
 		}
 	}
 
-	public void onConfigChanged() {
-
-		for (TreeItem<String> ti : this.configurationTree.getRoot().getChildren()) {
-
-			CheckBoxTreeItem treeItem = (CheckBoxTreeItem) ti;
-
-			this.updateItems(treeItem);
-		}
-
-		this.updateIV();
-		if (!Distributor.getInstance().ignore().toString().equalsIgnoreCase(Config.ignoreStudent + "|"))
-			Distributor.getInstance().setIgnoreMark(Config.ignoreStudent);
-
-		Distributor.getInstance().updateStandartReaders();
-	}
-
-	public void onChangeShownPage(MouseEvent event) {
-
-		CheckBoxTreeItem selected = (CheckBoxTreeItem) this.configurationTree.getSelectionModel().getSelectedItem();
-		if (selected == null)
-			return;
-		String location = (String) selected.getValue();
-
-		CheckBoxTreeItem<String> actual = selected;
-
-		while (actual != null) {
-
-			actual = (CheckBoxTreeItem<String>) actual.getParent();
-
-			if (actual != null)
-				location = actual.getValue() + "." + location;
-
-		}
-
-		if (selected != null) {
-			this.config.getChildren().clear();
-			for (Field f : Config.class.getFields()) {
-
-				if (f.getAnnotation(ConfigElement.class) == null)
-					continue;
-				ConfigElement e = f.getAnnotation(ConfigElement.class);
-
-				String fieldlocation = "";
-
-				for (String s : e.location().split("\\."))
-					if (!s.isEmpty())
-						fieldlocation = fieldlocation + (fieldlocation == "" ? "" : ".")
-								+ References.language.getString(s + ".location");
-
-				if (location.equalsIgnoreCase(fieldlocation + "." + References.language.getString(e.name()))) {
-					TextArea ta = new TextArea(References.language.getString(e.description()));
-
-					ta.setEditable(false);
-					ta.setWrapText(true);
-
-					this.config.getChildren().addAll(new Label(References.language.getString("description.text") + ":"),
-							ta);
-				}
-
-				if (!fieldlocation.equalsIgnoreCase(location))
-					continue;
-
-				if (e.elementClass().equals(Integer.class)) {
-					Spinner cb = new Spinner();
-					cb.setTooltip(new Tooltip(References.language.getString(e.description())));
-					cb.setEditable(true);
-					try {
-						if (f.getName().equals("runs") || f.getName().equals("newCalculating")
-								|| f.getName().equals("improvingOfCalculation"))
-							cb.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE,
-									f.getInt(null)));
-						else
-							cb.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, Integer.MAX_VALUE,
-									f.getInt(null)));
-						cb.getValueFactory().valueProperty().addListener((o, oldValue, newValue) -> {
-							try {
-								f.set(null, newValue);
-							} catch (IllegalArgumentException e1) {
-								e1.printStackTrace();
-							} catch (IllegalAccessException e1) {
-								e1.printStackTrace();
-							}
-							this.onConfigChanged();
-						});
-					} catch (IllegalArgumentException | IllegalAccessException e3) {
-						e3.printStackTrace();
-					}
-
-					Label l = new Label((References.language.getString(e.name()) + ":"));
-
-					l.autosize();
-					this.config.getChildren().addAll(l, cb);
-				} else if (e.elementClass().equals(String.class)) {
-					TextField cb = new TextField();
-					cb.setTooltip(new Tooltip(References.language.getString(e.description())));
-
-					try {
-						cb.setText((String) f.get(null));
-					} catch (IllegalArgumentException e2) {
-						e2.printStackTrace();
-					} catch (IllegalAccessException e2) {
-						e2.printStackTrace();
-					}
-					cb.addEventHandler(KeyEvent.KEY_RELEASED, events -> {
-						try {
-							f.set(null, cb.getText());
-							this.onConfigChanged();
-						} catch (IllegalArgumentException e1) {
-							e1.printStackTrace();
-						} catch (IllegalAccessException e1) {
-
-							e1.printStackTrace();
-						}
-					});
-					Label l = new Label((References.language.getString(e.name()) + ":"));
-
-					l.setMinWidth(1000);
-					l.autosize();
-					this.config.getChildren().addAll(l, cb);
-				}
-
-			}
-		}
-
-		this.onConfigChanged();
-
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -1803,12 +1284,6 @@ public class GUIManager implements Initializable {
 
 		// Config Stuff
 
-		CheckBoxTreeItem root = new CheckBoxTreeItem(References.language.getString("config.location"));
-
-		this.configurationTree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-
-		this.configurationTree.setRoot(root);
-
 		try {
 			ConfigManager.getInstance().register(Config.class);
 		} catch (IOException e4) {
@@ -1825,71 +1300,7 @@ public class GUIManager implements Initializable {
 				LOGGER.log(Level.SEVERE, "Error while loading Config", e4);
 			}
 
-		for (Field f : Config.class.getFields()) {
-			if (f.getAnnotation(ConfigElement.class) == null)
-				continue;
-			ConfigElement e = f.getAnnotation(ConfigElement.class);
-
-			CheckBoxTreeItem actual = null;
-
-			for (String s : e.location().split("\\.")) {
-				if (actual == null) {
-					actual = root;
-					continue;
-				}
-				boolean found = false;
-				for (Object ti : actual.getChildren()) {
-					if (((String) ((TreeItem) ti).getValue())
-							.equalsIgnoreCase(References.language.getString(s + ".location"))) {
-						actual = (CheckBoxTreeItem) ti;
-						found = true;
-						break;
-					}
-				}
-				if (!found) {
-					TreeItem nti = new CheckBoxTreeItem<String>(References.language.getString(s + ".location"));
-
-					actual.getChildren().add(0, nti);
-					actual = (CheckBoxTreeItem) nti;
-				}
-			}
-
-			if (e.elementClass().equals(Boolean.class)) {
-				CheckBoxTreeItem cb = new CheckBoxTreeItem(References.language.getString(e.name()));
-//				cb.setTooltip(new Tooltip(References.language.getString(e.description())));
-				cb.addEventHandler(ActionEvent.ANY, r -> {
-					this.onConfigChanged();
-				});
-				try {
-					cb.setSelected(f.getBoolean(null));
-				} catch (IllegalArgumentException e2) {
-					e2.printStackTrace();
-				} catch (IllegalAccessException e2) {
-					e2.printStackTrace();
-				}
-
-				cb.selectedProperty().addListener((obs, oldValue, newValue) -> {
-					try {
-						f.setBoolean(null, newValue);
-					} catch (IllegalArgumentException | IllegalAccessException e1) {
-						LOGGER.severe("Error while updating config!");
-					}
-				});
-
-				cb.addEventHandler(ActionEvent.ACTION, event -> {
-					try {
-						f.setBoolean(null, cb.isSelected());
-					} catch (IllegalArgumentException e1) {
-						e1.printStackTrace();
-					} catch (IllegalAccessException e1) {
-						e1.printStackTrace();
-					}
-				});
-//				configurationTree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
-				actual.getChildren().add(cb);
-			}
-
-		}
+		ConfigManager.getInstance().createMenuTree(this.configurationTree, this.config);
 
 		GUILoader.getPrimaryStage().setMaximized(Config.shouldMaximize);
 
@@ -2084,7 +1495,7 @@ public class GUIManager implements Initializable {
 
 		// Update Config
 
-		this.onConfigChanged();
+		ConfigManager.getInstance().onConfigChanged();
 
 		t1.setText(Config.inputFile);
 

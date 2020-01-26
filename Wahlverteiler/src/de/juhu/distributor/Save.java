@@ -8,8 +8,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import de.juhu.dateimanager.Vec2i;
 import de.juhu.dateimanager.WriteableContent;
-import de.juhu.math.Vec2i;
 import de.juhu.util.Config;
 import de.juhu.util.MergeSort;
 import de.juhu.util.References;

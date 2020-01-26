@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -22,8 +23,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class AddStudentManager implements Initializable {
-
-	public static Stage stage;
 
 	public ArrayList<TextField> cources = new ArrayList<>((Config.maxChooses) * 2);
 
@@ -101,7 +100,8 @@ public class AddStudentManager implements Initializable {
 		GUIManager.getInstance().inputView.fill();
 		GUIManager.getInstance().cView.fill();
 
-		stage.close();
+		((Stage) ((Button) event.getSource()).getScene().getWindow()).close();
+
 		studentID = -1;
 	}
 

@@ -18,7 +18,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import de.juhu.math.Vec2i;
 import de.juhu.util.References;
 
 public class ExcelImporter {

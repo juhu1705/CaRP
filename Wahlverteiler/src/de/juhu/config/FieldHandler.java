@@ -1,4 +1,4 @@
-package de.juhu.dateimanager;
+package de.juhu.config;
 
 import java.lang.reflect.Field;
 import java.util.logging.Level;

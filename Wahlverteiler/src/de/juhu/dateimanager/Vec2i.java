@@ -1,4 +1,4 @@
-package de.juhu.math;
+package de.juhu.dateimanager;
 
 import java.io.Serializable;
 

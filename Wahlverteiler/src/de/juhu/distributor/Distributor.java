@@ -276,7 +276,7 @@ public class Distributor implements Runnable {
 
 		calculate = true;
 
-		calculated = new PriorityQueue<>();
+		calculated = new PriorityQueue<>(100);
 
 		for (Student s : this.allStudents)
 			s.setActiveCourse(null);
@@ -339,9 +339,9 @@ public class Distributor implements Runnable {
 
 			if ((this.allStudents.get(i).getActiveCourse() != null
 					&& this.allStudents.get(i).getActiveCourse().equals(this.ignore()))
-					|| this.allStudents.get(i).getCoursesAsList().contains(this.ignore())) {
+					|| this.allStudents.get(i).getCoursesAsList().contains(this.ignore()))
 				this.ignoredStudents.add(this.allStudents.remove(i));
-			} else
+			else
 				i++;
 		}
 	}
@@ -521,45 +521,20 @@ public class Distributor implements Runnable {
 
 				Collections.shuffle(allCourses);
 
-				if (Config.newImproving) {
-					while (this.isAnyCourseFull()) {
-						for (Course c : this.allCourses) {
-							if (c.isFull()) {
-								ArrayList<Student> students = new ArrayList<Student>(c.getStudents());
-								Collections.shuffle(students);
+				while (this.isAnyCourseFull()) {
+					for (Course c : this.allCourses) {
+						if (c.isFull()) {
+							ArrayList<Student> students = new ArrayList<Student>(c.getStudents());
+							Collections.shuffle(students);
 
-								for (Student s : students)
-									if (!s.onlyNext())
-										s.mark();
-							}
-
+							for (Student s : students)
+								if (!s.onlyNext())
+									s.mark();
 						}
-					}
 
-				} else
-					while (this.isAnyCourseFull()) {
-						for (Course c : this.allCourses) {
-							Student first = null;
-							while (c.isFull()) {
-								ArrayList<Student> students = new ArrayList<Student>(c.getStudents());
-								Collections.shuffle(students);
-								for (Student s : students) {
-
-									if (first == null)
-										first = s;
-									if (first.equals(s) && c.isFull()) {
-										if (!s.next())
-											s.mark();
-										first = null;
-									}
-//								if (!s.onlyNext())
-//									s.mark();
-									if (!c.isFull())
-										break;
-								}
-							}
-						}
 					}
+				}
+
 				this.save();
 
 			}

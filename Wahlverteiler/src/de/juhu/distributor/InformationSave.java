@@ -3,8 +3,8 @@ package de.juhu.distributor;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import de.juhu.dateimanager.Vec2i;
 import de.juhu.dateimanager.WriteableContent;
-import de.juhu.math.Vec2i;
 import de.juhu.util.Config;
 import de.juhu.util.References;
 
@@ -153,7 +153,7 @@ public class InformationSave implements Serializable {
 					new String[] { References.language.getString("nounallocated.text") });
 		}
 
-		line = line % 2 != 0 ? line + (line - 1) % 2 : line + line % 2;
+		line = line % 2 == 0 ? line + (line - 1) % 2 : line + line % 2;
 
 		information.addLine(new Vec2i(0, line++),
 				new String[] { References.language.getString("studentswithbadpriority") });

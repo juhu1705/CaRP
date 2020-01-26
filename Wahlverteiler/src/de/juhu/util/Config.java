@@ -2,7 +2,7 @@ package de.juhu.util;
 
 import java.util.logging.Level;
 
-import de.juhu.dateimanager.ConfigElement;
+import de.juhu.config.ConfigElement;
 
 /**
  * Diese Klasse enthält alle Konfigurationsattribute des Kurs- und
@@ -56,8 +56,8 @@ public class Config {
 	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "usenewgoodness.description", name = "usenewgoodness.text", location = "config.calculation")
 	public static boolean useNewGoodness = true;
 
-	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "newimproving.description", name = "newimproving.text", location = "config.calculation")
-	public static boolean newImproving = true;
+//	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "newimproving.description", name = "newimproving.text", location = "config.calculation")
+//	public static boolean newImproving = true;
 
 	@ConfigElement(defaultValue = "true", elementClass = Boolean.class, description = "clearcalculationdata.description", name = "clearcalculationdata.text", location = "config.import")
 	public static boolean clear = true;

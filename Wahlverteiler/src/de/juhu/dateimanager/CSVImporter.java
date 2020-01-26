@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 
-import de.juhu.math.Vec2i;
 import de.juhu.util.References;
 
 public class CSVImporter {

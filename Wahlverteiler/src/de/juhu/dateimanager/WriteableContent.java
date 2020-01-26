@@ -19,7 +19,6 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import de.juhu.math.Vec2i;
 import de.juhu.util.CellStyles;
 
 public class WriteableContent {

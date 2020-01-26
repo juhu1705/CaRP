@@ -47,7 +47,7 @@ public class AboutManager {
 	public void onHelpSearch(ActionEvent event) {
 		try {
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-				Desktop.getDesktop().browse(new URI("https://ecosia.org/search?q="
+				Desktop.getDesktop().browse(new URI("https://github.com/juhu1705/CaRP/issues?utf8=%E2%9C%93&q="
 						+ URLEncoder.encode(weg.getText(), StandardCharsets.UTF_8.toString())));
 			}
 		} catch (IOException e) {

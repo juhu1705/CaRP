@@ -1,4 +1,4 @@
-package de.juhu.dateimanager;
+package de.juhu.config;
 
 import static de.juhu.util.References.LOGGER;
 
@@ -15,6 +15,25 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+
+import de.juhu.distributor.Distributor;
+import de.juhu.guiFX.GUIManager;
+import de.juhu.util.Config;
+import de.juhu.util.References;
+import javafx.event.ActionEvent;
+import javafx.scene.control.CheckBoxTreeItem;
+import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.control.cell.CheckBoxTreeCell;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 
 /**
  * Hier werden alle {@link ConfigElement Konfigurations Elemente} gespeichert
@@ -225,6 +244,200 @@ public class ConfigManager {
 
 		bw.close();
 
+	}
+
+	public void createMenuTree(TreeView<String> tree, VBox configurations) {
+		CheckBoxTreeItem root = new CheckBoxTreeItem(References.language.getString("config.location"));
+
+		tree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+
+		tree.setRoot(root);
+
+		for (Field f : this.fields) {
+			if (f.getAnnotation(ConfigElement.class) == null)
+				continue;
+			ConfigElement e = f.getAnnotation(ConfigElement.class);
+
+			CheckBoxTreeItem actual = null;
+
+			for (String s : e.location().split("\\.")) {
+				if (actual == null) {
+					actual = root;
+					continue;
+				}
+				boolean found = false;
+				for (Object ti : actual.getChildren()) {
+					if (((String) ((TreeItem) ti).getValue())
+							.equalsIgnoreCase(References.language.getString(s + ".location"))) {
+						actual = (CheckBoxTreeItem) ti;
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					TreeItem nti = new CheckBoxTreeItem<String>(References.language.getString(s + ".location"));
+
+					actual.getChildren().add(0, nti);
+					actual = (CheckBoxTreeItem) nti;
+				}
+			}
+
+			if (e.elementClass().equals(Boolean.class)) {
+				CheckBoxTreeItem cb = new CheckBoxTreeItem(References.language.getString(e.name()));
+//				cb.setTooltip(new Tooltip(References.language.getString(e.description())));
+				cb.addEventHandler(ActionEvent.ANY, r -> {
+					this.onConfigChanged();
+				});
+				try {
+					cb.setSelected(f.getBoolean(null));
+				} catch (IllegalArgumentException e2) {
+					e2.printStackTrace();
+				} catch (IllegalAccessException e2) {
+					e2.printStackTrace();
+				}
+
+				cb.selectedProperty().addListener((obs, oldValue, newValue) -> {
+					try {
+						f.setBoolean(null, newValue);
+					} catch (IllegalArgumentException | IllegalAccessException e1) {
+						LOGGER.severe("Error while updating config!");
+					}
+				});
+
+				cb.addEventHandler(ActionEvent.ACTION, event -> {
+					try {
+						f.setBoolean(null, cb.isSelected());
+					} catch (IllegalArgumentException e1) {
+						e1.printStackTrace();
+					} catch (IllegalAccessException e1) {
+						e1.printStackTrace();
+					}
+				});
+//				configurationTree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+				actual.getChildren().add(cb);
+			}
+
+		}
+
+		tree.addEventHandler(MouseEvent.MOUSE_CLICKED, (event -> {
+			CheckBoxTreeItem selected = (CheckBoxTreeItem) tree.getSelectionModel().getSelectedItem();
+
+			if (selected == null)
+				return;
+			String location = (String) selected.getValue();
+
+			CheckBoxTreeItem<String> actual = selected;
+
+			while (actual != null) {
+
+				actual = (CheckBoxTreeItem<String>) actual.getParent();
+
+				if (actual != null)
+					location = actual.getValue() + "." + location;
+
+			}
+
+			if (selected != null) {
+				configurations.getChildren().clear();
+				for (Field f : this.fields) {
+
+					if (f.getAnnotation(ConfigElement.class) == null)
+						continue;
+					ConfigElement e = f.getAnnotation(ConfigElement.class);
+
+					String fieldlocation = "";
+
+					for (String s : e.location().split("\\."))
+						if (!s.isEmpty())
+							fieldlocation = fieldlocation + (fieldlocation == "" ? "" : ".")
+									+ References.language.getString(s + ".location");
+
+					if (location.equalsIgnoreCase(fieldlocation + "." + References.language.getString(e.name()))) {
+						TextArea ta = new TextArea(References.language.getString(e.description()));
+
+						ta.setEditable(false);
+						ta.setWrapText(true);
+
+						configurations.getChildren()
+								.addAll(new Label(References.language.getString("description.text") + ":"), ta);
+					}
+
+					if (!fieldlocation.equalsIgnoreCase(location))
+						continue;
+
+					if (e.elementClass().equals(Integer.class)) {
+						Spinner cb = new Spinner();
+						cb.setTooltip(new Tooltip(References.language.getString(e.description())));
+						cb.setEditable(true);
+						try {
+							if (f.getName().equals("runs") || f.getName().equals("newCalculating")
+									|| f.getName().equals("improvingOfCalculation"))
+								cb.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
+										Integer.MAX_VALUE, f.getInt(null)));
+							else
+								cb.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-1,
+										Integer.MAX_VALUE, f.getInt(null)));
+							cb.getValueFactory().valueProperty().addListener((o, oldValue, newValue) -> {
+								try {
+									f.set(null, newValue);
+								} catch (IllegalArgumentException e1) {
+									e1.printStackTrace();
+								} catch (IllegalAccessException e1) {
+									e1.printStackTrace();
+								}
+								this.onConfigChanged();
+							});
+						} catch (IllegalArgumentException | IllegalAccessException e3) {
+							e3.printStackTrace();
+						}
+
+						Label l = new Label((References.language.getString(e.name()) + ":"));
+
+						l.autosize();
+						configurations.getChildren().addAll(l, cb);
+					} else if (e.elementClass().equals(String.class)) {
+						TextField cb = new TextField();
+						cb.setTooltip(new Tooltip(References.language.getString(e.description())));
+
+						try {
+							cb.setText((String) f.get(null));
+						} catch (IllegalArgumentException e2) {
+							e2.printStackTrace();
+						} catch (IllegalAccessException e2) {
+							e2.printStackTrace();
+						}
+						cb.addEventHandler(KeyEvent.KEY_RELEASED, events -> {
+							try {
+								f.set(null, cb.getText());
+								this.onConfigChanged();
+							} catch (IllegalArgumentException e1) {
+								e1.printStackTrace();
+							} catch (IllegalAccessException e1) {
+
+								e1.printStackTrace();
+							}
+						});
+						Label l = new Label((References.language.getString(e.name()) + ":"));
+
+						l.setMinWidth(1000);
+						l.autosize();
+						configurations.getChildren().addAll(l, cb);
+					}
+
+				}
+			}
+
+			this.onConfigChanged();
+		}));
+	}
+
+	public void onConfigChanged() {
+		GUIManager.getInstance().updateInputView();
+
+		if (!Distributor.getInstance().ignore().toString().equalsIgnoreCase(Config.ignoreStudent + "|"))
+			Distributor.getInstance().setIgnoreMark(Config.ignoreStudent);
+
+		Distributor.getInstance().updateStandartReaders();
 	}
 
 }

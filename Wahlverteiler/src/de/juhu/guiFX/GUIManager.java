@@ -754,7 +754,7 @@ public class GUIManager implements Initializable {
 		LOGGER.config("Starting About Window");
 
 		Util.openWindow("/assets/layouts/About.fxml", References.language.getString("about.text"),
-				GUILoader.getPrimaryStage(), mb1.isSelected());
+				GUILoader.getPrimaryStage(), mb1.isSelected()).setResizable(false);
 	}
 
 	public void clearConsole(ActionEvent event) {

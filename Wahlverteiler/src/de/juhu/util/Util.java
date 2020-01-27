@@ -119,7 +119,7 @@ public class Util {
 		return false;
 	}
 
-	public static void openWindow(String resourceLocation, String title, Stage parent, boolean darkTheme) {
+	public static Stage openWindow(String resourceLocation, String title, Stage parent, boolean darkTheme) {
 		Stage primaryStage = new Stage();
 
 		Image i;
@@ -133,7 +133,7 @@ public class Util {
 		try {
 			root = FXMLLoader.load(Util.class.getClass().getResource(resourceLocation), References.language);
 		} catch (IOException e) {
-			return;
+			return null;
 		}
 		Scene s = new Scene(root);
 		if (darkTheme) {
@@ -152,6 +152,8 @@ public class Util {
 		primaryStage.getIcons().add(i);
 
 		primaryStage.show();
+
+		return primaryStage;
 	}
 
 }

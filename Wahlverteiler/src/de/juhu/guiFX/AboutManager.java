@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 public class AboutManager {
 
@@ -44,16 +45,24 @@ public class AboutManager {
 		}
 	}
 
+	public void openLSPage(MouseEvent event) {
+		try {
+			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+				Desktop.getDesktop().browse(new URI("https://www.luisenschule-mh.de/"));
+			}
+		} catch (IOException | URISyntaxException e) {
+			References.LOGGER.info("https://www.luisenschule-mh.de/");
+		}
+	}
+
 	public void onHelpSearch(ActionEvent event) {
 		try {
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 				Desktop.getDesktop().browse(new URI("https://github.com/juhu1705/CaRP/issues?utf8=%E2%9C%93&q="
 						+ URLEncoder.encode(weg.getText(), StandardCharsets.UTF_8.toString())));
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
+		} catch (IOException | URISyntaxException e) {
+			References.LOGGER.info("https://github.com/juhu1705/CaRP/issues?utf8=%E2%9C%93&q=" + weg.getText());
 		}
 	}
 }

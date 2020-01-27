@@ -2,6 +2,7 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="565.0" prefWidth="416.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.AboutManager">
+<BorderPane prefHeight="554.0" prefWidth="416.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.AboutManager">
    <top>
       <TextField alignment="CENTER" disable="true" text="CaRP - Assigner" BorderPane.alignment="CENTER" />
    </top>
@@ -29,7 +30,7 @@
       </SplitPane>
    </bottom>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="636.0" prefWidth="416.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="75.0" fitWidth="77.0" layoutX="26.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="315.0" AnchorPane.topAnchor="28.0">
                <image>
@@ -65,12 +66,22 @@
             <Hyperlink layoutX="46.0" layoutY="308.0" onAction="#openLink" prefHeight="23.0" prefWidth="303.0" text="https://mvnrepository.com/artifact/sax/sax/2.0.1" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="61.0" AnchorPane.topAnchor="308.0" />
             <Label layoutX="24.0" layoutY="331.0" prefHeight="17.0" prefWidth="160.0" text="maven-model [Apache]" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="226.0" AnchorPane.topAnchor="331.0" />
             <Hyperlink layoutX="45.0" layoutY="348.0" onAction="#openLink" prefHeight="23.0" prefWidth="397.0" text="https://mvnrepository.com/artifact/org.apache.maven/maven-model" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="-32.0" AnchorPane.topAnchor="348.0" />
+            <Label layoutX="21.0" layoutY="371.0" prefHeight="17.0" prefWidth="219.0" text="launch4j-maven-plugin [Lukaszenart]" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="176.0" AnchorPane.topAnchor="371.0" />
+            <Hyperlink layoutX="46.0" layoutY="388.0" onAction="#openLink" prefHeight="23.0" prefWidth="367.0" text="https://github.com/lukaszlenart/launch4j-maven-plugin" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="388.0" />
             <Label layoutX="18.0" layoutY="391.0" prefHeight="21.0" prefWidth="74.0" text="Contact:" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="332.0" AnchorPane.topAnchor="391.0">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
             <Hyperlink layoutX="17.0" layoutY="410.0" onAction="#startMail" prefHeight="23.0" prefWidth="143.0" text="fabius1705@live.de" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="410.0" />
+            <ImageView fitHeight="132.0" fitWidth="228.0" layoutX="175.0" layoutY="435.0" onMouseClicked="#openLSPage" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="105.7334213256836" AnchorPane.leftAnchor="175.0" AnchorPane.topAnchor="435.0">
+               <image>
+                  <Image url="@../textures/logo/logo_luisenschule.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
          </children>
       </AnchorPane>
    </center>

@@ -1,6 +1,12 @@
 language: java
-jdk: 
- - oraclejdk8
+jdk:
+  - oraclejdk8
+sudo: false
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+install: true
 script: 
  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --file Wahlverteiler/pom.xml
  - mvn test -B --file Wahlverteiler/pom.xml

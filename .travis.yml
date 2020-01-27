@@ -1,6 +1,6 @@
 language: java
 jdk: 
- - oraclejdk11
+ - oraclejdk8
 script: 
  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V --file Wahlverteiler/pom.xml
  - mvn test -B --file Wahlverteiler/pom.xml

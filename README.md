@@ -154,6 +154,8 @@ Die Einstellungen
 Abschließend wird nun der Reiter „Einstellungen“ erklärt. Hier sind alle Konfigurationsmöglichkeiten aufzufinden. Dabei können sie im Baum (links), die gewünschten Pfade ausgewählt werden wodurch auf der rechten Hälfte die zugeordneten Konfigurationsmöglichkeiten angezeigt werden. Einstellungen, die nur an- und ausgeschaltet werden können, sind im Baum mitaufgeführt. Werden diese Dort angeklickt, erscheint rechts eine Beschreibung über deren Funktion. Allen anderen Einstellungen sind Hovertexte beigefügt, die deren Funktion erläutern.
   </li>
 </ol>
+<br>
+<br>
 <p>
 Version 0.3.7
   </p>

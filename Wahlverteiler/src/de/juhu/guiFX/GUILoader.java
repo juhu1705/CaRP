@@ -24,9 +24,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
+ * Diese Klasse stellt die Hauptklasse des CaRP-Assigners da. Von hier werden
+ * die Startprozesse eingeleitet und die Sprache geladen.
  * 
- * @author Fabius
- *
+ * @author Juhu1705
+ * @category GUI
+ * @version 1.0
  */
 public class GUILoader extends Application {
 
@@ -37,7 +40,7 @@ public class GUILoader extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		// LOGGER.info(getClass().getResource("/de/juhu/guiFX/GUI.fxml") + "");
+//		LOGGER.info(getClass().getResource("/de/juhu/guiFX/GUI.fxml") + "");
 //		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI() + "");
 //		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI().toURL() + "");
 		GUILoader.primaryStage = primaryStage;

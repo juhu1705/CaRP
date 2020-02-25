@@ -8,6 +8,15 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
+/**
+ * Diese Klasse organisiert das Einlesen der Config Datei.
+ * 
+ * @author Juhu1705
+ * @category Config
+ * @version 1.0
+ * @see ContentHandler
+ * @see ConfigManager#load(String)
+ */
 public class FieldHandler implements ContentHandler {
 
 	private String value, defaultValue, type, name, currentValue;

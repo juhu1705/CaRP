@@ -6,11 +6,30 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
+/**
+ * Ein einfacher Threadbasierter MergeSort-Allgorithmus zum Sortieren von
+ * {@link Comparable}-Objekten.
+ * 
+ * @author Juhu1705
+ *
+ * @param <T> Die Objektklasse der zu sortierenden Objekte
+ */
 public class MergeSort<T extends Comparable> implements Callable {
 
 	private ArrayList<T> input;
 	private ExecutorService pool;
 
+	/**
+	 * Initialisierung des Mergesorts. Aufgerufen wird der Allgorithmus durch
+	 * {@link ExecutorService#submit(Callable)}. Als Callable wird diese Klasse
+	 * mitgegeben. Das zurückgegebene {@link Future}-Objekt gibt über
+	 * {@link Future#get()} die sortierte {@link ArrayList} zurück.
+	 * 
+	 * @param input Die zu sortierende {@link ArrayList}.
+	 * @param pool  Der {@link ExecutorService} über den die Berechnung läuft.
+	 * @implNote Der {@link ExecutorService} muss
+	 *           {@link ArrayList#size()}{@code  / 2 + 10} groß sein.
+	 */
 	public MergeSort(ArrayList<T> input, ExecutorService pool) {
 		this.input = input;
 
@@ -54,6 +73,14 @@ public class MergeSort<T extends Comparable> implements Callable {
 		return sorted;
 	}
 
+	/**
+	 * @implNote Diese Methode kann zu beginn aufgerufen werden. Sie öffnet jedoch
+	 *           selbst weitere Threads im mitgegebenen {@link ExecutorService}
+	 * @param input Die zu sortierende {@link ArrayList}.
+	 * @param pool  Der {@link ExecutorService} über den die Berechnung läuft.
+	 * @return Sortierte ArrayList
+	 * @throws Exception Wenn ein Fehler bei der Berechnung auftritt.
+	 */
 	private ArrayList<T> mergeThreadless(ArrayList<T> input, ExecutorService pool) throws Exception {
 		if (input.size() <= 1)
 			return input;

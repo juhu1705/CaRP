@@ -6,6 +6,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import de.juhu.distributor.Save;
+
+/**
+ * Eine kleine Listenklasse basierend auf der ArrayList, die zum sortierten
+ * Speichern der hinzugefügten Objekte dient.
+ * 
+ * @author Juhu1705
+ * @implNote Funktioniert nur für die {@link Save}-Klasse nach aktuellem stand.
+ *           Es gibt keine Garantie, dass sie bei anderen Klassen als Eingabe
+ *           funktioniert.
+ */
 public class PriorityQueue<T extends Comparable<T>> implements List<T> {
 
 	public ArrayList<T> list;

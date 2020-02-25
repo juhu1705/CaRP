@@ -77,6 +77,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
 
+/**
+ * Diese Klasse verwaltet alle Aktionen des Haupt-GUIs.
+ * 
+ * @author Juhu1705
+ * @category GUI
+ * @version 2.1
+ */
 public class GUIManager implements Initializable {
 
 	private static GUIManager instance;

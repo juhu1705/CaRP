@@ -32,6 +32,7 @@ public class Util {
 
 	}
 
+	@Deprecated
 	private static boolean isReliable(double d1, double d2) {
 		return d1 == d2 || ((d1 + 2) > d2 && (d1 - 2) < d2);
 	}
@@ -68,6 +69,7 @@ public class Util {
 		c.setBounds((int) x, (int) y, (int) width, (int) height);
 	}
 
+	@Deprecated
 	public static int quad(int i, int height) {
 		if (height < 0)
 			return 1 / quad(i, Math.abs(height));
@@ -78,10 +80,21 @@ public class Util {
 		return i * quad(i, height - 1);
 	}
 
+	/**
+	 * 
+	 * @param input
+	 * @return
+	 */
 	public static boolean isBlank(String input) {
 		return input == null || input.isEmpty() || input.trim().isEmpty();
 	}
 
+	/**
+	 * 
+	 * @param toCheck
+	 * @param strings
+	 * @return
+	 */
 	public static boolean endsWith(String toCheck, String... strings) {
 		for (String s : strings) {
 			if (toCheck.endsWith(s))
@@ -90,6 +103,11 @@ public class Util {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param line
+	 * @return
+	 */
 	public static String[] removeFirst(String[] line) {
 		String[] newline = new String[line.length - 1];
 
@@ -100,6 +118,11 @@ public class Util {
 		return newline;
 	}
 
+	/**
+	 * 
+	 * @param courses
+	 * @return
+	 */
 	public static int maxStudentCount(List<Course> courses) {
 		int maxCount = 0;
 
@@ -109,6 +132,11 @@ public class Util {
 		return maxCount;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public static boolean isIgnoreCourse(String... name) {
 
 		for (String s : Config.ignoreStudent.split("\\|"))
@@ -119,6 +147,14 @@ public class Util {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param resourceLocation
+	 * @param title
+	 * @param parent
+	 * @param darkTheme
+	 * @return
+	 */
 	public static Stage openWindow(String resourceLocation, String title, Stage parent, boolean darkTheme) {
 		Stage primaryStage = new Stage();
 

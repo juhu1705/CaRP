@@ -1430,6 +1430,9 @@ public class GUIManager implements Initializable {
 		});
 
 		this.cptc.setCellValueFactory(s -> {
+			if (s.getValue().getActiveCourse() != null
+					&& Util.isIgnoreCourse(s.getValue().getActiveCourse().getSubject()))
+				return new SimpleStringProperty("-");
 			return new SimpleStringProperty(Integer.toString(s.getValue().getPriority()));
 		});
 

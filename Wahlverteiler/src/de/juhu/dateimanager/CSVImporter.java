@@ -12,7 +12,18 @@ import java.util.logging.Level;
 
 import de.juhu.util.References;
 
+/**
+ * Importiert eine CSV Datei aus dem mitgegebenen Pfad.
+ * 
+ * 
+ * @author Juhu1705
+ * @category Import
+ *
+ */
 public class CSVImporter {
+
+	protected CSVImporter() {
+	}
 
 	public static WriteableContent readCSV(String pathfile) throws IOException, URISyntaxException {
 		WriteableContent writeable = new WriteableContent();

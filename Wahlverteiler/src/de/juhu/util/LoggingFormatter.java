@@ -12,6 +12,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
+/**
+ * Formatiert den Log entsprechend den Configeinstellungen.
+ * 
+ * @author Juhu1705
+ * @category Log
+ */
 public class LoggingFormatter extends Formatter {
 
 	private static final DateTimeFormatter timeformatter = DateTimeFormatter.ofPattern("HH:mm:ss");

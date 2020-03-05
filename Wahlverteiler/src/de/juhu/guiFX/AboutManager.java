@@ -15,6 +15,12 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * Behandelt alle Aktionen des About Fensters.
+ * 
+ * @author Juhu1705
+ * @category GUI
+ */
 public class AboutManager {
 
 	@FXML

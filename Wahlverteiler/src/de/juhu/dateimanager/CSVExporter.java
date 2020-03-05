@@ -9,11 +9,16 @@ import java.io.IOException;
 import java.util.logging.Level;
 
 /**
+ * Verwaltet das Exportieren eines {@link WriteableContent} nach CSV an den
+ * gegebenen Pfad.
  * 
  * @author Juhu1705
- *
+ * @category Export
  */
 public class CSVExporter {
+
+	protected CSVExporter() {
+	}
 
 	public static void writeCSV(String pathfile, WriteableContent toWrite) throws IOException {
 

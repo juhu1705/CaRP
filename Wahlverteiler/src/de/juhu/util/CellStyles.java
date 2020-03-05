@@ -10,6 +10,12 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+ * Beinhaltet alle Zell Formatierungsformen, die benutzt werden.
+ * 
+ * @author Juhu1705
+ * @category Import / Export
+ */
 public class CellStyles {
 
 	public static HSSFCellStyle title(HSSFWorkbook workbook) {

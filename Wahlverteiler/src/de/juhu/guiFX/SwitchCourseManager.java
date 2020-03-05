@@ -20,6 +20,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * Behandelt alle Aktionen des Fensters zum bearbeiten von Kursen zur
+ * Verteilung.
+ * 
+ * @author Juhu1705
+ * @category GUI
+ */
 public class SwitchCourseManager implements Initializable {
 
 	public static Student student;

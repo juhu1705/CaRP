@@ -11,6 +11,12 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * Behandelt die Tabelle zur Ansicht der verteilten Kurse.
+ * 
+ * @author Juhu1705
+ * @category GUI
+ */
 public class OutputCourseView implements Runnable {
 
 	TableView tv;

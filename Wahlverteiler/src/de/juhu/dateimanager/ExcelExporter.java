@@ -13,6 +13,13 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+ * Verwaltet das Exportieren eines {@link WriteableContent} in ein Excel Format
+ * in den gegebenen Pfad.
+ * 
+ * @author Juhu1705
+ * @category Export
+ */
 public class ExcelExporter {
 
 	public static void writeXLS(String pathfile, WriteableContent toWrite) {

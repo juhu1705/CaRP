@@ -21,6 +21,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import de.juhu.util.CellStyles;
 
+/**
+ * Diese Klasse dient als Schnittstelle zum Im- / Export.
+ * 
+ * @author Juhu1705
+ * @category Import / Export
+ */
 public class WriteableContent {
 
 	private HashMap<Vec2i, String> lines = new HashMap<Vec2i, String>();
@@ -174,7 +180,7 @@ public class WriteableContent {
 		for (int y = 0; y <= maxLength.y; y++) {
 			try {
 				for (int x = 0; x <= maxLength.x; x++) {
-					if(cells[x][y] != null)
+					if (cells[x][y] != null)
 						writer.append(cells[x][y] + ";");
 
 				}

@@ -16,6 +16,13 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * Behandelt alle Aktionen des Fensters zum hinzufügen von Kursen zur
+ * Verteilung.
+ * 
+ * @author Juhu1705
+ * @category GUI
+ */
 public class AddCourseToSaveManager implements Initializable {
 
 	public static String s, t;

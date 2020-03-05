@@ -11,6 +11,12 @@ import java.util.logging.LogRecord;
 
 import javafx.scene.control.TextArea;
 
+/**
+ * Behandelt Log Nachrichten und speichert sie zwischen.
+ * 
+ * @author Juhu1705
+ * @category Log
+ */
 public class LoggingHandler extends Handler implements Runnable {
 
 	private StringBuilder log = new StringBuilder();

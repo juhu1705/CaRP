@@ -22,6 +22,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * Behandelt alle Aktionen des Fensters zum hinzufügen und bearbeiten von
+ * Schülern zur Liste.
+ * 
+ * @author Juhu1705
+ * @category GUI
+ */
 public class AddStudentManager implements Initializable {
 
 	public ArrayList<TextField> cources = new ArrayList<>((Config.maxChooses) * 2);

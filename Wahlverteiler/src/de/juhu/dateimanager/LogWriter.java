@@ -10,6 +10,13 @@ import java.util.logging.Level;
 
 import de.juhu.util.References;
 
+/**
+ * Schreibt den Log in den angegebenen Pfad.
+ * 
+ * @author Juhu1705
+ * @category Export
+ *
+ */
 public class LogWriter {
 
 	public static void writeLog(String pathfile) {

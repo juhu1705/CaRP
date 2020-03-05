@@ -3,6 +3,13 @@ package de.juhu.guiFX;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
+/**
+ * Behandelt alle Prozesse der Prozessleiste, die nie angezeigt wird. (Kann
+ * später noch eingefügt werden, ist aber nicht notwendig)
+ * 
+ * @author Juhu1705
+ * @category GUI
+ */
 public class PartProgress {
 
 	private static PartProgress instance;

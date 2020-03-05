@@ -21,6 +21,7 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
  * Beinhaltet alle Referenzobjekte
  * 
  * @author Juhu1705
+ * @category Util
  */
 public class References {
 

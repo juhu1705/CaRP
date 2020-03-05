@@ -6,6 +6,7 @@ package de.juhu.util;
  * zusatzinformationen werden mitgegeben.
  * 
  * @author Juhu1705
+ * @category Log
  */
 public enum PrintFormat {
 	LOGGER(3), CLASS(4), ONLY_MESSAGE(0), TIME(1), LEVEL(2), ALL(100);

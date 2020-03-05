@@ -15,6 +15,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * Beinhaltet nützliche Methoden
+ * 
+ * @author Fabius
+ * @category Util
+ */
 public class Util {
 
 	@Deprecated

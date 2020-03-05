@@ -11,6 +11,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 
+/**
+ * 
+ * Behandelt alle unter Statistiken angezeigten Tabellen.
+ * 
+ * @author Juhu1705
+ * @category GUI
+ *
+ */
 public class OutputInformationView implements Runnable {
 
 	public ArrayList<TableColumn<Student, String>> scourses = new ArrayList<>();

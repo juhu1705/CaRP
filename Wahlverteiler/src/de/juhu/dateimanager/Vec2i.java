@@ -3,7 +3,7 @@ package de.juhu.dateimanager;
 import java.io.Serializable;
 
 /**
- * Represents a 2-dimensional Vector
+ * Representiert einen zweidimensionalen Vektor
  * 
  * @category Math
  * @version 0.1

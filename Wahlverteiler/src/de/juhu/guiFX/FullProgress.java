@@ -3,6 +3,12 @@ package de.juhu.guiFX;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
+/**
+ * Behandelt alle Aktionen der Prozessleiste.
+ * 
+ * @author Juhu1705
+ * @category GUI
+ */
 public class FullProgress {
 
 	private static FullProgress instance;

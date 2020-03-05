@@ -10,6 +10,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
+/**
+ * Behandelt alle Aktionen des Fehler Fensters.
+ * 
+ * @author Juhu1705
+ * @category GUI
+ */
 public class ErrorGuiController implements Initializable {
 
 	public static String headline, information;

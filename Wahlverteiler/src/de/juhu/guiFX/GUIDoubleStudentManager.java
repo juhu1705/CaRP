@@ -13,6 +13,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * Behandelt alle Aktionen des Fensters, dass aufploppt, wenn ein doppelter
+ * Schüler beim Import auftritt.
+ * 
+ * @author Juhu1705
+ * @category GUI
+ */
 public class GUIDoubleStudentManager implements Initializable {
 
 	public static String sName = "", sPrename = "";

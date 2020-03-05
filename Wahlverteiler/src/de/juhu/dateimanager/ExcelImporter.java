@@ -20,6 +20,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import de.juhu.util.References;
 
+/**
+ * Importiert eine Excel Datei aus dem mitgegebenen Pfad.
+ * 
+ * 
+ * @author Juhu1705
+ * @category Import
+ *
+ */
 public class ExcelImporter {
 
 	public static WriteableContent readXLS(String pathfile) throws IOException, URISyntaxException {

@@ -11,6 +11,13 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * Behandelt die Tabelle zum bearbeiten / hinzufügen von Schülern zu einer
+ * Verteilung.
+ * 
+ * @author Juhu1705
+ * @category GUI
+ */
 public class SwitchCourseView implements Runnable {
 
 	TableView tv;

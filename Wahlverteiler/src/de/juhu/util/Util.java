@@ -150,7 +150,11 @@ public class Util {
 				if (s.equalsIgnoreCase(s1))
 					return true;
 
-		return false;
+		String connect = "";
+		for (String s1 : name) {
+			connect += s1;
+		}
+		return Config.ignoreStudent.replaceAll("|", "").equalsIgnoreCase(connect);
 	}
 
 	/**

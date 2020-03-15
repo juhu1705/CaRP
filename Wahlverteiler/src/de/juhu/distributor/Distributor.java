@@ -993,8 +993,6 @@ public class Distributor implements Runnable {
 
 	}
 
-	// INFO: DEPRECATED
-
 	/**
 	 * @deprecated Directly add the Student to the course instead of use this Method
 	 * @param student    The student to Add to the course

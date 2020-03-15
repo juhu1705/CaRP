@@ -18,7 +18,7 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="courses" layoutX="20.0" layoutY="24.0" prefHeight="168.0" prefWidth="561.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <TableView fx:id="courses" focusTraversable="false" layoutX="20.0" layoutY="24.0" prefHeight="168.0" prefWidth="561.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
               <columns>
                 <TableColumn fx:id="teacher" prefWidth="75.0" text="%teacher.text" />
                   <TableColumn fx:id="subject" prefWidth="75.0" text="%subject.text" />
@@ -40,7 +40,7 @@
    <bottom>
       <StackPane prefHeight="84.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#onFinished" text="%finished.text">
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onFinished" text="%finished.text">
                <graphic>
                   <FontAwesomeIconView glyphName="SAVE" />
                </graphic></Button>

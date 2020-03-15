@@ -5,8 +5,7 @@ import java.util.logging.Level;
 import de.juhu.config.ConfigElement;
 
 /**
- * Diese Klasse enthält alle Konfigurationsattribute des Kurs- und
- * Facharbeitszuweisers.
+ * Diese Klasse enthält alle Konfigurationsvariablen.
  * 
  * @author Juhu1705
  * @category Config

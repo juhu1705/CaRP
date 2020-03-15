@@ -23,7 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * Behandelt alle Aktionen des Fensters zum hinzufügen und bearbeiten von
+ * Behandelt alle Aktionen des Fensters zum Hinzufügen und Bearbeiten von
  * Schülern zur Liste.
  * 
  * @author Juhu1705

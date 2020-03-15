@@ -7,16 +7,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Diese Annotation verifiziert ein Attribut, als Konfigurations Attribut. Dabei
+ * Diese Annotation verifiziert ein Attribut, als Konfigurationsattribut. Dabei
  * muss das Attribut {@code public static}, also öffentlich und statisch sein.
  * Das Config Elements wird über die Klasse {@link ConfigManager Konfigurations
  * Manager} registriert. Konfigurationsattribute, die ein {@code String},
  * {@code Integer}, oder {@code Boolean} als Wert aufweisen, werden automatisch
  * im GUI unter dem Reiter Einstellungen zu finden sein. Dabei ist
  * {@link #description() die Beschreibung} als Hovertext und {@link #name() der
- * Name} als Bennenung eingefügt. Hierbei werden diese beiden eingegebenen
+ * Name} als Benennung eingefügt. Hierbei werden diese beiden eingegebenen
  * Strings durch den String aus der verwendeten Sprachdatei ersetzt. Alle
- * registrierten Konfigelements werden in der Config-Datei unter
+ * registrierten Konfigurationselemente werden in der Config-Datei unter
  * "%localappdata%/CaRP/config.cfg" gespeichert.
  * 
  * @author Juhu1705
@@ -29,7 +29,7 @@ public @interface ConfigElement {
 
 	/**
 	 * @return Den Standartmäßig gesetzte Initialwert.
-	 * @implNote Nur Strings werden Automatisch richtig initialisiert. Bitte den
+	 * @implNote Nur Strings werden automatisch richtig initialisiert. Bitte den
 	 *           gewünschten Wert standartmäßig einprogrammieren. Dieser wird
 	 *           überschrieben, sobald die Konfigurationsdatei geladen wird.
 	 */
@@ -43,25 +43,25 @@ public @interface ConfigElement {
 	public Class elementClass();
 
 	/**
-	 * @return Den in den Sprachdateien hintelegten übersetzungsstring für die
+	 * @return Den in den Sprachdateien hinterlegten Übersetzungsstring für die
 	 *         Beschreibung der Konfiguration
-	 * @implNote Der hintelegte String muss, damit dass Programm läuft in den
+	 * @implNote Der hinterlegte String muss, damit dass Programm läuft, in den
 	 *           Sprachdateien hinterlegt sein.
 	 */
 	public String description();
 
 	/**
-	 * @return Den in den Sprachdateien hinterlegten Key zum übersetzten des Namens.
-	 * @implNote Der hintelegte String muss, damit dass Programm läuft in den
+	 * @return Den in den Sprachdateien hinterlegten Key zum Übersetzten des Namens.
+	 * @implNote Der hinterlegte String muss, damit dass Programm läuft in den
 	 *           Sprachdateien hinterlegt sein.
 	 */
 	public String name();
 
 	/**
 	 * @return Die Position im Baumsystem, unter der die Config zu finden ist.
-	 * @implNote Der hintelegte String muss, damit dass Programm läuft in den
+	 * @implNote Der hinterlegte String muss, damit dass Programm läuft in den
 	 *           Sprachdateien hinterlegt sein. Ein "." trennt die Strings. Jeder
-	 *           einzelstring wird mit "String".location gesucht.
+	 *           Einzelstring wird mit "String".location gesucht.
 	 */
 	public String location();
 

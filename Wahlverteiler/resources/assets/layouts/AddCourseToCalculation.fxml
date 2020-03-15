@@ -40,7 +40,7 @@
    <bottom>
       <StackPane prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#onAdd" text="%finished.text">
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onAdd" text="%finished.text">
                <graphic>
                   <FontAwesomeIconView glyphName="SAVE" />
                </graphic></Button>

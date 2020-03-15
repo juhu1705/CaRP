@@ -39,8 +39,25 @@
 *.tab-header-background {
     -fx-background-color:light1;
 }
- 
- /*Menu */
+
+/* */
+
+*.tree-view {
+    -fx-color:default1;
+    
+    -fx-background-color:dark1;
+}
+
+*.tree-view .tree-cell {
+    -fx-background-color:dark1;
+}
+
+*.tree-view .tree-cell:focused {
+    -fx-background-color:divider1;
+    -fx-text-fill:dark1;
+}
+
+/*Menu */
  
 *.menu-bar {
     -fx-font-size:12px;

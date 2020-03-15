@@ -20,7 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Behandelt alle Aktionen des Fensters zum hinzufügen und bearbeiten von
+ * Behandelt alle Aktionen des Fensters zum Hinzufügen und Bearbeiten von
  * Schülern zur Verteilung.
  * 
  * @author Juhu1705
@@ -56,7 +56,6 @@ public class AddStudentToSaveManager implements Initializable {
 		this.scw.run();
 	}
 
-	@FXML
 	public void onFinished(ActionEvent event) {
 		boolean missingInformation = false;
 		if (this.prename.getText().isEmpty()) {

@@ -22,7 +22,7 @@
       <SplitPane dividerPositions="0.5" prefHeight="9.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <items>
             <TextField fx:id="weg" promptText="Help" />
-            <Button mnemonicParsing="false" onAction="#onHelpSearch" text="%search.text">
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onHelpSearch" text="%search.text">
                <graphic>
                   <FontAwesomeIconView glyphName="SEARCH" />
                </graphic></Button>
@@ -45,7 +45,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="224.0" layoutY="48.0" prefHeight="17.0" prefWidth="74.0" text="Version: 0.3.7" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="48.0" />
+            <Label layoutX="224.0" layoutY="48.0" prefHeight="17.0" prefWidth="74.0" text="Version: 0.3.8" AnchorPane.leftAnchor="224.0" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="48.0" />
             <Label layoutX="192.0" layoutY="66.0" prefHeight="17.0" prefWidth="146.0" text="Created by Fabius Mettner" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="72.0" AnchorPane.topAnchor="66.0" />
             <Label layoutX="172.0" layoutY="85.0" text="Under Supervision of Christian Wolf" AnchorPane.leftAnchor="172.0" AnchorPane.rightAnchor="49.0" AnchorPane.topAnchor="85.0" />
             <Label layoutX="29.0" layoutY="120.0" text="Used Libaries:" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="296.0" AnchorPane.topAnchor="120.0">
@@ -74,7 +74,7 @@
                </font>
             </Label>
             <Hyperlink layoutX="17.0" layoutY="410.0" onAction="#startMail" prefHeight="23.0" prefWidth="143.0" text="fabius1705@live.de" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="410.0" />
-            <ImageView fitHeight="132.0" fitWidth="228.0" layoutX="175.0" layoutY="435.0" onMouseClicked="#openLSPage" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="105.7334213256836" AnchorPane.leftAnchor="175.0" AnchorPane.topAnchor="435.0">
+            <ImageView fitHeight="183.0" fitWidth="239.0" layoutX="148.0" layoutY="417.0" onMouseClicked="#openLSPage" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="148.0" AnchorPane.topAnchor="417.0">
                <image>
                   <Image url="@../textures/logo/logo_luisenschule.png" />
                </image>

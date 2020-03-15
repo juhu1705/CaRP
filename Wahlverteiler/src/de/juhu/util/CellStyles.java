@@ -11,7 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
- * Beinhaltet alle Zell Formatierungsformen, die benutzt werden.
+ * Beinhaltet alle Zell-Formatierungsformen, die benutzt werden.
  * 
  * @author Juhu1705
  * @category Import / Export

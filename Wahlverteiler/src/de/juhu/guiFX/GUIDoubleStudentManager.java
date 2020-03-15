@@ -14,8 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Behandelt alle Aktionen des Fensters, dass aufploppt, wenn ein doppelter
- * Schüler beim Import auftritt.
+ * Behandelt alle Aktionen des Fensters, dass erscheint, wenn ein doppelter
+ * Schüler beim Importieren einer Datei auftritt.
  * 
  * @author Juhu1705
  * @category GUI

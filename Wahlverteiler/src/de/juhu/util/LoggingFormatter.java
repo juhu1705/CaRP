@@ -13,7 +13,7 @@ import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
 /**
- * Formatiert den Log entsprechend den Configeinstellungen.
+ * Formatiert den Log entsprechend den Kofigurationseinstellungen.
  * 
  * @author Juhu1705
  * @category Log

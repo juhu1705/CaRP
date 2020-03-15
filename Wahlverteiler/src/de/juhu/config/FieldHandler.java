@@ -19,8 +19,14 @@ import org.xml.sax.SAXException;
  */
 public class FieldHandler implements ContentHandler {
 
+	/**
+	 * Zwischenspeicherung für die einzulesenden Daten.
+	 */
 	private String value, defaultValue, type, name, currentValue;
 
+	/**
+	 * Speichert die eingelesenden Werte zur Bearbeitung.
+	 */
 	@Override
 	public void characters(char[] arg0, int arg1, int arg2) throws SAXException {
 		currentValue = new String(arg0, arg1, arg2);
@@ -31,6 +37,9 @@ public class FieldHandler implements ContentHandler {
 
 	}
 
+	/**
+	 * Lädt die Daten in das Programm.
+	 */
 	@Override
 	public void endElement(String arg0, String arg1, String arg2) throws SAXException {
 		if (arg1.equals("name"))

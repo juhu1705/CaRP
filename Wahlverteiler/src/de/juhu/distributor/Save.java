@@ -97,7 +97,7 @@ public class Save implements Comparable<Save>, Serializable {
 		int[] studentPriorities = new int[this.getHighestPriorityWhithoutIntegerMax() + 1];
 		int i1 = 0;
 		for (Student s : this.getStudentsWithPriority(1))
-			if (!s.getActiveCourse().equals(Distributor.getInstance().ignoredCourse))
+			if (s.getActiveCourse() != null && !s.getActiveCourse().equals(Distributor.getInstance().ignoredCourse))
 				i1++;
 
 		studentPriorities[0] = i1;

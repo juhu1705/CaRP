@@ -15,11 +15,11 @@
    <bottom>
       <ButtonBar prefHeight="24.0" prefWidth="236.0" BorderPane.alignment="CENTER">
         <buttons>
-            <Button mnemonicParsing="false" onAction="#add" text="%continue.text">
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#add" text="%continue.text">
                <graphic>
                   <FontAwesomeIconView glyphName="CARET_RIGHT" />
                </graphic></Button>
-            <Button maxWidth="150.0" mnemonicParsing="false" onAction="#skip" prefHeight="25.0" prefWidth="150.0" text="%skip.text">
+            <Button cancelButton="true" maxWidth="150.0" mnemonicParsing="false" onAction="#skip" prefHeight="25.0" prefWidth="150.0" text="%skip.text">
                <graphic>
                   <FontAwesomeIconView glyphName="MINUS_CIRCLE" />
                </graphic></Button>

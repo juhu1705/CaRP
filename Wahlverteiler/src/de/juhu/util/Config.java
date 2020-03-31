@@ -28,13 +28,13 @@ public class Config {
 		outputFile = (System.getenv("localappdata") + "\\CaRP\\");
 	}
 
-	@ConfigElement(defaultValue = "@PJK", elementClass = String.class, description = "ignoremark.description", name = "ignoremark.text", location = "config.import")
+	@ConfigElement(defaultValue = "PJK", elementClass = String.class, description = "ignoremark.description", name = "ignoremark.text", location = "config.import")
 	public static String ignoreStudent;
 
-	@ConfigElement(defaultValue = "@Course", elementClass = String.class, description = "coursemark.description", name = "coursemark.text", location = "config.import")
+	@ConfigElement(defaultValue = "Kurs", elementClass = String.class, description = "coursemark.description", name = "coursemark.text", location = "config.import")
 	public static String newCourse;
 
-	@ConfigElement(defaultValue = "Student", elementClass = String.class, description = "studentmark.description", name = "studentmark.text", location = "config.import")
+	@ConfigElement(defaultValue = "Schüler", elementClass = String.class, description = "studentmark.description", name = "studentmark.text", location = "config.import")
 	public static String newStudent;
 
 	@ConfigElement(defaultValue = "#", elementClass = String.class, description = "commentmark.description", name = "commentmark.text", location = "config.import")

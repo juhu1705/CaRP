@@ -1257,7 +1257,7 @@ public class Distributor implements Runnable {
 				}
 				int countStudents = Config.normalStudentLimit;
 				try {
-					countStudents = Integer.parseInt(line[2]);
+					countStudents = Double.valueOf(line[2]).intValue();
 				} catch (NumberFormatException e) {
 					LOGGER.warning("There was no expliciet limit of Students in course " + line[1] + "|" + line[2]
 							+ ". The limit is set to the default value " + Config.normalStudentLimit + "!");

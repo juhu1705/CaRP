@@ -1509,12 +1509,15 @@ public class GUIManager implements Initializable {
 
 		t1.setText(Config.inputFile);
 
-		File file = new File(Config.inputFile);
-		if (file.exists()) {
-			new Distributor(Config.inputFile);
-			this.inputView.fill();
-			this.cView.fill();
-		}
+		new Thread(() -> {
+			File file = new File(Config.inputFile);
+			if (file.exists()) {
+				new Distributor(Config.inputFile);
+				this.inputView.fill();
+				this.cView.fill();
+			}
+		}).start();
+
 	}
 
 	@FXML

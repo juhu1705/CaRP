@@ -7,7 +7,6 @@
   <description>Ein Programm, welches zum Zuordnen von Kurs und Facharbeitswahlen gedacht ist</description>
   
   
-  
   <!-- Dependencies -->
   <dependencies>
     <!-- https://bitbucket.org/Jerady/fontawesomefx/src/master/ -->
@@ -70,29 +69,6 @@
           <source>1.8</source>
           <target>1.8</target>
         </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.1.0</version><!--$NO-MVN-MAN-VER$-->
-        <configuration>
-            <archive>
-                <manifest>
-                    <mainClass>de.juhu.guiFX.GUILoader</mainClass>
-                </manifest>
-            </archive>
-            <descriptorRefs>
-                <descriptorRef>jar-with-dependencies</descriptorRef>
-            </descriptorRefs>
-        </configuration>
-        <executions>
-            <execution>
-                <id>make-assembly</id>
-                <phase>package</phase>
-                <goals>
-                    <goal>single</goal>
-                </goals>
-            </execution>
-        </executions>
       </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

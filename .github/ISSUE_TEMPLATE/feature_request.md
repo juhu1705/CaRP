@@ -8,7 +8,7 @@ assignees: juhu1705
 ---
 
 **Feature** *(needed)*
-A short descrition of what you want to have added
+A short description of what you want to have added.
 
 **What do you want your requested feature to improve?** *(needed)*
 A clear and concise description of what the feature should do.

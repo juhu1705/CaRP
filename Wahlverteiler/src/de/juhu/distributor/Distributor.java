@@ -305,6 +305,8 @@ public class Distributor implements Runnable {
 		Platform.runLater(GUIManager.getInstance().outputIView);
 
 		calculate = false;
+
+		this.printRate();
 	}
 
 	/**
@@ -350,8 +352,8 @@ public class Distributor implements Runnable {
 	 * Gibt die Rate der Berechnung mit der Priorität info in der Konsole aus.
 	 */
 	public void printRate() {
-		for (int i = 0; i <= Config.maxChooses; i++) {
-			LOGGER.info("Students that get their " + i + " coise: " + this.getStudentsWithRate(i));
+		for (int i = Config.maxChooses; i-- > 0;) {
+			LOGGER.info("Students that get their " + (i + 1) + ". choise: " + this.getStudentsWithRate(i));
 		}
 	}
 

@@ -6,7 +6,6 @@
 * {
     dark1: #616161;
     default1: #9E9E9E;
-    darktextfield: #333333;
     light1: #F5F5F5;
     text1: #212121;
     accent1: #607D8B;
@@ -20,45 +19,6 @@
      -fx-color:lightgrey;
      
      -fx-background-color:dark1;
-}
-
-/* Text field */
-
-.text-field {
-    -fx-background-color: darktextfield;
-    -fx-color: white;
-    -fx-text-fill: white;
-    -fx-padding: 5;
-    -fx-border: 5;
-    -fx-background-radius: 100;
-    -fx-transition: -fx-background-color 0.6s ease;
-}
-
-.text-field:hover {
-    -fx-background-color: #262626;
-}
-
-.split-pane {
-    -fx-background-color: transparent;
-}
-
-.split-pane-divider {
-    -fx-background-color: transparent;
-}
-
-.button {
-    -fx-background-color: darktextfield;
-    -fx-color: white;
-    -fx-text-fill: white;
-    -fx-padding: 5;
-    -fx-border: 5;
-    -fx-background-radius: 100;
-    -fx-min-width: 100%;
-    -fx-transition: -fx-background-color 0.6s ease;
-}
-
-.button:hover, .button:focus, #r5:hover, #r5:focus {
-    -fx-background-color: #262626;
 }
  
 /*Tab */

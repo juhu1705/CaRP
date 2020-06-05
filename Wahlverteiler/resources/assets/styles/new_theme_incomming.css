@@ -54,7 +54,7 @@
     -fx-border: 5;
     -fx-background-radius: 100;
     -fx-min-width: 100%;
-    -fx-transition: -fx-background-color 0.6s ease;
+    -fx-background-transition: -fx-background-color 0.6s;
 }
 
 .button:hover, .button:focus, #r5:hover, #r5:focus {

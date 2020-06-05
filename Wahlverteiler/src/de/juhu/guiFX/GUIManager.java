@@ -1507,17 +1507,18 @@ public class GUIManager implements Initializable {
 
 		ConfigManager.getInstance().onConfigChanged();
 
-		t1.setText(Config.inputFile);
+		if (Config.shouldImportAutomatic) {
+			t1.setText(Config.inputFile);
 
-		new Thread(() -> {
-			File file = new File(Config.inputFile);
-			if (file.exists()) {
-				new Distributor(Config.inputFile);
-				this.inputView.fill();
-				this.cView.fill();
-			}
-		}).start();
-
+			new Thread(() -> {
+				File file = new File(Config.inputFile);
+				if (file.exists()) {
+					new Distributor(Config.inputFile);
+					this.inputView.fill();
+					this.cView.fill();
+				}
+			}).start();
+		}
 	}
 
 	@FXML

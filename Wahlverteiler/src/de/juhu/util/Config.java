@@ -46,6 +46,9 @@ public class Config {
 	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "shouldMaximize.description", name = "shouldMaximize.text", location = "config")
 	public static boolean shouldMaximize = false;
 
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "shouldImport.description", name = "shouldImport.text", location = "config.import")
+	public static boolean shouldImportAutomatic = false;
+
 	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "shortnames.description", name = "shortnames.text", location = "config.export")
 	public static boolean shortNames;
 

@@ -22,7 +22,7 @@ public class CellStyles {
 	public static HSSFCellStyle title(HSSFWorkbook workbook) {
 		HSSFFont font = workbook.createFont();
 		font.setBold(true);
-		font.setColor(HSSFColorPredefined.AQUA.getIndex());
+		font.setColor(HSSFColorPredefined.WHITE.getIndex());
 		HSSFCellStyle style = workbook.createCellStyle();
 
 		style.setBorderBottom(BorderStyle.THIN);
@@ -34,7 +34,7 @@ public class CellStyles {
 
 		style.setFont(font);
 		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);// (HSSFColorPredefined.RED.getIndex());
-		style.setFillForegroundColor(HSSFColorPredefined.GREY_50_PERCENT.getIndex());
+		style.setFillForegroundColor(HSSFColorPredefined.GREY_80_PERCENT.getIndex());
 		return style;
 	}
 
@@ -108,7 +108,7 @@ public class CellStyles {
 	public static XSSFCellStyle title(XSSFWorkbook workbook) {
 		XSSFFont font = workbook.createFont();
 		font.setBold(true);
-		font.setColor(HSSFColorPredefined.AQUA.getIndex());
+		font.setColor(HSSFColorPredefined.WHITE.getIndex());
 		XSSFCellStyle style = workbook.createCellStyle();
 
 		font.setFontHeightInPoints((short) 16);
@@ -120,7 +120,7 @@ public class CellStyles {
 
 		style.setFont(font);
 		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);// (HSSFColorPredefined.RED.getIndex());
-		style.setFillForegroundColor(HSSFColorPredefined.GREY_50_PERCENT.getIndex());
+		style.setFillForegroundColor(HSSFColorPredefined.GREY_80_PERCENT.getIndex());
 		return style;
 	}
 

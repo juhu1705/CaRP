@@ -437,6 +437,8 @@ public class ConfigManager {
 		if (!Distributor.getInstance().ignore().toString().equalsIgnoreCase(Config.ignoreStudent + "|"))
 			Distributor.getInstance().setIgnoreMark(Config.ignoreStudent);
 
+		GUIManager.getInstance().cb2.setPromptText(Config.outputFileType);
+
 		Distributor.getInstance().updateStandartReaders();
 	}
 

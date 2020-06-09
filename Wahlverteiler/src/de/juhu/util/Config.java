@@ -43,6 +43,15 @@ public class Config {
 	@ConfigElement(defaultValue = "ALL", elementClass = String.class, description = "printformat.description", name = "printformat.text", location = "config")
 	public static String printFormat;
 
+	@ConfigElement(defaultValue = "Facharbeitswahlen (Lehrerzimmer)", elementClass = String.class, description = "courseHeader.description", name = "courseHeader.text", location = "config.export")
+	public static String courseHeader;
+
+	@ConfigElement(defaultValue = "Facharbeitswahlen (Aula)", elementClass = String.class, description = "studentHeader.description", name = "studentHeader.text", location = "config.export")
+	public static String studentHeader;
+
+	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "hasHeaderOutput.description", name = "hasHeaderOutput.text", location = "config.export")
+	public static boolean hasHeaderOutput = true;
+
 	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "shouldMaximize.description", name = "shouldMaximize.text", location = "config")
 	public static boolean shouldMaximize = false;
 

@@ -15,11 +15,13 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import de.juhu.util.CellStyles;
+import de.juhu.util.Config;
 
 /**
  * Diese Klasse dient als Schnittstelle zum Im- / Export.
@@ -32,12 +34,18 @@ public class WriteableContent {
 	private HashMap<Vec2i, String> lines = new HashMap<Vec2i, String>();
 	private String name;
 
+	private int startTable;
+
 	public WriteableContent() {
 		this.name = "";
 	}
 
 	public WriteableContent(String name) {
 		this.name = name;
+	}
+
+	public void setStartTable(int line) {
+		this.startTable = line;
 	}
 
 	public String getName() {
@@ -121,31 +129,42 @@ public class WriteableContent {
 		Vec2i maxLength = this.getMaxLength();
 		String[][] cells = this.getReverseGrid();
 
-		int rownumber = startingLineY + 1;
+		int rownumber = startingLineY;
 
 		Row row;
 
 		Cell cell;
 
+		for (int y = 0; y < this.startTable; y++) {
+			HSSFCellStyle style = CellStyles.header(workbook);
+			row = sheet.createRow(y);
+			for (int x = 0; x <= maxLength.x; x++) {
+				cell = row.createCell(x, STRING);
+				cell.setCellValue(cells[x][0] == null ? "" : cells[x][y]);
+				cell.setCellStyle(style);
+			}
+
+		}
+
 		HSSFCellStyle style = CellStyles.title(workbook);
-		row = sheet.createRow(0);
+		row = sheet.createRow(this.startTable);
 		for (int x = 0; x <= maxLength.x; x++) {
 			cell = row.createCell(x, STRING);
-			cell.setCellValue(cells[x][0] == null ? "" : cells[x][0]);
+			cell.setCellValue(cells[x][this.startTable] == null ? "" : cells[x][this.startTable]);
 			cell.setCellStyle(style);
 
 		}
 
 		style = CellStyles.normal2(workbook);
-		row = sheet.createRow(1);
+		row = sheet.createRow(this.startTable + 1);
 		for (int x = 0; x <= maxLength.x; x++) {
 			cell = row.createCell(x, STRING);
 			cell.setCellValue("");
 			cell.setCellStyle(style);
 		}
 
-		for (int y = 1; y <= maxLength.y; y++) {
-			if (y % 2 == 0) {
+		for (int y = this.startTable + 1; y <= maxLength.y; y++) {
+			if (y % 2 == 1) {
 				style = CellStyles.normal2(workbook);
 				row = sheet.createRow(rownumber + y);
 				for (int x = 0; x <= maxLength.x; x++) {
@@ -171,6 +190,13 @@ public class WriteableContent {
 			cell.setCellValue("");
 			cell.setCellStyle(style);
 		}
+
+		if (Config.hasHeaderOutput)
+			sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, maxLength.x));
+
+		for (int y = 0; y <= maxLength.y; y++)
+			sheet.autoSizeColumn(y);
+
 	}
 
 	public void writeCSV(BufferedWriter writer) {
@@ -195,38 +221,48 @@ public class WriteableContent {
 		Vec2i maxLength = this.getMaxLength();
 		String[][] cells = this.getReverseGrid();
 
-		int rownumber = startingLineY + 1;
+		int rownumber = startingLineY;
 
 		Row row;
 
 		Cell cell;
 
+		for (int y = 0; y < this.startTable; y++) {
+			XSSFCellStyle style = CellStyles.header(workbook);
+			row = sheet.createRow(y);
+			for (int x = 0; x <= maxLength.x; x++) {
+				cell = row.createCell(x, STRING);
+				cell.setCellValue(cells[x][0] == null ? "" : cells[x][y]);
+				cell.setCellStyle(style);
+			}
+
+		}
+
 		XSSFCellStyle style = CellStyles.title(workbook);
-		row = sheet.createRow(0);
+		row = sheet.createRow(this.startTable);
 		for (int x = 0; x <= maxLength.x; x++) {
 			cell = row.createCell(x, STRING);
-			cell.setCellValue(cells[x][0] == null ? "" : cells[x][0]);
+			cell.setCellValue(cells[x][this.startTable] == null ? "" : cells[x][this.startTable]);
 			cell.setCellStyle(style);
 
 		}
 
 		style = CellStyles.normal2(workbook);
-		row = sheet.createRow(1);
+		row = sheet.createRow(this.startTable + 1);
 		for (int x = 0; x <= maxLength.x; x++) {
 			cell = row.createCell(x, STRING);
 			cell.setCellValue("");
 			cell.setCellStyle(style);
 		}
 
-		for (int y = 1; y <= maxLength.y; y++) {
-			if (y % 2 == 0) {
+		for (int y = this.startTable + 1; y <= maxLength.y; y++) {
+			if (y % 2 == 1) {
 				style = CellStyles.normal2(workbook);
 				row = sheet.createRow(rownumber + y);
 				for (int x = 0; x <= maxLength.x; x++) {
 					cell = row.createCell(x, STRING);
 					cell.setCellValue(cells[x][y] == null ? "" : cells[x][y]);
 					cell.setCellStyle(style);
-
 				}
 			} else {
 				style = CellStyles.normal1(workbook);
@@ -235,10 +271,10 @@ public class WriteableContent {
 					cell = row.createCell(x, STRING);
 					cell.setCellValue(cells[x][y] == null ? "" : cells[x][y]);
 					cell.setCellStyle(style);
-
 				}
 			}
 		}
+
 		style = CellStyles.up(workbook);
 		row = sheet.createRow(maxLength.y + 1 + rownumber);
 		for (int x = 0; x <= maxLength.x; x++) {
@@ -246,6 +282,13 @@ public class WriteableContent {
 			cell.setCellValue("");
 			cell.setCellStyle(style);
 		}
+
+		if (Config.hasHeaderOutput)
+			sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, maxLength.x));
+
+		for (int y = 0; y <= maxLength.y; y++)
+			sheet.autoSizeColumn(y);
+
 	}
 
 	private Vec2i getMaxLength() {

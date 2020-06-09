@@ -297,8 +297,16 @@ public class Save implements Comparable<Save>, Serializable {
 	public WriteableContent writeStudentInformation() {
 		WriteableContent students = new WriteableContent(References.language.getString("coursedistribution.text"));
 
-		students.addLine(new Vec2i(0, 0), new String[] { "Name", "Vorname", "Kurs", "Lehrer", "Priorität" });
+		int lineCounter = 0;
+		if (Config.hasHeaderOutput) {
+			students.addLine(new Vec2i(0, lineCounter), new String[] { Config.studentHeader });
+			lineCounter += 2;
+		}
 
+		students.setStartTable(lineCounter);
+
+		students.addLine(new Vec2i(0, lineCounter), new String[] { "Name", "Vorname", "Kurs", "Lehrer", "Priorität" });
+		lineCounter += 2;
 		for (int i = 0; i < this.allStudents.size(); i++) {
 			String[] line = new String[5];
 			line[0] = this.allStudents.get(i).getName();
@@ -311,7 +319,7 @@ public class Save implements Comparable<Save>, Serializable {
 			} else
 				line[2] = "@PJK";
 
-			students.addLine(new Vec2i(0, i + 1), line);
+			students.addLine(new Vec2i(0, i + lineCounter), line);
 		}
 
 		return students;
@@ -326,9 +334,18 @@ public class Save implements Comparable<Save>, Serializable {
 	public WriteableContent writeCourseInformation() {
 		WriteableContent courses = new WriteableContent(References.language.getString("studentdistribution.text"));
 
-		courses.addLine(new Vec2i(0, 0), new String[] { "Kurs", "Lehrer", "Anzahl Schüler", "Schüler" });
+		int line = 0;
+		if (Config.hasHeaderOutput) {
+			courses.addLine(new Vec2i(0, line), new String[] { Config.courseHeader });
+			line += 2;
+		}
 
-		int line = 1;
+		courses.setStartTable(line);
+
+		courses.addLine(new Vec2i(0, line), new String[] { "Kurs", "Lehrer", "Anzahl Schüler", "Schüler" });
+
+		line += 2;
+
 		for (Course c : this.allCourses) {
 			String[] parameter = new String[c.size() + 3];
 

@@ -114,7 +114,7 @@ public class CellStyles {
 		font.setFontHeightInPoints((short) 16);
 
 		style.setBorderBottom(BorderStyle.THIN);
-
+		style.setBorderTop(BorderStyle.THIN);
 		style.setBorderRight(BorderStyle.THIN);
 		style.setBorderLeft(BorderStyle.THIN);
 

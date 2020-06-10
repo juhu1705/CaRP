@@ -102,6 +102,8 @@ public class InformationSave implements Serializable {
 
 		WriteableContent information = new WriteableContent(References.language.getString("statistics.text"));
 
+		information.setStartTable(0);
+
 		int line = 0;
 
 		information.addLine(new Vec2i(0, line++), new String[] { References.language.getString("informations.text"),

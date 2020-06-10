@@ -40,7 +40,7 @@
     -fx-background-color:light1;
 }
 
-/* */
+/* Tree View */
 
 *.tree-view {
     -fx-color:default1;
@@ -56,6 +56,16 @@
 *.tree-view .tree-cell:focused {
     -fx-background-color:divider1;
     -fx-text-fill:dark1;
+}
+
+/* Split Pane */
+
+.split-pane {
+    -fx-background-color: transparent;
+}
+
+.split-pane-divider {
+    -fx-background-color: transparent;
 }
 
 /*Menu */

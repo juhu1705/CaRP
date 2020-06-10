@@ -17,7 +17,7 @@
 /*Root Color*/
 *.root {
      -fx-color:lightgrey;
-     
+     -fx-focus-color: transparent;
      -fx-background-color:dark1;
 }
  
@@ -121,16 +121,62 @@
 /*Menu Button */
 *.menu-button {
     -fx-text-fill: light1;
-    -fx-background-color:default1
+    -fx-background-color:default1;
 }
 
 *.menu-button>*.label {
     -fx-text-fill: light1;
 }
 
+
+/* Combo Box */
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-background-radius: 6;
+}
+
+.combo-box-base:showing {
+    -fx-background-radius: 6 6 0 0;
+    -fx-background-color: default1;
+}
+
+.combo-box-popup {
+    -fx-background-radius: 0 0 6 6;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-radius: 0 0 6 6;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-margin: 1px;
+    -fx-background-radius: 0 0 6 6;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover {
+    -fx-background-radius: 6;
+    -fx-background-color: dark1;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover {
+    -fx-background-radius: 6;
+    -fx-background-color: default1;
+}
+
 /*Text Area */
 *.text-area {
     -fx-text-fill: primary1;
+    -fx-highlight-text-fill: #FFFFFF;
+    -fx-highlight-fill: dark1;
+    -fx-focus-color: transparent;
+}
+
+*.text-field {
+    -fx-text-fill: primary1;
+    -fx-highlight-text-fill: #FFFFFF;
+    -fx-highlight-fill: dark1;
+    -fx-focus-color: transparent;
 }
 
 /*VBox */

@@ -1,8 +1,8 @@
 package de.juhu.distributor;
 
-import static de.juhu.dateimanager.CSVImporter.readCSV;
-import static de.juhu.dateimanager.ExcelImporter.readXLSImproved;
-import static de.juhu.dateimanager.ExcelImporter.readXLSXImproved;
+import static de.juhu.filemanager.CSVImporter.readCSV;
+import static de.juhu.filemanager.ExcelImporter.readXLSImproved;
+import static de.juhu.filemanager.ExcelImporter.readXLSXImproved;
 import static de.juhu.util.References.LOGGER;
 
 import java.io.File;
@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
-import de.juhu.dateimanager.WriteableContent;
+import de.juhu.filemanager.WriteableContent;
 import de.juhu.guiFX.GUIDoubleStudentManager;
 import de.juhu.guiFX.GUILoader;
 import de.juhu.guiFX.GUIManager;
@@ -1061,7 +1061,7 @@ public class Distributor implements Runnable {
 
 	/**
 	 * Lässt die Datei je nach Dateityp auslesen und gibt die Tabellen in Form einer
-	 * {@link List Liste} aus {@link de.juhu.dateimanager.WriteableContent
+	 * {@link List Liste} aus {@link de.juhu.filemanager.WriteableContent
 	 * WriteableContents} zurück.
 	 * 
 	 * @param path Der Dateipfad der Ausgelesen werden soll.
@@ -1206,7 +1206,7 @@ public class Distributor implements Runnable {
 
 								Util.openWindow("/assets/layouts/DoubleStudent.fxml",
 										References.language.getString("doubleStudent.text"),
-										GUILoader.getPrimaryStage(), GUIManager.getInstance().mb1.isSelected());
+										GUILoader.getPrimaryStage(), GUIManager.getInstance().theme);
 							});
 
 							try {

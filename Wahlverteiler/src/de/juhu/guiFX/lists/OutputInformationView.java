@@ -34,8 +34,10 @@ public class OutputInformationView implements Runnable {
 
 		ratess.put(References.language.getString("highestpriority.text"),
 				Double.valueOf(GUIManager.actual.getInformation().getHighestPriority()));
-		ratess.put(References.language.getString("calculationrate.text"),
-				Double.valueOf(GUIManager.actual.getInformation().getRate()));
+		ratess.put(References.language.getString("expectation.text"),
+				Double.valueOf(GUIManager.actual.getInformation().getExpectation()));
+		ratess.put(References.language.getString("standartDeviation.text"),
+				Double.valueOf(GUIManager.actual.getInformation().getStandartDeviation()));
 		ratess.put(References.language.getString("calculationgoodness.text"),
 				Double.valueOf(GUIManager.actual.getInformation().getGuete()));
 		ratess.put(References.language.getString("studentcount.text"),

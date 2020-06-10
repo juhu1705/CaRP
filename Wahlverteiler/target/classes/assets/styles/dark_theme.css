@@ -55,7 +55,7 @@
 
 *.tree-view .tree-cell:focused {
     -fx-background-color:divider1;
-    -fx-text-fill:dark1;
+    -fx-text-fill:white;
 }
 
 /* Split Pane */

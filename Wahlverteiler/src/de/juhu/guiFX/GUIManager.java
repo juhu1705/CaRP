@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -22,13 +23,13 @@ import java.util.logging.Level;
 import org.xml.sax.SAXException;
 
 import de.juhu.config.ConfigManager;
-import de.juhu.dateimanager.CSVExporter;
-import de.juhu.dateimanager.ExcelExporter;
-import de.juhu.dateimanager.LogWriter;
 import de.juhu.distributor.Course;
 import de.juhu.distributor.Distributor;
 import de.juhu.distributor.Save;
 import de.juhu.distributor.Student;
+import de.juhu.filemanager.CSVExporter;
+import de.juhu.filemanager.ExcelExporter;
+import de.juhu.filemanager.LogWriter;
 import de.juhu.guiFX.lists.CourseView;
 import de.juhu.guiFX.lists.InputView;
 import de.juhu.guiFX.lists.OutputCourseView;
@@ -180,6 +181,10 @@ public class GUIManager implements Initializable {
 	@FXML
 	public CheckMenuItem mb0, mb1;
 
+	public HashMap<Theme, CheckMenuItem> checks = new HashMap<>();
+
+	public Theme theme;
+
 	private CheckMenuItem last, lastSwitch;
 
 	public void onFullScreen(ActionEvent event) {
@@ -246,7 +251,7 @@ public class GUIManager implements Initializable {
 		LOGGER.config("Starting Add Student Window");
 
 		Util.openWindow("/assets/layouts/AddStudentToCalculation.fxml",
-				References.language.getString("addstudent.text"), GUILoader.getPrimaryStage(), mb1.isSelected());
+				References.language.getString("addstudent.text"), GUILoader.getPrimaryStage(), this.theme);
 	}
 
 	public void onEditCourseActualSave(ActionEvent event) {
@@ -269,7 +274,7 @@ public class GUIManager implements Initializable {
 		AddCourseToSaveManager.mS = course.getMaxStudentCount();
 
 		Util.openWindow("/assets/layouts/AddCourseToCalculation.fxml", References.language.getString("addcourse.text"),
-				GUILoader.getPrimaryStage(), mb1.isSelected());
+				GUILoader.getPrimaryStage(), this.theme);
 	}
 
 	public void onAddCourseToActualSave(ActionEvent event) {
@@ -286,7 +291,7 @@ public class GUIManager implements Initializable {
 		LOGGER.config("Starting Add Course Window");
 
 		Util.openWindow("/assets/layouts/AddCourseToCalculation.fxml", References.language.getString("addcourse.text"),
-				GUILoader.getPrimaryStage(), mb1.isSelected());
+				GUILoader.getPrimaryStage(), this.theme);
 	}
 
 	public void onNextSave(ActionEvent event) {
@@ -332,7 +337,7 @@ public class GUIManager implements Initializable {
 		AddCourseManager.t = null;
 
 		Util.openWindow("/assets/layouts/AddCourse.fxml", References.language.getString("addcourse.text"),
-				GUILoader.getPrimaryStage(), mb1.isSelected());
+				GUILoader.getPrimaryStage(), this.theme);
 	}
 
 	public void onClearCalculations(ActionEvent event) {
@@ -358,6 +363,7 @@ public class GUIManager implements Initializable {
 		GUIManager.getInstance().b6.setDisable(true);
 	}
 
+	@Deprecated
 	public void onThemeChange(ActionEvent event) {
 		if (last == null)
 			last = mb1;
@@ -369,7 +375,7 @@ public class GUIManager implements Initializable {
 			GUILoader.scene.getStylesheets().clear();
 			// GUILoader.scene.getStylesheets().add(StyleSheet.DEFAULT_STYLE);
 			last = mb0;
-		} else if (mb1.isSelected()) {
+		} else if (mb0.isSelected()) {
 
 			GUILoader.scene.getStylesheets().add("/assets/styles/dark_theme.css");
 			last = mb1;
@@ -388,6 +394,29 @@ public class GUIManager implements Initializable {
 			}
 
 		}
+	}
+
+	public void onSetLightTheme(ActionEvent event) {
+		this.onSetTheme(Theme.LIGHT);
+	}
+
+	public void onSetDarkTheme(ActionEvent event) {
+		this.onSetTheme(Theme.DARK);
+	}
+
+	public void onSetTheme(Theme theme) {
+		if (theme.getLocation().equalsIgnoreCase("remove"))
+			GUILoader.scene.getStylesheets().clear();
+		else
+			GUILoader.scene.getStylesheets().add(theme.getLocation());
+
+		this.theme = theme;
+
+		this.checks.forEach((themes, checkbox) -> {
+			checkbox.setSelected(false);
+		});
+
+		this.checks.get(theme).setSelected(true);
 	}
 
 	public void moveBadStudentToFirst(MouseEvent event) {
@@ -477,7 +506,7 @@ public class GUIManager implements Initializable {
 		AddCourseManager.mS = course.getMaxStudentCount();
 
 		Util.openWindow("/assets/layouts/AddCourse.fxml", References.language.getString("addcourse.text"),
-				GUILoader.getPrimaryStage(), mb1.isSelected());
+				GUILoader.getPrimaryStage(), this.theme);
 	}
 
 	public void onCourseChangeRequest(MouseEvent event) {
@@ -512,7 +541,7 @@ public class GUIManager implements Initializable {
 			AddCourseManager.mS = course.getMaxStudentCount();
 
 			Util.openWindow("/assets/layouts/AddCourse.fxml", References.language.getString("addcourse.text"),
-					GUILoader.getPrimaryStage(), mb1.isSelected());
+					GUILoader.getPrimaryStage(), this.theme);
 
 		}
 	}
@@ -557,7 +586,7 @@ public class GUIManager implements Initializable {
 		LOGGER.config("Starting Switch Course Window");
 
 		Util.openWindow("/assets/layouts/SwitchCourse.fxml", References.language.getString("addstudent.text"),
-				GUILoader.getPrimaryStage(), mb1.isSelected());
+				GUILoader.getPrimaryStage(), this.theme);
 
 	}
 
@@ -579,7 +608,7 @@ public class GUIManager implements Initializable {
 		LOGGER.config("Starting Switch Course Window");
 
 		Util.openWindow("/assets/layouts/SwitchCourse.fxml", References.language.getString("addstudent.text"),
-				GUILoader.getPrimaryStage(), mb1.isSelected());
+				GUILoader.getPrimaryStage(), this.theme);
 	}
 
 	public void onEditStudent(ActionEvent event) {
@@ -600,7 +629,7 @@ public class GUIManager implements Initializable {
 		LOGGER.config("Starting Add Student Window");
 
 		Util.openWindow("/assets/layouts/AddStudent.fxml", References.language.getString("addstudent.text"),
-				GUILoader.getPrimaryStage(), mb1.isSelected());
+				GUILoader.getPrimaryStage(), this.theme);
 	}
 
 	public void onStudentChangeRequest(MouseEvent event) {
@@ -627,7 +656,7 @@ public class GUIManager implements Initializable {
 			AddStudentManager.studentID = student.getID();
 
 			Util.openWindow("/assets/layouts/AddStudent.fxml", References.language.getString("addstudent.text"),
-					GUILoader.getPrimaryStage(), mb1.isSelected());
+					GUILoader.getPrimaryStage(), this.theme);
 		}
 	}
 
@@ -666,7 +695,7 @@ public class GUIManager implements Initializable {
 		AddStudentManager.studentID = -1;
 
 		Util.openWindow("/assets/layouts/AddStudent.fxml", References.language.getString("addstudent.text"),
-				GUILoader.getPrimaryStage(), mb1.isSelected());
+				GUILoader.getPrimaryStage(), this.theme);
 	}
 
 	public void onFileTypeChanged(ActionEvent event) {
@@ -761,7 +790,7 @@ public class GUIManager implements Initializable {
 		LOGGER.config("Starting About Window");
 
 		Util.openWindow("/assets/layouts/About.fxml", References.language.getString("about.text"),
-				GUILoader.getPrimaryStage(), mb1.isSelected()).setResizable(false);
+				GUILoader.getPrimaryStage(), this.theme).setResizable(false);
 	}
 
 	public void clearConsole(ActionEvent event) {
@@ -868,7 +897,7 @@ public class GUIManager implements Initializable {
 		ErrorGuiController.headline = headline;
 		ErrorGuiController.information = message;
 
-		Util.openWindow("/assets/layouts/Error.fxml", "ERROR", GUILoader.getPrimaryStage(), mb1.isSelected());
+		Util.openWindow("/assets/layouts/Error.fxml", "ERROR", GUILoader.getPrimaryStage(), this.theme);
 		LOGGER.info("Error Window Started");
 
 	}
@@ -1546,6 +1575,11 @@ public class GUIManager implements Initializable {
 		this.unallocatedName.setCellValueFactory(s -> {
 			return new SimpleStringProperty(s.getValue().getName());
 		});
+
+		// Theme
+
+		this.checks.put(Theme.LIGHT, mb0);
+		this.checks.put(Theme.DARK, mb1);
 
 		// Update Config
 

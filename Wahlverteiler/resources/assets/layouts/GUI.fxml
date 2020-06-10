@@ -696,11 +696,11 @@
                            </graphic></MenuItem>
                         <Menu mnemonicParsing="false" text="%theme.text">
                            <items>
-                              <CheckMenuItem fx:id="mb1" mnemonicParsing="false" onAction="#onThemeChange" selected="true" text="%dark.text">
+                              <CheckMenuItem fx:id="mb1" mnemonicParsing="false" onAction="#onSetDarkTheme" selected="true" text="%dark.text">
                                  <accelerator>
                                     <KeyCodeCombination alt="UP" code="D" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator></CheckMenuItem>
-                              <CheckMenuItem fx:id="mb0" mnemonicParsing="false" onAction="#onThemeChange" text="%light.text">
+                              <CheckMenuItem fx:id="mb0" mnemonicParsing="false" onAction="#onSetLightTheme" text="%light.text">
                                  <accelerator>
                                     <KeyCodeCombination alt="UP" code="D" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>

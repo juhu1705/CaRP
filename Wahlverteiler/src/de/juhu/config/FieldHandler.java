@@ -8,6 +8,9 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
+import de.juhu.guiFX.GUIManager;
+import de.juhu.guiFX.Theme;
+
 /**
  * Diese Klasse organisiert das Einlesen der Config Datei.
  * 
@@ -78,6 +81,9 @@ public class FieldHandler implements ContentHandler {
 			}
 			f.setAccessible(a);
 		}
+
+		if (arg1.equals("themetype"))
+			GUIManager.getInstance().theme = Theme.valueOf(currentValue);
 
 	}
 

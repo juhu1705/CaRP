@@ -3,8 +3,8 @@ package de.juhu.distributor;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import de.juhu.dateimanager.Vec2i;
-import de.juhu.dateimanager.WriteableContent;
+import de.juhu.filemanager.Vec2i;
+import de.juhu.filemanager.WriteableContent;
 import de.juhu.util.Config;
 import de.juhu.util.References;
 
@@ -38,9 +38,24 @@ public class InformationSave implements Serializable {
 	private int rate;
 
 	/**
-	 * Die Guete der Berechnung des {@link #parent zugeordneten Speicher}.
+	 * Die Guete der Berechnung des {@link #parent zugeordneten Speichers}.
 	 */
 	private double guete;
+
+	/**
+	 * Der Erwartungswert des {@link #parent zugeordneten Speichers}.
+	 */
+	private double expectation;
+
+	/**
+	 * Die Varianz der Ergebnisse des {@link #parent zugeordneten Speichers}.
+	 */
+	private double variance;
+
+	/**
+	 * Die Standartabweichung vom Erwartungswert.
+	 */
+	private double standardDeviation;
 
 	/**
 	 * Die Anzahl der zugewiesenden Schüler, die im {@link #parent zugeordneten
@@ -112,9 +127,12 @@ public class InformationSave implements Serializable {
 		information.addLine(new Vec2i(0, ++line), new String[] {
 				References.language.getString("highestpriority.text") + ": ", Integer.toString(this.highestPriority) });
 		information.addLine(new Vec2i(0, ++line), new String[] {
-				References.language.getString("calculationrate.text") + ": ", Integer.toString(this.rate) });
-		information.addLine(new Vec2i(0, ++line), new String[] {
 				References.language.getString("calculationgoodness.text") + ": ", Double.toString(this.guete) });
+		information.addLine(new Vec2i(0, ++line), new String[] {
+				References.language.getString("expectation.text") + ": ", Double.toString(this.getExpectation()) });
+		information.addLine(new Vec2i(0, ++line),
+				new String[] { References.language.getString("standartDeviation.text") + ": ",
+						Double.toString(this.getStandartDeviation()) });
 		information.addLine(new Vec2i(0, ++line),
 				new String[] { References.language.getString("studentcount.text") + ": ",
 						Integer.toString(this.parent.getAllStudents().size()) });
@@ -256,7 +274,7 @@ public class InformationSave implements Serializable {
 		/*
 		 * Aktualisiert die höchste Priorität dieser Verteilung.
 		 */
-		this.highestPriority = parent.getHighestPriority();
+		this.highestPriority = parent.getHighestPriority() == Integer.MAX_VALUE ? -1 : parent.getHighestPriority();
 
 		/*
 		 * Aktualisiert die Rate dieser Verteilung.
@@ -282,6 +300,12 @@ public class InformationSave implements Serializable {
 		 * Aktualisiert die Güte der Verteilung.
 		 */
 		this.updateGuete();
+
+		this.calculateExpectation();
+
+		this.calculateVariance();
+
+		this.calculateStandardDeviation();
 	}
 
 	/**
@@ -311,7 +335,7 @@ public class InformationSave implements Serializable {
 			 */
 			int highest = this.parent.getHighestPriority();
 			if (highest > this.parent.getHighestPriorityWhithoutIntegerMax() || highest < 0)
-				highest = this.parent.getHighestPriorityWhithoutIntegerMax() + 10;
+				highest = this.parent.getHighestPriorityWhithoutIntegerMax() + Config.addForUnallocatedStudents;
 
 			/*
 			 * Ermittelt die Anzahl der Schüler.
@@ -351,6 +375,44 @@ public class InformationSave implements Serializable {
 	 */
 	public double getGuete() {
 		return this.guete;
+	}
+
+	public void calculateExpectation() {
+		this.expectation = 0;
+
+		for (int i = 0; i < this.parent.getStudentPriorities().length; i++) {
+			this.expectation += (i + 1) * this.getP(i);
+		}
+
+	}
+
+	public void calculateVariance() {
+		this.variance = 0;
+
+		for (int i = 0; i < this.parent.getStudentPriorities().length; i++) {
+			this.variance += ((i + 1) - this.getExpectation()) * ((i + 1) - this.getExpectation()) * getP(i);
+		}
+
+	}
+
+	public void calculateStandardDeviation() {
+		this.standardDeviation = Math.sqrt(this.getVariance());
+	}
+
+	public double getVariance() {
+		return this.variance;
+	}
+
+	public double getStandartDeviation() {
+		return this.standardDeviation;
+	}
+
+	public double getExpectation() {
+		return this.expectation;
+	}
+
+	public double getP(int priority) {
+		return ((double) this.parent.getStudentPriorities()[priority]) / ((double) this.getStudentCount());
 	}
 
 }

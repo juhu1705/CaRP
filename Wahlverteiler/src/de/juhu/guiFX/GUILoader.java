@@ -118,7 +118,14 @@ public class GUILoader extends Application {
 
 		Scene s = new Scene(root);
 
-		s.getStylesheets().add("/assets/styles/dark_theme.css");
+		if (!GUIManager.getInstance().theme.location.equalsIgnoreCase("remove"))
+			s.getStylesheets().add(GUIManager.getInstance().theme.location);
+
+		GUIManager.getInstance().checks.forEach((themes, checkbox) -> {
+			checkbox.setSelected(false);
+		});
+
+		GUIManager.getInstance().checks.get(GUIManager.getInstance().theme).setSelected(true);
 
 		primaryStage.setMinWidth(400);
 		primaryStage.setMinHeight(310);

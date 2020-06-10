@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 import de.juhu.distributor.Course;
+import de.juhu.guiFX.Theme;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -165,7 +166,7 @@ public class Util {
 	 * @param darkTheme
 	 * @return
 	 */
-	public static Stage openWindow(String resourceLocation, String title, Stage parent, boolean darkTheme) {
+	public static Stage openWindow(String resourceLocation, String title, Stage parent, Theme theme) {
 		Stage primaryStage = new Stage();
 
 		Image i;
@@ -182,8 +183,8 @@ public class Util {
 			return null;
 		}
 		Scene s = new Scene(root);
-		if (darkTheme) {
-			s.getStylesheets().add("/assets/styles/dark_theme.css");
+		if (!theme.getLocation().equalsIgnoreCase("remove")) {
+			s.getStylesheets().add(theme.getLocation());
 		}
 
 		primaryStage.setMinWidth(200);

@@ -82,6 +82,9 @@ public class Config {
 	@ConfigElement(defaultValue = "100", elementClass = Integer.class, description = "runcount.description", name = "runcount.text", location = "config.calculation")
 	public static int runs = 100;
 
+	@ConfigElement(defaultValue = "2", elementClass = Integer.class, description = "addForUnallocatedStudents.description", name = "addForUnallocatedStudents.text", location = "config.calculation")
+	public static int addForUnallocatedStudents = 2;
+
 	@ConfigElement(defaultValue = "5", elementClass = Integer.class, description = "newcalculating.description", name = "newcalculating.text", location = "config.calculation")
 	public static int newCalculating = 5;
 

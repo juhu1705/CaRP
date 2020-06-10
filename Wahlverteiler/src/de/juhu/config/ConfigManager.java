@@ -240,6 +240,15 @@ public class ConfigManager {
 
 		bw.append(" </fields>");
 		bw.newLine();
+		bw.append(" <theme>");
+		bw.newLine();
+
+		bw.append(" <themetype>" + GUIManager.getInstance().theme.name() + "</themetype>");
+		bw.newLine();
+
+		bw.append(" </theme>");
+		bw.newLine();
+
 		bw.append("</config>");
 
 		bw.close();
@@ -250,6 +259,8 @@ public class ConfigManager {
 		CheckBoxTreeItem root = new CheckBoxTreeItem(References.language.getString("config.location"));
 
 		tree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+
+		root.setExpanded(true);
 
 		tree.setRoot(root);
 
@@ -371,7 +382,8 @@ public class ConfigManager {
 						cb.setEditable(true);
 						try {
 							if (f.getName().equals("runs") || f.getName().equals("newCalculating")
-									|| f.getName().equals("improvingOfCalculation"))
+									|| f.getName().equals("improvingOfCalculation")
+									|| f.getName().equals("addForUnallocatedStudents"))
 								cb.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,
 										Integer.MAX_VALUE, f.getInt(null)));
 							else

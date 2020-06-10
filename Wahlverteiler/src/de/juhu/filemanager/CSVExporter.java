@@ -1,4 +1,4 @@
-package de.juhu.dateimanager;
+package de.juhu.filemanager;
 
 import static de.juhu.util.References.LOGGER;
 

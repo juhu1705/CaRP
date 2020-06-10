@@ -10,11 +10,13 @@ import de.juhu.distributor.Student;
 import de.juhu.util.Config;
 import de.juhu.util.References;
 import de.juhu.util.Util;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -31,17 +33,18 @@ import javafx.stage.Stage;
  */
 public class AddStudentManager implements Initializable {
 
-	public ArrayList<TextField> cources = new ArrayList<>((Config.maxChooses) * 2);
+	public ArrayList<ComboBox<String>> cources = new ArrayList<>((Config.maxChooses) * 2);
 
 	public static int studentID = -1;
 
 	@FXML
-	public TextField prename, name, c1f, c1t;
+	public TextField prename, name;
+	public ComboBox<String> c1f, c1t;
 
 	@FXML
 	public VBox vBox;
 
-	public TextField last;
+	public ComboBox<String> last;
 
 	public int i = 1;
 
@@ -55,11 +58,11 @@ public class AddStudentManager implements Initializable {
 			name.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
-		if (c1f.getText().isEmpty()) {
+		if (c1f.getEditor().getText().isEmpty()) {
 			c1f.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
-		if (c1t.getText().isEmpty() && !Util.isIgnoreCourse(c1f.getText())) {
+		if (c1t.getEditor().getText().isEmpty() && !Util.isIgnoreCourse(c1f.getEditor().getText())) {
 			c1t.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
@@ -69,17 +72,18 @@ public class AddStudentManager implements Initializable {
 		if (studentID == -1) {
 			Course[] c = new Course[cources.size() / 2 + 1];
 
-			c[0] = Distributor.getInstance().getOrCreateCourseByName(c1f.getText() + "|" + c1t.getText());
+			c[0] = Distributor.getInstance()
+					.getOrCreateCourseByName(c1f.getEditor().getText() + "|" + c1t.getEditor().getText());
 			for (int i = 0, n = 1; i + 1 < cources.size(); i += 2, n++) {
-				if (Util.isBlank(cources.get(i).getText() + cources.get(i + 1).getText()))
+				if (Util.isBlank(cources.get(i).getEditor().getText() + cources.get(i + 1).getEditor().getText()))
 					continue;
-				c[n] = Distributor.getInstance()
-						.getOrCreateCourseByName(cources.get(i).getText() + "|" + cources.get(i + 1).getText());
+				c[n] = Distributor.getInstance().getOrCreateCourseByName(
+						cources.get(i).getEditor().getText() + "|" + cources.get(i + 1).getEditor().getText());
 			}
 
 			Student s = new Student(name.getText(), prename.getText(), c);
 
-			if (c1f.getText().contains(Config.ignoreStudent))
+			if (c1f.getEditor().getText().contains(Config.ignoreStudent))
 				s = new Student(name.getText(), prename.getText(), Distributor.getInstance().ignore());
 
 			Distributor.getInstance().addStudent(s);
@@ -90,12 +94,13 @@ public class AddStudentManager implements Initializable {
 
 			Course[] c = new Course[cources.size() / 2 + 1];
 
-			c[0] = Distributor.getInstance().getOrCreateCourseByName(c1f.getText() + "|" + c1t.getText());
+			c[0] = Distributor.getInstance()
+					.getOrCreateCourseByName(c1f.getEditor().getText() + "|" + c1t.getEditor().getText());
 			for (int i = 0, n = 1; i + 1 < cources.size(); i += 2, n++) {
-				if (Util.isBlank(cources.get(i).getText() + cources.get(i + 1).getText()))
+				if (Util.isBlank(cources.get(i).getEditor().getText() + cources.get(i + 1).getEditor().getText()))
 					continue;
-				c[n] = Distributor.getInstance()
-						.getOrCreateCourseByName(cources.get(i).getText() + "|" + cources.get(i + 1).getText());
+				c[n] = Distributor.getInstance().getOrCreateCourseByName(
+						cources.get(i).getEditor().getText() + "|" + cources.get(i + 1).getEditor().getText());
 			}
 
 			s.setCourses(c);
@@ -112,20 +117,48 @@ public class AddStudentManager implements Initializable {
 		studentID = -1;
 	}
 
+	public void filledAction(ActionEvent event) {
+		filled(null);
+	}
+
 	public void filled(KeyEvent event) {
-		if (!last.getText().equals("") && i < Config.maxChooses) {
+		References.LOGGER.config(last.getEditor().getText());
+		if (!last.getEditor().getText().equals("") && i < Config.maxChooses) {
 			i++;
 			HBox hBox = new HBox(10);
 			hBox.setPadding(new Insets(10));
 			Label label = new Label(References.language.getString("course.text") + " " + i + ":"),
 					subject = new Label(References.language.getString("subject.text") + ":"),
 					teacher = new Label(References.language.getString("teacher.text") + ":");
-			TextField st = new TextField(), tt = new TextField();
+			ComboBox st = new ComboBox(), tt = new ComboBox();
+
+			st.setEditable(true);
+			tt.setEditable(true);
+
+			st.setFocusTraversable(true);
+			tt.setFocusTraversable(true);
+
+			ArrayList<String> teachers = new ArrayList<String>(), subjects = new ArrayList<String>();
+
+			for (Course c : Distributor.getInstance().getCourses()) {
+				if (!teachers.contains(c.getTeacher()))
+					teachers.add(c.getTeacher());
+				if (!subjects.contains(c.getSubject()))
+					subjects.add(c.getSubject());
+			}
+
+			tt.setItems(FXCollections.observableArrayList(teachers));
+			st.setItems(FXCollections.observableArrayList(subjects));
+
 			this.cources.add(st);
 			this.cources.add(tt);
 
 			tt.setOnKeyReleased(k -> {
 				filled(k);
+			});
+
+			tt.setOnAction(k -> {
+				filled(null);
 			});
 			last = tt;
 			hBox.getChildren().addAll(subject, st, teacher, tt);
@@ -136,6 +169,18 @@ public class AddStudentManager implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		References.LOGGER.info("Initialize Add Student Manager");
+
+		ArrayList<String> teachers = new ArrayList<String>(), subjects = new ArrayList<String>();
+
+		for (Course c : Distributor.getInstance().getCourses()) {
+			if (!teachers.contains(c.getTeacher()))
+				teachers.add(c.getTeacher());
+			if (!subjects.contains(c.getSubject()))
+				subjects.add(c.getSubject());
+		}
+
+		c1t.setItems(FXCollections.observableArrayList(teachers));
+		c1f.setItems(FXCollections.observableArrayList(subjects));
 
 		this.last = c1t;
 
@@ -148,8 +193,8 @@ public class AddStudentManager implements Initializable {
 			for (Course c : s.getCourses()) {
 				if (first) {
 					first = false;
-					c1f.setText(c.getSubject());
-					c1t.setText(c.getTeacher());
+					c1f.getEditor().setText(c.getSubject());
+					c1t.getEditor().setText(c.getTeacher());
 					filled(null);
 				} else {
 					if (this.cources.size() < i + 1)
@@ -158,8 +203,8 @@ public class AddStudentManager implements Initializable {
 					if (this.cources.get(i) == null || this.cources.get(i + 1) == null)
 						break;
 
-					this.cources.get(i++).setText(c.getSubject());
-					this.cources.get(i++).setText(c.getTeacher());
+					this.cources.get(i++).getEditor().setText(c.getSubject());
+					this.cources.get(i++).getEditor().setText(c.getTeacher());
 					filled(null);
 				}
 			}

@@ -899,7 +899,7 @@ public class GUIManager implements Initializable {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
 		LOGGER.info("Start Saving files");
-		LOGGER.info("Try to save to " + Config.outputFile + Config.outputFileType);
+		LOGGER.info("Try to save to " + Config.outputFile + "/calculation" + Config.outputFileType);
 
 		Save save = this.actual;
 		if (save == null) {
@@ -925,8 +925,30 @@ public class GUIManager implements Initializable {
 		});
 
 		String s;
-		if (Util.isBlank((s = Config.outputFile)) || s.endsWith("/") || s.endsWith("\\"))
+		if (Util.isBlank((s = Config.outputFile))) {
+			this.startErrorFrame("No output file!", "Please choose an output file before exporting.");
+
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
+
+					p0.setVisible(false);
+
+					GUIManager.getInstance().r1.setDisable(false);
+					GUIManager.getInstance().r2.setDisable(false);
+					GUIManager.getInstance().r3.setDisable(false);
+				}
+			});
+
 			return;
+		}
+
+		if (s.endsWith("\\"))
+			s.substring(0, s.length() - 2);
+		else if (s.endsWith("/"))
+			s.substring(0, s.length() - 1);
 
 		boolean xls = false, xlsx = false, csv = false;
 
@@ -1026,8 +1048,30 @@ public class GUIManager implements Initializable {
 		});
 
 		String s;
-		if (Util.isBlank((s = Config.outputFile)) || s.endsWith("/") || s.endsWith("\\"))
+		if (Util.isBlank((s = Config.outputFile))) {
+			this.startErrorFrame("No output file!", "Please choose an output file before exporting.");
+
+			Platform.runLater(new Runnable() {
+
+				@Override
+				public void run() {
+					de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
+
+					p0.setVisible(false);
+
+					GUIManager.getInstance().r1.setDisable(false);
+					GUIManager.getInstance().r2.setDisable(false);
+					GUIManager.getInstance().r3.setDisable(false);
+				}
+			});
+
 			return;
+		}
+
+		if (s.endsWith("\\"))
+			s.substring(0, s.length() - 2);
+		else if (s.endsWith("/"))
+			s.substring(0, s.length() - 1);
 //
 //		boolean xls = false, xlsx = false, csv = false;
 //

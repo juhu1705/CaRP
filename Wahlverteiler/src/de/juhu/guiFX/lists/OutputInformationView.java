@@ -71,8 +71,10 @@ public class OutputInformationView implements Runnable {
 			}
 
 			for (int i = 1; i <= Config.maxChooses; i++) {
-				TableColumn<Student, String> k = new TableColumn<>("Course " + i), s = new TableColumn<>("Subject"),
-						t = new TableColumn<>("Teacher");
+				TableColumn<Student, String> k = new TableColumn<>(
+						References.language.getString("course.text") + " " + i),
+						s = new TableColumn<>(References.language.getString("subject.text")),
+						t = new TableColumn<>(References.language.getString("teacher.text"));
 				k.getColumns().addAll(s, t);
 				this.scourses.add(k);
 				this.scourses.add(s);

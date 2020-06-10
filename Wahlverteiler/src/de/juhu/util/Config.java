@@ -22,10 +22,10 @@ public class Config {
 	@ConfigElement(defaultValue = ".xlsx", elementClass = String.class, description = "outputfiletype.description", name = "outputfiletype.text", location = "config.export")
 	public static String outputFileType = ".xlsx";
 
-	@ConfigElement(defaultValue = "%localappdata%\\Local\\CaRP", elementClass = String.class, description = "outputdirectory.description", name = "outputdirectory.text", location = "config.export")
+	@ConfigElement(defaultValue = "user.home\\Local\\.CaRP", elementClass = String.class, description = "outputdirectory.description", name = "outputdirectory.text", location = "config.export")
 	public static String outputFile;
 	static {
-		outputFile = (System.getenv("localappdata") + "\\CaRP\\");
+		outputFile = (References.HOME_FOLDER);
 	}
 
 	@ConfigElement(defaultValue = "PJK", elementClass = String.class, description = "ignoremark.description", name = "ignoremark.text", location = "config.import")

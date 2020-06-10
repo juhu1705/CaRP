@@ -2,4 +2,4 @@
 
 Der „Course and Research Paper Assinger“ (Kurs und Facharbeit Zuweiser = KuFa-Zuweiser) ist ein Programm zum Zuweisen von Schülern nach Wunschkursen, z.B. Sportkurse oder Facharbeiten, die nach einer Priorität geordnet sind. Dabei wird versucht eine Zuweisung zu erstellen, welche einer Verteilung mit der bestmöglichen Priorität entspricht und dabei das Limit eines jeden Kurses nicht überschreitet.
 
-Version 0.3.8
+Version 1.0.0

@@ -118,6 +118,9 @@ public class GUILoader extends Application {
 
 		Scene s = new Scene(root);
 
+		if (GUIManager.getInstance().theme == null)
+			GUIManager.getInstance().theme = Theme.DARK;
+
 		if (!GUIManager.getInstance().theme.location.equalsIgnoreCase("remove"))
 			s.getStylesheets().add(GUIManager.getInstance().theme.location);
 

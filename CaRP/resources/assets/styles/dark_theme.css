@@ -12,6 +12,7 @@
     primary1: #212121;
     secondary1: #757575;
     divider1: #BDBDBD;
+    white: #FFFFFF;
 }
  
 /*Root Color*/
@@ -167,14 +168,14 @@
 /*Text Area */
 *.text-area {
     -fx-text-fill: primary1;
-    -fx-highlight-text-fill: #FFFFFF;
+    -fx-highlight-text-fill: white;
     -fx-highlight-fill: dark1;
     -fx-focus-color: transparent;
 }
 
 *.text-field {
     -fx-text-fill: primary1;
-    -fx-highlight-text-fill: #FFFFFF;
+    -fx-highlight-text-fill: white;
     -fx-highlight-fill: dark1;
     -fx-focus-color: transparent;
 }

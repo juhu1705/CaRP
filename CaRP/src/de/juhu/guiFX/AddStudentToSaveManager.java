@@ -1,6 +1,7 @@
 package de.juhu.guiFX;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import de.juhu.distributor.Course;
@@ -9,13 +10,12 @@ import de.juhu.guiFX.lists.SwitchCourseView;
 import de.juhu.util.References;
 import de.juhu.util.Util;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -30,8 +30,8 @@ public class AddStudentToSaveManager implements Initializable {
 
 	public static Student student;
 
-	@FXML
-	private TableView<Course> courses;
+//	@FXML
+//	private TableView<Course> courses;
 
 	@FXML
 	private TextField prename;
@@ -40,20 +40,23 @@ public class AddStudentToSaveManager implements Initializable {
 	private TextField name;
 
 	@FXML
-	private TableColumn<Course, String> teacher, subject;
+	private ChoiceBox<String> choiceBox;
+
+//	@FXML
+//	private TableColumn<Course, String> teacher, subject;
 
 	private SwitchCourseView scw;
 
 	public void onSetActive(ActionEvent event) {
-		Course c = this.courses.getSelectionModel().getSelectedItem();
-
-		if (c == null || (c.getSubject() == null || c.getTeacher() == null)
-				|| (c.getSubject().isEmpty() && c.getTeacher().isEmpty()))
-			return;
-
-		student.setActiveCourse(c);
-
-		this.scw.run();
+//		Course c = this.courses.getSelectionModel().getSelectedItem();
+//
+//		if (c == null || (c.getSubject() == null || c.getTeacher() == null)
+//				|| (c.getSubject().isEmpty() && c.getTeacher().isEmpty()))
+//			return;
+//
+//		student.setActiveCourse(c);
+//
+//		this.scw.run();
 	}
 
 	public void onFinished(ActionEvent event) {
@@ -71,6 +74,12 @@ public class AddStudentToSaveManager implements Initializable {
 
 		student.setName(this.name.getText());
 		student.setPrename(this.prename.getText());
+
+		for (Course c : GUIManager.actual.getAllCoursesAsArray()) {
+			if (this.choiceBox.getValue().equals(c.getSubject() + ", " + c.getTeacher() + " | "
+					+ Integer.toString(c.size()) + "/" + Integer.toString(c.getMaxStudentCount())))
+				c.addStudent(student);
+		}
 
 		GUIManager.actual.addStudent(student);
 
@@ -94,15 +103,26 @@ public class AddStudentToSaveManager implements Initializable {
 			}
 		};
 
+		ArrayList<String> courses = new ArrayList<>();
+
+		for (Course c : GUIManager.actual.getAllCoursesAsArray()) {
+			courses.add(c.getSubject() + ", " + c.getTeacher() + " | " + Integer.toString(c.size()) + "/"
+					+ Integer.toString(c.getMaxStudentCount()));
+		}
+
+		References.LOGGER.config(courses.toString());
+
+		choiceBox.setItems(FXCollections.observableArrayList(courses));
+
 		References.LOGGER.info("Student: " + student.toString());
 
-		this.teacher.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getTeacher());
-		});
-
-		this.subject.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getSubject());
-		});
+//		this.teacher.setCellValueFactory(s -> {
+//			return new SimpleStringProperty(s.getValue().getTeacher());
+//		});
+//
+//		this.subject.setCellValueFactory(s -> {
+//			return new SimpleStringProperty(s.getValue().getSubject());
+//		});
 
 		if (!Util.isBlank(student.getName()))
 			this.name.setText(student.getName());
@@ -110,8 +130,8 @@ public class AddStudentToSaveManager implements Initializable {
 		if (!Util.isBlank(student.getPrename()))
 			this.prename.setText(student.getPrename());
 
-		this.scw = new SwitchCourseView(courses, student);
-		this.scw.run();
+//		this.scw = new SwitchCourseView(this.courses, student);
+//		this.scw.run();
 
 	}
 }

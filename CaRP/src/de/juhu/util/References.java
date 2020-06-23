@@ -61,7 +61,7 @@ public class References {
 	 */
 	public static final Logger LOGGER;
 	static {
-		LOGGER = Logger.getLogger("Wahlverteiler");
+		LOGGER = Logger.getLogger("Assigner");
 		LOGGER.setUseParentHandlers(false);
 		Handler handler = LOGGING_HANDLER;
 		handler.setFormatter(lf = new LoggingFormatter());

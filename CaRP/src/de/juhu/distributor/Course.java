@@ -212,7 +212,7 @@ public class Course implements Comparable<Course>, Serializable {
 		if (i == 0)
 			i = this.teacher.compareTo(c.teacher);
 
-		return 0;
+		return i;
 	}
 
 	@Override

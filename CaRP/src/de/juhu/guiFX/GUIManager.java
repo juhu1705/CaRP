@@ -58,6 +58,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
@@ -108,13 +109,13 @@ public class GUIManager implements Initializable {
 	public TreeView<String> configurationTree;
 
 	@FXML
-	public Label counter;
+	public Label counter, textPrevious, textNext;
 
 	@FXML
 	public TextField t1, t2;
 
 	@FXML
-	public Button r1, r2, r3, r4, r5, b1, b2, b3, b4, b5, b6;
+	public Button r1, r2, r3, r4, r5, b1, b2, b3, b4, b5, b6, b7;
 
 	@FXML
 	public ComboBox<Level> cb1;
@@ -129,10 +130,10 @@ public class GUIManager implements Initializable {
 	public TableView<Student> tv0, tv1, unallocatedStudents, bStudents;
 
 	@FXML
-	public TableView<Entry<String, Double>> rates;
+	public TableView<Entry<String, String>> rates;
 
 	@FXML
-	public TableView<Entry<Integer, Integer>> priorities;
+	public TableView<Entry<String, Integer>> priorities;
 
 	@FXML
 	public TableView<Course> tvc, tv2;
@@ -145,10 +146,10 @@ public class GUIManager implements Initializable {
 	public TableColumn<Course, String> subject, teacher, oSubject, oTeacher, maxStudentCount;
 
 	@FXML
-	public TableColumn<Entry<String, Double>, String> rate, rateV;
+	public TableColumn<Entry<String, String>, String> rate, rateV;
 
 	@FXML
-	public TableColumn<Entry<Integer, Integer>, String> priority, swpriority, percentualPriorities;
+	public TableColumn<Entry<String, Integer>, String> priority, swpriority, percentualPriorities;
 
 	@FXML
 	public Tab students, teachers, statistics, tabStudents, tabCourses, tabInput, tabOutput;
@@ -156,8 +157,10 @@ public class GUIManager implements Initializable {
 	@FXML
 	public TabPane masterTabPane;
 
+	public SeparatorMenuItem seperator;
+
 	@FXML
-	public Menu menuStudent, menuCourse;
+	public Menu menuStudent, menuCourse, menuStudent1, menuCourse1;
 
 	public ArrayList<TableColumn<Student, String>> atci = new ArrayList<TableColumn<Student, String>>();
 
@@ -226,8 +229,8 @@ public class GUIManager implements Initializable {
 		Course course = this.tv2.getSelectionModel().getSelectedItem();
 
 		if (!course.getStudents().isEmpty()) {
-			this.startErrorFrame("Cannot remove a course with students inside!",
-					"Please ensure that there are no students in this course. Remove them, or replace their course with some other course!");
+			this.startErrorFrame(References.language.getString("add.course_fail.title"),
+					References.language.getString("add.course_fail.description"));
 			return;
 		}
 
@@ -241,8 +244,8 @@ public class GUIManager implements Initializable {
 
 	public void onAddStudentToActualSave(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot add student while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -256,8 +259,8 @@ public class GUIManager implements Initializable {
 
 	public void onEditCourseActualSave(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot modify course data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -279,8 +282,8 @@ public class GUIManager implements Initializable {
 
 	public void onAddCourseToActualSave(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot add course while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -301,9 +304,13 @@ public class GUIManager implements Initializable {
 		Platform.runLater(GUIManager.getInstance().outputCView);
 		Platform.runLater(GUIManager.getInstance().outputIView);
 
-		if (GUIManager.actual.equals(Distributor.calculated.next(actual)))
+		if (GUIManager.actual.equals(Distributor.calculated.next(actual))) {
 			this.b4.setDisable(true);
+			this.textNext.setText("");
+		} else
+			this.textNext.setText(Double.toString(Distributor.calculated.next(actual).getInformation().getGuete()));
 		this.b1.setDisable(false);
+		this.textPrevious.setText(Double.toString(Distributor.calculated.previous(actual).getInformation().getGuete()));
 
 		this.counter.setText(Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
 	}
@@ -315,9 +322,14 @@ public class GUIManager implements Initializable {
 		Platform.runLater(GUIManager.getInstance().outputCView);
 		Platform.runLater(GUIManager.getInstance().outputIView);
 
-		if (GUIManager.actual.equals(Distributor.calculated.previous(actual)))
+		if (GUIManager.actual.equals(Distributor.calculated.previous(actual))) {
 			this.b1.setDisable(true);
+			this.textPrevious.setText("");
+		} else
+			this.textPrevious
+					.setText(Double.toString(Distributor.calculated.previous(actual).getInformation().getGuete()));
 		this.b4.setDisable(false);
+		this.textNext.setText(Double.toString(Distributor.calculated.next(actual).getInformation().getGuete()));
 
 		this.counter.setText(Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
 	}
@@ -325,8 +337,8 @@ public class GUIManager implements Initializable {
 	public void addCourse(ActionEvent event) {
 
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot add course while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -342,8 +354,8 @@ public class GUIManager implements Initializable {
 
 	public void onClearCalculations(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot delete calculation while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 		Distributor.getInstance().calculated.clear();
@@ -361,6 +373,7 @@ public class GUIManager implements Initializable {
 		GUIManager.getInstance().b4.setDisable(true);
 		GUIManager.getInstance().b5.setDisable(true);
 		GUIManager.getInstance().b6.setDisable(true);
+		GUIManager.getInstance().b7.setDisable(true);
 	}
 
 	@Deprecated
@@ -421,8 +434,8 @@ public class GUIManager implements Initializable {
 
 	public void moveBadStudentToFirst(MouseEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot move student while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -448,8 +461,8 @@ public class GUIManager implements Initializable {
 
 	public void moveUnallocatedStudentToFirst(MouseEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot move student while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -470,8 +483,8 @@ public class GUIManager implements Initializable {
 
 	public void onDeleteCourse(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot modify course data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -488,8 +501,8 @@ public class GUIManager implements Initializable {
 
 	public void onEditCourse(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot modify course data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -511,8 +524,8 @@ public class GUIManager implements Initializable {
 
 	public void onCourseChangeRequest(MouseEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot modify course data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -548,8 +561,8 @@ public class GUIManager implements Initializable {
 
 	public void onDeleteStudent(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot modify student data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -566,8 +579,8 @@ public class GUIManager implements Initializable {
 
 	public void onSwitchCourse(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot modify student data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -592,8 +605,8 @@ public class GUIManager implements Initializable {
 
 	public void onSwitchCourseUnallocatedStudent(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot modify student data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -613,8 +626,8 @@ public class GUIManager implements Initializable {
 
 	public void onEditStudent(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot modify student data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -634,8 +647,8 @@ public class GUIManager implements Initializable {
 
 	public void onStudentChangeRequest(MouseEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot modify student data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -662,8 +675,8 @@ public class GUIManager implements Initializable {
 
 	public void onDragDroppedInput(DragEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot import data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.import_fail.title"),
+					References.language.getString("calculation.import_fail.description"));
 			return;
 		}
 
@@ -685,8 +698,8 @@ public class GUIManager implements Initializable {
 
 	public void addStudent(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot add student while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.edit_data_fail.title"),
+					References.language.getString("calculation.edit_data_fail.description"));
 			return;
 		}
 
@@ -703,6 +716,7 @@ public class GUIManager implements Initializable {
 	}
 
 	boolean tabS = true;
+	boolean tabOS = true;
 
 	public void onSelectionChangedCourse(Event event) {
 
@@ -711,30 +725,34 @@ public class GUIManager implements Initializable {
 		}
 
 		if (((Tab) event.getSource()).isSelected()) {
-			menuCourse.setDisable(true);
+			menuCourse.setVisible(false);
 			tabS = true;
 		} else {
 			tabS = false;
-			menuCourse.setDisable(false);
+			menuCourse.setVisible(true);
 		}
 
 	}
 
 	public void onTabIn(Event event) {
 
-		if (tabInput == null)
+		if (tabInput == null || menuStudent == null || menuCourse == null)
 			return;
 
 		if (((Tab) event.getSource()).isSelected()) {
 			if (tabS)
-				menuStudent.setDisable(false);
+				menuStudent.setVisible(true);
 			else
-				menuCourse.setDisable(false);
+				menuCourse.setVisible(true);
+
+			seperator.setVisible(true);
 		} else {
 
-			menuCourse.setDisable(true);
+			seperator.setVisible(false);
 
-			menuStudent.setDisable(true);
+			menuCourse.setVisible(false);
+
+			menuStudent.setVisible(false);
 		}
 	}
 
@@ -747,16 +765,64 @@ public class GUIManager implements Initializable {
 			return;
 
 		if (!((Tab) event.getSource()).isSelected())
-			menuStudent.setDisable(false);
+			menuStudent.setVisible(true);
 		else
-			menuStudent.setDisable(true);
+			menuStudent.setVisible(false);
 
+	}
+
+	public void onSelectionOutputCourse(Event event) {
+
+		if (teachers == null) {
+			return;
+		}
+
+		if (((Tab) event.getSource()).isSelected()) {
+			menuCourse1.setVisible(false);
+			tabOS = true;
+		} else {
+			tabOS = false;
+			menuCourse1.setVisible(true);
+		}
+
+	}
+
+	public void onTabOutput(Event event) {
+
+		if (tabOutput == null || menuStudent1 == null || menuCourse1 == null)
+			return;
+
+		if (((Tab) event.getSource()).isSelected() && !students.isDisable() && !teachers.isDisable()) {
+			if (tabOS)
+				menuStudent1.setVisible(true);
+			else
+				menuCourse1.setVisible(true);
+
+			seperator.setVisible(true);
+		} else {
+
+			seperator.setVisible(false);
+
+			menuCourse1.setVisible(false);
+
+			menuStudent1.setVisible(false);
+		}
+	}
+
+	public void onSelectOutputStudent(Event event) {
+		if (students == null)
+			return;
+
+		if (!((Tab) event.getSource()).isSelected())
+			menuStudent1.setVisible(true);
+		else
+			menuStudent1.setVisible(false);
 	}
 
 	public void searchActionInput(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot import data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.import_fail.title"),
+					References.language.getString("calculation.import_fail.description"));
 			return;
 		}
 
@@ -904,8 +970,8 @@ public class GUIManager implements Initializable {
 
 	public void addCourseToActual(ActionEvent event) {
 		if (GUIManager.actual == null) {
-			GUIManager.getInstance().startErrorFrame("Cannot Add Course to non existing Save!",
-					"Please calculate something, or load a save.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.no_save.title"),
+					References.language.getString("calculation.no_save.description"));
 			return;
 		}
 
@@ -920,8 +986,8 @@ public class GUIManager implements Initializable {
 
 	public void saveAction(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot save calculation while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.save_fail.title"),
+					References.language.getString("calculation.save_fail.description"));
 			return;
 		}
 
@@ -932,8 +998,8 @@ public class GUIManager implements Initializable {
 
 		Save save = this.actual;
 		if (save == null) {
-			this.startErrorFrame("No calculation found!",
-					"There are no data in the distributor. \n Please ensure, to run the calculator and assign the given data, before exporting them!");
+			this.startErrorFrame(References.language.getString("calculation.no_calculation.title"),
+					References.language.getString("calculation.no_calculation.description"));
 			return;
 		}
 
@@ -955,7 +1021,8 @@ public class GUIManager implements Initializable {
 
 		String s;
 		if (Util.isBlank((s = Config.outputFile))) {
-			this.startErrorFrame("No output file!", "Please choose an output file before exporting.");
+			this.startErrorFrame(References.language.getString("no_output_file.title"),
+					References.language.getString("no_output_file.description"));
 
 			Platform.runLater(new Runnable() {
 
@@ -1015,7 +1082,7 @@ public class GUIManager implements Initializable {
 				CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
 			}
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "Fehler beim Exportieren der Datei", e);
+			LOGGER.log(Level.SEVERE, "Error while exporting data", e);
 		}
 
 		LogWriter.writeLog(s + "/logging" + timestamp.getTime());
@@ -1043,8 +1110,8 @@ public class GUIManager implements Initializable {
 
 	public void saveActualAction(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot save calculation while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.save_fail.title"),
+					References.language.getString("calculation.save_fail.description"));
 			return;
 		}
 
@@ -1055,8 +1122,8 @@ public class GUIManager implements Initializable {
 
 		Save save = actual;
 		if (save == null) {
-			this.startErrorFrame("No calculation found!",
-					"There are no data in the distributor. \n Please ensure, to run the calculator and assign the given data, before exporting them!");
+			this.startErrorFrame(References.language.getString("calculation.no_calculation.title"),
+					References.language.getString("calculation.no_calculation.description"));
 			return;
 		}
 
@@ -1078,7 +1145,8 @@ public class GUIManager implements Initializable {
 
 		String s;
 		if (Util.isBlank((s = Config.outputFile))) {
-			this.startErrorFrame("No output file!", "Please choose an output file before exporting.");
+			this.startErrorFrame(References.language.getString("no_output_file.title"),
+					References.language.getString("no_output_file.description"));
 
 			Platform.runLater(new Runnable() {
 
@@ -1204,8 +1272,12 @@ public class GUIManager implements Initializable {
 			t1.setVisible(true);
 	}
 
+	public void onSaveDueToWindowChange(Event event) {
+		onSaveConfig(null);
+	}
+
 	public void onSaveConfig(ActionEvent event) {
-		LOGGER.info("Start saving config");
+		LOGGER.fine("Start saving config");
 
 		if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER), LinkOption.NOFOLLOW_LINKS))
 			new File(References.HOME_FOLDER).mkdir();
@@ -1213,10 +1285,10 @@ public class GUIManager implements Initializable {
 		try {
 			ConfigManager.getInstance().save(new File(References.HOME_FOLDER + "config.cfg"));
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "Fehler beim schreiben der Config datei!", e);
+			LOGGER.log(Level.SEVERE, "Error due to write config data!", e);
 		}
 
-		LOGGER.info("Finished saving config");
+		LOGGER.fine("Finished saving config");
 	}
 
 	public void close(ActionEvent event) {
@@ -1251,16 +1323,16 @@ public class GUIManager implements Initializable {
 	public void onShowInExcel(ActionEvent event) {
 
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot show data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.save_fail.title"),
+					References.language.getString("calculation.save_fail.description"));
 			return;
 		}
 
 		Save save = GUIManager.actual;
 
 		if (save == null) {
-			GUIManager.getInstance().startErrorFrame("Cannot show data without calculating before!",
-					"Please first run a calculation.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.no_calculation.title"),
+					References.language.getString("calculation.no_calculation.description"));
 			return;
 		}
 
@@ -1269,7 +1341,7 @@ public class GUIManager implements Initializable {
 
 			Desktop.getDesktop().browse(new File("test.xlsx").toURI());
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "Fehler beim öffnen der Prewiev Datei.");
+			LOGGER.log(Level.SEVERE, "Error due to open the preview Excel file.");
 		}
 	}
 
@@ -1506,7 +1578,8 @@ public class GUIManager implements Initializable {
 			if (s.getValue().getActiveCourse() != null
 					&& Util.isIgnoreCourse(s.getValue().getActiveCourse().getSubject().split("|")))
 				return new SimpleStringProperty("-");
-			return new SimpleStringProperty(Integer.toString(s.getValue().getPriority()));
+			return new SimpleStringProperty(s.getValue().getPriority() == Integer.MAX_VALUE ? "Inf."
+					: Integer.toString(s.getValue().getPriority()));
 		});
 
 		// Output Course View
@@ -1597,6 +1670,12 @@ public class GUIManager implements Initializable {
 				}
 			}).start();
 		}
+
+		// Check for activate Student options
+
+		if (tabInput.isSelected() && tabStudents.isSelected())
+			menuStudent.setVisible(true);
+
 	}
 
 	@FXML
@@ -1671,8 +1750,8 @@ public class GUIManager implements Initializable {
 
 	public void onLoad(ActionEvent event) {
 		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame("Cannot import data while calculating!",
-					"Please wait until the actual running calculation is finished.");
+			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.import_fail.title"),
+					References.language.getString("calculation.import_fail.description"));
 			return;
 		}
 
@@ -1737,8 +1816,8 @@ public class GUIManager implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		GUIManager.getInstance().startErrorFrame("You have to restart the App!",
-				"The language will be updatet after restarting the App.");
+		GUIManager.getInstance().startErrorFrame(References.language.getString("restart.title"),
+				References.language.getString("restart.description"));
 	}
 
 	public void onSetGerman(ActionEvent event) {
@@ -1752,8 +1831,8 @@ public class GUIManager implements Initializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		GUIManager.getInstance().startErrorFrame("You have to restart the App!",
-				"The language will be updatet after restarting the App.");
+		GUIManager.getInstance().startErrorFrame(References.language.getString("restart.title"),
+				References.language.getString("restart.description"));
 	}
 
 }

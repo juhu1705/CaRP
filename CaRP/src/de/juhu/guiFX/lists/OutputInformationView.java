@@ -30,36 +30,37 @@ public class OutputInformationView implements Runnable {
 
 		GUIManager.getInstance().bStudents.sort();
 
-		HashMap<String, Double> ratess = new HashMap<>();
+		HashMap<String, String> ratess = new HashMap<>();
 
-		ratess.put(References.language.getString("highestpriority.text"),
-				Double.valueOf(GUIManager.actual.getInformation().getHighestPriority()));
-		ratess.put(References.language.getString("expectation.text"),
-				Double.valueOf(GUIManager.actual.getInformation().getExpectation()));
-		ratess.put(References.language.getString("standartDeviation.text"),
-				Double.valueOf(GUIManager.actual.getInformation().getStandartDeviation()));
-		ratess.put(References.language.getString("calculationgoodness.text"),
-				Double.valueOf(GUIManager.actual.getInformation().getGuete()));
-		ratess.put(References.language.getString("studentcount.text"),
-				Double.valueOf(GUIManager.actual.getAllStudents().size()));
-		ratess.put(References.language.getString("calculatedstudentcount.text"),
-				Double.valueOf(GUIManager.actual.getInformation().getStudentCount()));
-		ratess.put(References.language.getString("coursecount.text"),
-				Double.valueOf(GUIManager.actual.getAllCourses().size()));
+		ratess.put("0 - " + References.language.getString("calculationgoodness.text"),
+				Double.toString(GUIManager.actual.getInformation().getGuete()));
+
+		ratess.put("1 - " + References.language.getString("highestpriority.text"),
+				GUIManager.actual.getHighestPriorityWhithoutIntegerMax() == -1 ? "Inf."
+						: Integer.toString(GUIManager.actual.getHighestPriorityWhithoutIntegerMax()));
+//		ratess.put(References.language.getString("expectation.text"),
+//				Double.valueOf(GUIManager.actual.getInformation().getExpectation()));
+//		ratess.put(References.language.getString("standartDeviation.text"),
+//				Double.valueOf(GUIManager.actual.getInformation().getStandartDeviation()));
+
+		ratess.put("2 - " + References.language.getString("studentcount.text"),
+				Integer.toString(GUIManager.actual.getAllStudents().size()));
+		ratess.put("3 - " + References.language.getString("calculatedstudentcount.text"),
+				Integer.toString(GUIManager.actual.getInformation().getStudentCount()));
+		ratess.put("4 - " + References.language.getString("coursecount.text"),
+				Integer.toString(GUIManager.actual.getAllCourses().size()));
 
 		GUIManager.getInstance().rates.getItems().clear();
 
 		GUIManager.getInstance().rates.setItems(FXCollections.observableArrayList(ratess.entrySet()));
 
-		GUIManager.getInstance().rates.sort();
-
 		int[] priorities = GUIManager.actual.getInformation().getStudentPriorities();
-		HashMap<Integer, Integer> p = new HashMap<>();
+		HashMap<String, Integer> p = new HashMap<>();
 
 		for (int i = 0; i < priorities.length - 1; i++)
-			p.put(Integer.valueOf(i + 1), Integer.valueOf(priorities[i]));
+			p.put(Integer.toString(i + 1), Integer.valueOf(priorities[i]));
 
-		p.put(Integer.valueOf(-1), Integer.valueOf(priorities[priorities.length - 1]));
+		p.put("Inf.", Integer.valueOf(priorities[priorities.length - 1]));
 
 		GUIManager.getInstance().priorities.setItems(FXCollections.observableArrayList(p.entrySet()));
 
@@ -137,6 +138,7 @@ public class OutputInformationView implements Runnable {
 		// GUIManager.getInstance().b4.setDisable(false);
 		GUIManager.getInstance().b5.setDisable(false);
 		GUIManager.getInstance().b6.setDisable(false);
+		GUIManager.getInstance().b7.setDisable(false);
 	}
 
 }

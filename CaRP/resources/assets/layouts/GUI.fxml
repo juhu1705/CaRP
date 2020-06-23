@@ -34,6 +34,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <GridPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.GUIManager">
@@ -44,182 +45,166 @@
    <rowConstraints>
       <RowConstraints />
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <BorderPane accessibleRole="IMAGE_VIEW" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
          <center>
             <TabPane fx:id="masterTabPane" prefWidth="412.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
-                  <Tab text="%inOut.tab">
-                     <content>
-                        <BorderPane>
-                           <top>
-                              <VBox prefHeight="82.0" prefWidth="395.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Label focusTraversable="false" prefHeight="17.0" prefWidth="388.0" text="%inputf.text">
-                                       <VBox.margin>
-                                          <Insets left="10.0" top="10.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <SplitPane dividerPositions="0.5" focusTraversable="false" prefHeight="19.0" prefWidth="369.0">
-                                       <items>
-                                          <Button fx:id="r5" minWidth="60.0" mnemonicParsing="false" onAction="#searchActionInput" onDragDropped="#onDragDroppedInput" onDragOver="#onDragOver" text="%search.text">
-                                             <graphic>
-                                                <FontAwesomeIconView glyphName="SEARCH" />
-                                             </graphic></Button>
-                                          <TextField fx:id="t1" editable="false" onDragDropped="#onDragDroppedInput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="289.0" />
-                                       </items>
-                                       <VBox.margin>
-                                          <Insets left="10.0" right="10.0" top="10.0" />
-                                       </VBox.margin>
-                                    </SplitPane>
-                                    <Button mnemonicParsing="false" onAction="#onShowImportedData" text="%openinput.text">
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </VBox.margin>
-                                       <graphic>
-                                          <OctIconView glyphName="BOOK" />
-                                       </graphic>
-                                    </Button>
-                                 </children>
-                              </VBox>
-                           </top>
-                           <center>
-                              <VBox prefHeight="103.0" prefWidth="395.0" BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Label focusTraversable="false" prefHeight="17.0" prefWidth="389.0" text="%outputf.text">
-                                       <VBox.margin>
-                                          <Insets left="10.0" top="10.0" />
-                                       </VBox.margin>
-                                    </Label>
-                                    <SplitPane dividerPositions="0.5, 0.5" focusTraversable="false" prefHeight="16.0" prefWidth="369.0">
-                                       <items>
-                                          <Button fx:id="r4" minWidth="60.0" mnemonicParsing="false" onAction="#searchActionOutput" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" text="%search.text">
-                                             <graphic>
-                                                <FontAwesomeIconView glyphName="SEARCH" />
-                                             </graphic></Button>
-                                          <TextField fx:id="t2" editable="false" minWidth="180.0" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="200.0">
-                                             <tooltip>
-                                                <Tooltip text="Here you can find the path of your output file" />
-                                             </tooltip>
-                                          </TextField>
-                                          <ComboBox fx:id="cb2" minWidth="65.0" onAction="#onFileTypeChanged" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="130.0" promptText=".xlsx">
-                                             <tooltip>
-                                                <Tooltip text="Here you select the type of output file" />
-                                             </tooltip>
-                                          </ComboBox>
-                                       </items>
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </VBox.margin>
-                                    </SplitPane>
-                                 </children>
-                              </VBox>
-                           </center>
-                        </BorderPane>
-                     </content>
-                     <graphic>
-                        <OctIconView glyphName="TOOLS" />
-                     </graphic>
-                  </Tab>
                   <Tab fx:id="tabInput" closable="false" onSelectionChanged="#onTabIn" text="%input.text">
                      <content>
-                        <TabPane>
-                           <tabs>
-                              <Tab fx:id="tabStudents" closable="false" onSelectionChanged="#onSelectionChangedCourse" text="%students.text">
-                                 <content>
-                                    <TableView fx:id="tv0" prefHeight="200.0" prefWidth="411.0" tableMenuButtonVisible="true">
-                                       <columns>
-                                          <TableColumn fx:id="vtc" prefWidth="61.0" text="%prename.text" />
-                                          <TableColumn fx:id="ntc" prefWidth="69.0" text="%name.text" />
-                                          <TableColumn fx:id="k1tc" prefWidth="90.0" text="%course1.text">
+                        <BorderPane>
+                           <center>
+                              <TabPane>
+                                 <tabs>
+                                    <Tab fx:id="tabStudents" closable="false" onSelectionChanged="#onSelectionChangedCourse" text="%students.text">
+                                       <content>
+                                          <TableView fx:id="tv0" prefHeight="263.0" prefWidth="452.0" tableMenuButtonVisible="true">
                                              <columns>
-                                                <TableColumn fx:id="k1stc" prefWidth="50.0" text="%subject.text" />
-                                                <TableColumn fx:id="k1ttc" prefWidth="58.0" text="%teacher.text" />
+                                                <TableColumn fx:id="vtc" prefWidth="61.0" text="%prename.text" />
+                                                <TableColumn fx:id="ntc" prefWidth="69.0" text="%name.text" />
+                                                <TableColumn fx:id="k1tc" prefWidth="90.0" text="%course1.text">
+                                                   <columns>
+                                                      <TableColumn fx:id="k1stc" prefWidth="50.0" text="%subject.text" />
+                                                      <TableColumn fx:id="k1ttc" prefWidth="58.0" text="%teacher.text" />
+                                                   </columns>
+                                                </TableColumn>
                                              </columns>
-                                          </TableColumn>
-                                       </columns>
-                                       <columnResizePolicy>
-                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                       </columnResizePolicy>
-                                       <contextMenu>
-                                          <ContextMenu>
-                                            <items>
-                                                <MenuItem mnemonicParsing="false" onAction="#addStudent" text="%addstudent.text">
-                                                   <graphic>
-                                                      <FontAwesomeIconView glyphName="PLUS" />
-                                                   </graphic></MenuItem>
-                                                <MenuItem mnemonicParsing="false" onAction="#onEditStudent" text="%edit.text">
-                                                   <graphic>
-                                                      <FontAwesomeIconView glyphName="EDIT" />
-                                                   </graphic></MenuItem>
-                                              <MenuItem mnemonicParsing="false" onAction="#onDeleteStudent" text="%remove.text">
-                                                   <graphic>
-                                                      <FontAwesomeIconView glyphName="TRASH" />
-                                                   </graphic></MenuItem>
-                                            </items>
-                                          </ContextMenu>
-                                       </contextMenu>
-                                    </TableView>
-                                 </content>
-                                 <graphic>
-                                    <FontAwesomeIconView glyphName="GROUP" />
-                                 </graphic>
-                              </Tab>
-                              <Tab fx:id="tabCourses" closable="false" onSelectionChanged="#onSelectionChangedStudent" text="%courses.text">
-                                 <content>
-                                    <TableView fx:id="tvc" prefHeight="200.0" prefWidth="411.0" tableMenuButtonVisible="true">
-                                       <columns>
-                                          <TableColumn fx:id="subject" prefWidth="61.0" text="%subject.text" />
-                                          <TableColumn fx:id="teacher" prefWidth="69.0" text="%teacher.text" />
-                                          <TableColumn fx:id="maxStudentCount" prefWidth="69.0" text="%maxstudentscount.text" />
-                                       </columns>
-                                       <columnResizePolicy>
-                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                       </columnResizePolicy>
-                                       <contextMenu>
-                                          <ContextMenu>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                             <contextMenu>
+                                                <ContextMenu>
+                                                  <items>
+                                                      <MenuItem mnemonicParsing="false" onAction="#addStudent" text="%addstudent.text">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="PLUS" />
+                                                         </graphic>
+                                                      </MenuItem>
+                                                      <MenuItem mnemonicParsing="false" onAction="#onEditStudent" text="%edit.text">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="EDIT" />
+                                                         </graphic>
+                                                      </MenuItem>
+                                                    <MenuItem mnemonicParsing="false" onAction="#onDeleteStudent" text="%remove.text">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="TRASH" />
+                                                         </graphic>
+                                                      </MenuItem>
+                                                  </items>
+                                                </ContextMenu>
+                                             </contextMenu>
+                                          </TableView>
+                                       </content>
+                                       <graphic>
+                                          <FontAwesomeIconView glyphName="GROUP" />
+                                       </graphic>
+                                    </Tab>
+                                    <Tab fx:id="tabCourses" closable="false" onSelectionChanged="#onSelectionChangedStudent" text="%courses.text">
+                                       <content>
+                                          <TableView fx:id="tvc" prefHeight="200.0" prefWidth="411.0" tableMenuButtonVisible="true">
+                                             <columns>
+                                                <TableColumn fx:id="subject" prefWidth="61.0" text="%subject.text" />
+                                                <TableColumn fx:id="teacher" prefWidth="69.0" text="%teacher.text" />
+                                                <TableColumn fx:id="maxStudentCount" prefWidth="69.0" text="%maxstudentscount.text" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                             <contextMenu>
+                                                <ContextMenu>
+                                                   <items>
+                                                      <MenuItem mnemonicParsing="false" onAction="#addCourse" text="%addcourse.text">
+                                                         <accelerator>
+                                                            <KeyCodeCombination alt="UP" code="C" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                                         </accelerator>
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="PLUS" />
+                                                         </graphic>
+                                                      </MenuItem>
+                                                      <MenuItem mnemonicParsing="false" onAction="#onEditCourse" text="%edit.text">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="EDIT" />
+                                                         </graphic>
+                                                      </MenuItem>
+                                                      <MenuItem mnemonicParsing="false" onAction="#onDeleteCourse" text="%remove.text">
+                                                         <graphic>
+                                                            <FontAwesomeIconView glyphName="TRASH" />
+                                                         </graphic>
+                                                      </MenuItem>
+                                                   </items>
+                                                </ContextMenu>
+                                             </contextMenu>
+                                          </TableView>
+                                       </content>
+                                       <graphic>
+                                          <FontAwesomeIconView glyphName="BOOK" />
+                                       </graphic>
+                                    </Tab>
+                                 </tabs>
+                              </TabPane>
+                           </center>
+                           <top>
+                              <BorderPane BorderPane.alignment="CENTER">
+                                 <center>
+                                    <VBox prefHeight="75.0" prefWidth="452.0">
+                                       <children>
+                                          <Label focusTraversable="false" prefHeight="17.0" prefWidth="388.0" text="%inputf.text">
+                                             <VBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <SplitPane dividerPositions="0.5" focusTraversable="false" prefHeight="19.0" prefWidth="369.0">
                                              <items>
-                                                <MenuItem mnemonicParsing="false" onAction="#addCourse" text="%addcourse.text">
-                                                   <accelerator>
-                                                      <KeyCodeCombination alt="UP" code="C" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                                                   </accelerator>
+                                                <Button fx:id="r5" minWidth="60.0" mnemonicParsing="false" onAction="#searchActionInput" onDragDropped="#onDragDroppedInput" onDragOver="#onDragOver" text="%search.text">
                                                    <graphic>
-                                                      <FontAwesomeIconView glyphName="PLUS" />
+                                                      <FontAwesomeIconView glyphName="SEARCH" />
                                                    </graphic>
-                                                </MenuItem>
-                                                <MenuItem mnemonicParsing="false" onAction="#onEditCourse" text="%edit.text">
-                                                   <graphic>
-                                                      <FontAwesomeIconView glyphName="EDIT" />
-                                                   </graphic></MenuItem>
-                                                <MenuItem mnemonicParsing="false" onAction="#onDeleteCourse" text="%remove.text">
-                                                   <graphic>
-                                                      <FontAwesomeIconView glyphName="TRASH" />
-                                                   </graphic></MenuItem>
+                                                </Button>
+                                                <TextField fx:id="t1" editable="false" onDragDropped="#onDragDroppedInput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="289.0" />
                                              </items>
-                                          </ContextMenu>
-                                       </contextMenu>
-                                    </TableView>
-                                 </content>
-                                 <graphic>
-                                    <FontAwesomeIconView glyphName="BOOK" />
-                                 </graphic>
-                              </Tab>
-                           </tabs>
-                        </TabPane>
+                                             <VBox.margin>
+                                                <Insets left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </SplitPane>
+                                          <Separator prefHeight="0.0" prefWidth="452.0">
+                                             <VBox.margin>
+                                                <Insets top="10.0" />
+                                             </VBox.margin>
+                                          </Separator>
+                                          <StackPane>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#onClearDistributor" text="%cleardata.text">
+                                                   <graphic>
+                                                      <MaterialDesignIconView glyphName="DELETE" />
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
+                                 </center>
+                                 <bottom>
+                                    <Separator prefHeight="0.0" prefWidth="452.0" BorderPane.alignment="CENTER" />
+                                 </bottom>
+                              </BorderPane>
+                           </top>
+                        </BorderPane>
                      </content>
                      <graphic>
                         <MaterialDesignIconView glyphName="FORMAT_LIST_BULLETED" />
                      </graphic>
                   </Tab>
-                  <Tab fx:id="tabOutput" closable="false" text="%distribution.text">
+                  <Tab fx:id="tabOutput" closable="false" onSelectionChanged="#onTabOutput" text="%distribution.text">
                      <content>
                         <BorderPane>
                            <center>
                               <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                                  <tabs>
-                                    <Tab fx:id="students" closable="false" disable="true" text="%coursedistribution.text">
+                                    <Tab fx:id="students" closable="false" disable="true" onSelectionChanged="#onSelectOutputStudent" text="%coursedistribution.text">
                                        <content>
                                           <TableView fx:id="tv1" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true">
                                              <columns>
@@ -256,9 +241,9 @@
                                           <FontAwesomeIconView glyphName="GROUP" />
                                        </graphic>
                                     </Tab>
-                                    <Tab fx:id="teachers" closable="false" disable="true" text="%studentdistribution.text">
+                                    <Tab fx:id="teachers" closable="false" disable="true" onSelectionChanged="#onSelectionOutputCourse" text="%studentdistribution.text">
                                        <content>
-                                          <TableView fx:id="tv2" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true">
+                                          <TableView fx:id="tv2" prefHeight="171.0" prefWidth="421.0" tableMenuButtonVisible="true">
                                              <columns>
                                                 <TableColumn fx:id="oSubject" prefWidth="75.0" text="%subject.text" />
                                                 <TableColumn fx:id="oTeacher" prefWidth="75.0" text="%teacher.text" />
@@ -382,13 +367,13 @@
                               </TabPane>
                            </center>
                            <top>
-                              <HBox alignment="CENTER" prefHeight="29.0" prefWidth="392.0" spacing="20.0" BorderPane.alignment="CENTER">
+                              <HBox alignment="CENTER" prefHeight="29.0" prefWidth="428.0" spacing="20.0" BorderPane.alignment="CENTER">
                                  <BorderPane.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </BorderPane.margin>
                                  <children>
-                                    <Label text="%sometip.text" />
                                     <Label fx:id="counter" text="0" />
+                                    <Label fx:id="textPrevious" />
                                     <Button fx:id="b1" disable="true" mnemonicParsing="false" onAction="#onPreviousSave" text="%previous.text">
                                        <graphic>
                                           <OctIconView glyphName="CHEVRON_LEFT" />
@@ -405,24 +390,112 @@
                                        <graphic>
                                           <MaterialDesignIconView glyphName="DELETE" />
                                        </graphic></Button>
-                                    <Button fx:id="b3" disable="true" mnemonicParsing="false" onAction="#onShowInExcel" text="%showinspreadsheedprogramm.text">
+                                    <Button fx:id="b7" disable="true" mnemonicParsing="false" onAction="#onClearCalculations" text="%clearcalculations.text">
                                        <graphic>
-                                          <OctIconView glyphName="FILE_SYMLINK_FILE" />
-                                       </graphic></Button>
+                                          <MaterialDesignIconView glyphName="DELETE" />
+                                       </graphic>
+                                    </Button>
                                     <Button fx:id="b4" contentDisplay="RIGHT" disable="true" mnemonicParsing="false" onAction="#onNextSave" text="%next.text">
                                        <graphic>
                                           <OctIconView glyphName="CHEVRON_RIGHT" />
                                        </graphic></Button>
+                                    <Label fx:id="textNext" />
                                  </children>
                               </HBox>
                            </top>
+                           <bottom>
+                              <VBox prefHeight="125.0" prefWidth="427.0">
+                                 <children>
+                                    <Separator prefWidth="200.0" />
+                                    <VBox prefHeight="74.0" prefWidth="433.0">
+                                       <children>
+                                          <Label focusTraversable="false" prefHeight="17.0" prefWidth="389.0" text="%outputf.text">
+                                             <VBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <SplitPane dividerPositions="0.5, 0.5" focusTraversable="false" prefHeight="16.0" prefWidth="369.0">
+                                             <items>
+                                                <Button fx:id="r4" minWidth="60.0" mnemonicParsing="false" onAction="#searchActionOutput" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" text="%search.text">
+                                                   <graphic>
+                                                      <FontAwesomeIconView glyphName="SEARCH" />
+                                                   </graphic>
+                                                </Button>
+                                                <TextField fx:id="t2" editable="false" minWidth="180.0" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="200.0">
+                                                   <tooltip>
+                                                      <Tooltip text="Here you can find the path of your output file" />
+                                                   </tooltip>
+                                                </TextField>
+                                                <ComboBox fx:id="cb2" minWidth="65.0" onAction="#onFileTypeChanged" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="130.0" promptText=".xlsx">
+                                                   <tooltip>
+                                                      <Tooltip text="Here you select the type of output file" />
+                                                   </tooltip>
+                                                </ComboBox>
+                                             </items>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </SplitPane>
+                                       </children>
+                                    </VBox>
+                                    <BorderPane focusTraversable="true" prefHeight="43.0" prefWidth="402.0">
+                                       <right>
+                                          <ButtonBar focusTraversable="false" prefHeight="45.0" prefWidth="90.0" BorderPane.alignment="CENTER">
+                                             <buttons>
+                                                <ProgressBar fx:id="p0" prefHeight="38.0" prefWidth="100.0">
+                                                   <padding>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </padding>
+                                                </ProgressBar>
+                                             </buttons>
+                                             <BorderPane.margin>
+                                                <Insets right="10.0" />
+                                             </BorderPane.margin>
+                                          </ButtonBar>
+                                       </right>
+                                       <top>
+                                          <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
+                                       </top>
+                                       <center>
+                                          <ButtonBar focusTraversable="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="307.0" BorderPane.alignment="CENTER_LEFT">
+                                             <buttons>
+                                                <Button fx:id="b3" disable="true" mnemonicParsing="false" onAction="#onShowInExcel" text="%showinspreadsheedprogramm.text">
+                                                   <graphic>
+                                                      <OctIconView glyphName="FILE_SYMLINK_FILE" />
+                                                   </graphic>
+                                                </Button>
+                                                <Button fx:id="r2" minWidth="400.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#runAndSaveAction" prefHeight="25.0" text="%ras.text">
+                                                   <graphic>
+                                                      <MaterialDesignIconView glyphName="DOWNLOAD" />
+                                                   </graphic>
+                                                </Button>
+                                                <Button fx:id="r3" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#saveAction" prefHeight="25.0" text="%save.text">
+                                                   <graphic>
+                                                      <MaterialDesignIconView glyphName="CONTENT_SAVE_ALL" />
+                                                   </graphic>
+                                                </Button>
+                                                <Button fx:id="r1" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#runAction" prefHeight="25.0" text="%run.text">
+                                                   <graphic>
+                                                      <MaterialDesignIconView glyphName="PLAY" />
+                                                   </graphic>
+                                                </Button>
+                                             </buttons>
+                                             <BorderPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </BorderPane.margin>
+                                          </ButtonBar>
+                                       </center>
+                                    </BorderPane>
+                                 </children>
+                              </VBox>
+                           </bottom>
                         </BorderPane>
                      </content>
                      <graphic>
                         <MaterialDesignIconView glyphName="FORMAT_LIST_NUMBERS" />
                      </graphic>
                   </Tab>
-                  <Tab text="%options.tab">
+                  <Tab onSelectionChanged="#onSaveDueToWindowChange" text="%options.tab">
                      <content>
                         <BorderPane>
                            <center>
@@ -491,6 +564,9 @@
                      </graphic>
                   </Tab>
                </tabs>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
             </TabPane>
          </center>
          <top>
@@ -520,28 +596,13 @@
                               <MaterialDesignIconView glyphName="CLOSE" />
                            </graphic></MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#searchActionInput" text="%searchinput.text">
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="I" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                           </accelerator>
+                        <MenuItem mnemonicParsing="false" onAction="#saveActualAction" text="%savefile.text">
                            <graphic>
-                              <FontAwesomeIconView glyphName="FOLDER_OPEN_ALT" />
-                           </graphic></MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#searchActionOutput" text="%searchoutput.text">
+                              <MaterialDesignIconView glyphName="CONTENT_SAVE_ALL" />
+                           </graphic>
                            <accelerator>
-                              <KeyCodeCombination alt="UP" code="A" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                           </accelerator>
-                           <graphic>
-                              <FontAwesomeIconView glyphName="FOLDER_OPEN_ALT" />
-                           </graphic></MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#onShowInExcel" text="%showinspreadsheedprogramm.text">
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="E" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                           </accelerator>
-                           <graphic>
-                              <OctIconView glyphName="FILE_SYMLINK_FILE" />
-                           </graphic></MenuItem>
+                              <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#close" text="%end.text">
                            <graphic>
@@ -582,8 +643,8 @@
                            <accelerator>
                               <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator></MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <Menu fx:id="menuCourse" disable="true" mnemonicParsing="false" text="%course.text">
+                        <SeparatorMenuItem fx:id="seperator" mnemonicParsing="false" />
+                        <Menu fx:id="menuCourse" mnemonicParsing="false" text="%course.text" visible="false">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#addCourse" text="%addcourse.text">
                                  <graphic>
@@ -603,7 +664,7 @@
                               <FontAwesomeIconView glyphName="BOOK" />
                            </graphic>
                         </Menu>
-                        <Menu fx:id="menuStudent" disable="true" mnemonicParsing="false" text="%student.text">
+                        <Menu fx:id="menuStudent" mnemonicParsing="false" text="%student.text" visible="false">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#addStudent" text="%addstudent.text">
                                  <graphic>
@@ -622,63 +683,53 @@
                               <FontAwesomeIconView glyphName="GROUP" />
                            </graphic>
                         </Menu>
+                        <Menu fx:id="menuCourse1" mnemonicParsing="false" text="%course.text" visible="false">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onAddCourseToActualSave" text="%addcourse.text">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="PLUS" />
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onEditCourseActualSave" text="%edit.text">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="EDIT" />
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onDeleteCourseFromActualSave" text="%remove.text">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="TRASH" />
+                                 </graphic>
+                              </MenuItem>
+                           </items>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="BOOK" />
+                           </graphic>
+                        </Menu>
+                        <Menu fx:id="menuStudent1" mnemonicParsing="false" text="%student.text" visible="false">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onAddStudentToActualSave" text="%addstudent.text">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="PLUS" />
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onSwitchCourse" text="%edit.text">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="EDIT" />
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onDeleteStudentFromActualSave" text="%remove.text">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="TRASH" />
+                                 </graphic>
+                              </MenuItem>
+                           </items>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="GROUP" />
+                           </graphic>
+                        </Menu>
                      </items>
                      <graphic>
                         <FontAwesomeIconView glyphName="WRENCH" />
-                     </graphic>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="%extendedfunktions.text">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#saveActualAction" text="%savefile.text">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="CONTENT_SAVE_ALL" />
-                           </graphic>
-                           <accelerator>
-                              <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                           </accelerator></MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#onSaveLog" text="%savelog.text">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="CONTENT_SAVE_ALL" />
-                           </graphic>
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                           </accelerator></MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#onClearDistributor" text="%cleardata.text">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="DELETE" />
-                           </graphic>
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="C" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                           </accelerator></MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#onClearCalculations" text="%clearcalculations.text">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="DELETE" />
-                           </graphic>
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="B" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                           </accelerator></MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#onSaveConfig" text="%saveconfig.text">
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="Y" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                           </accelerator>
-                           <graphic>
-                              <FontAwesomeIconView glyphName="SLIDERS" />
-                           </graphic>
-                        </MenuItem>
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#onFullScreen" text="%fullscreen.text">
-                           <accelerator>
-                              <KeyCodeCombination alt="UP" code="F11" control="UP" meta="UP" shift="UP" shortcut="ANY" />
-                           </accelerator>
-                           <graphic>
-                              <FontAwesomeIconView glyphName="EXPAND" />
-                           </graphic>
-                        </MenuItem>
-                     </items>
-                     <graphic>
-                        <FontAwesomeIconView glyphName="GEARS" />
                      </graphic>
                   </Menu>
                   <Menu mnemonicParsing="false" text="%help.text">
@@ -733,6 +784,15 @@
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator></MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#onFullScreen" text="%fullscreen.text">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="F11" control="UP" meta="UP" shift="UP" shortcut="ANY" />
+                           </accelerator>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="EXPAND" />
+                           </graphic>
+                        </MenuItem>
                      </items>
                      <graphic>
                         <FontAwesomeIconView glyphName="QUESTION_CIRCLE" />
@@ -741,46 +801,6 @@
                </menus>
             </MenuBar>
          </top>
-      </BorderPane>
-      <BorderPane focusTraversable="true" prefHeight="43.0" prefWidth="402.0" GridPane.rowIndex="2">
-         <right>
-            <ButtonBar focusTraversable="false" BorderPane.alignment="CENTER">
-               <buttons>
-                  <ProgressBar fx:id="p0" prefHeight="18.0" prefWidth="107.0">
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </ProgressBar>
-               </buttons>
-               <BorderPane.margin>
-                  <Insets right="10.0" />
-               </BorderPane.margin>
-            </ButtonBar>
-         </right>
-         <top>
-            <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
-         </top>
-         <center>
-            <ButtonBar focusTraversable="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="307.0" BorderPane.alignment="CENTER_LEFT">
-               <buttons>
-                  <Button fx:id="r2" minWidth="400.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#runAndSaveAction" prefHeight="25.0" text="%ras.text">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="DOWNLOAD" />
-                     </graphic></Button>
-                  <Button fx:id="r3" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#saveAction" prefHeight="25.0" text="%save.text">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="CONTENT_SAVE_ALL" />
-                     </graphic></Button>
-                  <Button fx:id="r1" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#runAction" prefHeight="25.0" text="%run.text">
-                     <graphic>
-                        <MaterialDesignIconView glyphName="PLAY" />
-                     </graphic></Button>
-               </buttons>
-               <BorderPane.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </BorderPane.margin>
-            </ButtonBar>
-         </center>
       </BorderPane>
    </children>
 </GridPane>

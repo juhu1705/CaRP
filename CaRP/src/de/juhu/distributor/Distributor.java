@@ -226,8 +226,8 @@ public class Distributor implements Runnable {
 		 */
 		if (calculate) {
 			Platform.runLater(() -> {
-				GUIManager.getInstance().startErrorFrame("Cannot start calculation while calculating!",
-						"Please wait until the actual running calculation is finished.");
+				GUIManager.getInstance().startErrorFrame(References.language.getString("double_calculation_fail.title"),
+						References.language.getString("calculation.edit_data_fail.description"));
 //				GUIManager.getInstance().r1.setDisable(false);
 //				GUIManager.getInstance().r2.setDisable(false);
 //				GUIManager.getInstance().r3.setDisable(false);
@@ -255,8 +255,8 @@ public class Distributor implements Runnable {
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
-						GUIManager.getInstance().startErrorFrame("No Data for Calculating!",
-								"Please import data in the programm.");
+						GUIManager.getInstance().startErrorFrame(References.language.getString("no_data_fail.title"),
+								References.language.getString("no_data_fail.description"));
 						GUIManager.getInstance().r1.setDisable(false);
 						GUIManager.getInstance().r2.setDisable(false);
 						GUIManager.getInstance().r3.setDisable(false);
@@ -296,7 +296,12 @@ public class Distributor implements Runnable {
 			GUIManager.getInstance().counter
 					.setText(Integer.toString(Distributor.calculated.indexOf(GUIManager.actual) + 1));
 			GUIManager.getInstance().b1.setDisable(true);
-			GUIManager.getInstance().b4.setDisable(false);
+			if (Distributor.calculated.size() > 1) {
+				GUIManager.getInstance().b4.setDisable(false);
+				GUIManager.getInstance().textNext
+						.setText(Double.toString(Distributor.calculated.get(2).getInformation().getGuete()));
+			} else
+				GUIManager.getInstance().b4.setDisable(true);
 			GUIManager.getInstance().masterTabPane.getSelectionModel().select(GUIManager.getInstance().tabOutput);
 		});
 

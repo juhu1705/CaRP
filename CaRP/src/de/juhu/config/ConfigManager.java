@@ -288,6 +288,7 @@ public class ConfigManager {
 				if (!found) {
 					TreeItem nti = new CheckBoxTreeItem<String>(References.language.getString(s + ".location"));
 
+					nti.setExpanded(true);
 					actual.getChildren().add(0, nti);
 					actual = (CheckBoxTreeItem) nti;
 				}
@@ -325,6 +326,7 @@ public class ConfigManager {
 					}
 				});
 //				configurationTree.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+				cb.setExpanded(true);
 				actual.getChildren().add(cb);
 			}
 
@@ -407,7 +409,9 @@ public class ConfigManager {
 
 						l.autosize();
 						configurations.getChildren().addAll(l, cb);
-					} else if (e.elementClass().equals(String.class)) {
+					} else if (e.elementClass().equals(String.class) && !e.name().equals("outputdirectory.text")
+							&& !e.name().equals("outputfiletype.text") && !e.name().equals("inputfile.text")) {
+
 						TextField cb = new TextField();
 						cb.setTooltip(new Tooltip(References.language.getString(e.description())));
 
@@ -431,8 +435,8 @@ public class ConfigManager {
 						});
 						Label l = new Label((References.language.getString(e.name()) + ":"));
 
-						l.setMinWidth(1000);
 						l.autosize();
+
 						configurations.getChildren().addAll(l, cb);
 					}
 

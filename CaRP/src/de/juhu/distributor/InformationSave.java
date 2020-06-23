@@ -125,14 +125,15 @@ public class InformationSave implements Serializable {
 				References.language.getString("value.text") });
 
 		information.addLine(new Vec2i(0, ++line), new String[] {
-				References.language.getString("highestpriority.text") + ": ", Integer.toString(this.highestPriority) });
-		information.addLine(new Vec2i(0, ++line), new String[] {
 				References.language.getString("calculationgoodness.text") + ": ", Double.toString(this.guete) });
-		information.addLine(new Vec2i(0, ++line), new String[] {
-				References.language.getString("expectation.text") + ": ", Double.toString(this.getExpectation()) });
 		information.addLine(new Vec2i(0, ++line),
-				new String[] { References.language.getString("standartDeviation.text") + ": ",
-						Double.toString(this.getStandartDeviation()) });
+				new String[] { References.language.getString("highestpriority.text") + ": ",
+						Integer.toString(this.parent.getHighestPriorityWhithoutIntegerMax()) });
+//		information.addLine(new Vec2i(0, ++line), new String[] {
+//				References.language.getString("expectation.text") + ": ", Double.toString(this.getExpectation()) });
+//		information.addLine(new Vec2i(0, ++line),
+//				new String[] { References.language.getString("standartDeviation.text") + ": ",
+//						Double.toString(this.getStandartDeviation()) });
 		information.addLine(new Vec2i(0, ++line),
 				new String[] { References.language.getString("studentcount.text") + ": ",
 						Integer.toString(this.parent.getAllStudents().size()) });

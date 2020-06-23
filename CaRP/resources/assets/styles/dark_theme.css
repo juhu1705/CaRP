@@ -143,7 +143,6 @@
 
 .combo-box-popup {
     -fx-background-radius: 0 0 6 6;
-    -fx-max-height: 100px;
 }
 
 .combo-box-popup .list-view {

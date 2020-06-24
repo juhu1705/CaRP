@@ -2,6 +2,8 @@ package de.juhu.guiFX.lists;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import de.juhu.distributor.Student;
 import de.juhu.guiFX.GUIManager;
@@ -30,7 +32,7 @@ public class OutputInformationView implements Runnable {
 
 		GUIManager.getInstance().bStudents.sort();
 
-		HashMap<String, String> ratess = new HashMap<>();
+		Map<String, String> ratess = new LinkedHashMap<>(5);
 
 		ratess.put("0 - " + References.language.getString("calculationgoodness.text"),
 				Double.toString(GUIManager.actual.getInformation().getGuete()));

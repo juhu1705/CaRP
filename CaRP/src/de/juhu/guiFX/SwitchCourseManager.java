@@ -1,22 +1,21 @@
 package de.juhu.guiFX;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import de.juhu.distributor.Course;
 import de.juhu.distributor.Distributor;
 import de.juhu.distributor.Student;
-import de.juhu.guiFX.lists.SwitchCourseView;
 import de.juhu.util.References;
 import de.juhu.util.Util;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -31,8 +30,8 @@ public class SwitchCourseManager implements Initializable {
 
 	public static Student student;
 
-	@FXML
-	private TableView<Course> courses;
+//	@FXML
+//	private TableView<Course> courses;
 
 	@FXML
 	private TextField prename;
@@ -41,21 +40,24 @@ public class SwitchCourseManager implements Initializable {
 	private TextField name;
 
 	@FXML
-	private TableColumn<Course, String> teacher, subject;
+	private ComboBox<String> comboBox;
 
-	private SwitchCourseView scw;
+//	@FXML
+//	private TableColumn<Course, String> teacher, subject;
 
-	public void onSetActive(ActionEvent event) {
-		Course c = this.courses.getSelectionModel().getSelectedItem();
-
-		if (c == null || (c.getSubject() == null || c.getTeacher() == null)
-				|| (c.getSubject().isEmpty() && c.getTeacher().isEmpty()))
-			return;
-
-		student.setActiveCourse(c);
-
-		this.scw.run();
-	}
+//	private SwitchCourseView scw;
+//
+//	public void onSetActive(ActionEvent event) {
+//		Course c = this.courses.getSelectionModel().getSelectedItem();
+//
+//		if (c == null || (c.getSubject() == null || c.getTeacher() == null)
+//				|| (c.getSubject().isEmpty() && c.getTeacher().isEmpty()))
+//			return;
+//
+//		student.setActiveCourse(c);
+//
+//		this.scw.run();
+//	}
 
 	public void onFinished(ActionEvent event) {
 		boolean missingInformation = false;
@@ -73,6 +75,12 @@ public class SwitchCourseManager implements Initializable {
 		student.setName(this.name.getText());
 		student.setPrename(this.prename.getText());
 
+		for (Course c : GUIManager.actual.getAllCoursesAsArray()) {
+			if (this.comboBox.getValue().endsWith(c.getSubject() + ", " + c.getTeacher() + " | "
+					+ Integer.toString(c.size()) + "/" + Integer.toString(c.getMaxStudentCount())))
+				student.setActiveCourse(c);
+		}
+
 		Distributor.calculated.peek().getInformation().update();
 		Platform.runLater(GUIManager.getInstance().outputSView);
 		Platform.runLater(GUIManager.getInstance().outputCView);
@@ -89,13 +97,28 @@ public class SwitchCourseManager implements Initializable {
 
 		References.LOGGER.info("Student: " + student.toString());
 
-		this.teacher.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getTeacher());
-		});
+		ArrayList<String> courses = new ArrayList<>();
 
-		this.subject.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getSubject());
-		});
+		int i = 1;
+
+		for (Course c : student.getCourses()) {
+			if (student.getActiveCourse().equals(c))
+				courses.add("(" + i++ + ".) " + c.getSubject() + ", " + c.getTeacher() + " | "
+						+ Integer.toString(c.size()) + "/" + Integer.toString(c.getMaxStudentCount()));
+			else
+				courses.add(i++ + ". " + c.getSubject() + ", " + c.getTeacher() + " | " + Integer.toString(c.size())
+						+ "/" + Integer.toString(c.getMaxStudentCount()));
+		}
+
+		comboBox.setItems(FXCollections.observableArrayList(courses));
+
+//		this.teacher.setCellValueFactory(s -> {
+//			return new SimpleStringProperty(s.getValue().getTeacher());
+//		});
+//
+//		this.subject.setCellValueFactory(s -> {
+//			return new SimpleStringProperty(s.getValue().getSubject());
+//		});
 
 		if (!Util.isBlank(student.getName()))
 			this.name.setText(student.getName());
@@ -103,8 +126,8 @@ public class SwitchCourseManager implements Initializable {
 		if (!Util.isBlank(student.getPrename()))
 			this.prename.setText(student.getPrename());
 
-		this.scw = new SwitchCourseView(courses, student);
-		this.scw.run();
+//		this.scw = new SwitchCourseView(this.courses, student);
+//		this.scw.run();
 
 	}
 }

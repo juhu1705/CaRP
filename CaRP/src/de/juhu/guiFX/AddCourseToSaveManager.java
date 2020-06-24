@@ -66,6 +66,8 @@ public class AddCourseToSaveManager implements Initializable {
 			GUIManager.actual.addCourse(c);
 		}
 
+		GUIManager.actual.sortAll();
+
 		Platform.runLater(GUIManager.getInstance().outputSView);
 		Platform.runLater(GUIManager.getInstance().outputCView);
 		Platform.runLater(GUIManager.getInstance().outputIView);

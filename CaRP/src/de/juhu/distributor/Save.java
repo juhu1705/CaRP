@@ -514,4 +514,9 @@ public class Save implements Comparable<Save>, Serializable {
 		}
 	}
 
+	public void sortAll() {
+		this.allStudents = Save.sortStudents((this.allStudents));
+		this.allCourses = Save.sortCourse((this.allCourses));
+	}
+
 }

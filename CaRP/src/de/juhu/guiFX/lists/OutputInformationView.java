@@ -52,6 +52,8 @@ public class OutputInformationView implements Runnable {
 
 		GUIManager.getInstance().rates.getItems().clear();
 
+		References.LOGGER.config(ratess.toString());
+
 		GUIManager.getInstance().rates.setItems(FXCollections.observableArrayList(ratess.entrySet()));
 
 		int[] priorities = GUIManager.actual.getInformation().getStudentPriorities();

@@ -23,6 +23,7 @@ import de.juhu.util.PriorityQueue;
 import de.juhu.util.References;
 import de.juhu.util.Util;
 import javafx.application.Platform;
+import javafx.event.Event;
 
 /**
  * Diese Klasse Verwaltet und Berechnet die eingegebenen Daten und stellt die
@@ -302,12 +303,21 @@ public class Distributor implements Runnable {
 						.setText(Double.toString(Distributor.calculated.get(2).getInformation().getGuete()));
 			} else
 				GUIManager.getInstance().b4.setDisable(true);
-			GUIManager.getInstance().masterTabPane.getSelectionModel().select(GUIManager.getInstance().tabOutput);
+
+			// GUIManager.getInstance().masterTabPane.getSelectionModel().select(GUIManager.getInstance().tabOutput);
 		});
 
 		Platform.runLater(GUIManager.getInstance().outputSView);
 		Platform.runLater(GUIManager.getInstance().outputCView);
 		Platform.runLater(GUIManager.getInstance().outputIView);
+
+		Platform.runLater(() -> {
+			if (!GUIManager.getInstance().tabOC)
+				GUIManager.getInstance().tabOS = true;
+
+			GUIManager.getInstance().onTabOutput(
+					new Event(GUIManager.getInstance().tabOutput, GUIManager.getInstance().tabOutput, null));
+		});
 
 		calculate = false;
 

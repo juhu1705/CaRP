@@ -15,7 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -40,7 +40,7 @@ public class AddStudentToSaveManager implements Initializable {
 	private TextField name;
 
 	@FXML
-	private ChoiceBox<String> choiceBox;
+	private ComboBox<String> comboBox;
 
 //	@FXML
 //	private TableColumn<Course, String> teacher, subject;
@@ -76,12 +76,15 @@ public class AddStudentToSaveManager implements Initializable {
 		student.setPrename(this.prename.getText());
 
 		for (Course c : GUIManager.actual.getAllCoursesAsArray()) {
-			if (this.choiceBox.getValue().equals(c.getSubject() + ", " + c.getTeacher() + " | "
+			if (this.comboBox.getValue().equals(c.getSubject() + ", " + c.getTeacher() + " | "
 					+ Integer.toString(c.size()) + "/" + Integer.toString(c.getMaxStudentCount())))
-				c.addStudent(student);
+				student.setActiveCourse(c);
+
 		}
 
 		GUIManager.actual.addStudent(student);
+
+		GUIManager.actual.sortAll();
 
 		GUIManager.actual.getInformation().update();
 		Platform.runLater(GUIManager.getInstance().outputSView);
@@ -110,9 +113,7 @@ public class AddStudentToSaveManager implements Initializable {
 					+ Integer.toString(c.getMaxStudentCount()));
 		}
 
-		References.LOGGER.config(courses.toString());
-
-		choiceBox.setItems(FXCollections.observableArrayList(courses));
+		comboBox.setItems(FXCollections.observableArrayList(courses));
 
 		References.LOGGER.info("Student: " + student.toString());
 

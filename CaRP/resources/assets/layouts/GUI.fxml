@@ -29,6 +29,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -37,7 +38,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.GUIManager">
+<GridPane minWidth="1000.0" prefHeight="497.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.GUIManager">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -49,13 +50,13 @@
    <children>
       <BorderPane accessibleRole="IMAGE_VIEW" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
          <center>
-            <TabPane fx:id="masterTabPane" prefWidth="412.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="masterTabPane" prefWidth="412.0" rotateGraphic="true" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab fx:id="tabInput" closable="false" onSelectionChanged="#onTabIn" text="%input.text">
                      <content>
                         <BorderPane>
                            <center>
-                              <TabPane>
+                              <TabPane fx:id="inputTabPane">
                                  <tabs>
                                     <Tab fx:id="tabStudents" closable="false" onSelectionChanged="#onSelectionChangedCourse" text="%students.text">
                                        <content>
@@ -149,11 +150,16 @@
                                  <center>
                                     <VBox prefHeight="75.0" prefWidth="452.0">
                                        <children>
-                                          <Label focusTraversable="false" prefHeight="17.0" prefWidth="388.0" text="%inputf.text">
-                                             <VBox.margin>
-                                                <Insets left="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </Label>
+                                          <AnchorPane>
+                                             <children>
+                                                <Label focusTraversable="false" layoutX="14.0" layoutY="9.0" prefHeight="17.0" prefWidth="512.0" text="%inputf.text" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                                                <Button layoutX="759.0" layoutY="5.0" mnemonicParsing="false" onAction="#onClearDistributor" prefHeight="25.0" prefWidth="118.0" text="%cleardata.text" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="6.0">
+                                                   <graphic>
+                                                      <MaterialDesignIconView glyphName="DELETE" />
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
                                           <SplitPane dividerPositions="0.5" focusTraversable="false" prefHeight="19.0" prefWidth="369.0">
                                              <items>
                                                 <Button fx:id="r5" minWidth="60.0" mnemonicParsing="false" onAction="#searchActionInput" onDragDropped="#onDragDroppedInput" onDragOver="#onDragOver" text="%search.text">
@@ -167,29 +173,14 @@
                                                 <Insets left="10.0" right="10.0" top="10.0" />
                                              </VBox.margin>
                                           </SplitPane>
-                                          <Separator prefHeight="0.0" prefWidth="452.0">
-                                             <VBox.margin>
-                                                <Insets top="10.0" />
-                                             </VBox.margin>
-                                          </Separator>
                                           <StackPane>
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                                              </VBox.margin>
-                                             <children>
-                                                <Button mnemonicParsing="false" onAction="#onClearDistributor" text="%cleardata.text">
-                                                   <graphic>
-                                                      <MaterialDesignIconView glyphName="DELETE" />
-                                                   </graphic>
-                                                </Button>
-                                             </children>
                                           </StackPane>
                                        </children>
                                     </VBox>
                                  </center>
-                                 <bottom>
-                                    <Separator prefHeight="0.0" prefWidth="452.0" BorderPane.alignment="CENTER" />
-                                 </bottom>
                               </BorderPane>
                            </top>
                         </BorderPane>
@@ -198,11 +189,11 @@
                         <MaterialDesignIconView glyphName="FORMAT_LIST_BULLETED" />
                      </graphic>
                   </Tab>
-                  <Tab fx:id="tabOutput" closable="false" onSelectionChanged="#onTabOutput" text="%distribution.text">
+                  <Tab fx:id="tabOutput" closable="false" onSelectionChanged="#onTabOutput" style="-fx-rotate: 0;" text="%distribution.text">
                      <content>
                         <BorderPane>
                            <center>
-                              <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                              <TabPane fx:id="outputTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
                                  <tabs>
                                     <Tab fx:id="students" closable="false" disable="true" onSelectionChanged="#onSelectOutputStudent" text="%coursedistribution.text">
                                        <content>
@@ -440,9 +431,9 @@
                                     </VBox>
                                     <BorderPane focusTraversable="true" prefHeight="43.0" prefWidth="402.0">
                                        <right>
-                                          <ButtonBar focusTraversable="false" prefHeight="45.0" prefWidth="90.0" BorderPane.alignment="CENTER">
+                                          <ButtonBar focusTraversable="false" prefHeight="40.0" prefWidth="153.0" BorderPane.alignment="CENTER">
                                              <buttons>
-                                                <ProgressBar fx:id="p0" prefHeight="38.0" prefWidth="100.0">
+                                                <ProgressBar fx:id="p0" prefHeight="38.0" prefWidth="155.0">
                                                    <padding>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </padding>
@@ -499,10 +490,10 @@
                      <content>
                         <BorderPane>
                            <center>
-                              <SplitPane dividerPositions="0.5" BorderPane.alignment="CENTER">
+                              <SplitPane dividerPositions="0.3937007874015748" focusTraversable="false" BorderPane.alignment="CENTER">
                                  <items>
-                                    <TreeView fx:id="configurationTree" editable="true" prefHeight="176.0" prefWidth="248.0" />
-                                    <ScrollPane>
+                                    <TreeView fx:id="configurationTree" editable="true" minWidth="300.0" prefHeight="468.0" prefWidth="197.0" />
+                                    <ScrollPane minWidth="400.0" prefHeight="468.0" prefWidth="497.0">
                                        <content>
                                           <VBox fx:id="config" prefHeight="200.0" prefWidth="533.0" spacing="10.0">
                                              <padding>
@@ -565,12 +556,15 @@
                   </Tab>
                </tabs>
                <BorderPane.margin>
-                  <Insets />
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
                </BorderPane.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </TabPane>
          </center>
          <top>
-            <MenuBar BorderPane.alignment="CENTER">
+            <MenuBar prefHeight="25.0" prefWidth="458.0" BorderPane.alignment="CENTER">
                <menus>
                   <Menu mnemonicParsing="false" text="%file.text">
                      <items>
@@ -644,7 +638,7 @@
                               <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator></MenuItem>
                         <SeparatorMenuItem fx:id="seperator" mnemonicParsing="false" />
-                        <Menu fx:id="menuCourse" mnemonicParsing="false" text="%course.text" visible="false">
+                        <Menu fx:id="menuCourse" mnemonicParsing="false" text="%course.text">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#addCourse" text="%addcourse.text">
                                  <graphic>
@@ -664,7 +658,7 @@
                               <FontAwesomeIconView glyphName="BOOK" />
                            </graphic>
                         </Menu>
-                        <Menu fx:id="menuStudent" mnemonicParsing="false" text="%student.text" visible="false">
+                        <Menu fx:id="menuStudent" mnemonicParsing="false" text="%student.text">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#addStudent" text="%addstudent.text">
                                  <graphic>
@@ -683,7 +677,8 @@
                               <FontAwesomeIconView glyphName="GROUP" />
                            </graphic>
                         </Menu>
-                        <Menu fx:id="menuCourse1" mnemonicParsing="false" text="%course.text" visible="false">
+                        <SeparatorMenuItem fx:id="seperator1" mnemonicParsing="false" />
+                        <Menu fx:id="menuCourse1" mnemonicParsing="false" text="%course.text">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#onAddCourseToActualSave" text="%addcourse.text">
                                  <graphic>
@@ -705,7 +700,7 @@
                               <FontAwesomeIconView glyphName="BOOK" />
                            </graphic>
                         </Menu>
-                        <Menu fx:id="menuStudent1" mnemonicParsing="false" text="%student.text" visible="false">
+                        <Menu fx:id="menuStudent1" mnemonicParsing="false" text="%student.text">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#onAddStudentToActualSave" text="%addstudent.text">
                                  <graphic>

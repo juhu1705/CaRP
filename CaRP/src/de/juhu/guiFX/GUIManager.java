@@ -157,7 +157,8 @@ public class GUIManager implements Initializable {
 	@FXML
 	public TabPane masterTabPane;
 
-	public SeparatorMenuItem seperator;
+	@FXML
+	public SeparatorMenuItem seperator, seperator1;
 
 	@FXML
 	public Menu menuStudent, menuCourse, menuStudent1, menuCourse1;
@@ -276,7 +277,7 @@ public class GUIManager implements Initializable {
 		AddCourseToSaveManager.t = course.getTeacher();
 		AddCourseToSaveManager.mS = course.getMaxStudentCount();
 
-		Util.openWindow("/assets/layouts/AddCourseToCalculation.fxml", References.language.getString("addcourse.text"),
+		Util.openWindow("/assets/layouts/AddCourseToCalculation.fxml", References.language.getString("editing.text"),
 				GUILoader.getPrimaryStage(), this.theme);
 	}
 
@@ -518,7 +519,7 @@ public class GUIManager implements Initializable {
 		AddCourseManager.t = course.getTeacher();
 		AddCourseManager.mS = course.getMaxStudentCount();
 
-		Util.openWindow("/assets/layouts/AddCourse.fxml", References.language.getString("addcourse.text"),
+		Util.openWindow("/assets/layouts/AddCourse.fxml", References.language.getString("editing.text"),
 				GUILoader.getPrimaryStage(), this.theme);
 	}
 
@@ -553,7 +554,7 @@ public class GUIManager implements Initializable {
 			AddCourseManager.t = course.getTeacher();
 			AddCourseManager.mS = course.getMaxStudentCount();
 
-			Util.openWindow("/assets/layouts/AddCourse.fxml", References.language.getString("addcourse.text"),
+			Util.openWindow("/assets/layouts/AddCourse.fxml", References.language.getString("editing.text"),
 					GUILoader.getPrimaryStage(), this.theme);
 
 		}
@@ -598,7 +599,7 @@ public class GUIManager implements Initializable {
 
 		LOGGER.config("Starting Switch Course Window");
 
-		Util.openWindow("/assets/layouts/SwitchCourse.fxml", References.language.getString("addstudent.text"),
+		Util.openWindow("/assets/layouts/SwitchCourse.fxml", References.language.getString("editing.text"),
 				GUILoader.getPrimaryStage(), this.theme);
 
 	}
@@ -620,7 +621,7 @@ public class GUIManager implements Initializable {
 
 		LOGGER.config("Starting Switch Course Window");
 
-		Util.openWindow("/assets/layouts/SwitchCourse.fxml", References.language.getString("addstudent.text"),
+		Util.openWindow("/assets/layouts/SwitchCourse.fxml", References.language.getString("editing.text"),
 				GUILoader.getPrimaryStage(), this.theme);
 	}
 
@@ -641,7 +642,7 @@ public class GUIManager implements Initializable {
 
 		LOGGER.config("Starting Add Student Window");
 
-		Util.openWindow("/assets/layouts/AddStudent.fxml", References.language.getString("addstudent.text"),
+		Util.openWindow("/assets/layouts/AddStudent.fxml", References.language.getString("editing.text"),
 				GUILoader.getPrimaryStage(), this.theme);
 	}
 
@@ -668,7 +669,7 @@ public class GUIManager implements Initializable {
 
 			AddStudentManager.studentID = student.getID();
 
-			Util.openWindow("/assets/layouts/AddStudent.fxml", References.language.getString("addstudent.text"),
+			Util.openWindow("/assets/layouts/AddStudent.fxml", References.language.getString("editing.text"),
 					GUILoader.getPrimaryStage(), this.theme);
 		}
 	}
@@ -715,8 +716,7 @@ public class GUIManager implements Initializable {
 		Config.outputFileType = cb2.getValue();
 	}
 
-	boolean tabS = true;
-	boolean tabOS = true;
+	public boolean tabS = true, tabOS = true, tabOC = false;
 
 	public void onSelectionChangedCourse(Event event) {
 
@@ -773,16 +773,17 @@ public class GUIManager implements Initializable {
 
 	public void onSelectionOutputCourse(Event event) {
 
-		if (teachers == null) {
+		if (teachers == null)
 			return;
-		}
 
 		if (((Tab) event.getSource()).isSelected()) {
-			menuCourse1.setVisible(false);
-			tabOS = true;
-		} else {
-			tabOS = false;
 			menuCourse1.setVisible(true);
+			seperator1.setVisible(true);
+			tabOC = true;
+		} else {
+			tabOC = false;
+			seperator1.setVisible(false);
+			menuCourse1.setVisible(false);
 		}
 
 	}
@@ -795,13 +796,12 @@ public class GUIManager implements Initializable {
 		if (((Tab) event.getSource()).isSelected() && !students.isDisable() && !teachers.isDisable()) {
 			if (tabOS)
 				menuStudent1.setVisible(true);
-			else
+			else if (tabOC)
 				menuCourse1.setVisible(true);
 
-			seperator.setVisible(true);
+			seperator1.setVisible(true);
 		} else {
-
-			seperator.setVisible(false);
+			seperator1.setVisible(false);
 
 			menuCourse1.setVisible(false);
 
@@ -813,10 +813,15 @@ public class GUIManager implements Initializable {
 		if (students == null)
 			return;
 
-		if (!((Tab) event.getSource()).isSelected())
+		if (((Tab) event.getSource()).isSelected() && tabOutput.isSelected()) {
 			menuStudent1.setVisible(true);
-		else
+			seperator1.setVisible(true);
+			tabOS = true;
+		} else {
 			menuStudent1.setVisible(false);
+			seperator1.setVisible(false);
+			tabOS = false;
+		}
 	}
 
 	public void searchActionInput(ActionEvent event) {
@@ -1002,6 +1007,8 @@ public class GUIManager implements Initializable {
 					References.language.getString("calculation.no_calculation.description"));
 			return;
 		}
+
+		save.sortAll();
 
 		Distributor.calculate = true;
 
@@ -1673,8 +1680,14 @@ public class GUIManager implements Initializable {
 
 		// Check for activate Student options
 
-		if (tabInput.isSelected() && tabStudents.isSelected())
+		if (tabInput.isSelected() && tabStudents.isSelected()) {
 			menuStudent.setVisible(true);
+			menuStudent1.setVisible(false);
+			seperator.setVisible(true);
+			seperator1.setVisible(false);
+			menuCourse.setVisible(false);
+			menuCourse1.setVisible(false);
+		}
 
 	}
 

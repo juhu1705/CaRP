@@ -13,17 +13,22 @@
     secondary1: #757575;
     divider1: #BDBDBD;
     white: #FFFFFF;
+    contentbackground: #50545c;
 }
  
 /*Root Color*/
 *.root {
-     -fx-color:lightgrey;
+     -fx-color: lightgrey;
      -fx-focus-color: transparent;
-     -fx-background-color:dark1;
+     -fx-background-color: contentbackground;
 }
  
 /*Tab */
- 
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-color: transparent;
+}
+
 *.tab {
      -fx-background-color:lightgrey;
 }
@@ -41,16 +46,106 @@
     -fx-background-color:light1;
 }
 
+
+/*Tab Pane master*/
+
+#masterTabPane {
+    -fx-background-color: contentbackground;
+
+}
+
+#masterTabPane > .tab-header-area > * > .tab {
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: #2f3136;
+    
+    -fx-padding: 10 25 10 25;
+    -fx-margin: 10;
+}
+
+#masterTabPane > .tab-header-area > * > .tab > * > .tab-label, #masterTabPane > .tab-header-area > * > .tab > * > .tab-label > .glyph-icon {
+    -fx-text-fill: #8e9297;
+    -fx-fill: #8e9297;
+}
+
+#masterTabPane > .tab-header-area > * > .tab > * > .tab-label > .glyph-icon {
+    padding: 1;
+    margin: 1;
+    
+}
+
+#masterTabPane > .tab-header-area > * > .tab:hover {
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color:#35373d;
+}
+
+#masterTabPane > .tab-header-area > * > .tab:selected > * > .tab-label, #masterTabPane > .tab-header-area > * > .tab:selected > * > .tab-label > .glyph-icon {
+    -fx-text-fill: #f9dab0;
+}
+
+#masterTabPane > .tab-header-area > * > .tab:selected {
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-color: transparent;
+    -fx-background-color: #3a3c43;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    
+}
+
+#masterTabPane > .tab-header-area > .tab-header-background {
+    -fx-background-color: #2f3136;
+}
+
+/*Under Tabs */
+
+
+#inputTabPane.tab-pane, #outputTabPane {
+    -fx-background-color: contentbackground;
+}
+
+#tabStudents.tab, #tabCourses.tab, #outputTabPane > .tab-header-area > * > .tab {
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: contentbackground;
+    
+    -fx-padding: 5 20 5 20;
+    -fx-margin: 5;
+}
+
+#tabStudents.tab > * > .tab-label, #tabCourses.tab > * > .tab-label, #outputTabPane > .tab-header-area > * > .tab > * > .tab-label {
+    -fx-text-fill: #8e9297;
+}
+
+#tabStudents.tab:hover, #tabCourses.tab:hover, #outputTabPane > .tab-header-area > * > .tab:hover {
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color:#35373d;
+}
+
+#tabStudents.tab:selected .tab-label, #tabCourses.tab:selected .tab-label, #outputTabPane > .tab-header-area > * > .tab:selected > * > .tab-label {
+    -fx-text-fill: #f9dab0;
+}
+
+#tabStudents.tab:selected, #tabCourses.tab:selected, #outputTabPane > .tab-header-area > * > .tab:selected {
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-color: transparent;
+    -fx-background-color: #3a3c43;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    
+}
+
+#inputTabPane > .tab-header-area >  .tab-header-background, #outputTabPane > .tab-header-area >  .tab-header-background {
+    -fx-background-color: contentbackground;
+}
+
+
+
 /* Tree View */
 
 *.tree-view {
     -fx-color:default1;
     
-    -fx-background-color:dark1;
+    -fx-background-color:contentbackground;
 }
 
 *.tree-view .tree-cell {
-    -fx-background-color:dark1;
+    -fx-background-color:contentbackground;
     -fx-text-fill:white;
 }
 
@@ -187,11 +282,11 @@
 
 /*Scroll Pane */
 *.scroll-pane {
-    -fx-background-color: default1;
+    -fx-background-color: contentbackground;
 }
 
 .scroll-pane > .viewport {
-   -fx-background-color: dark1;
+   -fx-background-color: contentbackground;
 }
 
 *.scroll-bar:vertical, *.scroll-bar:horizontal{
@@ -218,7 +313,7 @@
 }
 
 *.scroll-pane > *.corner {
-    -fx-background-color: default1;
+    -fx-background-color: contentbackground;
 }
 
 /*Label */
@@ -257,6 +352,9 @@
     -fx-base: transparent;
     -fx-background-color: transparent;
 }
+
+
+
 
 .table-view .placeholder {
     -fx-background-color: transparent;

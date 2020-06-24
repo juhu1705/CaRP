@@ -1212,7 +1212,7 @@ public class GUIManager implements Initializable {
 //			CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
 //		}
 
-		LogWriter.writeLog(s + "/logging" + timestamp.getTime());
+		// LogWriter.writeLog(s + "/logging" + timestamp.getTime());
 		this.save(s + "/save" + timestamp.getTime());
 
 		LOGGER.info("Finished Saving files");

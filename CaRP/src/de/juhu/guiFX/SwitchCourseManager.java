@@ -69,6 +69,13 @@ public class SwitchCourseManager implements Initializable {
 			this.name.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
+		if (this.comboBox.getValue() == null
+				|| this.comboBox.getValue().equals(References.language.getString("course.text"))
+				|| this.comboBox.getValue().equals(References.language.getString("valuemissing.text"))) {
+			this.comboBox.setPromptText(References.language.getString("valuemissing.text"));
+			missingInformation = true;
+		}
+
 		if (missingInformation)
 			return;
 
@@ -112,6 +119,12 @@ public class SwitchCourseManager implements Initializable {
 
 		comboBox.setItems(FXCollections.observableArrayList(courses));
 
+		Course c = student.getActiveCourse();
+		i = student.getPosition(c) + 1;
+
+		if (student.getActiveCourse() != null)
+			comboBox.setValue("(" + i++ + ".) " + c.getSubject() + ", " + c.getTeacher() + " | "
+					+ Integer.toString(c.size()) + "/" + Integer.toString(c.getMaxStudentCount()));
 //		this.teacher.setCellValueFactory(s -> {
 //			return new SimpleStringProperty(s.getValue().getTeacher());
 //		});

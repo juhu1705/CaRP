@@ -69,6 +69,13 @@ public class AddStudentToSaveManager implements Initializable {
 			this.name.setPromptText(References.language.getString("valuemissing.text"));
 			missingInformation = true;
 		}
+		if (this.comboBox.getValue() == null
+				|| this.comboBox.getValue().equals(References.language.getString("course.text"))
+				|| this.comboBox.getValue().equals(References.language.getString("valuemissing.text"))) {
+			this.comboBox.setPromptText(References.language.getString("valuemissing.text"));
+			missingInformation = true;
+		}
+
 		if (missingInformation)
 			return;
 

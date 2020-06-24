@@ -96,6 +96,10 @@ public class Util {
 		return input == null || input.isEmpty() || input.trim().isEmpty();
 	}
 
+	public static double round(double toRound, int col) {
+		return ((Math.round(Math.pow(10.0d, col) * toRound)) / Math.pow(10.0d, col));
+	}
+
 	/**
 	 * 
 	 * @param toCheck

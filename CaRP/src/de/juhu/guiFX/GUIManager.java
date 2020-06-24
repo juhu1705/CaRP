@@ -309,9 +309,11 @@ public class GUIManager implements Initializable {
 			this.b4.setDisable(true);
 			this.textNext.setText("");
 		} else
-			this.textNext.setText(Double.toString(Distributor.calculated.next(actual).getInformation().getGuete()));
+			this.textNext.setText(References.language.getString("nextgoodness.text")
+					+ Double.toString(Util.round(Distributor.calculated.next(actual).getInformation().getGuete(), 3)));
 		this.b1.setDisable(false);
-		this.textPrevious.setText(Double.toString(Distributor.calculated.previous(actual).getInformation().getGuete()));
+		this.textPrevious.setText(References.language.getString("previousgoodness.text")
+				+ Double.toString(Util.round(Distributor.calculated.previous(actual).getInformation().getGuete(), 3)));
 
 		this.counter.setText(Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
 	}
@@ -327,10 +329,11 @@ public class GUIManager implements Initializable {
 			this.b1.setDisable(true);
 			this.textPrevious.setText("");
 		} else
-			this.textPrevious
-					.setText(Double.toString(Distributor.calculated.previous(actual).getInformation().getGuete()));
+			this.textPrevious.setText(References.language.getString("previousgoodness.text") + Double
+					.toString(Util.round(Distributor.calculated.previous(actual).getInformation().getGuete(), 3)));
 		this.b4.setDisable(false);
-		this.textNext.setText(Double.toString(Distributor.calculated.next(actual).getInformation().getGuete()));
+		this.textNext.setText(References.language.getString("nextgoodness.text")
+				+ Double.toString(Util.round(Distributor.calculated.next(actual).getInformation().getGuete(), 3)));
 
 		this.counter.setText(Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
 	}

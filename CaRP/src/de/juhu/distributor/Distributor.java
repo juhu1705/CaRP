@@ -299,8 +299,8 @@ public class Distributor implements Runnable {
 			GUIManager.getInstance().b1.setDisable(true);
 			if (Distributor.calculated.size() > 1) {
 				GUIManager.getInstance().b4.setDisable(false);
-				GUIManager.getInstance().textNext
-						.setText(Double.toString(Distributor.calculated.get(2).getInformation().getGuete()));
+				GUIManager.getInstance().textNext.setText(References.language.getString("nextgoodness.text")
+						+ Double.toString(Util.round(Distributor.calculated.get(2).getInformation().getGuete(), 3)));
 			} else
 				GUIManager.getInstance().b4.setDisable(true);
 

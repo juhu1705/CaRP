@@ -294,8 +294,14 @@ public class Distributor implements Runnable {
 		 */
 
 		Platform.runLater(() -> {
-			GUIManager.getInstance().counter
-					.setText(Integer.toString(Distributor.calculated.indexOf(GUIManager.actual) + 1));
+			GUIManager.getInstance().counter.setText(References.language.getString("distribution.text") + ": "
+					+ Integer.toString((Distributor.calculated.indexOf(GUIManager.actual) + 1)));
+
+			References.LOGGER.config(GUIManager.getInstance().textActual + "");
+
+			GUIManager.getInstance().textActual.setText(References.language.getString("calculationgoodness.text") + ": "
+					+ Double.toString(Util.round(GUIManager.actual.getInformation().getGuete(), 3)));
+
 			GUIManager.getInstance().b1.setDisable(true);
 			if (Distributor.calculated.size() > 1) {
 				GUIManager.getInstance().b4.setDisable(false);

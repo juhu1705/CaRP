@@ -364,6 +364,7 @@
                                  </BorderPane.margin>
                                  <children>
                                     <Label fx:id="counter" text="0" />
+                                    <Label fx:id="textActual" layoutX="56.0" layoutY="16.0" />
                                     <Label fx:id="textPrevious" />
                                     <Button fx:id="b1" disable="true" mnemonicParsing="false" onAction="#onPreviousSave" text="%previous.text">
                                        <graphic>
@@ -748,7 +749,7 @@
                                  </accelerator></CheckMenuItem>
                               <CheckMenuItem fx:id="mb0" mnemonicParsing="false" onAction="#onSetLightTheme" text="%light.text">
                                  <accelerator>
-                                    <KeyCodeCombination alt="UP" code="D" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                    <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>
                               </CheckMenuItem>
                            </items>
@@ -779,6 +780,14 @@
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#openHelpFile" text="%helpfile.text">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="PAPERCLIP" />
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="A" control="UP" meta="UP" shift="DOWN" shortcut="DOWN" />
+                           </accelerator>
+                        </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#onFullScreen" text="%fullscreen.text">
                            <accelerator>

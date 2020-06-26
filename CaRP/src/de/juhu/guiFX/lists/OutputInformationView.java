@@ -137,10 +137,10 @@ public class OutputInformationView implements Runnable {
 		GUIManager.getInstance().r3.setDisable(false);
 
 		// GUIManager.getInstance().b1.setDisable(false);
-		GUIManager.getInstance().b2.setDisable(false);
+		// GUIManager.getInstance().b2.setDisable(false);
 		GUIManager.getInstance().b3.setDisable(false);
 		// GUIManager.getInstance().b4.setDisable(false);
-		GUIManager.getInstance().b5.setDisable(false);
+		// GUIManager.getInstance().b5.setDisable(false);
 		GUIManager.getInstance().b6.setDisable(false);
 		GUIManager.getInstance().b7.setDisable(false);
 	}

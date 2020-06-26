@@ -130,7 +130,7 @@ public class GUILoader extends Application {
 
 		GUIManager.getInstance().checks.get(GUIManager.getInstance().theme).setSelected(true);
 
-		primaryStage.setMinWidth(1100);
+		primaryStage.setMinWidth(1400);
 		primaryStage.setMinHeight(580);
 		primaryStage.setTitle(PROJECT_NAME + " | " + VERSION);
 		primaryStage.setScene(s);

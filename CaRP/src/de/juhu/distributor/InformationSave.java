@@ -121,6 +121,13 @@ public class InformationSave implements Serializable {
 
 		int line = 0;
 
+		if (Config.hasHeaderOutput) {
+			information.addLine(new Vec2i(0, line),
+					new String[] { References.language.getString("informations.text") });
+			line += 2;
+		}
+		information.addLine(new Vec2i(0, line++), new String[] { References.language.getString("informations.text") });
+
 		information.addLine(new Vec2i(0, line++), new String[] { References.language.getString("informations.text"),
 				References.language.getString("value.text") });
 

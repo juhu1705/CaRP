@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -109,7 +111,7 @@ public class GUIManager implements Initializable {
 	public TreeView<String> configurationTree;
 
 	@FXML
-	public Label counter, textPrevious, textNext;
+	public Label counter, textPrevious, textNext, textActual;
 
 	@FXML
 	public TextField t1, t2;
@@ -315,7 +317,11 @@ public class GUIManager implements Initializable {
 		this.textPrevious.setText(References.language.getString("previousgoodness.text")
 				+ Double.toString(Util.round(Distributor.calculated.previous(actual).getInformation().getGuete(), 3)));
 
-		this.counter.setText(Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
+		this.counter.setText(References.language.getString("distribution.text") + ": "
+				+ Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
+		this.textActual.setText(References.language.getString("calculationgoodness.text") + ": "
+				+ Double.toString(Util.round(actual.getInformation().getGuete(), 3)));
+		// INFO: Hi
 	}
 
 	public void onPreviousSave(ActionEvent event) {
@@ -335,7 +341,10 @@ public class GUIManager implements Initializable {
 		this.textNext.setText(References.language.getString("nextgoodness.text")
 				+ Double.toString(Util.round(Distributor.calculated.next(actual).getInformation().getGuete(), 3)));
 
-		this.counter.setText(Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
+		this.counter.setText(References.language.getString("distribution.text") + ": "
+				+ Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
+		this.textActual.setText(References.language.getString("calculationgoodness.text") + ": "
+				+ Double.toString(Util.round(actual.getInformation().getGuete(), 3)));
 	}
 
 	public void addCourse(ActionEvent event) {
@@ -367,6 +376,12 @@ public class GUIManager implements Initializable {
 		boolean hold = Config.clear;
 
 		Distributor.getInstance().reset();
+		this.rates.getItems().clear();
+		GUIManager.getInstance().priorities.getItems().clear();
+		GUIManager.getInstance().unallocatedStudents.getItems().clear();
+		GUIManager.getInstance().bStudents.getItems().clear();
+		this.tv1.getItems().clear();
+		this.tv2.getItems().clear();
 
 		GUIManager.getInstance().teachers.setDisable(true);
 		GUIManager.getInstance().students.setDisable(true);
@@ -782,11 +797,13 @@ public class GUIManager implements Initializable {
 		if (((Tab) event.getSource()).isSelected()) {
 			menuCourse1.setVisible(true);
 			seperator1.setVisible(true);
+			b5.setDisable(false);
 			tabOC = true;
 		} else {
 			tabOC = false;
 			seperator1.setVisible(false);
 			menuCourse1.setVisible(false);
+			b5.setDisable(true);
 		}
 
 	}
@@ -797,11 +814,15 @@ public class GUIManager implements Initializable {
 			return;
 
 		if (((Tab) event.getSource()).isSelected() && !students.isDisable() && !teachers.isDisable()) {
-			if (tabOS)
+			if (tabOS) {
 				menuStudent1.setVisible(true);
-			else if (tabOC)
+				b2.setDisable(false);
+				b5.setDisable(true);
+			} else if (tabOC) {
 				menuCourse1.setVisible(true);
-
+				b2.setDisable(true);
+				b5.setDisable(false);
+			}
 			seperator1.setVisible(true);
 		} else {
 			seperator1.setVisible(false);
@@ -809,6 +830,8 @@ public class GUIManager implements Initializable {
 			menuCourse1.setVisible(false);
 
 			menuStudent1.setVisible(false);
+
+			b2.setDisable(true);
 		}
 	}
 
@@ -819,10 +842,12 @@ public class GUIManager implements Initializable {
 		if (((Tab) event.getSource()).isSelected() && tabOutput.isSelected()) {
 			menuStudent1.setVisible(true);
 			seperator1.setVisible(true);
+			b2.setDisable(false);
 			tabOS = true;
 		} else {
 			menuStudent1.setVisible(false);
 			seperator1.setVisible(false);
+			b2.setDisable(true);
 			tabOS = false;
 		}
 	}
@@ -1313,6 +1338,18 @@ public class GUIManager implements Initializable {
 	public void onHelp(ActionEvent event) {
 
 		try {
+			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+				Desktop.getDesktop().browse(new URI("https://github.com/juhu1705/CaRP/wiki"));
+			}
+		} catch (IOException | URISyntaxException e) {
+			References.LOGGER.info("https://github.com/juhu1705/CaRP/wiki");
+		}
+
+	}
+
+	public void openHelpFile(ActionEvent event) {
+
+		try {
 			if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER), LinkOption.NOFOLLOW_LINKS))
 				new File(References.HOME_FOLDER).mkdir();
 
@@ -1691,6 +1728,8 @@ public class GUIManager implements Initializable {
 			menuCourse.setVisible(false);
 			menuCourse1.setVisible(false);
 		}
+
+		this.counter.setText(References.language.getString("distribution.text") + ": " + Integer.toString(0));
 
 	}
 

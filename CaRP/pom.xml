@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.juhu</groupId>
   <artifactId>Course_and_Research_Paper-Assigner</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.0-a1</version>
   <name>CaRP Assigner</name>
   <description>Ein Programm, welches zum Zuordnen von Kurs und Facharbeitswahlen gedacht ist</description>
   

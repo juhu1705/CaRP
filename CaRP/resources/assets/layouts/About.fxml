@@ -45,7 +45,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="211.0" layoutY="49.0" prefHeight="17.0" prefWidth="97.0" text="Version: 1.0.1" AnchorPane.leftAnchor="211.0" AnchorPane.rightAnchor="108.0" AnchorPane.topAnchor="49.0" />
+            <Label layoutX="211.0" layoutY="49.0" prefHeight="17.0" prefWidth="97.0" text="Version: 1.0.2" AnchorPane.leftAnchor="211.0" AnchorPane.rightAnchor="108.0" AnchorPane.topAnchor="49.0" />
             <Label layoutX="192.0" layoutY="66.0" prefHeight="17.0" prefWidth="146.0" text="Created by Fabius Mettner" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="72.0" AnchorPane.topAnchor="66.0" />
             <Label layoutX="172.0" layoutY="85.0" text="Under Supervision of Christian Wolf" AnchorPane.leftAnchor="172.0" AnchorPane.rightAnchor="49.0" AnchorPane.topAnchor="85.0" />
             <Label layoutX="29.0" layoutY="120.0" text="Used Libaries:" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="296.0" AnchorPane.topAnchor="120.0">

@@ -1092,7 +1092,6 @@ public class Distributor implements Runnable {
 	 * @throws URISyntaxException Wenn der filename nicht existiert.
 	 */
 	private List<WriteableContent> importFile(String path) throws IOException, URISyntaxException {
-		path = path.toLowerCase();
 		List<WriteableContent> c = new ArrayList<>();
 		if (path.endsWith(".xls"))
 			c = readXLSImproved(path);

@@ -84,11 +84,7 @@ public class References {
 			else
 				model = reader.read(new InputStreamReader(References.class
 						.getResourceAsStream("/META-INF/maven/de.juhu/Course_and_Research_Paper-Assigner/pom.xml")));
-		} catch (FileNotFoundException e) {
-
-		} catch (IOException e) {
-
-		} catch (XmlPullParserException e) {
+		} catch (IOException | XmlPullParserException ignored) {
 
 		}
 
@@ -113,11 +109,7 @@ public class References {
 			else
 				model = reader.read(new InputStreamReader(References.class
 						.getResourceAsStream("/META-INF/maven/de.juhu/Course_and_Research_Paper-Assigner/pom.xml")));
-		} catch (FileNotFoundException e) {
-
-		} catch (IOException e) {
-
-		} catch (XmlPullParserException e) {
+		} catch (XmlPullParserException | IOException ignored) {
 
 		}
 		if (model == null)

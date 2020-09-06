@@ -4,14 +4,18 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 import de.juhu.util.References;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
@@ -21,10 +25,13 @@ import javafx.scene.input.MouseEvent;
  * @author Juhu1705
  * @category GUI
  */
-public class AboutManager {
+public class AboutManager implements Initializable {
 
 	@FXML
 	public TextField weg;
+
+	@FXML
+	public Label version;
 
 	public void openLink(ActionEvent event) {
 		if (event.getSource() instanceof Hyperlink) {
@@ -70,5 +77,10 @@ public class AboutManager {
 		} catch (IOException | URISyntaxException e) {
 			References.LOGGER.info("https://github.com/juhu1705/CaRP/issues?utf8=%E2%9C%93&q=" + weg.getText());
 		}
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		version.setText("Version: " + References.VERSION);
 	}
 }

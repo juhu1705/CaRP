@@ -167,7 +167,7 @@ public class Util {
 	 * @param resourceLocation
 	 * @param title
 	 * @param parent
-	 * @param darkTheme
+	 * @param theme
 	 * @return
 	 */
 	public static Stage openWindow(String resourceLocation, String title, Stage parent, Theme theme) {
@@ -182,8 +182,9 @@ public class Util {
 		Parent root = null;
 
 		try {
-			root = FXMLLoader.load(Util.class.getClass().getResource(resourceLocation), References.language);
+			root = FXMLLoader.load(Util.class.getResource(resourceLocation), References.language);
 		} catch (IOException e) {
+			References.LOGGER.warning("Cannot load window");
 			return null;
 		}
 		Scene s = new Scene(root);

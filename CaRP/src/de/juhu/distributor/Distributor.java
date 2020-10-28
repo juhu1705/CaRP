@@ -1206,7 +1206,6 @@ public class Distributor implements Runnable {
 				if (line == null || line.length < 2 || Util.isBlank(line[0]) || Util.isBlank(line[1])) {
 					LOGGER.warning(
 							"Not enough arguments for student. This line will be skiped: [Line: " + lineNumber + "]");
-					lineNumber++;
 					return;
 				}
 
@@ -1228,7 +1227,7 @@ public class Distributor implements Runnable {
 
 							while (!GUIDoubleStudentManager.finished) {
 								try {
-									Thread.sleep(10);
+									Thread.sleep(100);
 								} catch (InterruptedException e) {
 									LOGGER.log(Level.SEVERE, "Error during sleeping!", e);
 								}
@@ -1262,13 +1261,12 @@ public class Distributor implements Runnable {
 			@Override
 			public void read(String[] line, int lineNumber) {
 				LOGGER.info("Try to Add Course " + lineNumber);
-				if (line.length <= 2) {
+				if (line.length <= 2 || Util.isBlank(line[0]) || Util.isBlank(line[1]) || Util.isBlank(line[2])) {
 					LOGGER.info("Not enough arguments for a new Course. This line will be skiped: [Line: " + lineNumber
 							+ "]");
-					lineNumber++;
 					return;
 				}
-				int countStudents = Config.normalStudentLimit;
+				int countStudents;
 				try {
 					countStudents = Double.valueOf(line[2]).intValue();
 				} catch (NumberFormatException e) {

@@ -186,9 +186,6 @@ public class Distributor implements Runnable {
 	 * @param readObject  Der erste {@link Save Speicher}, der in die
 	 *                    {@link Distributor#calculated Liste der Kalkulationen}
 	 *                    eingefügt wird.
-	 * @param readObject2 Der zweite {@link Save Speicher}, der in die
-	 *                    {@link Distributor#calculated Liste der Kalkulationen}
-	 *                    eingefügt wird.
 	 */
 	public Distributor(Save actual, Save... readObject) {
 		if (instance != null)
@@ -416,73 +413,73 @@ public class Distributor implements Runnable {
 
 	/**
 	 * <p>
-	 * Weißt die im {@link Distributor} hinterlegten Daten bestmöglich zu. Dabei
-	 * wird versucht die {@link Student Schüler} aus der {@link #allStudents Liste
-	 * der Schüler} so auf die {@link Course Kurse} aus der {@link #allCourses Liste
-	 * der Kurse} zu verteilen, dass möglichst viele Schüler einen möglichst guten
-	 * Kurs aus ihren {@link Student#courses Kurswahlen} zugewiesen bekommen.
+	 * Wei&szlig;t die im {@link Distributor} hinterlegten Daten bestm&ouml;glich zu. Dabei
+	 * wird versucht die {@link Student Sch&uuml;ler} aus der {@link #allStudents Liste
+	 * der Sch&uuml;ler} so auf die {@link Course Kurse} aus der {@link #allCourses Liste
+	 * der Kurse} zu verteilen, dass m&ouml;glichst viele Sch&uuml;ler einen m&ouml;glichst guten
+	 * Kurs aus ihren Kurswahlen zugewiesen bekommen.
 	 * </p>
 	 * <p>
-	 * Um die bestmögliche Verteilung zu erreichen wird nach einem kontrollierten
+	 * Um die bestm&ouml;gliche Verteilung zu erreichen wird nach einem kontrollierten
 	 * Zufalls und Verbesserungsprinzip vorgegangen. Daher besteht jeder der unter
-	 * {@link Config#runs} angegebenen durchläufe aus folgenden zwei Schritten:
+	 * {@link Config#runs} angegebenen durchl&auml;ufe aus folgenden zwei Schritten:
 	 * <ul>
 	 * <li>Dem neu Zuweisen</li>
 	 * <li>und dem Verbessern.</li>
 	 * </ul>
 	 * </p>
 	 * <p>
-	 * Bevor die Berechnung starten kann, werden die Schüler und Kursdaten zunächst
+	 * Bevor die Berechnung starten kann, werden die Sch&uuml;ler und Kursdaten zun&auml;chst
 	 * einmal in die {@link #loadedallStudents} und {@link #loadedallCourses} Listen
-	 * gesichert, so dass diese Daten immer zur unverfälschten neuberechnung genutzt
-	 * werden können.
+	 * gesichert, so dass diese Daten immer zur unverf&auml;lschten neuberechnung genutzt
+	 * werden k&ouml;nnen.
 	 * </p>
 	 * <p>
-	 * Um eine graphische Übersicht zu bekommen wird die {@link ProgressIndicator
+	 * Um eine graphische &Uuml;bersicht zu bekommen wird die {@link ProgressIndicator
 	 * Prozess Leiste} mit den entsprechenden Werten initialisiert.
 	 * </p>
 	 * <p>
 	 * Nun werden die {@link Config#runs} vielen Versuche gestartet. Mit jedem
 	 * durchlaufendem Versuch wird die {@link ProgressIndicator Prozess Leiste} um
-	 * einen Wert erhöht, sowie eine Nachricht mit der aktuellen Durchlaufsnummer
+	 * einen Wert erh&ouml;ht, sowie eine Nachricht mit der aktuellen Durchlaufsnummer
 	 * ausgegeben.
 	 * </p>
 	 * <p>
 	 * Dann werden versuche einer Neuzuweisung gestartet. Die Menge dieser neu
-	 * Zuweisungsversuche ist über {@link Config#newCalculating} einstellbar.
-	 * 
+	 * Zuweisungsversuche ist &uuml;ber {@link Config#newCalculating} einstellbar.
+	 *
 	 * Zur Neuzuweisung werden die Daten aus den Sicherheitsspeichern des
 	 * {@link Distributor Berechners} geladen und dann wird die {@link #allStudents
-	 * Liste der Schüler} gemischt. Für jeden Schüler wird dann über die Methode
+	 * Liste der Sch&uuml;ler} gemischt. F&uuml;r jeden Sch&uuml;ler wird dann &uuml;ber die Methode
 	 * {@link Student#next()} versucht ein Kurs zu finden. Kann kein Kurs gefunden
-	 * werden wird der Schüler über {@link Student#mark()} markiert. Nach dieser
-	 * Zuweisung werden die Daten über {@link #save()} gespeichert.
+	 * werden wird der Sch&uuml;ler &uuml;ber {@link Student#mark()} markiert. Nach dieser
+	 * Zuweisung werden die Daten &uuml;ber {@link #save()} gespeichert.
 	 * </p>
 	 * <p>
 	 * Nach den Versuchen der Neuzuweisung werden noch
 	 * {@link Config#improvingOfCalculation} viele Versuche unternommen eine
-	 * zufällig ausgewählte Kalkulation zu verbessern. Hierzu wird eine Zufällige
+	 * zuf&auml;llig ausgew&auml;hlte Kalkulation zu verbessern. Hierzu wird eine Zuf&auml;llige
 	 * gespeicherte Zuweisung aus der {@link #calculated Liste der Speicher} geladen
-	 * und dann eine Neuberechnung an diesem durchgeführt. Dazu wird allen nicht
-	 * zugewiesenden (also markierten) Schüler deren erster Kurs gewährt und im
-	 * Anschluss allen Schülern mit der schlechtesten Priorität das Gleiche gewährt.
-	 * Nach dem Mischen der Kurse wird nun überprüft, welche Kurse zu voll sind.
-	 * Sollte ein Kurs zu viele Schüler beinhalten werden, wenn
-	 * {@link Config#newImproving} aktiviert ist, Schüler aus diesem Kurs zufällig
-	 * in deren nächsten Gewünschten Kurs verschoben. Ist
-	 * {@link Config#newImproving} deaktiviert, so werden aus dem Kurs zufällig
-	 * Schüler in deren nächsten Freien Kurs verschoben.
+	 * und dann eine Neuberechnung an diesem durchgef&uuml;hrt. Dazu wird allen nicht
+	 * zugewiesenden (also markierten) Sch&uuml;ler deren erster Kurs gew&auml;hrt und im
+	 * Anschluss allen Sch&uuml;lern mit der schlechtesten Priorit&auml;t das Gleiche gew&auml;hrt.
+	 * Nach dem Mischen der Kurse wird nun &uuml;berpr&uuml;ft, welche Kurse zu voll sind.
+	 * Sollte ein Kurs zu viele Sch&uuml;ler beinhalten werden, wenn
+	 * Config#newImproving aktiviert ist, Sch&uuml;ler aus diesem Kurs zuf&auml;llig
+	 * in deren n&auml;chsten Gew&uuml;nschten Kurs verschoben. Ist
+	 * Config#newImproving deaktiviert, so werden aus dem Kurs zuf&auml;llig
+	 * Sch&uuml;ler in deren n&auml;chsten Freien Kurs verschoben.
 	 * </p>
 	 * <p>
-	 * Nach Beendigung der {@link Config#runs} vielen durchläufe wird noch die
-	 * {@link ProgressIndicator Prozess Leiste} zurückgesetzt.
+	 * Nach Beendigung der {@link Config#runs} vielen durchl&auml;ufe wird noch die
+	 * {@link ProgressIndicator Prozess Leiste} zur&uuml;ckgesetzt.
 	 * </p>
-	 * 
-	 * 
+	 *
+	 *
 	 * @since BETA-0.1.0
-	 * @implNote Diese Methode wird in Verknüpfung mit der graphischen Oberfläche
-	 *           und weiteren kleinen Zusätzlichen Eigenschaften über {@link #run()}
-	 *           ausgeführt.
+	 * @implNote Diese Methode wird in Verkn&uuml;pfung mit der graphischen Oberfl&auml;che
+	 *           und weiteren kleinen Zus&auml;tzlichen Eigenschaften &uuml;ber {@link #run()}
+	 *           ausgef&uuml;hrt.
 	 */
 	public void assign() {
 		LOGGER.info("Start Calculating");
@@ -1041,7 +1038,7 @@ public class Distributor implements Runnable {
 	 * 
 	 * <p>
 	 * Zunächst wird der File in eine List des Zwischenformates
-	 * {@link WriteableContent} umgewandelt. Dazu wird {@link #importFile(path)}
+	 * {@link WriteableContent} umgewandelt. Dazu wird #importFile(path)
 	 * aufgerufen. Sollte ein Fehler auftreten so wird dieser mit dem
 	 * {@link Level#SEVERE Log-Level SEVERE} und dem erklärenden Text: "Unable to
 	 * load data!", sowie der Fehlermeldung ausgegeben und das Einlesen der Datei
@@ -1050,7 +1047,7 @@ public class Distributor implements Runnable {
 	 * 
 	 * <p>
 	 * Im folgenden wird dann jeder {@link WriteableContent} in den Distributor über
-	 * die Methode {@linkplain #readGrid(Tabellen_Überschrift, Tabelle, path)}
+	 * die Methode #readGrid(Tabellen_Überschrift, Tabelle, path)
 	 * eingelesen. Die Tabelle wird hirzu über {@link WriteableContent#getGrid()
 	 * getGrid()} und die Tabellen Überschrift durch die Methode
 	 * {@link WriteableContent#getName() getName()} weitergegeben.
@@ -1206,7 +1203,7 @@ public class Distributor implements Runnable {
 		this.readers.add(0, new Reader(Config.newStudent) {
 			@Override
 			public void read(String[] line, int lineNumber) {
-				if (line.length < 2) {
+				if (line == null || line.length < 2 || Util.isBlank(line[0]) || Util.isBlank(line[1])) {
 					LOGGER.warning(
 							"Not enough arguments for student. This line will be skiped: [Line: " + lineNumber + "]");
 					lineNumber++;
@@ -1229,15 +1226,9 @@ public class Distributor implements Runnable {
 										GUILoader.getPrimaryStage(), GUIManager.getInstance().theme);
 							});
 
-							try {
-								Thread.sleep(1000);
-							} catch (InterruptedException e) {
-								LOGGER.log(Level.SEVERE, "Error during sleeping!", e);
-							}
-
 							while (!GUIDoubleStudentManager.finished) {
 								try {
-									Thread.sleep(100);
+									Thread.sleep(10);
 								} catch (InterruptedException e) {
 									LOGGER.log(Level.SEVERE, "Error during sleeping!", e);
 								}
@@ -1256,7 +1247,7 @@ public class Distributor implements Runnable {
 				} else {
 					Course[] chooses = new Course[(line.length - 2) / 2];
 					for (int i = 2, c = 0; i + 1 < line.length; i += 2, c++) {
-						if (line == null || line[i] == null || line[i].equals(null))
+						if (line[i] == null || line[i].equals("") || line[i + 1] == null)
 							continue;
 						chooses[c] = Distributor.getInstance().getOrCreateCourseByName(line[i] + "|" + line[i + 1]);
 					}
@@ -1369,7 +1360,7 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Entfernt einen Schüler aus der {@link Liste aller zu Berechnenden Schüler},
+	 * Entfernt einen Schüler aus der {@link #allStudents Liste aller zu Berechnenden Schüler},
 	 * oder aus der {@link #ignoredStudents Liste aller nicht zu berechnenden
 	 * Schüler}.
 	 * 

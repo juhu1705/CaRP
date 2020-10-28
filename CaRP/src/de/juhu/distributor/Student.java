@@ -25,7 +25,7 @@ public class Student implements Comparable<Student>, Serializable {
 	 * nach ihrer Priorität. An Position 0 steht der Kurs mit der geringsten
 	 * Priorität.
 	 */
-	private ArrayList<Course> courses = new ArrayList<>();
+	private ArrayList<Course> courses = new ArrayList<Course>();
 
 	/**
 	 * Der Kurs, in dem sich der Schüler momentan befindet. Ist {@code null}, wenn

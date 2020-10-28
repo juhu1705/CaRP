@@ -60,8 +60,6 @@ public class Save implements Comparable<Save>, Serializable {
 	 * @param ignoredStudents Alle nicht mitberechneten Schüler -
 	 *                        {@link Distributor#ignoredStudents}
 	 * @param allCourses      Alle Kurse - {@link Distributor#allCourses}
-	 * @param informations    Weitere Informationen über die Berechnung -
-	 *                        {@link InformationSave#InformationSave(int, int, int[], ArrayList, ArrayList)}
 	 */
 	public Save(List<Student> editedStudents, List<Student> ignoredStudents, List<Course> allCourses) {
 

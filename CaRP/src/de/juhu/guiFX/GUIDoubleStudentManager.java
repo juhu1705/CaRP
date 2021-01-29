@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 /**
  * Behandelt alle Aktionen des Fensters, dass erscheint, wenn ein doppelter
- * Schüler beim Importieren einer Datei auftritt.
+ * SchÃ¼ler beim Importieren einer Datei auftritt.
  * 
  * @author Juhu1705
  * @category GUI

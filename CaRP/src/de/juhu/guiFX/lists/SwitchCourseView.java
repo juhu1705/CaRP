@@ -12,7 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 /**
- * Behandelt die Tabelle zum bearbeiten / hinzufügen von Schülern zu einer
+ * Behandelt die Tabelle zum bearbeiten / hinzufÃ¼gen von SchÃ¼lern zu einer
  * Verteilung.
  * 
  * @author Juhu1705

@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import de.juhu.config.ConfigElement;
 
 /**
- * Diese Klasse enthält alle Konfigurationsvariablen.
+ * Diese Klasse enthÃ¤lt alle Konfigurationsvariablen.
  * 
  * @author Juhu1705
  * @category Config
@@ -34,7 +34,7 @@ public class Config {
 	@ConfigElement(defaultValue = "Kurs", elementClass = String.class, description = "coursemark.description", name = "coursemark.text", location = "config.import")
 	public static String newCourse;
 
-	@ConfigElement(defaultValue = "Schüler", elementClass = String.class, description = "studentmark.description", name = "studentmark.text", location = "config.import")
+	@ConfigElement(defaultValue = "SchÃ¼ler", elementClass = String.class, description = "studentmark.description", name = "studentmark.text", location = "config.import")
 	public static String newStudent;
 
 	@ConfigElement(defaultValue = "#", elementClass = String.class, description = "commentmark.description", name = "commentmark.text", location = "config.import")
@@ -46,7 +46,7 @@ public class Config {
 	@ConfigElement(defaultValue = "Lehrerliste", elementClass = String.class, description = "courseHeader.description", name = "courseHeader.text", location = "config.export")
 	public static String courseHeader;
 
-	@ConfigElement(defaultValue = "Schülerliste", elementClass = String.class, description = "studentHeader.description", name = "studentHeader.text", location = "config.export")
+	@ConfigElement(defaultValue = "SchÃ¼lerliste", elementClass = String.class, description = "studentHeader.description", name = "studentHeader.text", location = "config.export")
 	public static String studentHeader;
 
 	@ConfigElement(defaultValue = "false", elementClass = Boolean.class, description = "hasHeaderOutput.description", name = "hasHeaderOutput.text", location = "config.export")

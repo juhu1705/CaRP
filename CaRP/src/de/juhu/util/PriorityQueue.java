@@ -10,10 +10,10 @@ import de.juhu.distributor.Save;
 
 /**
  * Eine kleine Listenklasse basierend auf der ArrayList, die zum sortierten
- * Speichern der hinzugefügten Objekte dient.
+ * Speichern der hinzugefÃ¼gten Objekte dient.
  * 
  * @author Juhu1705
- * @implNote Funktioniert nur für die {@link Save}-Klasse nach aktuellem stand.
+ * @implNote Funktioniert nur fÃ¼r die {@link Save}-Klasse nach aktuellem stand.
  *           Es gibt keine Garantie, dass sie bei anderen Klassen als Eingabe
  *           funktioniert.
  */

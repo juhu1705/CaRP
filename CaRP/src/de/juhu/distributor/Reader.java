@@ -1,11 +1,11 @@
 package de.juhu.distributor;
 
 /**
- * Ein Leser ist für das Einlesen einer Tabellenzeile verantwortlich. Er wird
- * über die Methode {@link Distributor#addReader(Reader)} im aktuellen Verteiler
+ * Ein Leser ist fÃ¼r das Einlesen einer Tabellenzeile verantwortlich. Er wird
+ * Ã¼ber die Methode {@link Distributor#addReader(Reader)} im aktuellen Verteiler
  * registriert und dann beim Einlesen einer Datei verwendet. Dabei wird die
- * Methode {@link #read(String[], int)} ausgeführt, sobald die Zeile über den
- * {@link #key Schlüssel} des Lesers verfügt.
+ * Methode {@link #read(String[], int)} ausgefÃ¼hrt, sobald die Zeile Ã¼ber den
+ * {@link #key SchlÃ¼ssel} des Lesers verfÃ¼gt.
  * 
  * @version 1.0
  * @category Distribution
@@ -16,25 +16,25 @@ package de.juhu.distributor;
 public abstract class Reader {
 
 	/**
-	 * Der Schlüssel dieses Lesers, auf den dieser Leser beim Einlesen anspringen
+	 * Der SchlÃ¼ssel dieses Lesers, auf den dieser Leser beim Einlesen anspringen
 	 * soll.
 	 */
 	String key;
 
 	/**
-	 * Erzeugt einen neuen Leser mit dem gewünschten Schlüssel
+	 * Erzeugt einen neuen Leser mit dem gewÃ¼nschten SchlÃ¼ssel
 	 * 
-	 * @param key Der Schlüssel des neuen Lesers.
+	 * @param key Der SchlÃ¼ssel des neuen Lesers.
 	 */
 	public Reader(String key) {
 		this.key = key;
 	}
 
 	/**
-	 * Überprüft, ob der gegebene Schlüssel dem Schlüssel dieses Lesers entspricht.
+	 * ÃœberprÃ¼ft, ob der gegebene SchlÃ¼ssel dem SchlÃ¼ssel dieses Lesers entspricht.
 	 * 
-	 * @param key Der Schlüssel, der vergichen werden soll.
-	 * @return Ob der Schlüssel diesem Schlüssel entspricht. Zum Vergleichen wird
+	 * @param key Der SchlÃ¼ssel, der vergichen werden soll.
+	 * @return Ob der SchlÃ¼ssel diesem SchlÃ¼ssel entspricht. Zum Vergleichen wird
 	 *         die Methode {@link String#equalsIgnoreCase(String)} verwendet.
 	 */
 	public boolean isKey(String key) {
@@ -42,12 +42,12 @@ public abstract class Reader {
 	}
 
 	/**
-	 * Ließt die entsprechende Zeile ein.
+	 * LieÃŸt die entsprechende Zeile ein.
 	 * 
 	 * @param line       Die Zeile die eingelesen werden soll.
 	 * @param lineNumber Die Zeilennummer der Zeile im Programm.
 	 * @implNote Die Zeile die eingelesen werden soll besitzt nun nicht mehr ihren
-	 *           Schlüssel, es beginnt direkt mit der ersten Argumentzelle dieser
+	 *           SchlÃ¼ssel, es beginnt direkt mit der ersten Argumentzelle dieser
 	 *           Zeile.
 	 */
 	public abstract void read(String[] line, int lineNumber);

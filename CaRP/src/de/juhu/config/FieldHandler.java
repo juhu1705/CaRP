@@ -23,7 +23,7 @@ import de.juhu.guiFX.Theme;
 public class FieldHandler implements ContentHandler {
 
 	/**
-	 * Zwischenspeicherung für die einzulesenden Daten.
+	 * Zwischenspeicherung fÃ¼r die einzulesenden Daten.
 	 */
 	private String value, defaultValue, type, name, currentValue;
 
@@ -41,7 +41,7 @@ public class FieldHandler implements ContentHandler {
 	}
 
 	/**
-	 * Lädt die Daten in das Programm.
+	 * LÃ¤dt die Daten in das Programm.
 	 */
 	@Override
 	public void endElement(String arg0, String arg1, String arg2) throws SAXException {

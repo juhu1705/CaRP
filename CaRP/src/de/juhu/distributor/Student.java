@@ -7,65 +7,65 @@ import java.util.List;
 import de.juhu.util.Config;
 
 /**
- * Diese Klasse bildet einen Schüler ab und beinhaltet alle diesbezüglich
+ * Diese Klasse bildet einen SchÃ¼ler ab und beinhaltet alle diesbezÃ¼glich
  * wichtigen Informationen.
  * 
  * @version 1.1
  * @category Distribution
  * @author Juhu1705
  * @implNote Ist {@link Comparable vergleichbar} mit anderen {@link Student
- *           Schülern}.
+ *           SchÃ¼lern}.
  */
 public class Student implements Comparable<Student>, Serializable {
 
 	// INFO: Attribute
 
 	/**
-	 * Speichert alle vom {@link Student Schüler} gewählten {@link Course Kurse}
-	 * nach ihrer Priorität. An Position 0 steht der Kurs mit der geringsten
-	 * Priorität.
+	 * Speichert alle vom {@link Student SchÃ¼ler} gewÃ¤hlten {@link Course Kurse}
+	 * nach ihrer PrioritÃ¤t. An Position 0 steht der Kurs mit der geringsten
+	 * PrioritÃ¤t.
 	 */
 	private ArrayList<Course> courses = new ArrayList<>();
 
 	/**
-	 * Der Kurs, in dem sich der Schüler momentan befindet. Ist {@code null}, wenn
-	 * der Schüler in keinem Kurs ist.
+	 * Der Kurs, in dem sich der SchÃ¼ler momentan befindet. Ist {@code null}, wenn
+	 * der SchÃ¼ler in keinem Kurs ist.
 	 */
 	private Course activeCourse;
 
 	/**
 	 * <p>
-	 * Die Priorität die dem {@link #activeCourse aktiven Kurs} nach der
+	 * Die PrioritÃ¤t die dem {@link #activeCourse aktiven Kurs} nach der
 	 * {@link #courses Liste der Kurse} zugeordnet ist.
 	 * </p>
-	 * Kann über {@link #refreshPriority()} aktualisiert werden.
+	 * Kann Ã¼ber {@link #refreshPriority()} aktualisiert werden.
 	 */
 	protected int priority;
 
 	/**
-	 * Die ID des Schülers. Sie ist für jeden unterschiedlichen Schüler einzigartig.
+	 * Die ID des SchÃ¼lers. Sie ist fÃ¼r jeden unterschiedlichen SchÃ¼ler einzigartig.
 	 */
 	private int id;
 
 	/**
-	 * Der Nachname des Schülers.
+	 * Der Nachname des SchÃ¼lers.
 	 */
 	private String name;
 
 	/**
-	 * Der Vorname des Schülers.
+	 * Der Vorname des SchÃ¼lers.
 	 */
 	private String prename;
 
 	/**
-	 * Ein Indikator, der anzeigt, ob dieser Schüler einem Kurs zugeordnet ist.
+	 * Ein Indikator, der anzeigt, ob dieser SchÃ¼ler einem Kurs zugeordnet ist.
 	 */
 	private boolean mark;
 
 	// INFO: Konstruktoren
 
 	/**
-	 * Erzeugt einen Schüler mit einer neuen ID, der noch keinen Namen besitzt.
+	 * Erzeugt einen SchÃ¼ler mit einer neuen ID, der noch keinen Namen besitzt.
 	 */
 	protected Student() {
 		this.generateID();
@@ -73,15 +73,15 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Erzeugt einen neuen Schüler, mit einer neuen ID. Der Name und der Vorname
+	 * Erzeugt einen neuen SchÃ¼ler, mit einer neuen ID. Der Name und der Vorname
 	 * werden gespeichert und die mitgegebenen Kurse werden in gleicher Reihenfolge
-	 * in die {@link #courses Liste der gewünschten Kurse} gespeichert. Der erste
+	 * in die {@link #courses Liste der gewÃ¼nschten Kurse} gespeichert. Der erste
 	 * Kurs der Liste wird dabei zum {@link #activeCourse aktiven Kurs} des
-	 * Schülers.
+	 * SchÃ¼lers.
 	 * 
-	 * @param name    Der Nachname des Schülers
-	 * @param prename Der Vorname des Schülers
-	 * @param courses Die Kurswünsche des Schülers
+	 * @param name    Der Nachname des SchÃ¼lers
+	 * @param prename Der Vorname des SchÃ¼lers
+	 * @param courses Die KurswÃ¼nsche des SchÃ¼lers
 	 */
 	public Student(String name, String prename, Course... courses) {
 		this();
@@ -98,14 +98,14 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Erstellt einen Schüler mit dem mitgegebenen Vor- und Nachnamen, sowie der
-	 * mitgegebenen ID. Nur zum Kopieren verwendet. Kurse müssen manuell eingefügt,
+	 * Erstellt einen SchÃ¼ler mit dem mitgegebenen Vor- und Nachnamen, sowie der
+	 * mitgegebenen ID. Nur zum Kopieren verwendet. Kurse mÃ¼ssen manuell eingefÃ¼gt,
 	 * oder beim kopieren synchronisiert werden. Hierzu eignet sich die Methode
 	 * {@link Distributor#copyData(ArrayList, ArrayList, Course)}
 	 * 
-	 * @param name    Der Nachname des Schülers
-	 * @param prename Der Vorname des Schülers
-	 * @param id      Die ID des Schülers
+	 * @param name    Der Nachname des SchÃ¼lers
+	 * @param prename Der Vorname des SchÃ¼lers
+	 * @param id      Die ID des SchÃ¼lers
 	 */
 	private Student(String name, String prename, int id) {
 		this.setName(name);
@@ -118,10 +118,10 @@ public class Student implements Comparable<Student>, Serializable {
 	// INFO: Methoden
 
 	/**
-	 * Generiert eine ID für den Schüler. Wird immer beim erstellen eines Schülers
-	 * aufgerufen. Greift auf die Methode {@link Distributor#getStudentID()} zurück
+	 * Generiert eine ID fÃ¼r den SchÃ¼ler. Wird immer beim erstellen eines SchÃ¼lers
+	 * aufgerufen. Greift auf die Methode {@link Distributor#getStudentID()} zurÃ¼ck
 	 * um eine ID zu generieren und setzt die ID auf den von dieser Methode
-	 * zurückgegebenen Wert.
+	 * zurÃ¼ckgegebenen Wert.
 	 */
 	private void generateID() {
 		this.id = Distributor.getStudentID();
@@ -129,38 +129,38 @@ public class Student implements Comparable<Student>, Serializable {
 
 	/**
 	 * <p>
-	 * Setzt den {@link #activeCourse aktive Kurs} auf den nächsten noch freien
-	 * {@link Course Kurs} aus der {@link #courses Liste der gewünschten Kurse} des
-	 * Schülers.
+	 * Setzt den {@link #activeCourse aktive Kurs} auf den nÃ¤chsten noch freien
+	 * {@link Course Kurs} aus der {@link #courses Liste der gewÃ¼nschten Kurse} des
+	 * SchÃ¼lers.
 	 * </p>
 	 * <ul>
-	 * <li>Dazu wird zunächst geguckt, ob der Schüler {@link #courses gewünschten
+	 * <li>Dazu wird zunÃ¤chst geguckt, ob der SchÃ¼ler {@link #courses gewÃ¼nschten
 	 * Kurse} besitzt. Sollte dies nicht der Fall sein, so wird {@code false}
-	 * zurückgegeben, der Prioritätswert durch Aufruf der Methode
+	 * zurÃ¼ckgegeben, der PrioritÃ¤tswert durch Aufruf der Methode
 	 * {@link #refreshPriority()} aktualisiert und die Methode beendet.</li>
 	 * 
 	 * <li>Danach wird geschaut, ob der {@link #activeCourse aktive Kurs} momentan
 	 * den Wert {@code null} beinhaltet. Sollte dies der Fall sein, so wird der
 	 * aktive Kurs, auf den ersten Kurs aus der Liste der {@link #courses
-	 * gewünschten Kurse} gesetzt und der Schüler dem Kurs hinzugefügt.</li>
+	 * gewÃ¼nschten Kurse} gesetzt und der SchÃ¼ler dem Kurs hinzugefÃ¼gt.</li>
 	 * 
 	 * <li>Im folgenden wird in einer {@code while}-Schleife geschaut, ob der aktive
-	 * Kurs bereits mit seiner maximalen Schüleranzahl besetzt ist. Wenn ja, so wird
-	 * der nächste Kurs aus der {@link #courses Liste der gewünschten Kurse}
+	 * Kurs bereits mit seiner maximalen SchÃ¼leranzahl besetzt ist. Wenn ja, so wird
+	 * der nÃ¤chste Kurs aus der {@link #courses Liste der gewÃ¼nschten Kurse}
 	 * ermittelt und bei diesem das gleiche ermittelt. Sollten alle Kurse die der
-	 * Schüler sich wünscht an dieser Stelle voll sein, so wird die Methode mit dem
-	 * Rückgabewert {@code false} abgebrochen, sowie der {@link #activeCourse aktive
+	 * SchÃ¼ler sich wÃ¼nscht an dieser Stelle voll sein, so wird die Methode mit dem
+	 * RÃ¼ckgabewert {@code false} abgebrochen, sowie der {@link #activeCourse aktive
 	 * Kurs} auf {@code null} gesetzt.</li>
 	 * 
 	 * <li>Sollte ein Kurs gefunden werden, der noch frei ist, so wird dieser
-	 * Schüler der {@link Course#students Liste der Schüler des Kurses} hinzugefügt.
-	 * Anschließend wird der {@link #priority Prioritätswert} des Schülers durch die
+	 * SchÃ¼ler der {@link Course#students Liste der SchÃ¼ler des Kurses} hinzugefÃ¼gt.
+	 * AnschlieÃŸend wird der {@link #priority PrioritÃ¤tswert} des SchÃ¼lers durch die
 	 * Methode {@link #refreshPriority()} aktualisiert. Dann wird die Methode mit
-	 * der Rückgabe {@code true} beendet.</li>
+	 * der RÃ¼ckgabe {@code true} beendet.</li>
 	 * </ul>
 	 * 
 	 * @return Ob ein neuer Kurs zugewiesen werden konnte. Wenn {@code false}
-	 *         zurückgegeben wird, so ist der {@link #activeCourse aktive Kurs} dann
+	 *         zurÃ¼ckgegeben wird, so ist der {@link #activeCourse aktive Kurs} dann
 	 *         {@code null}.
 	 */
 	public boolean next() {
@@ -185,16 +185,16 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Setzt den {@link #activeCourse Aktiven Kurs} auf den nächsten Kurs aus der
-	 * {@link #courses Liste der gewünschten Kurse} des Schülers.
+	 * Setzt den {@link #activeCourse Aktiven Kurs} auf den nÃ¤chsten Kurs aus der
+	 * {@link #courses Liste der gewÃ¼nschten Kurse} des SchÃ¼lers.
 	 * 
 	 * @see #next() Hier ist die Funktion genau beschrieben. Anstatt der
 	 *      {@code while}-Schleife wird hier lediglich ein {@code if}-Case genutzt,
-	 *      der mit einer {@code else} Bedingung mit der vorgeschalteten Überprüfung
+	 *      der mit einer {@code else} Bedingung mit der vorgeschalteten ÃœberprÃ¼fung
 	 *      verbunden ist. Ansonsten sind die Methoden identisch aufgebaut.
-	 * @implNote Die Methode fügt einen Schüler auch zu einem Bereits vollen Kurs
-	 *           hinzu und lässt ihn dort verweilen.
-	 * @return Ob der Schüler einem Kurs zugeordnet werden konnte.
+	 * @implNote Die Methode fÃ¼gt einen SchÃ¼ler auch zu einem Bereits vollen Kurs
+	 *           hinzu und lÃ¤sst ihn dort verweilen.
+	 * @return Ob der SchÃ¼ler einem Kurs zugeordnet werden konnte.
 	 */
 	public boolean onlyNext() {
 		if (this.courses.isEmpty())
@@ -218,48 +218,48 @@ public class Student implements Comparable<Student>, Serializable {
 	// INFO: Getter und Setter
 
 	/**
-	 * Setzt den {@link #name Nachnamen} des Schülers auf den mitgegebenen String.
+	 * Setzt den {@link #name Nachnamen} des SchÃ¼lers auf den mitgegebenen String.
 	 * 
-	 * @param name Den Nachnamen, den der Schüler annehmen soll.
+	 * @param name Den Nachnamen, den der SchÃ¼ler annehmen soll.
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Gibt den {@link #name Nachnamen} des Schülers zurück.
+	 * Gibt den {@link #name Nachnamen} des SchÃ¼lers zurÃ¼ck.
 	 * 
-	 * @return Der Nachname des Schülers.
+	 * @return Der Nachname des SchÃ¼lers.
 	 */
 	public String getName() {
 		return this.name;
 	}
 
 	/**
-	 * Setzt den {@link #prename Vornamen} des Schülers auf den mitgegebenen String.
+	 * Setzt den {@link #prename Vornamen} des SchÃ¼lers auf den mitgegebenen String.
 	 * 
-	 * @param prename Den Vornamen, den der Schüler annehmen soll.
+	 * @param prename Den Vornamen, den der SchÃ¼ler annehmen soll.
 	 */
 	public void setPrename(String prename) {
 		this.prename = prename;
 	}
 
 	/**
-	 * Gibt den {@link #prename Vornamen} des Schülers zurück.
+	 * Gibt den {@link #prename Vornamen} des SchÃ¼lers zurÃ¼ck.
 	 * 
-	 * @return Der Vorname des Schülers.
+	 * @return Der Vorname des SchÃ¼lers.
 	 */
 	public String getPrename() {
 		return this.prename;
 	}
 
 	/**
-	 * Fügt einen Kurs ans Ende der {@link #courses Liste der gewünschten Kurse} des
-	 * Schülers hinzu.
+	 * FÃ¼gt einen Kurs ans Ende der {@link #courses Liste der gewÃ¼nschten Kurse} des
+	 * SchÃ¼lers hinzu.
 	 * 
 	 * Wenn der Kurs den Wert {@code null} darstellt, so wird dieser Ignoriert.
 	 * 
-	 * @param course Der Kurs, der hinzugefügt werden soll.
+	 * @param course Der Kurs, der hinzugefÃ¼gt werden soll.
 	 */
 	public void addCourse(Course course) {
 		if (course == null)
@@ -272,12 +272,12 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Fügt einen Kurs an der gewünschten Stelle zu den {@link #courses
+	 * FÃ¼gt einen Kurs an der gewÃ¼nschten Stelle zu den {@link #courses
 	 * Wunschkursen} hinzu. Dabei werden die nachfolgenden Kurse und der Kurs an
 	 * diesem Index um einen Listenplatz nach hinten verschoben.
 	 * 
-	 * @param index  Der Listenplatz, an den der Kurs eingefügt werden soll.
-	 * @param course Der Kurs, der eingefügt werden soll.
+	 * @param index  Der Listenplatz, an den der Kurs eingefÃ¼gt werden soll.
+	 * @param course Der Kurs, der eingefÃ¼gt werden soll.
 	 * @throws IndexOutOfBoundsException Wenn der Index nicht innerhalb der Liste
 	 *                                   liegt.
 	 */
@@ -292,17 +292,17 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Gibt die Liste aller {@link #courses gewünschten Kurse} des Schülers zurück.
+	 * Gibt die Liste aller {@link #courses gewÃ¼nschten Kurse} des SchÃ¼lers zurÃ¼ck.
 	 * 
-	 * @return Ein Array der gewünschten Kurse des Schülers.
+	 * @return Ein Array der gewÃ¼nschten Kurse des SchÃ¼lers.
 	 */
 	public Course[] getCourses() {
 		return this.courses.toArray(new Course[this.courses.size()]);
 	}
 
 	/**
-	 * Setzt den {@link #activeCourse aktiven Kurs} auf den nächsten Kurs aus der
-	 * {@link #courses Liste der gewünschten Kurse}.
+	 * Setzt den {@link #activeCourse aktiven Kurs} auf den nÃ¤chsten Kurs aus der
+	 * {@link #courses Liste der gewÃ¼nschten Kurse}.
 	 * 
 	 * @return Der neu gesetzte {@link #activeCourse Kurs}.
 	 */
@@ -311,7 +311,7 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Setzt den {@link #activeCourse aktiven Kurs} auf den gewünschten Kurs. Dabei
+	 * Setzt den {@link #activeCourse aktiven Kurs} auf den gewÃ¼nschten Kurs. Dabei
 	 * wird der letzte aktive Kurs in einen entfernt.
 	 * 
 	 * @param course Der Kurs der zum aktiven Kurs werden soll.
@@ -331,8 +331,8 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Gibt denjenigen Kurs aus der {@link #courses Liste der gewünschten Kurse des
-	 * Schülers} zurück, welcher dem {@link #activeCourse aktiven Kurs} folgt.
+	 * Gibt denjenigen Kurs aus der {@link #courses Liste der gewÃ¼nschten Kurse des
+	 * SchÃ¼lers} zurÃ¼ck, welcher dem {@link #activeCourse aktiven Kurs} folgt.
 	 * 
 	 * @return Der dem aktiven Kurs folgende Kurs.
 	 * @see #getNextCourse(Course, int)
@@ -344,9 +344,9 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Gibt den Kurs zurück der iterator viele Positionen hinter dem
+	 * Gibt den Kurs zurÃ¼ck der iterator viele Positionen hinter dem
 	 * {@link #activeCourse aktiven Kurs} in der {@link #courses Liste der
-	 * gewünschten Kurse} steht.
+	 * gewÃ¼nschten Kurse} steht.
 	 * 
 	 * @param iterator Anzahl der Positionen die zwischen dem aktiven Kurs und dem
 	 *                 zu ermittelnden Kurs liegen sollen.
@@ -361,15 +361,15 @@ public class Student implements Comparable<Student>, Serializable {
 
 	/**
 	 * Ermittelt den Kurs, der iterator viele Positionen hinter dem mitgegebenen
-	 * Kurs in der {@link #courses Liste der gewünschten Kurse} liegt.
+	 * Kurs in der {@link #courses Liste der gewÃ¼nschten Kurse} liegt.
 	 * 
-	 * @param course   Der Kurs, von dem gezählt wird.
+	 * @param course   Der Kurs, von dem gezÃ¤hlt wird.
 	 * @param iterator Die Anzahl an Positionen, die vom mitgegebenen Kurs
 	 *                 weitergegangen werden soll.
 	 * @return Der Kurs der entsprechend viele Positionen hinter dem mitgegebenen
-	 *         Kurs liegt. Gibt {@code null} zurück wenn der Kurs kein Element der
-	 *         {@link #courses Liste der gewünschten Kurse} ist. Gibt den ersten
-	 *         Kurs der Liste zurück wenn der mitgegebene Kurs {@code null} ist.
+	 *         Kurs liegt. Gibt {@code null} zurÃ¼ck wenn der Kurs kein Element der
+	 *         {@link #courses Liste der gewÃ¼nschten Kurse} ist. Gibt den ersten
+	 *         Kurs der Liste zurÃ¼ck wenn der mitgegebene Kurs {@code null} ist.
 	 */
 	public Course getNextCourse(Course course, int iterator) {
 		if (course == null)
@@ -386,11 +386,11 @@ public class Student implements Comparable<Student>, Serializable {
 
 	/**
 	 * Ermittelt den Index an dem der Kurs in der {@link #courses Liste der
-	 * gewünschten Kurse} steht multipliziert mit 2.
+	 * gewÃ¼nschten Kurse} steht multipliziert mit 2.
 	 * 
 	 * @param course Der Kurs dessen Wert ermittelt werden soll
 	 * @return Der Index multipliziert mit 2, oder {@link Integer#MAX_VALUE}, wenn
-	 *         der Kurs nicht in der {@link #courses Liste der gewünschten Kurse}
+	 *         der Kurs nicht in der {@link #courses Liste der gewÃ¼nschten Kurse}
 	 *         existiert.
 	 */
 	public int getCourseAmount(Course course) {
@@ -404,16 +404,16 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * @return Den {@link #activeCourse aktiven Kurs} des Schülers
+	 * @return Den {@link #activeCourse aktiven Kurs} des SchÃ¼lers
 	 */
 	public Course getActiveCourse() {
 		return activeCourse;
 	}
 
 	/**
-	 * Setzt den aktiven Kurs des Schülers auf den gewünschten Kurs, wenn dieser in
+	 * Setzt den aktiven Kurs des SchÃ¼lers auf den gewÃ¼nschten Kurs, wenn dieser in
 	 * der {@link #courses Liste der Wunschkurse} vorhanden ist. Danach sorgt die
-	 * Methode dafür, das die {@link #priority Priorität} des Kurses aktualisiert
+	 * Methode dafÃ¼r, das die {@link #priority PrioritÃ¤t} des Kurses aktualisiert
 	 * wird.
 	 * 
 	 * @param activeCourse Der Kurs, welcher zum aktiven Kurs gemacht werden soll.
@@ -446,7 +446,7 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Setzt den {@link #priority Prioritätswert} auf den, durch die Methode
+	 * Setzt den {@link #priority PrioritÃ¤tswert} auf den, durch die Methode
 	 * {@link #calculatePriority()} ermittelten Wert.
 	 */
 	public void refreshPriority() {
@@ -454,9 +454,9 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Berechnet die Priorität die der {@link #activeCourse aktive Kurs} besitzt.
+	 * Berechnet die PrioritÃ¤t die der {@link #activeCourse aktive Kurs} besitzt.
 	 * 
-	 * @return Die Priorität die der aktive Kurs besitzt, oder
+	 * @return Die PrioritÃ¤t die der aktive Kurs besitzt, oder
 	 *         {@link Integer#MAX_VALUE} wenn der aktive Kurs {@code null} ist, oder
 	 *         nicht in der {@link #courses Liste der Wunschkurse} existiert.
 	 */
@@ -470,20 +470,20 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * @return Gibt die zuletzt ermittelte {@link #priority Priorität} zurück.
+	 * @return Gibt die zuletzt ermittelte {@link #priority PrioritÃ¤t} zurÃ¼ck.
 	 */
 	public int getPriority() {
 		return this.priority;
 	}
 
 	/**
-	 * Ermittelt die Rate, die dieser Schüler besitzt: {@link #priority Priorität}
-	 * hoch {@link Config#powValue}. Sollte die Priorität {@link Integer#MAX_VALUE}
+	 * Ermittelt die Rate, die dieser SchÃ¼ler besitzt: {@link #priority PrioritÃ¤t}
+	 * hoch {@link Config#powValue}. Sollte die PrioritÃ¤t {@link Integer#MAX_VALUE}
 	 * entsprechen, wird die durch
 	 * {@link Distributor#getHighestPriorityWhithoutIntegerMax()} ermittelte
-	 * Priorität plus eins als Priorität angenommen.
+	 * PrioritÃ¤t plus eins als PrioritÃ¤t angenommen.
 	 * 
-	 * @return Die Rate des Schülers
+	 * @return Die Rate des SchÃ¼lers
 	 */
 	public int getRate() {
 		return (int) (this.priority == Integer.MAX_VALUE
@@ -492,12 +492,12 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Ermittelt die Rate, die dieser Schüler besitzt: {@link #priority Priorität}
-	 * hoch {@link Config#powValue}. Sollte die Priorität {@link Integer#MAX_VALUE}
+	 * Ermittelt die Rate, die dieser SchÃ¼ler besitzt: {@link #priority PrioritÃ¤t}
+	 * hoch {@link Config#powValue}. Sollte die PrioritÃ¤t {@link Integer#MAX_VALUE}
 	 * entsprechen, wird die durch highestPriority plus eins ersetzt.
 	 * 
-	 * @param highestPriority Die höchste Priorität der Berechnung
-	 * @return Die Rate des Schülers
+	 * @param highestPriority Die hÃ¶chste PrioritÃ¤t der Berechnung
+	 * @return Die Rate des SchÃ¼lers
 	 */
 	public int getRate(int highestPriority) {
 		return (int) (this.priority == Integer.MAX_VALUE ? Math.pow(highestPriority + 1, Config.powValue + 3)
@@ -505,21 +505,21 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Setzt die {@link #mark Markierung} des Schülers auf {@code true}.
+	 * Setzt die {@link #mark Markierung} des SchÃ¼lers auf {@code true}.
 	 */
 	public void mark() {
 		this.mark = true;
 	}
 
 	/**
-	 * Setzt die {@link #mark Markierung} des Schülers auf {@code false}.
+	 * Setzt die {@link #mark Markierung} des SchÃ¼lers auf {@code false}.
 	 */
 	public void unmark() {
 		this.mark = false;
 	}
 
 	/**
-	 * @return Die {@link #mark Markierung} des Schülers.
+	 * @return Die {@link #mark Markierung} des SchÃ¼lers.
 	 */
 	public boolean isMarked() {
 		return this.mark;
@@ -536,9 +536,9 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Schaut ob das zu vergleichende Objekt ein Schüler ist, wenn nicht wird der
-	 * Rückgabewert der {@link Object#equals(Object) super-Methode} zurückgegeben.
-	 * Zum vergleichen der beiden Schüler wird die {@link #id ID} der Schüler
+	 * Schaut ob das zu vergleichende Objekt ein SchÃ¼ler ist, wenn nicht wird der
+	 * RÃ¼ckgabewert der {@link Object#equals(Object) super-Methode} zurÃ¼ckgegeben.
+	 * Zum vergleichen der beiden SchÃ¼ler wird die {@link #id ID} der SchÃ¼ler
 	 * miteinander verglichen.
 	 */
 	@Override
@@ -554,7 +554,7 @@ public class Student implements Comparable<Student>, Serializable {
 
 	/**
 	 * Gibt als representativen String den {@link #prename Vornamen} verbunden mit
-	 * dem {@link #name Nachnamen} zurück.
+	 * dem {@link #name Nachnamen} zurÃ¼ck.
 	 */
 	@Override
 	public String toString() {
@@ -577,27 +577,27 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * Überprüft, ob die ID mit der ID dieses Schülers übereinstimmt.
+	 * ÃœberprÃ¼ft, ob die ID mit der ID dieses SchÃ¼lers Ã¼bereinstimmt.
 	 * 
-	 * @param studentID Die ID, deren Übereinstimmung geprüft wird.
-	 * @return Ob die ID mit der {@link #id ID} dieses Schülers übereinstimmt.
+	 * @param studentID Die ID, deren Ãœbereinstimmung geprÃ¼ft wird.
+	 * @return Ob die ID mit der {@link #id ID} dieses SchÃ¼lers Ã¼bereinstimmt.
 	 */
 	public boolean idequals(int studentID) {
 		return this.id == studentID;
 	}
 
 	/**
-	 * @return Die ID dieses Schülers
+	 * @return Die ID dieses SchÃ¼lers
 	 */
 	public int getID() {
 		return this.id;
 	}
 
 	/**
-	 * Fügt die mitgegebene Kurse in gleicher Reihenfolge ans Ende der
-	 * {@link #courses Liste der Wunschkurse} des Schülers an.
+	 * FÃ¼gt die mitgegebene Kurse in gleicher Reihenfolge ans Ende der
+	 * {@link #courses Liste der Wunschkurse} des SchÃ¼lers an.
 	 * 
-	 * @param c Die Kurse sie eingefügt werden sollen.
+	 * @param c Die Kurse sie eingefÃ¼gt werden sollen.
 	 */
 	public void setCourses(Course... c) {
 		this.courses.clear();
@@ -607,20 +607,20 @@ public class Student implements Comparable<Student>, Serializable {
 	}
 
 	/**
-	 * @return Die {@link #courses Wunschkurse} dieses Schülers.
+	 * @return Die {@link #courses Wunschkurse} dieses SchÃ¼lers.
 	 */
 	public List<Course> getCoursesAsList() {
 		return this.courses;
 	}
 
 	/**
-	 * Aktualisiert die Marke des Schülers in Bezug auf dessen {@link #priority
-	 * Priorität}. Ist die {@link #priority Priorität} des Schülers kleiner 0, oder
-	 * größer als die highestPriority wird der Schüler {@link #mark() markiert}, ist
-	 * der Schüler {@link #mark markiert}, obwohl die vornestehenden Bedingungen
-	 * nicht erfüllt sind, wird die {@link #unmark() markierung zurückgezogen}.
+	 * Aktualisiert die Marke des SchÃ¼lers in Bezug auf dessen {@link #priority
+	 * PrioritÃ¤t}. Ist die {@link #priority PrioritÃ¤t} des SchÃ¼lers kleiner 0, oder
+	 * grÃ¶ÃŸer als die highestPriority wird der SchÃ¼ler {@link #mark() markiert}, ist
+	 * der SchÃ¼ler {@link #mark markiert}, obwohl die vornestehenden Bedingungen
+	 * nicht erfÃ¼llt sind, wird die {@link #unmark() markierung zurÃ¼ckgezogen}.
 	 * 
-	 * @param highestPriority Die höchste Priorität, die in dem zu vergleichenden
+	 * @param highestPriority Die hÃ¶chste PrioritÃ¤t, die in dem zu vergleichenden
 	 *                        Prozess vorliegt.
 	 */
 	public void checkMarkt(int highestPriority) {

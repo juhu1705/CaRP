@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
- * Beinhaltet nützliche Methoden
+ * Beinhaltet nÃ¼tzliche Methoden
  * 
  * @author Fabius
  * @category Util

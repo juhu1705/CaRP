@@ -9,7 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.TableView;
 
 /**
- * Behandelt die Tabelle zur Ansicht der importierten Schülerliste.
+ * Behandelt die Tabelle zur Ansicht der importierten SchÃ¼lerliste.
  * 
  * @author Juhu1705
  * @category GUI

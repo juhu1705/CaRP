@@ -37,7 +37,7 @@ public class Save implements Comparable<Save>, Serializable {
 	private InformationSave informations;
 
 	/**
-	 * Die Liste aller Schüler einer Berechnung inklusive der ignorierten Schüler.
+	 * Die Liste aller SchÃ¼ler einer Berechnung inklusive der ignorierten SchÃ¼ler.
 	 */
 	private List<Student> allStudents;
 
@@ -49,18 +49,18 @@ public class Save implements Comparable<Save>, Serializable {
 	/**
 	 * Erzeugt einen neuen Speicher, indem die "editedStudents" mit den
 	 * "ignoredStudents" gekreuzt und dann in die {@link #allStudents Liste aller
-	 * Schüler} dieses Speichers gespeichert werden. Dabei wird die mitgegebenen
-	 * Listen über einen MergeSort allgorithmus sortiert. Dem {@link #informations
+	 * SchÃ¼ler} dieses Speichers gespeichert werden. Dabei wird die mitgegebenen
+	 * Listen Ã¼ber einen MergeSort allgorithmus sortiert. Dem {@link #informations
 	 * Informations Speicher} wird dieser Speicher als {@link InformationSave#parent
 	 * Elternklasse} gesetzt und dieser wird noch einmal
 	 * {@link InformationSave#update() aktualisiert}.
 	 * 
-	 * @param editedStudents  Alle berechneten Schüler -
+	 * @param editedStudents  Alle berechneten SchÃ¼ler -
 	 *                        {@link Distributor#allStudents}
-	 * @param ignoredStudents Alle nicht mitberechneten Schüler -
+	 * @param ignoredStudents Alle nicht mitberechneten SchÃ¼ler -
 	 *                        {@link Distributor#ignoredStudents}
 	 * @param allCourses      Alle Kurse - {@link Distributor#allCourses}
-	 * @param informations    Weitere Informationen über die Berechnung -
+	 * @param informations    Weitere Informationen Ã¼ber die Berechnung -
 	 *                        {@link InformationSave#InformationSave(int, int, int[], ArrayList, ArrayList)}
 	 */
 	public Save(List<Student> editedStudents, List<Student> ignoredStudents, List<Course> allCourses) {
@@ -76,7 +76,7 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * @return Die höchste Priorität der in diesem Speicher gespeicherten
+	 * @return Die hÃ¶chste PrioritÃ¤t der in diesem Speicher gespeicherten
 	 *         Berechnung.
 	 */
 	public int getHighestPriority() {
@@ -90,7 +90,7 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * @return Die Anzahl der Schüler mit den einzelnen Prioritäten der in diesem
+	 * @return Die Anzahl der SchÃ¼ler mit den einzelnen PrioritÃ¤ten der in diesem
 	 *         Speicher gespeicherten Berechnung.
 	 */
 	public int[] getStudentPriorities() {
@@ -110,12 +110,12 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Bewertet die hier gespeicherte Berechnung indem die Summe aller Schüler
-	 * {@link Student#getRate(int) Raten} zurückgegeben wird. Sollte diese aus dem
+	 * Bewertet die hier gespeicherte Berechnung indem die Summe aller SchÃ¼ler
+	 * {@link Student#getRate(int) Raten} zurÃ¼ckgegeben wird. Sollte diese aus dem
 	 * zugelassenden Bereich herausfallen, wird {@link Integer#MAX_VALUE}
-	 * zurückgegeben.
+	 * zurÃ¼ckgegeben.
 	 * 
-	 * @param highestPriority Die höchste Priorität dieser Berechnung - Über
+	 * @param highestPriority Die hÃ¶chste PrioritÃ¤t dieser Berechnung - Ãœber
 	 *                        {@link #getHighestPriorityWhithoutIntegerMax()} zu
 	 *                        erhalten.
 	 * @return Die Rate dieser Berechnung.
@@ -136,7 +136,7 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Gibt den Kurs aus der {@link #allCourses Liste aller Kurse} zurück, der
+	 * Gibt den Kurs aus der {@link #allCourses Liste aller Kurse} zurÃ¼ck, der
 	 * gleich benannt ist. Dazu wird {@link Course#toString()} mit dem mitgegebenen
 	 * Namen verglichen.
 	 * 
@@ -153,8 +153,8 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * @return Die in diesem Speicher vorhandende höchste Schülerpriorität zurück,
-	 *         wobei nicht zugewiesenden Schüler nicht beachtet werden.
+	 * @return Die in diesem Speicher vorhandende hÃ¶chste SchÃ¼lerprioritÃ¤t zurÃ¼ck,
+	 *         wobei nicht zugewiesenden SchÃ¼ler nicht beachtet werden.
 	 */
 	public int getHighestPriorityWhithoutIntegerMax() {
 		int highest = 0;
@@ -165,11 +165,11 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Sucht alle Schüler mit der gegebenden {@link Student#priority Priorität}
-	 * heraus und gibt diese als Liste zurück.
+	 * Sucht alle SchÃ¼ler mit der gegebenden {@link Student#priority PrioritÃ¤t}
+	 * heraus und gibt diese als Liste zurÃ¼ck.
 	 * 
-	 * @param priority Die Priorität nach der gesucht wird.
-	 * @return Eine Liste aller Schüler mit dieser Priorität.
+	 * @param priority Die PrioritÃ¤t nach der gesucht wird.
+	 * @return Eine Liste aller SchÃ¼ler mit dieser PrioritÃ¤t.
 	 */
 	public ArrayList<Student> getStudentsWithPriority(int priority) {
 		ArrayList<Student> pStudents = new ArrayList<>();
@@ -182,7 +182,7 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Sortiert die mitgegebende Liste der Kurse nach ihren Namen über die
+	 * Sortiert die mitgegebende Liste der Kurse nach ihren Namen Ã¼ber die
 	 * {@link Course#compareTo(Course)} Methode des Kurses.
 	 * 
 	 * @param courseToSort Die Liste der Kurse, die Sortiert werden soll.
@@ -206,11 +206,11 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Sortiert die mitgegebende Liste der Schüler nach ihren Namen über die
-	 * {@link Student#compareTo(Student)} Methode des Schülers.
+	 * Sortiert die mitgegebende Liste der SchÃ¼ler nach ihren Namen Ã¼ber die
+	 * {@link Student#compareTo(Student)} Methode des SchÃ¼lers.
 	 * 
-	 * @param studentsToSort Die Liste der Schüler, die sortiert werden soll.
-	 * @return Die sortierte Liste der Schüler.
+	 * @param studentsToSort Die Liste der SchÃ¼ler, die sortiert werden soll.
+	 * @return Die sortierte Liste der SchÃ¼ler.
 	 */
 	public static List<Student> sortStudents(List<Student> studentsToSort) {
 		ExecutorService pool = Executors.newFixedThreadPool(studentsToSort.size() / 2 + 10);
@@ -230,21 +230,21 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * @return Die {@link #allStudents Liste aller Schüler} dieses Speichers zurück.
+	 * @return Die {@link #allStudents Liste aller SchÃ¼ler} dieses Speichers zurÃ¼ck.
 	 */
 	public List<Student> getAllStudents() {
 		return this.allStudents;
 	}
 
 	/**
-	 * @return Die {@link #allCourses Liste aller Kurse} dieses Speichers zurück.
+	 * @return Die {@link #allCourses Liste aller Kurse} dieses Speichers zurÃ¼ck.
 	 */
 	public List<Course> getAllCourses() {
 		return this.allCourses;
 	}
 
 	/**
-	 * @return Gibt die {@link #allCourses Liste aller Kurse} als Array zurück.
+	 * @return Gibt die {@link #allCourses Liste aller Kurse} als Array zurÃ¼ck.
 	 */
 	public Course[] getAllCoursesAsArray() {
 		Course[] courses = new Course[this.allCourses.size()];
@@ -256,7 +256,7 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * @return Der mit diesem Speicher verknüpfte {@link #informations
+	 * @return Der mit diesem Speicher verknÃ¼pfte {@link #informations
 	 *         Informationsspeicher}.
 	 */
 	public InformationSave getInformation() {
@@ -266,7 +266,7 @@ public class Save implements Comparable<Save>, Serializable {
 	/**
 	 * Erstellt {@link WriteableContent Tabellen}, indenen die unterschiedlichen
 	 * Informationen geschrieben werden. Unter dem Element 1 sind die Informationen
-	 * von der Schülerseite aus, in dem zweiten Listenelement befinden sich die
+	 * von der SchÃ¼lerseite aus, in dem zweiten Listenelement befinden sich die
 	 * Informationen von der Kursseite aus und an letzter Stelle findet man die
 	 * weiteren Informationen zu dieser gespeicherten Berechnung.
 	 * 
@@ -289,10 +289,10 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Schreibt alle Informationen von Schülerseite aus in eine
+	 * Schreibt alle Informationen von SchÃ¼lerseite aus in eine
 	 * {@link WriteableContent Tabelle}.
 	 * 
-	 * @return Eine Tabelle mit den schülerseitigen Informationen dieses Speichers.
+	 * @return Eine Tabelle mit den schÃ¼lerseitigen Informationen dieses Speichers.
 	 */
 	public WriteableContent writeStudentInformation() {
 		WriteableContent students = new WriteableContent(References.language.getString("coursedistribution.text"));
@@ -305,7 +305,7 @@ public class Save implements Comparable<Save>, Serializable {
 
 		students.setStartTable(lineCounter);
 
-		students.addLine(new Vec2i(0, lineCounter), new String[] { "Name", "Vorname", "Kurs", "Lehrer", "Priorität" });
+		students.addLine(new Vec2i(0, lineCounter), new String[] { "Name", "Vorname", "Kurs", "Lehrer", "PrioritÃ¤t" });
 		lineCounter += 2;
 		for (int i = 0; i < this.allStudents.size(); i++) {
 			String[] line = new String[5];
@@ -342,15 +342,15 @@ public class Save implements Comparable<Save>, Serializable {
 
 		courses.setStartTable(line);
 
-		courses.addLine(new Vec2i(0, line), new String[] { "Kurs", "Lehrer", "Anzahl Schüler", "Schüler" });
+		courses.addLine(new Vec2i(0, line), new String[] { "Kurs", "Lehrer", "Anzahl SchÃ¼ler", "SchÃ¼ler" });
 
 		line += 2;
 
 		for (Course c : this.allCourses) {
 			String[] parameter = new String[c.size() + 3];
 
-			References.LOGGER.info("Kursname: " + c.toString() + "; Schülerzahl: " + Integer.toString(c.size())
-					+ "; Parameterlänge: " + Integer.toString(parameter.length));
+			References.LOGGER.info("Kursname: " + c.toString() + "; SchÃ¼lerzahl: " + Integer.toString(c.size())
+					+ "; ParameterlÃ¤nge: " + Integer.toString(parameter.length));
 
 			parameter[0] = c.getSubject();
 			parameter[1] = c.getTeacher();
@@ -379,9 +379,9 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Vergleicht diesen Speicher mit einem anderen. Dazu wird zunächst die
+	 * Vergleicht diesen Speicher mit einem anderen. Dazu wird zunÃ¤chst die
 	 * {@link InformationSave#getGuete() Guete} der beiden Speicher miteinander
-	 * verglichen. Wird 0 zurückgegeben, beinhalten die beiden Speicher die selben
+	 * verglichen. Wird 0 zurÃ¼ckgegeben, beinhalten die beiden Speicher die selben
 	 * Informationen.
 	 */
 	@Override
@@ -408,7 +408,7 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Überprüft, ob es sich bei diesem Speicher und dem gegebenen Speicher, um
+	 * ÃœberprÃ¼ft, ob es sich bei diesem Speicher und dem gegebenen Speicher, um
 	 * Speicher mit den selben Informationen handelt.
 	 * 
 	 * @param s Der Speicher, der mit diesem verglichen werden soll.
@@ -443,10 +443,10 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Fügt einen Kurs zu diesem Speicher hinzu. Existiert dieser Kurs bereits, wird
-	 * der existierende Kurs gelöscht und der mitgegebende anschließend eingefügt.
+	 * FÃ¼gt einen Kurs zu diesem Speicher hinzu. Existiert dieser Kurs bereits, wird
+	 * der existierende Kurs gelÃ¶scht und der mitgegebende anschlieÃŸend eingefÃ¼gt.
 	 * 
-	 * @param c Der Kurs der hinzugefügt werden soll.
+	 * @param c Der Kurs der hinzugefÃ¼gt werden soll.
 	 */
 	public void addCourse(Course c) {
 		if (this.allCourses.contains(c))
@@ -455,10 +455,10 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Ermittelt den Schüler mit der mitgegebenen ID
+	 * Ermittelt den SchÃ¼ler mit der mitgegebenen ID
 	 * 
 	 * @param studentID Die ID nach der gesucht werden soll.
-	 * @return Der Schüler mit dieser ID oder {@code null}, wenn kein Schüler mit
+	 * @return Der SchÃ¼ler mit dieser ID oder {@code null}, wenn kein SchÃ¼ler mit
 	 *         dieser ID gefunden werden konnte.
 	 */
 	public Student getStudentByID(int studentID) {
@@ -469,11 +469,11 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Fügt einen Schüler zu diesem Speicher hinzu. Existiert dieser Schüler
-	 * bereits, wird der vorgang abgebrochen und {@code false} zurückgegeben.
+	 * FÃ¼gt einen SchÃ¼ler zu diesem Speicher hinzu. Existiert dieser SchÃ¼ler
+	 * bereits, wird der vorgang abgebrochen und {@code false} zurÃ¼ckgegeben.
 	 * 
-	 * @param student Der Schüler der hinzugefügt werden soll.
-	 * @return Ob der Schüler erfolgreich hinzugefügt werden konnte.
+	 * @param student Der SchÃ¼ler der hinzugefÃ¼gt werden soll.
+	 * @return Ob der SchÃ¼ler erfolgreich hinzugefÃ¼gt werden konnte.
 	 */
 	public boolean addStudent(Student student) {
 		if (student == null || this.allStudents.contains(student))
@@ -483,9 +483,9 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Löscht einen Schüler aus der {@link #allStudents Liste aller Schüler}.
+	 * LÃ¶scht einen SchÃ¼ler aus der {@link #allStudents Liste aller SchÃ¼ler}.
 	 * 
-	 * @param student Der Schüler der gelöscht werden soll.
+	 * @param student Der SchÃ¼ler der gelÃ¶scht werden soll.
 	 */
 	public void removeStudent(Student student) {
 		if (student == null)
@@ -497,9 +497,9 @@ public class Save implements Comparable<Save>, Serializable {
 	}
 
 	/**
-	 * Löscht einen Kurs aus der {@link #allCourses Liste aller Kurse}.
+	 * LÃ¶scht einen Kurs aus der {@link #allCourses Liste aller Kurse}.
 	 * 
-	 * @param course Der Kurs der gelöscht werden soll.
+	 * @param course Der Kurs der gelÃ¶scht werden soll.
 	 */
 	public void removeCourse(Course course) {
 		if (course == null)

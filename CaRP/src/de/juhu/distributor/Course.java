@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import de.juhu.util.Config;
 
 /**
- * Diese Klasse bildet einen Kurs ab und beinhaltet alle diesbezüglich wichtigen
+ * Diese Klasse bildet einen Kurs ab und beinhaltet alle diesbezÃ¼glich wichtigen
  * Informationen.
  * 
  * @version 1.0
@@ -18,12 +18,12 @@ import de.juhu.util.Config;
 public class Course implements Comparable<Course>, Serializable {
 
 	/**
-	 * Alle Schüler, die dem Kurs zugeordnet sind.
+	 * Alle SchÃ¼ler, die dem Kurs zugeordnet sind.
 	 */
 	private ArrayList<Student> students = new ArrayList<>();
 
 	/**
-	 * Der Lehrer des Kurses / Das Lehrerkürzel
+	 * Der Lehrer des Kurses / Das LehrerkÃ¼rzel
 	 */
 	private String teacher;
 
@@ -33,17 +33,17 @@ public class Course implements Comparable<Course>, Serializable {
 	private String subject;
 
 	/**
-	 * Die Maximale Schüleranzahl, die dieser Kurs beinhalten darf.
+	 * Die Maximale SchÃ¼leranzahl, die dieser Kurs beinhalten darf.
 	 */
 	private int maxStudents;
 
 	/**
-	 * Erzeugt einen Kurs, indem das maximale Schülerlimit, der Lehrer und das Fach
+	 * Erzeugt einen Kurs, indem das maximale SchÃ¼lerlimit, der Lehrer und das Fach
 	 * gesetzt sind.
 	 * 
 	 * @param subject     Das Fach des Kurses
 	 * @param teacher     Der Lehrer des Kurses
-	 * @param maxStudents Die maximale Anzahl an Schülern, die in diesen Kurs passen
+	 * @param maxStudents Die maximale Anzahl an SchÃ¼lern, die in diesen Kurs passen
 	 */
 	public Course(String subject, String teacher, int maxStudents) {
 		this(subject, teacher);
@@ -53,11 +53,11 @@ public class Course implements Comparable<Course>, Serializable {
 
 	/**
 	 * Erzeugt einen Kurs, in dem der Lehrer und das Fach mitgegeben werden. Die
-	 * maximale Schülerzahl wird auf den in der Config mitgegebenen Standartwert
+	 * maximale SchÃ¼lerzahl wird auf den in der Config mitgegebenen Standartwert
 	 * gesetzt.
 	 * 
 	 * @param subject Das Fach des Kurses
-	 * @param teacher Der Schüler des Kurses
+	 * @param teacher Der SchÃ¼ler des Kurses
 	 */
 	public Course(String subject, String teacher) {
 		this.teacher = teacher.toUpperCase();
@@ -67,7 +67,7 @@ public class Course implements Comparable<Course>, Serializable {
 
 	/**
 	 * Erzeugt einen Kurs aus einem zwei langen Array, indem der Kurs und der Lehrer
-	 * gesetzt wird und die maximale Schülerzahl auf den in der Config mitgegebenen
+	 * gesetzt wird und die maximale SchÃ¼lerzahl auf den in der Config mitgegebenen
 	 * Standartwert gesetzt wird.
 	 * 
 	 * @param split An Position 0 das Fach und an Position 1 der Lehrer
@@ -79,7 +79,7 @@ public class Course implements Comparable<Course>, Serializable {
 	}
 
 	/**
-	 * @return Der Lehrer des Kurses / Das Lehrerkürzel
+	 * @return Der Lehrer des Kurses / Das LehrerkÃ¼rzel
 	 */
 	public String getTeacher() {
 		return this.teacher;
@@ -93,7 +93,7 @@ public class Course implements Comparable<Course>, Serializable {
 	}
 
 	/*
-	 * TODO Bitte Überprüfen
+	 * TODO Bitte ÃœberprÃ¼fen
 	 */
 
 	@Override
@@ -109,11 +109,11 @@ public class Course implements Comparable<Course>, Serializable {
 	}
 
 	/**
-	 * Überprüft, ob mehr Schüler im Kurs sind, als das {@link #maxStudents
-	 * Schülerlimit} zulässt. Ist das {@link #maxStudents Schülerlimit} {@code -1}
-	 * besitzt der Kurs kein Schülerlimit.
+	 * ÃœberprÃ¼ft, ob mehr SchÃ¼ler im Kurs sind, als das {@link #maxStudents
+	 * SchÃ¼lerlimit} zulÃ¤sst. Ist das {@link #maxStudents SchÃ¼lerlimit} {@code -1}
+	 * besitzt der Kurs kein SchÃ¼lerlimit.
 	 * 
-	 * @return {@code true}, wenn mehr Schüler im Kurs sind, als das Schülerlimit
+	 * @return {@code true}, wenn mehr SchÃ¼ler im Kurs sind, als das SchÃ¼lerlimit
 	 *         erlaubt.
 	 */
 	public boolean isFull() {
@@ -121,8 +121,8 @@ public class Course implements Comparable<Course>, Serializable {
 	}
 
 	/**
-	 * Gibt den Kurs als String zurück. Dazu wird das {@link #subject Fach} durch
-	 * einen "|" vom {@link #teacher Lehrer} getrennt. Der zurückgegebene String
+	 * Gibt den Kurs als String zurÃ¼ck. Dazu wird das {@link #subject Fach} durch
+	 * einen "|" vom {@link #teacher Lehrer} getrennt. Der zurÃ¼ckgegebene String
 	 * sieht dann wiefolgt aus: {@link #subject
 	 * Fach}{@code  + "|" + }{@link #teacher Lehrer}.
 	 */
@@ -132,17 +132,17 @@ public class Course implements Comparable<Course>, Serializable {
 	}
 
 	/**
-	 * @return Gibt eine Liste aller Schüler im Kurs zurück.
+	 * @return Gibt eine Liste aller SchÃ¼ler im Kurs zurÃ¼ck.
 	 */
 	public ArrayList<Student> getStudents() {
 		return this.students;
 	}
 
 	/**
-	 * Überprüft, ob dieser Schüler diesem Kurs zugeordnet ist.
+	 * ÃœberprÃ¼ft, ob dieser SchÃ¼ler diesem Kurs zugeordnet ist.
 	 * 
-	 * @param student Der Schüler, bei dem überprüft werden soll, ob er im Kurs ist.
-	 * @return Ob der Schüler im Kurs ist.
+	 * @param student Der SchÃ¼ler, bei dem Ã¼berprÃ¼ft werden soll, ob er im Kurs ist.
+	 * @return Ob der SchÃ¼ler im Kurs ist.
 	 * @implNote Verwendet die Methode {@link ArrayList#contains(Object)}
 	 */
 	public boolean contains(Student student) {
@@ -150,11 +150,11 @@ public class Course implements Comparable<Course>, Serializable {
 	}
 
 	/**
-	 * Fügt einen Schüler hinzu, wenn er nicht bereits im Kurs ist, oder der
-	 * hinzuzufügene Schüler nicht {@code null} ist.
+	 * FÃ¼gt einen SchÃ¼ler hinzu, wenn er nicht bereits im Kurs ist, oder der
+	 * hinzuzufÃ¼gene SchÃ¼ler nicht {@code null} ist.
 	 * 
-	 * @param student Der Schüler, der hinzugefügt werden soll.
-	 * @return Ob der Schüler erfolgreich hinzugefügt werden konnte.
+	 * @param student Der SchÃ¼ler, der hinzugefÃ¼gt werden soll.
+	 * @return Ob der SchÃ¼ler erfolgreich hinzugefÃ¼gt werden konnte.
 	 * @implNote Verwendet die Methode {@link ArrayList#add(Object)}
 	 */
 	public boolean addStudent(Student student) {
@@ -165,10 +165,10 @@ public class Course implements Comparable<Course>, Serializable {
 	}
 
 	/**
-	 * Entfernt einen Schüler aus diesem Kurs.
+	 * Entfernt einen SchÃ¼ler aus diesem Kurs.
 	 * 
-	 * @param student Der Schüler, der entfernt werden soll.
-	 * @return Der Schüler, der entfernt wurde.
+	 * @param student Der SchÃ¼ler, der entfernt werden soll.
+	 * @return Der SchÃ¼ler, der entfernt wurde.
 	 * @implNote Verwendet die Methode {@link ArrayList#remove(int)}
 	 */
 	public Student removeStudent(Student student) {
@@ -176,18 +176,18 @@ public class Course implements Comparable<Course>, Serializable {
 	}
 
 	/**
-	 * Gibt den Schüler zurück, der dem mitgegebene Index in der {@link #students
-	 * Liste der Schüler des Kurses} zugeordnet ist.
+	 * Gibt den SchÃ¼ler zurÃ¼ck, der dem mitgegebene Index in der {@link #students
+	 * Liste der SchÃ¼ler des Kurses} zugeordnet ist.
 	 * 
-	 * @param i Der Index von dem der Schüler zurückgegeben werden soll.
-	 * @return Der Schüler, der an der Position i der Liste steht.
+	 * @param i Der Index von dem der SchÃ¼ler zurÃ¼ckgegeben werden soll.
+	 * @return Der SchÃ¼ler, der an der Position i der Liste steht.
 	 */
 	public Student getStudent(int i) {
 		return this.students.get(i);
 	}
 
 	/**
-	 * @return {@link ArrayList#size()} der {@link #students Liste der Schüler des
+	 * @return {@link ArrayList#size()} der {@link #students Liste der SchÃ¼ler des
 	 *         Kurses}.
 	 */
 	public int size() {
@@ -195,10 +195,10 @@ public class Course implements Comparable<Course>, Serializable {
 	}
 
 	/**
-	 * Gibt die Liste als String zurück. Die Schüler werden über
-	 * {@link Student#toString()} in einen String überführt.
+	 * Gibt die Liste als String zurÃ¼ck. Die SchÃ¼ler werden Ã¼ber
+	 * {@link Student#toString()} in einen String Ã¼berfÃ¼hrt.
 	 * 
-	 * @return {@link ArrayList#toString()} der {@link #students Liste der Schüler
+	 * @return {@link ArrayList#toString()} der {@link #students Liste der SchÃ¼ler
 	 *         des Kurses}.
 	 */
 	public String studentsToString() {
@@ -221,8 +221,8 @@ public class Course implements Comparable<Course>, Serializable {
 	}
 
 	/**
-	 * @return Die maximale Anzahl an Schülern, die diesem Kurs zugewiesen werden
-	 *         dürfen.
+	 * @return Die maximale Anzahl an SchÃ¼lern, die diesem Kurs zugewiesen werden
+	 *         dÃ¼rfen.
 	 */
 	public int getMaxStudentCount() {
 		return this.maxStudents;
@@ -247,10 +247,10 @@ public class Course implements Comparable<Course>, Serializable {
 	}
 
 	/**
-	 * Setzt das {@link #maxStudents Schülerlimit} des Kurses
+	 * Setzt das {@link #maxStudents SchÃ¼lerlimit} des Kurses
 	 * 
-	 * @param maxStudents Die maximale Anzahl an Schülern, die diesem Kurs
-	 *                    zugeordnet werden dürfen.
+	 * @param maxStudents Die maximale Anzahl an SchÃ¼lern, die diesem Kurs
+	 *                    zugeordnet werden dÃ¼rfen.
 	 */
 	public void setStudentMax(int maxStudents) {
 		this.maxStudents = maxStudents;

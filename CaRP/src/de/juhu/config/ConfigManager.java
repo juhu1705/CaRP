@@ -37,7 +37,7 @@ import javafx.scene.layout.VBox;
 
 /**
  * Hier werden alle {@link ConfigElement Konfigurations Elemente} gespeichert
- * und verwaltet. Diese Klasse ermöglicht das Laden der initialisierten Werte,
+ * und verwaltet. Diese Klasse ermÃ¶glicht das Laden der initialisierten Werte,
  * einer Konfigurations-Datei, sowie das Schreiben einer Konfigurationsdatei.
  * 
  * @author Juhu1705
@@ -66,7 +66,7 @@ public class ConfigManager {
 	/**
 	 * Gibt das erste {@code Field} aus {@link #fields der Liste aller
 	 * Konfigurations-Elemente} aus, dessen Name mit dem mitgegebenen {@link String}
-	 * übereinstimmt zurück.
+	 * Ã¼bereinstimmt zurÃ¼ck.
 	 * 
 	 * @param name Die Bennenung des {@link ConfigElement Konfigurations-Element}
 	 * @return Das gleichnamige {@link ConfigElement Konfigurations-Element}, oder
@@ -81,9 +81,9 @@ public class ConfigManager {
 	}
 
 	/**
-	 * Fügt das zu registrierende {@link ConfigElement} in {@link #fields die Liste
-	 * aller Konfigurations-Elemente} ein, wenn es über die Annotation
-	 * {@link ConfigElement} verfügt.
+	 * FÃ¼gt das zu registrierende {@link ConfigElement} in {@link #fields die Liste
+	 * aller Konfigurations-Elemente} ein, wenn es Ã¼ber die Annotation
+	 * {@link ConfigElement} verfÃ¼gt.
 	 * 
 	 * 
 	 * @param configElement Das zu registrierende {@link ConfigElement}
@@ -99,8 +99,8 @@ public class ConfigManager {
 	}
 
 	/**
-	 * Registriert alle {@link Field Felder} der {@link Class Klasse}, die über die
-	 * Annotation {@link ConfigElement} verfügen über die Methode
+	 * Registriert alle {@link Field Felder} der {@link Class Klasse}, die Ã¼ber die
+	 * Annotation {@link ConfigElement} verfÃ¼gen Ã¼ber die Methode
 	 * {@link #register(Field)}.
 	 * 
 	 * @param c Die {@link Class Klasse}, deren {@link Field Felder}, welche die
@@ -117,9 +117,9 @@ public class ConfigManager {
 	}
 
 	/**
-	 * Lädt die unter {@link ConfigElement#defaultValue() dem Standartwert}
+	 * LÃ¤dt die unter {@link ConfigElement#defaultValue() dem Standartwert}
 	 * mitgegebenen Werte in die jeweiligen Felder, sollten diese nicht
-	 * standartmäßig über einen Wert verfügen.
+	 * standartmÃ¤ÃŸig Ã¼ber einen Wert verfÃ¼gen.
 	 * 
 	 * @implNote Diese Methode Funktioniert nur bedingt. Daher ist es ratsam, die
 	 *           Felder direkt zu initialisieren.
@@ -155,15 +155,15 @@ public class ConfigManager {
 
 	/**
 	 * <p>
-	 * Lädt eine Konfigurations Datei ein. Dabei werden die {@link #fields Elemente
-	 * aus der Liste aller Konfigurations-Elemente} auf den für sie vermerkten Wert
+	 * LÃ¤dt eine Konfigurations Datei ein. Dabei werden die {@link #fields Elemente
+	 * aus der Liste aller Konfigurations-Elemente} auf den fÃ¼r sie vermerkten Wert
 	 * gesetzt.
 	 * </p>
 	 * 
 	 * <p>
-	 * Die Konfigurationsdatei ist in {@code XML} zu schreiben. Dabei umschließt der
+	 * Die Konfigurationsdatei ist in {@code XML} zu schreiben. Dabei umschlieÃŸt der
 	 * Parameter {@code config} die gesammte Konfigurationsdatei. Unter dem
-	 * Parameter {@code fields} können mithilfe des Parameters {@code field} und dem
+	 * Parameter {@code fields} kÃ¶nnen mithilfe des Parameters {@code field} und dem
 	 * folgenden Parameter {@code parameter} die einzelnen Konfigurationswerte
 	 * gesetzt werden. Dabei ist {@code name} der Name des zu setztenden Feldes.
 	 * {@code value} gibt den Wert an, auf den es gesetzt wird. Unter
@@ -189,11 +189,11 @@ public class ConfigManager {
 	/**
 	 * Exportiert die Daten der {@link #fields Elemente aus der Liste aller
 	 * Konfigurations-Elemente} in eine Datei nach dem unter {@link #load(String)}
-	 * erklärten Aufbau. Diese Datei ist von der Methode {@link #load(String)}
+	 * erklÃ¤rten Aufbau. Diese Datei ist von der Methode {@link #load(String)}
 	 * wieder einlesbar.
 	 * 
 	 * @param output Der Pfad zu dem Exportiert wird.
-	 * @throws IOException Sollte es nicht möglixh sein an den angegebenen Pfad zu
+	 * @throws IOException Sollte es nicht mÃ¶glixh sein an den angegebenen Pfad zu
 	 *                     Schreiben, oder sollte output gleich {@code null} sein
 	 */
 	public void save(File output) throws IOException {

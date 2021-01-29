@@ -26,7 +26,7 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 public class References {
 
 	/**
-	 * Weiß nicht wieso es noch drinnen ist.
+	 * WeiÃŸ nicht wieso es noch drinnen ist.
 	 */
 	public static StreamHandler sh;
 
@@ -41,7 +41,7 @@ public class References {
 	public static PropertyResourceBundle language;
 
 	/**
-	 * Der zum Logger zugehörige {@link LoggingHandler}.
+	 * Der zum Logger zugehÃ¶rige {@link LoggingHandler}.
 	 */
 	public static final LoggingHandler LOGGING_HANDLER;
 	static {
@@ -57,7 +57,7 @@ public class References {
 	}
 
 	/**
-	 * Der Logger, über den alle Log-Nachrichten behandelt werden.
+	 * Der Logger, Ã¼ber den alle Log-Nachrichten behandelt werden.
 	 */
 	public static final Logger LOGGER;
 	static {

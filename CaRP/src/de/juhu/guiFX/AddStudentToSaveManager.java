@@ -20,8 +20,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Behandelt alle Aktionen des Fensters zum Hinzufügen und Bearbeiten von
- * Schülern zur Verteilung.
+ * Behandelt alle Aktionen des Fensters zum HinzufÃ¼gen und Bearbeiten von
+ * SchÃ¼lern zur Verteilung.
  * 
  * @author Juhu1705
  * @category GUI

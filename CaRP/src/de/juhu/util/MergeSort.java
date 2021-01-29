@@ -22,13 +22,13 @@ public class MergeSort<T extends Comparable> implements Callable {
 	/**
 	 * Initialisierung des Mergesorts. Aufgerufen wird der Allgorithmus durch
 	 * {@link ExecutorService#submit(Callable)}. Als Callable wird diese Klasse
-	 * mitgegeben. Das zurückgegebene {@link Future}-Objekt gibt über
-	 * {@link Future#get()} die sortierte {@link ArrayList} zurück.
+	 * mitgegeben. Das zurÃ¼ckgegebene {@link Future}-Objekt gibt Ã¼ber
+	 * {@link Future#get()} die sortierte {@link ArrayList} zurÃ¼ck.
 	 * 
 	 * @param input Die zu sortierende {@link ArrayList}.
-	 * @param pool  Der {@link ExecutorService} über den die Berechnung läuft.
+	 * @param pool  Der {@link ExecutorService} Ã¼ber den die Berechnung lÃ¤uft.
 	 * @implNote Der {@link ExecutorService} muss
-	 *           {@link ArrayList#size()}{@code  / 2 + 10} groß sein.
+	 *           {@link ArrayList#size()}{@code  / 2 + 10} groÃŸ sein.
 	 */
 	public MergeSort(ArrayList<T> input, ExecutorService pool) {
 		this.input = input;
@@ -74,10 +74,10 @@ public class MergeSort<T extends Comparable> implements Callable {
 	}
 
 	/**
-	 * @implNote Diese Methode kann zu beginn aufgerufen werden. Sie öffnet jedoch
+	 * @implNote Diese Methode kann zu beginn aufgerufen werden. Sie Ã¶ffnet jedoch
 	 *           selbst weitere Threads im mitgegebenen {@link ExecutorService}
 	 * @param input Die zu sortierende {@link ArrayList}.
-	 * @param pool  Der {@link ExecutorService} über den die Berechnung läuft.
+	 * @param pool  Der {@link ExecutorService} Ã¼ber den die Berechnung lÃ¤uft.
 	 * @return Sortierte ArrayList
 	 * @throws Exception Wenn ein Fehler bei der Berechnung auftritt.
 	 */

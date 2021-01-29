@@ -44,13 +44,13 @@ public class Distributor implements Runnable {
 	public static PriorityQueue<Save> calculated = new PriorityQueue<Save>(100);
 
 	/**
-	 * Zeigt an, ob fertigberechnete Ergebnisse ausgegeben werden können.
+	 * Zeigt an, ob fertigberechnete Ergebnisse ausgegeben werden kÃ¶nnen.
 	 */
 	public static boolean calculate = false;
 
 	// INFO: Berechnungsinformationen
 	/**
-	 * Speichert die zu berechnenden Schüler.
+	 * Speichert die zu berechnenden SchÃ¼ler.
 	 */
 	ArrayList<Student> loadedallStudents = new ArrayList<>();
 
@@ -60,35 +60,35 @@ public class Distributor implements Runnable {
 	ArrayList<Course> loadedallCourses = new ArrayList<>();
 
 	/**
-	 * Diese Liste hält alle für die Berechnung irrelevanten Schüler fest und stellt
-	 * sie zum nachträglichen Einfügen in das Ergebnis bereit.
+	 * Diese Liste hÃ¤lt alle fÃ¼r die Berechnung irrelevanten SchÃ¼ler fest und stellt
+	 * sie zum nachtrÃ¤glichen EinfÃ¼gen in das Ergebnis bereit.
 	 */
 	ArrayList<Student> ignoredStudents = new ArrayList<>();
 
 	/**
-	 * Dieser Kurs beinhaltet alle ignore Students. Er dient als Referenzkurs für
+	 * Dieser Kurs beinhaltet alle ignore Students. Er dient als Referenzkurs fÃ¼r
 	 * diese.
 	 */
 	Course ignoredCourse = new Course(Config.ignoreStudent, "", -1);
 
 	/**
-	 * Dient zur Berechnung der Schüler.
+	 * Dient zur Berechnung der SchÃ¼ler.
 	 * 
-	 * @info Verändert sich während der Laufzeit.
+	 * @info VerÃ¤ndert sich wÃ¤hrend der Laufzeit.
 	 */
 	ArrayList<Student> allStudents = new ArrayList<>();
 
 	/**
 	 * Dient zur Berechnung der Kurse.
 	 * 
-	 * @info Verändert sich während der Laufzeit.
+	 * @info VerÃ¤ndert sich wÃ¤hrend der Laufzeit.
 	 */
 	ArrayList<Course> allCourses = new ArrayList<>();
 
 	/**
-	 * Enthält alle nicht zuteilbaren Schüler.
+	 * EnthÃ¤lt alle nicht zuteilbaren SchÃ¼ler.
 	 * 
-	 * @deprecated Unused - Nur in älteren Fehlerhaften Zuweisungsmethoden benutzt,
+	 * @deprecated Unused - Nur in Ã¤lteren Fehlerhaften Zuweisungsmethoden benutzt,
 	 *             die nicht mehr aufgerufen werden
 	 */
 	@Deprecated
@@ -117,7 +117,7 @@ public class Distributor implements Runnable {
 
 	/**
 	 * Erstellt eine Instanz dieser Klasse ohne weitere Eigenschaften. Wird nur
-	 * ausgeführt, wenn noch keine Instanz vorhanden ist und {@link #getInstance()}
+	 * ausgefÃ¼hrt, wenn noch keine Instanz vorhanden ist und {@link #getInstance()}
 	 * aufgerufen wird, oder alle Berechnungen geleert werden sollen, sowie die
 	 * eingelesenden Daten.
 	 */
@@ -141,14 +141,14 @@ public class Distributor implements Runnable {
 	/**
 	 * Erstellt eine Neue Instanz dieser Klasse und setzt die Vorhandende Instanz
 	 * auf die hier erstellte. Sollte {@link Config#clear} false sein, so werden die
-	 * Gespeicherten Schüler und Kurse der vorherigen in {@link #instance}
+	 * Gespeicherten SchÃ¼ler und Kurse der vorherigen in {@link #instance}
 	 * gespeicherten Instanz automatisch in die neue miteingerechnet.
 	 * 
-	 * Gleichzeitig werden die Schüler und Kursdaten aus dem mitgegebenen Pfad über
+	 * Gleichzeitig werden die SchÃ¼ler und Kursdaten aus dem mitgegebenen Pfad Ã¼ber
 	 * die Methode {@link #readFile(String)} eingelesen und in die Bestehenden Daten
-	 * eingespeißt.
+	 * eingespeiÃŸt.
 	 * 
-	 * @param filename Der Pfad, aus dem die benötigten Schüler und Kurs Daten
+	 * @param filename Der Pfad, aus dem die benÃ¶tigten SchÃ¼ler und Kurs Daten
 	 *                 herausgelesen werden.
 	 */
 	public Distributor(String filename) {
@@ -157,7 +157,7 @@ public class Distributor implements Runnable {
 		else
 			this.loadReaders();
 
-		// Lädt, falls gewünscht die Daten aus der alten Instanz in die Neue.
+		// LÃ¤dt, falls gewÃ¼nscht die Daten aus der alten Instanz in die Neue.
 		if (!Config.clear) {
 			this.allStudents = Distributor.getInstance().loadedallStudents;
 			this.allCourses = Distributor.getInstance().loadedallCourses;
@@ -167,7 +167,7 @@ public class Distributor implements Runnable {
 		// Setzt die aktuelle Instanz auf diese.
 		Distributor.instance = this;
 
-		// Ließt die Dateien in das System ein.
+		// LieÃŸt die Dateien in das System ein.
 		this.readFile(filename);
 		this.loadedallStudents = this.allStudents;
 		this.loadedallCourses = this.allCourses;
@@ -175,17 +175,17 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Lädt die Daten des ersten mitgegebenen {@link Save Speichers} in den
-	 * {@link Distributor Berechner}. Fügt die anderen beiden Speicherungen und die
+	 * LÃ¤dt die Daten des ersten mitgegebenen {@link Save Speichers} in den
+	 * {@link Distributor Berechner}. FÃ¼gt die anderen beiden Speicherungen und die
 	 * geladene in die {@link Distributor#calculated Liste der Kalkulationen} ein.
 	 * 
-	 * @implNote Alle vorherigen Daten werden gelöscht.
+	 * @implNote Alle vorherigen Daten werden gelÃ¶scht.
 	 * @param actual      Der {@link Save Speicher}, welcher geladen und dann in die
 	 *                    {@link Distributor#calculated Liste der Kalkulationen}
-	 *                    eingefügt wird.
+	 *                    eingefÃ¼gt wird.
 	 * @param readObject  Der erste {@link Save Speicher}, der in die
 	 *                    {@link Distributor#calculated Liste der Kalkulationen}
-	 *                    eingefügt wird.
+	 *                    eingefÃ¼gt wird.
 	 */
 	public Distributor(Save actual, Save... readObject) {
 		if (instance != null)
@@ -196,31 +196,31 @@ public class Distributor implements Runnable {
 		// Setzt die aktuelle Instanz auf diese.
 		Distributor.instance = this;
 
-		// Ließt die Saves in das System ein.
+		// LieÃŸt die Saves in das System ein.
 		this.loadDataFromSave(actual);
 		this.loadedallStudents = this.allStudents;
 		this.loadedallCourses = this.allCourses;
 
-		// Fügt alle drei Speicherungen zu den Kalkulationen hinzu.
+		// FÃ¼gt alle drei Speicherungen zu den Kalkulationen hinzu.
 		Distributor.calculated.add(actual);
 		for (Save s : readObject)
 			Distributor.calculated.add(s);
 	}
 
 	/**
-	 * Startet den Gewünschten Berechnungs- und Zuweisungsprozess. Überwacht, dass
-	 * nur eine Berechnung zur gleichen Zeit abläuft. Lädt, wenn keine Schülerdaten
+	 * Startet den GewÃ¼nschten Berechnungs- und Zuweisungsprozess. Ãœberwacht, dass
+	 * nur eine Berechnung zur gleichen Zeit ablÃ¤uft. LÃ¤dt, wenn keine SchÃ¼lerdaten
 	 * vorhanden sind und ein Pfad angegeben ist, welcher auf eine existierende
 	 * Tabellen-Datei verweist diese Tabellen-Datei in das Programm und berechnet
-	 * für die neu geladenen Daten eine Zuweisung.
+	 * fÃ¼r die neu geladenen Daten eine Zuweisung.
 	 * 
 	 * Macht zuletzt die fertige Berechnung im GUI sichtbar.
 	 */
 	@Override
 	public void run() {
 		/*
-		 * Überprüft, ob bereits eine Instanz geöfnet ist und bricht, wenn bereits eine
-		 * Instanz geöffnet ist den Prozess ab.
+		 * ÃœberprÃ¼ft, ob bereits eine Instanz geÃ¶fnet ist und bricht, wenn bereits eine
+		 * Instanz geÃ¶ffnet ist den Prozess ab.
 		 */
 		if (calculate) {
 			Platform.runLater(() -> {
@@ -234,7 +234,7 @@ public class Distributor implements Runnable {
 		}
 
 		/*
-		 * Lädt falls keine Daten geladen sind und eine Datei angegeben ist, diese in
+		 * LÃ¤dt falls keine Daten geladen sind und eine Datei angegeben ist, diese in
 		 * den Zuweiser.
 		 */
 		if (this.allStudents.isEmpty()) {
@@ -287,7 +287,7 @@ public class Distributor implements Runnable {
 		GUIManager.actual = Distributor.calculated.peek();
 
 		/*
-		 * Lädt die Daten in die Ausgabe-Vorschau
+		 * LÃ¤dt die Daten in die Ausgabe-Vorschau
 		 */
 
 		Platform.runLater(() -> {
@@ -328,7 +328,7 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Lädt die Daten eines {@link Save Speichers} in den {@link Distributor}.
+	 * LÃ¤dt die Daten eines {@link Save Speichers} in den {@link Distributor}.
 	 * 
 	 * @param save Der zu ladene {@link Save Speicher}.
 	 */
@@ -367,7 +367,7 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Gibt die Rate der Berechnung mit der Priorität info in der Konsole aus.
+	 * Gibt die Rate der Berechnung mit der PrioritÃ¤t info in der Konsole aus.
 	 */
 	public void printRate() {
 		for (int i = Config.maxChooses; i-- > 0;) {
@@ -376,10 +376,10 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Ermittelt die Anzahl der Schüler mit der entsprechenden Rate.
+	 * Ermittelt die Anzahl der SchÃ¼ler mit der entsprechenden Rate.
 	 * 
 	 * @param rate Die Rate nach der gesucht wird.
-	 * @return Die Anzahl der Schüler mit der entsprechenden Rate.
+	 * @return Die Anzahl der SchÃ¼ler mit der entsprechenden Rate.
 	 */
 	public int getStudentsWithRate(int rate) {
 		rate *= 2;
@@ -398,7 +398,7 @@ public class Distributor implements Runnable {
 	/**
 	 * Ermittelt wie gut die Kalkulation war.
 	 * 
-	 * @return Der Güte Wert der Berechnung
+	 * @return Der GÃ¼te Wert der Berechnung
 	 */
 	public int rate() {
 		int count = 0;
@@ -568,13 +568,13 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Geht die {@link #allCourses Liste aller Kurse} durch und überprüft, ob die
-	 * Methode {@link Course#isFull()} {@code true} zurückgibt. Sollte dies der Fall
-	 * sein, so wird {@code true} zurückgegeben, ansonsten wird {@code false}
-	 * zurückgegeben.
+	 * Geht die {@link #allCourses Liste aller Kurse} durch und Ã¼berprÃ¼ft, ob die
+	 * Methode {@link Course#isFull()} {@code true} zurÃ¼ckgibt. Sollte dies der Fall
+	 * sein, so wird {@code true} zurÃ¼ckgegeben, ansonsten wird {@code false}
+	 * zurÃ¼ckgegeben.
 	 * 
 	 * @return Ob <b><u>ein</u></b> Kurs aus der {@link #allCourses Liste aller
-	 *         Kurse} überfüllt ist.
+	 *         Kurse} Ã¼berfÃ¼llt ist.
 	 */
 	private boolean isAnyCourseFull() {
 		for (Course c : this.allCourses)
@@ -584,17 +584,17 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Erzeugt zwei von den alten {@link Student Schüler} und {@link Course Kurs}
-	 * Listen unabhängige Listen, die in selber Weise verknüpft sind. Dabei ist das
-	 * erste Element im Array, die kopierte Liste der Schüler und das zweite die
+	 * Erzeugt zwei von den alten {@link Student SchÃ¼ler} und {@link Course Kurs}
+	 * Listen unabhÃ¤ngige Listen, die in selber Weise verknÃ¼pft sind. Dabei ist das
+	 * erste Element im Array, die kopierte Liste der SchÃ¼ler und das zweite die
 	 * kopierte Liste der Lehrer.
 	 * 
-	 * @param oldStudents    Die Liste der Schüler die Kopiert werden soll.
-	 * @param oldCourses     Die verknüpfte Liste der Kurse die Kopiert werden soll.
-	 * @param ignoredCourse2 Der Kurs für nicht zugeordnete Schüler.
+	 * @param oldStudents    Die Liste der SchÃ¼ler die Kopiert werden soll.
+	 * @param oldCourses     Die verknÃ¼pfte Liste der Kurse die Kopiert werden soll.
+	 * @param ignoredCourse2 Der Kurs fÃ¼r nicht zugeordnete SchÃ¼ler.
 	 * @return Die Kopierten Daten.
 	 *         <ul>
-	 *         <li>Element 1: Liste der Schüler (kopiert)</li>
+	 *         <li>Element 1: Liste der SchÃ¼ler (kopiert)</li>
 	 *         <li>Element 2: Liste der Kurse (kopiert)</li>
 	 *         </ul>
 	 */
@@ -603,7 +603,7 @@ public class Distributor implements Runnable {
 		// Erzeugung der neuen Arrays
 
 		/*
-		 * Die neue Schüler-Liste, in die die Kurse Kopiert werden.
+		 * Die neue SchÃ¼ler-Liste, in die die Kurse Kopiert werden.
 		 */
 		ArrayList<Student> newStudents = new ArrayList<Student>();
 
@@ -613,7 +613,7 @@ public class Distributor implements Runnable {
 		ArrayList<Course> newCourses = new ArrayList<Course>();
 
 		/*
-		 * Kopieren der Schüler ohne Verknüpfungen.
+		 * Kopieren der SchÃ¼ler ohne VerknÃ¼pfungen.
 		 */
 		for (Student s : oldStudents)
 			try {
@@ -623,7 +623,7 @@ public class Distributor implements Runnable {
 			}
 
 		/*
-		 * Kopieren der Kurse ohne Verknüpfungen
+		 * Kopieren der Kurse ohne VerknÃ¼pfungen
 		 */
 		for (Course c : oldCourses)
 			try {
@@ -633,7 +633,7 @@ public class Distributor implements Runnable {
 			}
 
 		/*
-		 * Erstellen der benötigten Verknüpfungen
+		 * Erstellen der benÃ¶tigten VerknÃ¼pfungen
 		 */
 		for (Student s : oldStudents) {
 			for (Student news : newStudents) {
@@ -656,18 +656,18 @@ public class Distributor implements Runnable {
 		}
 
 		/*
-		 * Rückgabe der neu erstellten Listen
+		 * RÃ¼ckgabe der neu erstellten Listen
 		 */
 		return new ArrayList[] { newStudents, newCourses };
 	}
 
 	/**
 	 * Speichert die aktuellen Daten im Distributor in einen {@link Save neuen
-	 * Speicher} und fügt diesen in {@link #calculated Liste der Speicher} ein.
-	 * Dabei werden die Daten über
+	 * Speicher} und fÃ¼gt diesen in {@link #calculated Liste der Speicher} ein.
+	 * Dabei werden die Daten Ã¼ber
 	 * {@link Distributor#copyData(ArrayList, ArrayList, Course)} kopiert und die
 	 * Kopierten Daten in den Speicher geladen, so dass die im Speicher enthaltenen
-	 * Daten nicht mehr mit den Daten im {@link Distributor} verknüpft sind.
+	 * Daten nicht mehr mit den Daten im {@link Distributor} verknÃ¼pft sind.
 	 */
 	public void save() {
 		ArrayList<Student> students = new ArrayList();
@@ -695,13 +695,13 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Ermittelt alle Schüler aus der {@link #allStudents Liste der zu berechnenden
-	 * Schüler}, deren {@link Student#priority Priorität} mit der mitgegebenen
-	 * Priorität übereinstimmt.
+	 * Ermittelt alle SchÃ¼ler aus der {@link #allStudents Liste der zu berechnenden
+	 * SchÃ¼ler}, deren {@link Student#priority PrioritÃ¤t} mit der mitgegebenen
+	 * PrioritÃ¤t Ã¼bereinstimmt.
 	 * 
-	 * @param priority Die Priorität, nach der gesucht wird.
-	 * @return Eine Liste aller Schüler, deren {@link Student#priority Priorität}
-	 *         mit der gegebenen Priorität übereinstimmt.
+	 * @param priority Die PrioritÃ¤t, nach der gesucht wird.
+	 * @return Eine Liste aller SchÃ¼ler, deren {@link Student#priority PrioritÃ¤t}
+	 *         mit der gegebenen PrioritÃ¤t Ã¼bereinstimmt.
 	 */
 	private ArrayList<Student> getStudentsWithPriority(int priority) {
 		ArrayList<Student> pStudents = new ArrayList<>();
@@ -714,10 +714,10 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Ermittelt alle Schüler aus der {@link #allStudents Liste der zu berechnenden
-	 * Schüler}, die keinem Kurs zugeordnet sind.
+	 * Ermittelt alle SchÃ¼ler aus der {@link #allStudents Liste der zu berechnenden
+	 * SchÃ¼ler}, die keinem Kurs zugeordnet sind.
 	 * 
-	 * @return Eine Liste aller nicht zugewiesenden Schüler
+	 * @return Eine Liste aller nicht zugewiesenden SchÃ¼ler
 	 */
 	private ArrayList<Student> getUnallocatedStudents() {
 		ArrayList<Student> pStudents = new ArrayList<>();
@@ -734,12 +734,12 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Ermittelt die Anzahl der Schüler jeder Priorität. Dabei ist der letzte Index
-	 * der Liste gefüllt mit der Anzahl der Schüler, die nicht zugewiesen werden
+	 * Ermittelt die Anzahl der SchÃ¼ler jeder PrioritÃ¤t. Dabei ist der letzte Index
+	 * der Liste gefÃ¼llt mit der Anzahl der SchÃ¼ler, die nicht zugewiesen werden
 	 * konnten.
 	 * 
-	 * @return Eine Liste mit der (Priorität - 1) und der Zugehörigen Anzahl der
-	 *         Schüler.
+	 * @return Eine Liste mit der (PrioritÃ¤t - 1) und der ZugehÃ¶rigen Anzahl der
+	 *         SchÃ¼ler.
 	 */
 	private int[] getPriorities() {
 		int[] priorities = new int[this.getHighestPriorityWhithoutIntegerMax() + 1];
@@ -752,12 +752,12 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Gibt die Anzahl der Schüler aus der {@link #allStudents Liste aller Schüler}
-	 * zurück, deren {@link Student#priority Priorität} mit der gegebenen Priorität
-	 * übereinstimmt.
+	 * Gibt die Anzahl der SchÃ¼ler aus der {@link #allStudents Liste aller SchÃ¼ler}
+	 * zurÃ¼ck, deren {@link Student#priority PrioritÃ¤t} mit der gegebenen PrioritÃ¤t
+	 * Ã¼bereinstimmt.
 	 * 
-	 * @param priority Die Priorität, nach der gesucht wird.
-	 * @return Die Anzahl der Schüler mit der mitgegebenden Priorität.
+	 * @param priority Die PrioritÃ¤t, nach der gesucht wird.
+	 * @return Die Anzahl der SchÃ¼ler mit der mitgegebenden PrioritÃ¤t.
 	 */
 	private int countPriority(int priority) {
 		int count = 0;
@@ -768,10 +768,10 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Ermittelt die höchste Priorität, wobei alle nicht Zugewiesenden Schüler
+	 * Ermittelt die hÃ¶chste PrioritÃ¤t, wobei alle nicht Zugewiesenden SchÃ¼ler
 	 * unbeachtet bleiben.
 	 * 
-	 * @return Die höchste Priorität, ohne nicht zugewiesende Schüler.
+	 * @return Die hÃ¶chste PrioritÃ¤t, ohne nicht zugewiesende SchÃ¼ler.
 	 */
 	public int getHighestPriorityWhithoutIntegerMax() {
 		int highest = 0;
@@ -782,10 +782,10 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Ermittelt die höchste Priorität
+	 * Ermittelt die hÃ¶chste PrioritÃ¤t
 	 * 
-	 * @return Die höchste Priorität
-	 * @implNote {@link Integer#MAX_VALUE}, wenn Schüler nicht zugewiesen werden
+	 * @return Die hÃ¶chste PrioritÃ¤t
+	 * @implNote {@link Integer#MAX_VALUE}, wenn SchÃ¼ler nicht zugewiesen werden
 	 *           konnten.
 	 */
 	public int getHighestPriority() {
@@ -850,7 +850,7 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Überprüft, ob ein Kurs zu voll ist.
+	 * ÃœberprÃ¼ft, ob ein Kurs zu voll ist.
 	 * 
 	 * @return
 	 * @deprecated Unused
@@ -878,7 +878,7 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Gibt alle Kurse mit ihren Schüler im {@link References#LOGGER Log} aus.
+	 * Gibt alle Kurse mit ihren SchÃ¼ler im {@link References#LOGGER Log} aus.
 	 */
 	private void print() {
 		for (Course c : this.allCourses) {
@@ -888,7 +888,7 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Überprüft, ob ein Kurs mit dem gleichen Namen ({@link Course#getSubject()
+	 * ÃœberprÃ¼ft, ob ein Kurs mit dem gleichen Namen ({@link Course#getSubject()
 	 * Fach}{@code  + "|" + }{@link Course#getTeacher() Lehrer}) bereits unter den
 	 * vorhandenen Kursen existiert.
 	 * 
@@ -904,27 +904,27 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * @return Die {@link #allStudents Liste der Schüler}.
+	 * @return Die {@link #allStudents Liste der SchÃ¼ler}.
 	 */
 	public ArrayList getCalcStudents() {
 		return this.allStudents;
 	}
 
 	/**
-	 * @return Die {@link #ignoredStudents Liste der für die Berechnung irrelevanten
-	 *         Schüler}
+	 * @return Die {@link #ignoredStudents Liste der fÃ¼r die Berechnung irrelevanten
+	 *         SchÃ¼ler}
 	 */
 	public ArrayList getIgnoreStudents() {
 		return this.ignoredStudents;
 	}
 
 	/**
-	 * Die nächste Freie ID, die an einen Schüler vergeben werden kann.
+	 * Die nÃ¤chste Freie ID, die an einen SchÃ¼ler vergeben werden kann.
 	 */
 	private static int nextID = 0;
 
 	/**
-	 * Gibt die {@link #nextID nächste freie ID} zurück und zählt diese um einen
+	 * Gibt die {@link #nextID nÃ¤chste freie ID} zurÃ¼ck und zÃ¤hlt diese um einen
 	 * Wert hoch.
 	 * 
 	 * @return Die ID, die angefordert wurde
@@ -938,7 +938,7 @@ public class Distributor implements Runnable {
 
 	/**
 	 * Sucht nach dem {@link Course Kurs} mit dem selben Namen in der
-	 * {@link #allCourses Kursliste} und gibt diesen zurück. Sollte der
+	 * {@link #allCourses Kursliste} und gibt diesen zurÃ¼ck. Sollte der
 	 * {@link Course Kurs} nicht existieren, so wird ein neuer Kurs mit dem
 	 * angegebenen Namen erstellt.
 	 * 
@@ -949,7 +949,7 @@ public class Distributor implements Runnable {
 		if (name == null || Util.isBlank(name))
 			return null;
 
-		// Überprüft ob der Kurs dem ignoredCourse entspricht.
+		// ÃœberprÃ¼ft ob der Kurs dem ignoredCourse entspricht.
 
 		if (Util.isIgnoreCourse(name.split("\\|")))
 			return this.ignoredCourse;
@@ -962,8 +962,8 @@ public class Distributor implements Runnable {
 
 	/**
 	 * Sucht nach dem {@link Course Kurs} mit dem selben Namen in der
-	 * {@link #allCourses Kursliste} und gibt diesen zurück. Sollte der
-	 * {@link Course Kurs} nicht existieren, so wird {@code null} zurückgegeben.
+	 * {@link #allCourses Kursliste} und gibt diesen zurÃ¼ck. Sollte der
+	 * {@link Course Kurs} nicht existieren, so wird {@code null} zurÃ¼ckgegeben.
 	 * 
 	 * @param name Der Name des gesuchten Kurses.
 	 * @return Der gesuchte {@link Course Kurs}.
@@ -977,7 +977,7 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Gibt alle Kurse zurück
+	 * Gibt alle Kurse zurÃ¼ck
 	 * 
 	 * @return Eine {@link ArrayList} aller Kurse.
 	 */
@@ -986,7 +986,7 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Gibt den Kurs zurück, der nicht in die Berechnung des Distributors
+	 * Gibt den Kurs zurÃ¼ck, der nicht in die Berechnung des Distributors
 	 * miteinbezogen wird
 	 * 
 	 * @return {@link #ignoredCourse}
@@ -996,10 +996,10 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Fügt einen {@link Student Schüler} zur {@link #allStudents Liste der Schüler}
+	 * FÃ¼gt einen {@link Student SchÃ¼ler} zur {@link #allStudents Liste der SchÃ¼ler}
 	 * hinzu.
 	 * 
-	 * @param s Der {@link Student Schüler} der hinzugefügt werden soll.
+	 * @param s Der {@link Student SchÃ¼ler} der hinzugefÃ¼gt werden soll.
 	 */
 	public void addStudent(Student s) {
 		if (s == null)
@@ -1037,19 +1037,19 @@ public class Distributor implements Runnable {
 	 * </p>
 	 * 
 	 * <p>
-	 * Zunächst wird der File in eine List des Zwischenformates
+	 * ZunÃ¤chst wird der File in eine List des Zwischenformates
 	 * {@link WriteableContent} umgewandelt. Dazu wird #importFile(path)
 	 * aufgerufen. Sollte ein Fehler auftreten so wird dieser mit dem
-	 * {@link Level#SEVERE Log-Level SEVERE} und dem erklärenden Text: "Unable to
+	 * {@link Level#SEVERE Log-Level SEVERE} und dem erklÃ¤renden Text: "Unable to
 	 * load data!", sowie der Fehlermeldung ausgegeben und das Einlesen der Datei
 	 * wird abgebrochen.
 	 * </p>
 	 * 
 	 * <p>
-	 * Im folgenden wird dann jeder {@link WriteableContent} in den Distributor über
-	 * die Methode #readGrid(Tabellen_Überschrift, Tabelle, path)
-	 * eingelesen. Die Tabelle wird hirzu über {@link WriteableContent#getGrid()
-	 * getGrid()} und die Tabellen Überschrift durch die Methode
+	 * Im folgenden wird dann jeder {@link WriteableContent} in den Distributor Ã¼ber
+	 * die Methode #readGrid(Tabellen_Ãœberschrift, Tabelle, path)
+	 * eingelesen. Die Tabelle wird hirzu Ã¼ber {@link WriteableContent#getGrid()
+	 * getGrid()} und die Tabellen Ãœberschrift durch die Methode
 	 * {@link WriteableContent#getName() getName()} weitergegeben.
 	 * </p>
 	 * 
@@ -1078,9 +1078,9 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Lässt die Datei je nach Dateityp auslesen und gibt die Tabellen in Form einer
+	 * LÃ¤sst die Datei je nach Dateityp auslesen und gibt die Tabellen in Form einer
 	 * {@link List Liste} aus {@link de.juhu.filemanager.WriteableContent
-	 * WriteableContents} zurück.
+	 * WriteableContents} zurÃ¼ck.
 	 * 
 	 * @param path Der Dateipfad der Ausgelesen werden soll.
 	 * @return Eine {@link List Liste} aus {@link WriteableContent
@@ -1106,7 +1106,7 @@ public class Distributor implements Runnable {
 	 * {@link de.juhu.distributor.Reader Reader} weiter zum importieren in den
 	 * {@link Distributor}
 	 * 
-	 * @param gridName Der Name der Tabelle. Entscheidet darüber an welchen
+	 * @param gridName Der Name der Tabelle. Entscheidet darÃ¼ber an welchen
 	 *                 {@link de.juhu.distributor.Reader Reader} die Daten bei einer
 	 *                 unspezifischen Angabe weitergegeben werden.
 	 * @param grid     Die importierten Daten in einem {@link String[][]}
@@ -1116,7 +1116,7 @@ public class Distributor implements Runnable {
 		LOGGER.info("Start to load data from " + filename + ".");
 
 		/*
-		 * Zählt die Zeilen der Tabelle mit.
+		 * ZÃ¤hlt die Zeilen der Tabelle mit.
 		 */
 		int lineNumber = 0;
 
@@ -1167,11 +1167,11 @@ public class Distributor implements Runnable {
 	private ArrayList<Reader> readers = new ArrayList<>();
 
 	/**
-	 * Überprüft, ob der eingegebene String auf einen
+	 * ÃœberprÃ¼ft, ob der eingegebene String auf einen
 	 * {@link de.juhu.distributor.Reader Reader} aus der Liste
 	 * {@link Distributor#readers reader} verweist.
 	 * 
-	 * @param input Der zu überprüfende Key.
+	 * @param input Der zu Ã¼berprÃ¼fende Key.
 	 * @return Ob der Key zu einem {@link de.juhu.distributor.Reader Reader} passt.
 	 */
 	private boolean isReaderKey(String input) {
@@ -1183,10 +1183,10 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Fügt einen {@link Reader} zu den {@link #readers aktiven Readern} hinzu.
+	 * FÃ¼gt einen {@link Reader} zu den {@link #readers aktiven Readern} hinzu.
 	 * 
-	 * @param reader Der {@link Reader}, der hinzugefügt werden soll.
-	 * @return Ob der {@link Reader} hinzugefügt werden konnte.
+	 * @param reader Der {@link Reader}, der hinzugefÃ¼gt werden soll.
+	 * @return Ob der {@link Reader} hinzugefÃ¼gt werden konnte.
 	 */
 	public boolean addReader(Reader reader) {
 		if (reader == null || this.isReaderKey(reader.key))
@@ -1197,7 +1197,7 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Lädt die Standart {@link Reader} in {@link #readers}.
+	 * LÃ¤dt die Standart {@link Reader} in {@link #readers}.
 	 */
 	private void loadReaders() {
 		this.readers.add(0, new Reader(Config.newStudent) {
@@ -1285,7 +1285,7 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Aktualisiert die Standartmäßig eingefügten Leser.
+	 * Aktualisiert die StandartmÃ¤ÃŸig eingefÃ¼gten Leser.
 	 */
 	public void updateStandartReaders() {
 		if (this.readers.size() < 2) {
@@ -1300,12 +1300,12 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Sucht einen {@link Student Schüler} in der {@link #allStudents Liste aller
-	 * Schüler} und {@link #ignoredStudents Liste aller für die Berechnung
-	 * irrelevanten Schüler} nach übereinstimmung mit der mitgegebenen ID heraus.
+	 * Sucht einen {@link Student SchÃ¼ler} in der {@link #allStudents Liste aller
+	 * SchÃ¼ler} und {@link #ignoredStudents Liste aller fÃ¼r die Berechnung
+	 * irrelevanten SchÃ¼ler} nach Ã¼bereinstimmung mit der mitgegebenen ID heraus.
 	 * 
-	 * @param studentID Die ID, dessen Schüler gesucht werden soll.
-	 * @return Der gefundene Schüler, {@code null}, wenn kein Schüler mit dieser ID
+	 * @param studentID Die ID, dessen SchÃ¼ler gesucht werden soll.
+	 * @return Der gefundene SchÃ¼ler, {@code null}, wenn kein SchÃ¼ler mit dieser ID
 	 *         existiert.
 	 */
 	public Student getStudentByID(int studentID) {
@@ -1319,11 +1319,11 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Fügt einen {@link Course Kurs} in die {@link #allCourses Liste aller Kurse}
-	 * ein. Falls der Kurs bereits existiert, wird dieser aus der Liste gelöscht und
-	 * dann der neue Kurs eingefügt.
+	 * FÃ¼gt einen {@link Course Kurs} in die {@link #allCourses Liste aller Kurse}
+	 * ein. Falls der Kurs bereits existiert, wird dieser aus der Liste gelÃ¶scht und
+	 * dann der neue Kurs eingefÃ¼gt.
 	 * 
-	 * @param c Der Kurs der eingefügt werden soll.
+	 * @param c Der Kurs der eingefÃ¼gt werden soll.
 	 */
 	public void addCourse(Course c) {
 		if (this.allCourses.contains(c))
@@ -1333,7 +1333,7 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Setzt den aktiven Kurs aller Schüler auf {@code null}.
+	 * Setzt den aktiven Kurs aller SchÃ¼ler auf {@code null}.
 	 */
 	public void reset() {
 		for (Student s : this.allStudents)
@@ -1358,11 +1358,11 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Entfernt einen Schüler aus der {@link #allStudents Liste aller zu Berechnenden Schüler},
+	 * Entfernt einen SchÃ¼ler aus der {@link #allStudents Liste aller zu Berechnenden SchÃ¼ler},
 	 * oder aus der {@link #ignoredStudents Liste aller nicht zu berechnenden
-	 * Schüler}.
+	 * SchÃ¼ler}.
 	 * 
-	 * @param student Der zu entfernende Schüler
+	 * @param student Der zu entfernende SchÃ¼ler
 	 */
 	public void removeStudent(Student student) {
 		if (student == null)
@@ -1386,8 +1386,8 @@ public class Distributor implements Runnable {
 	}
 
 	/**
-	 * Überschreibt die ignorier Marke im {@link #ignoredCourse Referenzkurs des
-	 * nicht berechneten Schüler}.
+	 * Ãœberschreibt die ignorier Marke im {@link #ignoredCourse Referenzkurs des
+	 * nicht berechneten SchÃ¼ler}.
 	 * 
 	 * @param ignoreStudent die neue ignorier Marke
 	 */

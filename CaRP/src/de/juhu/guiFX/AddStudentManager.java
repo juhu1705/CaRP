@@ -25,8 +25,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * Behandelt alle Aktionen des Fensters zum Hinzufügen und Bearbeiten von
- * Schülern zur Liste.
+ * Behandelt alle Aktionen des Fensters zum HinzufÃ¼gen und Bearbeiten von
+ * SchÃ¼lern zur Liste.
  * 
  * @author Juhu1705
  * @category GUI

@@ -1,7 +1,7 @@
 package de.juhu.util;
 
 /**
- * Das Print Format ist wichtig für die Logger Klasse und bestimmt die
+ * Das Print Format ist wichtig fÃ¼r die Logger Klasse und bestimmt die
  * angegebenen zusatzinformationen. Je kleiner der Wert, desto weniger
  * zusatzinformationen werden mitgegeben.
  * 

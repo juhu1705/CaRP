@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
- * Behandelt alle Aktionen des Fensters zum Hinzufügen und Bearbeiten von Kursen
+ * Behandelt alle Aktionen des Fensters zum HinzufÃ¼gen und Bearbeiten von Kursen
  * zur Liste.
  * 
  * @author Juhu1705

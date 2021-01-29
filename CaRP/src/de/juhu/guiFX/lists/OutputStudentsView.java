@@ -7,7 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.TableView;
 
 /**
- * Behandelt die Tabelle zur Ansicht der verteilten Schüler.
+ * Behandelt die Tabelle zur Ansicht der verteilten SchÃ¼ler.
  * 
  * @author Juhu1705
  * @category GUI

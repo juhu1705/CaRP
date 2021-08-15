@@ -4,6 +4,4 @@ Der „Course and Research Paper Assinger“ (Kurs und Facharbeit Zuweiser = KuF
 
 Dieses Programm wurde im Rahmen einer besonderen Lernleistung für die Luisenschule Mülheim an der Ruhr im Abschlussjahr 2019 / 2020 entwickelt.
 
-_Hinweis: Beim ausführen des Programmes kann unter Windows die Meldung "Der Computer wurde durch Windows geschützt" erscheinen. Wenn Sie das Programm trotzdem ausführen wollen klicken Sie auf "Weitere Informationen" und dann unten auf den Knopf "Trotzdem ausführen"._
-
 Version 1.0.1

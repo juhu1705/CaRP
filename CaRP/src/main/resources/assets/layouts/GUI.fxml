@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<GridPane minWidth="1000.0" prefHeight="497.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.GUIManager">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <BorderPane accessibleRole="IMAGE_VIEW" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+         <center>
+            <TabPane fx:id="masterTabPane" prefWidth="412.0" rotateGraphic="true" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab fx:id="tabInput" closable="false" onSelectionChanged="#onTabIn" text="%input.text">
+                     <content>
+                        <BorderPane>
+                           <center>
+                              <TabPane fx:id="inputTabPane">
+                                 <tabs>
+                                    <Tab fx:id="tabStudents" closable="false" onSelectionChanged="#onSelectionChangedCourse" text="%students.text">
+                                       <content>
+                                          <TableView fx:id="tv0" prefHeight="263.0" prefWidth="452.0" tableMenuButtonVisible="true">
+                                             <columns>
+                                                <TableColumn fx:id="vtc" prefWidth="61.0" text="%prename.text" />
+                                                <TableColumn fx:id="ntc" prefWidth="69.0" text="%name.text" />
+                                                <TableColumn fx:id="k1tc" prefWidth="90.0" text="%course1.text">
+                                                   <columns>
+                                                      <TableColumn fx:id="k1stc" prefWidth="50.0" text="%subject.text" />
+                                                      <TableColumn fx:id="k1ttc" prefWidth="58.0" text="%teacher.text" />
+                                                   </columns>
+                                                </TableColumn>
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                             <contextMenu>
+                                                <ContextMenu>
+                                                  <items>
+                                                      <MenuItem mnemonicParsing="false" onAction="#addStudent" text="%addstudent.text">
+                                                         <graphic>
+                                                            <FontIcon iconLiteral="fas-plus" />
+                                                         </graphic>
+                                                      </MenuItem>
+                                                      <MenuItem mnemonicParsing="false" onAction="#onEditStudent" text="%edit.text">
+                                                         <graphic>
+                                                            <FontIcon iconLiteral="fas-edit" />
+                                                         </graphic>
+                                                      </MenuItem>
+                                                    <MenuItem mnemonicParsing="false" onAction="#onDeleteStudent" text="%remove.text">
+                                                         <graphic>
+                                                            <FontIcon iconLiteral="fas-trash" />
+                                                         </graphic>
+                                                      </MenuItem>
+                                                  </items>
+                                                </ContextMenu>
+                                             </contextMenu>
+                                          </TableView>
+                                       </content>
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-users" />
+                                       </graphic>
+                                    </Tab>
+                                    <Tab fx:id="tabCourses" closable="false" onSelectionChanged="#onSelectionChangedStudent" text="%courses.text">
+                                       <content>
+                                          <TableView fx:id="tvc" prefHeight="200.0" prefWidth="411.0" tableMenuButtonVisible="true">
+                                             <columns>
+                                                <TableColumn fx:id="subject" prefWidth="61.0" text="%subject.text" />
+                                                <TableColumn fx:id="teacher" prefWidth="69.0" text="%teacher.text" />
+                                                <TableColumn fx:id="maxStudentCount" prefWidth="69.0" text="%maxstudentscount.text" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                             <contextMenu>
+                                                <ContextMenu>
+                                                   <items>
+                                                      <MenuItem mnemonicParsing="false" onAction="#addCourse" text="%addcourse.text">
+                                                         <accelerator>
+                                                            <KeyCodeCombination alt="UP" code="C" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                                         </accelerator>
+                                                         <graphic>
+                                                            <FontIcon iconLiteral="fas-plus" />
+                                                         </graphic>
+                                                      </MenuItem>
+                                                      <MenuItem mnemonicParsing="false" onAction="#onEditCourse" text="%edit.text">
+                                                         <graphic>
+                                                            <FontIcon iconLiteral="fas-edit" />
+                                                         </graphic>
+                                                      </MenuItem>
+                                                      <MenuItem mnemonicParsing="false" onAction="#onDeleteCourse" text="%remove.text">
+                                                         <graphic>
+                                                            <FontIcon iconLiteral="fas-trash" />
+                                                         </graphic>
+                                                      </MenuItem>
+                                                   </items>
+                                                </ContextMenu>
+                                             </contextMenu>
+                                          </TableView>
+                                       </content>
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-book" />
+                                       </graphic>
+                                    </Tab>
+                                 </tabs>
+                              </TabPane>
+                           </center>
+                           <top>
+                              <BorderPane BorderPane.alignment="CENTER">
+                                 <center>
+                                    <VBox prefHeight="75.0" prefWidth="452.0">
+                                       <children>
+                                          <AnchorPane>
+                                             <children>
+                                                <Label focusTraversable="false" layoutX="14.0" layoutY="9.0" prefHeight="17.0" prefWidth="512.0" text="%inputf.text" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                                                <Button layoutX="759.0" layoutY="5.0" mnemonicParsing="false" onAction="#onClearDistributor" prefHeight="25.0" prefWidth="118.0" text="%cleardata.text" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="6.0">
+                                                   <graphic>
+                                                      <FontIcon iconLiteral="fas-trash" />
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </AnchorPane>
+                                          <SplitPane dividerPositions="0.5" focusTraversable="false" prefHeight="19.0" prefWidth="369.0">
+                                             <items>
+                                                <Button fx:id="r5" minWidth="60.0" mnemonicParsing="false" onAction="#searchActionInput" onDragDropped="#onDragDroppedInput" onDragOver="#onDragOver" text="%search.text">
+                                                   <graphic>
+                                                      <FontIcon iconLiteral="fas-search" />
+                                                   </graphic>
+                                                </Button>
+                                                <TextField fx:id="t1" editable="false" onDragDropped="#onDragDroppedInput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="289.0" />
+                                             </items>
+                                             <VBox.margin>
+                                                <Insets left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </SplitPane>
+                                          <StackPane>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                             </VBox.margin>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
+                                 </center>
+                              </BorderPane>
+                           </top>
+                        </BorderPane>
+                     </content>
+                     <graphic>
+                        <FontIcon iconLiteral="fas-list-ul" />
+                     </graphic>
+                  </Tab>
+                  <Tab fx:id="tabOutput" closable="false" onSelectionChanged="#onTabOutput" style="-fx-rotate: 0;" text="%distribution.text">
+                     <content>
+                        <BorderPane>
+                           <center>
+                              <TabPane fx:id="outputTabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+                                 <tabs>
+                                    <Tab fx:id="students" closable="false" disable="true" onSelectionChanged="#onSelectOutputStudent" text="%coursedistribution.text">
+                                       <content>
+                                          <TableView fx:id="tv1" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true">
+                                             <columns>
+                                                <TableColumn fx:id="cvtc" prefWidth="97.0" text="%prename.text" />
+                                                <TableColumn fx:id="cntc" prefWidth="108.0" text="%name.text" />
+                                                <TableColumn prefWidth="149.0" text="%course.text">
+                                                   <columns>
+                                                      <TableColumn fx:id="ckstc" prefWidth="57.0" text="%subject.text" />
+                                                      <TableColumn fx:id="ckttc" prefWidth="61.0" text="%teacher.text" />
+                                                   </columns>
+                                                </TableColumn>
+                                                <TableColumn fx:id="cptc" prefWidth="89.0" text="%priority.text" />
+                                             </columns>
+                                             <contextMenu>
+                                                <ContextMenu>
+                                                  <items>
+                                                      <MenuItem mnemonicParsing="false" onAction="#onSwitchCourse" text="%edit.text">
+                                                         <graphic>
+                                                            <FontIcon iconLiteral="fas-edit" />
+                                                         </graphic></MenuItem>
+                                                    <MenuItem mnemonicParsing="false" onAction="#onDeleteStudentFromActualSave" text="%remove.text">
+                                                         <graphic>
+                                                            <FontIcon iconLiteral="fas-trash" />
+                                                         </graphic></MenuItem>
+                                                  </items>
+                                                </ContextMenu>
+                                             </contextMenu>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </content>
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-users" />
+                                       </graphic>
+                                    </Tab>
+                                    <Tab fx:id="teachers" closable="false" disable="true" onSelectionChanged="#onSelectionOutputCourse" text="%studentdistribution.text">
+                                       <content>
+                                          <TableView fx:id="tv2" prefHeight="171.0" prefWidth="421.0" tableMenuButtonVisible="true">
+                                             <columns>
+                                                <TableColumn fx:id="oSubject" prefWidth="75.0" text="%subject.text" />
+                                                <TableColumn fx:id="oTeacher" prefWidth="75.0" text="%teacher.text" />
+                                             </columns>
+                                             <contextMenu>
+                                                <ContextMenu>
+                                                  <items>
+                                                    <MenuItem mnemonicParsing="false" onAction="#onEditCourseActualSave" text="%edit.text">
+                                                         <graphic>
+                                                            <FontIcon iconLiteral="fas-edit" />
+                                                         </graphic></MenuItem>
+                                                      <MenuItem mnemonicParsing="false" onAction="#onDeleteCourseFromActualSave" text="%remove.text">
+                                                         <graphic>
+                                                            <FontIcon iconLiteral="fas-trash" />
+                                                         </graphic></MenuItem>
+                                                  </items>
+                                                </ContextMenu>
+                                             </contextMenu>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </content>
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-book" />
+                                       </graphic>
+                                    </Tab>
+                                    <Tab fx:id="statistics" closable="false" disable="true" text="%statistics.text">
+                                       <content>
+                                          <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER">
+                                             <content>
+                                                <VBox alignment="CENTER" prefHeight="446.0" prefWidth="401.0" spacing="10.0">
+                                                   <children>
+                                                      <Label text="%rates.text" />
+                                                      <TableView fx:id="rates" minHeight="200.0" prefHeight="122.0" VBox.vgrow="ALWAYS">
+                                                        <columns>
+                                                          <TableColumn fx:id="rate" prefWidth="150.0" text="%rate.text" />
+                                                          <TableColumn fx:id="rateV" minWidth="0.0" prefWidth="0.0" text="%value.text" />
+                                                        </columns>
+                                                         <columnResizePolicy>
+                                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                         </columnResizePolicy>
+                                                      </TableView>
+                                                      <Label text="%priorities.text" />
+                                                      <TableView fx:id="priorities" minHeight="200.0" VBox.vgrow="ALWAYS">
+                                                        <columns>
+                                                          <TableColumn fx:id="priority" prefWidth="75.0" text="%priority.text" />
+                                                          <TableColumn fx:id="swpriority" prefWidth="75.0" text="%countofstudents.text" />
+                                                            <TableColumn fx:id="percentualPriorities" prefWidth="75.0" text="%percentcount.text" />
+                                                        </columns>
+                                                         <columnResizePolicy>
+                                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                         </columnResizePolicy>
+                                                      </TableView>
+                                                      <Label text="%unallocatedstudents.text" />
+                                                      <TableView fx:id="unallocatedStudents" minHeight="150.0" VBox.vgrow="ALWAYS">
+                                                        <columns>
+                                                          <TableColumn fx:id="unallocatedPrename" prefWidth="75.0" text="%prename.text" />
+                                                          <TableColumn fx:id="unallocatedName" prefWidth="75.0" text="%name.text" />
+                                                        </columns>
+                                                         <contextMenu>
+                                                            <ContextMenu>
+                                                               <items>
+                                                                  <MenuItem mnemonicParsing="false" onAction="#onSwitchCourseUnallocatedStudent" text="%switchcourse.text">
+                                                                     <graphic>
+                                                                        <FontIcon iconLiteral="fas-edit" />
+                                                                     </graphic></MenuItem>
+                                                               </items>
+                                                            </ContextMenu>
+                                                         </contextMenu>
+                                                         <columnResizePolicy>
+                                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                         </columnResizePolicy>
+                                                      </TableView>
+                                                      <Label text="%studentswithbadpriority" />
+                                                      <TableView fx:id="bStudents" minHeight="200.0" VBox.vgrow="ALWAYS">
+                                                        <columns>
+                                                          <TableColumn fx:id="bPrename" prefWidth="75.0" text="%prename.text" />
+                                                          <TableColumn fx:id="bName" prefWidth="75.0" text="%name.text" />
+                                                            <TableColumn prefWidth="75.0" text="%course.text">
+                                                               <columns>
+                                                                  <TableColumn fx:id="bSubject" prefWidth="75.0" text="%subject.text" />
+                                                                  <TableColumn fx:id="bTeacher" prefWidth="75.0" text="%teacher.text" />
+                                                               </columns>
+                                                            </TableColumn>
+                                                            <TableColumn fx:id="bPriority" prefWidth="75.0" text="%priority.text" />
+                                                        </columns>
+                                                         <columnResizePolicy>
+                                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                         </columnResizePolicy>
+                                                         <contextMenu>
+                                                            <ContextMenu>
+                                                               <items>
+                                                                  <MenuItem mnemonicParsing="false" onAction="#onSwitchCourse" text="%switchcourse.text">
+                                                                     <graphic>
+                                                                        <FontIcon iconLiteral="fas-edit" />
+                                                                     </graphic></MenuItem>
+                                                               </items>
+                                                            </ContextMenu>
+                                                         </contextMenu>
+                                                      </TableView>
+                                                   </children>
+                                                   <opaqueInsets>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </opaqueInsets>
+                                                   <padding>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </content>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </ScrollPane>
+                                       </content>
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-bars" />
+                                       </graphic>
+                                    </Tab>
+                                 </tabs>
+                              </TabPane>
+                           </center>
+                           <top>
+                              <HBox alignment="CENTER" prefHeight="29.0" prefWidth="428.0" spacing="20.0" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </BorderPane.margin>
+                                 <children>
+                                    <Label fx:id="counter" text="0" />
+                                    <Label fx:id="textActual" layoutX="56.0" layoutY="16.0" />
+                                    <Label fx:id="textPrevious" />
+                                    <Button fx:id="b1" disable="true" mnemonicParsing="false" onAction="#onPreviousSave" text="%previous.text">
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-chevron-left" />
+                                       </graphic></Button>
+                                    <Button fx:id="b2" disable="true" mnemonicParsing="false" onAction="#onAddStudentToActualSave" text="%addstudento.text">
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-plus" />
+                                       </graphic></Button>
+                                    <Button fx:id="b5" disable="true" mnemonicParsing="false" onAction="#onAddCourseToActualSave" text="%addcourseo.text">
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-plus" />
+                                       </graphic></Button>
+                                    <Button fx:id="b6" disable="true" mnemonicParsing="false" onAction="#onRemoveUnusedCourses" text="%removeunusedcourses.text">
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-trash" />
+                                       </graphic></Button>
+                                    <Button fx:id="b7" disable="true" mnemonicParsing="false" onAction="#onClearCalculations" text="%clearcalculations.text">
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-trash" />
+                                       </graphic>
+                                    </Button>
+                                    <Button fx:id="b4" contentDisplay="RIGHT" disable="true" mnemonicParsing="false" onAction="#onNextSave" text="%next.text">
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-chevron-right" />
+                                       </graphic></Button>
+                                    <Label fx:id="textNext" />
+                                 </children>
+                              </HBox>
+                           </top>
+                           <bottom>
+                              <VBox prefHeight="125.0" prefWidth="427.0">
+                                 <children>
+                                    <Separator prefWidth="200.0" />
+                                    <VBox prefHeight="74.0" prefWidth="433.0">
+                                       <children>
+                                          <Label focusTraversable="false" prefHeight="17.0" prefWidth="389.0" text="%outputf.text">
+                                             <VBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <SplitPane dividerPositions="0.5, 0.5" focusTraversable="false" prefHeight="16.0" prefWidth="369.0">
+                                             <items>
+                                                <Button fx:id="r4" minWidth="60.0" mnemonicParsing="false" onAction="#searchActionOutput" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" text="%search.text">
+                                                   <graphic>
+                                                      <FontIcon iconLiteral="fas-search" />
+                                                   </graphic>
+                                                </Button>
+                                                <TextField fx:id="t2" editable="false" minWidth="180.0" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="200.0">
+                                                   <tooltip>
+                                                      <Tooltip text="Here you can find the path of your output file" />
+                                                   </tooltip>
+                                                </TextField>
+                                                <ComboBox fx:id="cb2" minWidth="65.0" onAction="#onFileTypeChanged" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="130.0" promptText=".xlsx">
+                                                   <tooltip>
+                                                      <Tooltip text="Here you select the type of output file" />
+                                                   </tooltip>
+                                                </ComboBox>
+                                             </items>
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                          </SplitPane>
+                                       </children>
+                                    </VBox>
+                                    <BorderPane focusTraversable="true" prefHeight="43.0" prefWidth="402.0">
+                                       <right>
+                                          <ButtonBar focusTraversable="false" prefHeight="40.0" prefWidth="153.0" BorderPane.alignment="CENTER">
+                                             <buttons>
+                                                <ProgressBar fx:id="p0" prefHeight="38.0" prefWidth="155.0">
+                                                   <padding>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </padding>
+                                                </ProgressBar>
+                                             </buttons>
+                                             <BorderPane.margin>
+                                                <Insets right="10.0" />
+                                             </BorderPane.margin>
+                                          </ButtonBar>
+                                       </right>
+                                       <top>
+                                          <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
+                                       </top>
+                                       <center>
+                                          <ButtonBar focusTraversable="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="307.0" BorderPane.alignment="CENTER_LEFT">
+                                             <buttons>
+                                                <Button fx:id="b3" disable="true" mnemonicParsing="false" onAction="#onShowInExcel" text="%showinspreadsheedprogramm.text">
+                                                   <graphic>
+                                                      <FontIcon iconLiteral="fas-file-excel" />
+                                                   </graphic>
+                                                </Button>
+                                                <Button fx:id="r2" minWidth="400.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#runAndSaveAction" prefHeight="25.0" text="%ras.text">
+                                                   <graphic>
+                                                      <FontIcon iconLiteral="fas-download" />
+                                                   </graphic>
+                                                </Button>
+                                                <Button fx:id="r3" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#saveAction" prefHeight="25.0" text="%save.text">
+                                                   <graphic>
+                                                      <FontIcon iconLiteral="fas-save" />
+                                                   </graphic>
+                                                </Button>
+                                                <Button fx:id="r1" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#runAction" prefHeight="25.0" text="%run.text">
+                                                   <graphic>
+                                                      <FontIcon iconLiteral="fas-play" />
+                                                   </graphic>
+                                                </Button>
+                                             </buttons>
+                                             <BorderPane.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </BorderPane.margin>
+                                          </ButtonBar>
+                                       </center>
+                                    </BorderPane>
+                                 </children>
+                              </VBox>
+                           </bottom>
+                        </BorderPane>
+                     </content>
+                     <graphic>
+                        <FontIcon iconLiteral="fas-list-ol" />
+                     </graphic>
+                  </Tab>
+                  <Tab onSelectionChanged="#onSaveDueToWindowChange" text="%options.tab">
+                     <content>
+                        <BorderPane>
+                           <center>
+                              <SplitPane dividerPositions="0.3937007874015748" focusTraversable="false" BorderPane.alignment="CENTER">
+                                 <items>
+                                    <TreeView fx:id="configurationTree" editable="true" minWidth="300.0" prefHeight="468.0" prefWidth="197.0" />
+                                    <ScrollPane minWidth="400.0" prefHeight="468.0" prefWidth="497.0">
+                                       <content>
+                                          <VBox fx:id="config" prefHeight="200.0" prefWidth="533.0" spacing="10.0">
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </items>
+                              </SplitPane>
+                           </center>
+                        </BorderPane>
+                     </content>
+                     <graphic>
+                        <FontIcon iconLiteral="fas-cog" />
+                     </graphic></Tab>
+                  <Tab text="%log.tab">
+                     <content>
+                        <BorderPane prefHeight="195.0" prefWidth="408.0">
+                           <center>
+                              <GridPane BorderPane.alignment="CENTER">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <TextArea fx:id="ta1" cache="true" cacheHint="SPEED" editable="false">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </TextArea>
+                                 </children>
+                              </GridPane>
+                           </center>
+                           <top>
+                              <HBox alignment="TOP_CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <ComboBox fx:id="cb1" nodeOrientation="LEFT_TO_RIGHT" onAction="#levelChanges" prefWidth="150.0" promptText="%chooselevel.text" />
+                                    <ComboBox fx:id="cb0" nodeOrientation="LEFT_TO_RIGHT" onAction="#printFormatChanged" prefWidth="150.0" promptText="%chooseformat.text" />
+                                    <Button fx:id="clear" mnemonicParsing="false" onAction="#clearConsole" text="%clear.text">
+                                       <graphic>
+                                          <FontIcon iconLiteral="fas-trash" />
+                                       </graphic></Button>
+                                 </children>
+                                 <BorderPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </BorderPane.margin>
+                              </HBox>
+                           </top>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </BorderPane>
+                     </content>
+                     <graphic>
+                        <FontIcon iconLiteral="fas-file-alt" />
+                     </graphic>
+                  </Tab>
+               </tabs>
+               <BorderPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </BorderPane.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </TabPane>
+         </center>
+         <top>
+            <MenuBar prefHeight="25.0" prefWidth="458.0" BorderPane.alignment="CENTER">
+               <menus>
+                  <Menu mnemonicParsing="false" text="%file.text">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onNew" text="%new.text">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-external-link-alt" />
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="N" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#onLoad" text="%open.text">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-folder-open" />
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#onNew" text="%close.text">
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-times" />
+                           </graphic></MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveActualAction" text="%savefile.text">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-save" />
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#close" text="%end.text">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-window-close" />
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                     </items>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                     <graphic>
+                        <FontIcon iconLiteral="fas-sticky-note" />
+                     </graphic>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="%editing.text">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#runAction" text="%run.text">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="R" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-play" />
+                           </graphic></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#saveAction" text="%save.text">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-save" />
+                           </graphic></MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#runAndSaveAction" text="%ras.text">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-download" />
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
+                        <SeparatorMenuItem fx:id="seperator" mnemonicParsing="false" />
+                        <Menu fx:id="menuCourse" mnemonicParsing="false" text="%course.text">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#addCourse" text="%addcourse.text">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-plus" />
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onEditCourse" text="%edit.text">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-edit" />
+                                 </graphic></MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onDeleteCourse" text="%remove.text">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-trash" />
+                                 </graphic></MenuItem>
+                           </items>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-book" />
+                           </graphic>
+                        </Menu>
+                        <Menu fx:id="menuStudent" mnemonicParsing="false" text="%student.text">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#addStudent" text="%addstudent.text">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-plus" />
+                                 </graphic></MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onEditStudent" text="%edit.text">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-edit" />
+                                 </graphic></MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onDeleteStudent" text="%remove.text">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-trash" />
+                                 </graphic></MenuItem>
+                           </items>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-users" />
+                           </graphic>
+                        </Menu>
+                        <SeparatorMenuItem fx:id="seperator1" mnemonicParsing="false" />
+                        <Menu fx:id="menuCourse1" mnemonicParsing="false" text="%course.text">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onAddCourseToActualSave" text="%addcourse.text">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-plus" />
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onEditCourseActualSave" text="%edit.text">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-edit" />
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onDeleteCourseFromActualSave" text="%remove.text">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-trash" />
+                                 </graphic>
+                              </MenuItem>
+                           </items>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-book" />
+                           </graphic>
+                        </Menu>
+                        <Menu fx:id="menuStudent1" mnemonicParsing="false" text="%student.text">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onAddStudentToActualSave" text="%addstudent.text">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-plus" />
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onSwitchCourse" text="%edit.text">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-edit" />
+                                 </graphic>
+                              </MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onDeleteStudentFromActualSave" text="%remove.text">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-trash" />
+                                 </graphic>
+                              </MenuItem>
+                           </items>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-users" />
+                           </graphic>
+                        </Menu>
+                     </items>
+                     <graphic>
+                        <FontIcon iconLiteral="fas-wrench" />
+                     </graphic>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="%help.text">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onAbout" text="%about.text">
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-address-card" />
+                           </graphic></MenuItem>
+                        <Menu mnemonicParsing="false" text="%theme.text">
+                           <items>
+                              <CheckMenuItem fx:id="mb1" mnemonicParsing="false" onAction="#onSetDarkTheme" selected="true" text="%dark.text">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="UP" code="D" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                 </accelerator></CheckMenuItem>
+                              <CheckMenuItem fx:id="mb0" mnemonicParsing="false" onAction="#onSetLightTheme" text="%light.text">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                 </accelerator>
+                              </CheckMenuItem>
+                           </items>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-exchange-alt" />
+                           </graphic>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="%language.text">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#onSetGerman" text="%german.text">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="DOWN" code="D" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                 </accelerator></MenuItem>
+                              <MenuItem mnemonicParsing="false" onAction="#onSetEnglish" text="%english.text">
+                                 <accelerator>
+                                    <KeyCodeCombination alt="DOWN" code="E" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                                 </accelerator></MenuItem>
+                           </items>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-globe" />
+                           </graphic>
+                        </Menu>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#onHelp" text="%help.text">
+                           <graphic>
+                              <FontIcon iconLiteral="far-question-circle" />
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#openHelpFile" text="%helpfile.text">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-paperclip" />
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="A" control="UP" meta="UP" shift="DOWN" shortcut="DOWN" />
+                           </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#onFullScreen" text="%fullscreen.text">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="F11" control="UP" meta="UP" shift="UP" shortcut="ANY" />
+                           </accelerator>
+                           <graphic>
+                              <FontIcon iconLiteral="fas-expand" />
+                           </graphic>
+                        </MenuItem>
+                     </items>
+                     <graphic>
+                        <FontIcon iconLiteral="fas-question-circle" />
+                     </graphic>
+                  </Menu>
+               </menus>
+            </MenuBar>
+         </top>
+      </BorderPane>
+   </children>
+</GridPane>

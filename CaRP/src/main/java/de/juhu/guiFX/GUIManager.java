@@ -997,7 +997,7 @@ public class GUIManager implements Initializable {
 		ErrorGuiController.headline = headline;
 		ErrorGuiController.information = message;
 
-		Util.openWindow("/assets/layouts/Error.fxml", "ERROR", GUILoader.getPrimaryStage(), this.theme);
+		//Util.openWindow("/assets/layouts/Error.fxml", "ERROR", GUILoader.getPrimaryStage(), this.theme);
 		LOGGER.info("Error Window Started");
 
 	}

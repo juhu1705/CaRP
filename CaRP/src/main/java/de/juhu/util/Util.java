@@ -5,16 +5,24 @@ import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
 
 import de.juhu.distributor.Course;
 import de.juhu.guiFX.Theme;
+import de.juhu.util.events.WindowCreatedEvent;
+import de.juhu.util.events.WindowUpdateEvent;
+import de.noisruker.event.EventManager;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import static de.noisruker.logger.Logger.LOGGER;
 
 /**
  * Beinhaltet nützliche Methoden
@@ -162,6 +170,30 @@ public class Util {
 		return Config.ignoreStudent.replaceAll("|", "").equalsIgnoreCase(connect);
 	}
 
+	public static Stage updateWindow(Stage stage, String resourceLocation) {
+		Parent root;
+
+		try {
+			root = FXMLLoader.load(Util.class.getResource(resourceLocation), References.language);
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, "Start new Window fail", e);
+			return stage;
+		}
+
+		Scene s = new Scene(root);
+
+		EventManager.getInstance().triggerEvent(new WindowUpdateEvent(stage, s));
+
+		stage.setScene(s);
+
+		stage.show();
+
+		stage.setFullScreenExitHint("Press F11 to exit fullscreen");
+		stage.setFullScreenExitKeyCombination(new KeyCodeCombination(KeyCode.F11));
+
+		return stage;
+	}
+
 	/**
 	 * 
 	 * @param resourceLocation
@@ -182,14 +214,13 @@ public class Util {
 		Parent root = null;
 
 		try {
-			root = FXMLLoader.load(Util.class.getClass().getResource(resourceLocation), References.language);
+			root = FXMLLoader.load(Util.class.getResource(resourceLocation), References.language);
 		} catch (IOException e) {
 			return null;
 		}
 		Scene s = new Scene(root);
-		if (!theme.getLocation().equalsIgnoreCase("remove")) {
-			s.getStylesheets().add(theme.getLocation());
-		}
+
+		EventManager.getInstance().triggerEvent(new WindowCreatedEvent(primaryStage, s));
 
 		primaryStage.setMinWidth(200);
 		primaryStage.setMinHeight(158);

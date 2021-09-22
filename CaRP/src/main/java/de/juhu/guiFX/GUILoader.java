@@ -14,7 +14,10 @@ import java.nio.file.LinkOption;
 import java.util.Objects;
 import java.util.PropertyResourceBundle;
 
+import de.juhu.util.Config;
 import de.juhu.util.References;
+import de.juhu.util.events.WindowUpdateEvent;
+import de.noisruker.event.EventManager;
 import de.noisruker.logger.Logger;
 import de.noisruker.logger.Settings;
 import javafx.application.Application;
@@ -24,6 +27,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 
 /**
  * Diese Klasse stellt die Hauptklasse des CaRP-Assigners da. Von hier werden
@@ -47,69 +52,6 @@ public class GUILoader extends Application {
 //		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI().toURL() + "");
 		GUILoader.primaryStage = primaryStage;
 
-		try {
-			if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"),
-					LinkOption.NOFOLLOW_LINKS)) {
-				if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER), LinkOption.NOFOLLOW_LINKS))
-					new File(References.HOME_FOLDER).mkdir();
-
-				Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
-						FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
-			}
-		} catch (Exception e) {
-			FileReader reader;
-			References.language = new PropertyResourceBundle(reader = new FileReader("/assets/language/de.properties"));
-			reader.close();
-		}
-
-		this.loadLanguage();
-
-		if (References.language.containsKey("version")) {
-			FileReader reader = null;
-			InputStreamReader reader2 = null;
-			if (!References.language.getString("version").equalsIgnoreCase(
-					new PropertyResourceBundle((new File("./resources/assets/language/de.properties").exists()
-							? reader = new FileReader("./resources/assets/language/de.properties")
-							: (reader2 = new InputStreamReader(
-									References.class.getResourceAsStream("/assets/language/de.properties")))))
-											.getString("version"))) {
-				if (reader != null)
-					reader.close();
-				if (reader2 != null)
-					reader2.close();
-
-				if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER), LinkOption.NOFOLLOW_LINKS))
-					new File(References.HOME_FOLDER).mkdir();
-
-				if (Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"),
-						LinkOption.NOFOLLOW_LINKS))
-					Files.delete(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
-
-				Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
-						FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
-
-				Reader reader3;
-				References.language = new PropertyResourceBundle(
-						reader3 = new FileReader(References.HOME_FOLDER + "language.properties"));
-				reader3.close();
-			}
-		} else {
-			if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER), LinkOption.NOFOLLOW_LINKS))
-				new File(References.HOME_FOLDER).mkdir();
-
-			if (Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"),
-					LinkOption.NOFOLLOW_LINKS))
-				Files.delete(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
-
-			Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
-					FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
-
-			Reader reader;
-			References.language = new PropertyResourceBundle(
-					reader = new FileReader(References.HOME_FOLDER + "language.properties"));
-			reader.close();
-		}
-
 		Image i;
 
 		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
@@ -123,17 +65,13 @@ public class GUILoader extends Application {
 
 		Scene s = new Scene(root);
 
-		if (GUIManager.getInstance().theme == null)
-			GUIManager.getInstance().theme = Theme.DARK;
-
-		if (!GUIManager.getInstance().theme.location.equalsIgnoreCase("remove"))
-			s.getStylesheets().add(GUIManager.getInstance().theme.location);
+		EventManager.getInstance().triggerEvent(new WindowUpdateEvent(primaryStage, s));
 
 		GUIManager.getInstance().checks.forEach((themes, checkbox) -> {
 			checkbox.setSelected(false);
 		});
 
-		GUIManager.getInstance().checks.get(GUIManager.getInstance().theme).setSelected(true);
+		//GUIManager.getInstance().checks.get(GUIManager.getInstance().theme).setSelected(true);
 
 		primaryStage.setMinWidth(1400);
 		primaryStage.setMinHeight(580);
@@ -171,33 +109,13 @@ public class GUILoader extends Application {
 		return primaryStage;
 	}
 
-	private void loadLanguage() {
-
-		if (References.language != null)
-			return;
-		try {
-			Reader reader;
-			References.language = new PropertyResourceBundle(
-					reader = new FileReader(References.HOME_FOLDER + "language.properties"));
-			reader.close();
-		} catch (IOException e) {
-			try {
-				Reader reader;
-				Logger.LOGGER.info("Failed to load language, backup language was loaded");
-				References.language = new PropertyResourceBundle(
-						reader = new FileReader("/assets/language/de.properties"));
-				reader.close();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-	}
-
 	public static void main(String[] args) {
 		Settings.PROGRAMM_FOLDER = "/.CaRP/";
 		Settings.LOGGER_NAME = PROJECT_NAME;
 
 		Logger.LOGGER.info("Starte: " + PROJECT_NAME + " | Version: " + VERSION);
+
+		Config.register();
 
 		for (String arg : args) {
 			if (new File(arg).exists())

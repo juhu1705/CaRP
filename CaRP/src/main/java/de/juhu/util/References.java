@@ -1,10 +1,11 @@
 package de.juhu.util;
 
 import java.nio.file.Paths;
-import java.util.PropertyResourceBundle;
-import java.util.Random;
+import java.util.*;
 
 import de.noisruker.logger.Settings;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 
 /**
  * Beinhaltet alle Referenzobjekte
@@ -42,6 +43,11 @@ public class References {
 	static {
 		PROJECT_NAME = "CaRP Assigner";
 	}
+
+	public static final JMetro J_METRO = new JMetro(Style.DARK);
+	public static final List<JMetro> OTHER_PAGES_WITH_THEMES = new ArrayList<>();
+	public static final String THEME_IMPROVEMENTS = Objects.requireNonNull(References.class.getResource("/assets/styles/theme.css")).toExternalForm();
+	public static final String DARK_THEME_FIXES = Objects.requireNonNull(References.class.getResource("/assets/styles/dark.css")).toExternalForm();
 
 	/**
 	 * Der Zufallsgenerator

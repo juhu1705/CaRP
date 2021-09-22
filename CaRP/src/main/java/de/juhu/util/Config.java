@@ -1,13 +1,25 @@
 package de.juhu.util;
 
+import de.juhu.guiFX.GUILoader;
+import de.juhu.util.events.*;
 import de.noisruker.config.ConfigElement;
 import de.noisruker.config.ConfigManager;
+import de.noisruker.config.event.ConfigEntryChangeEvent;
+import de.noisruker.event.EventManager;
+import javafx.scene.Scene;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
+import java.util.List;
+import java.util.PropertyResourceBundle;
 import java.util.logging.Level;
 
 import static de.noisruker.config.ConfigElementType.*;
@@ -109,23 +121,141 @@ public class Config {
 	@ConfigElement(defaultValue = "3", type = COUNT, description = "rateindex.description", name = "rateindex.text", location = "config.calculation", visible = true)
 	public static int powValue = 3;
 
-	static {
+	@ConfigElement(defaultValue = "GERMAN", type = CHOOSE, description = "language.description", name = "language.text", location = "config", visible = true)
+	public static String language;
+
+	@ConfigElement(defaultValue = "DARK", type = CHOOSE, description = "theme.description", name = "theme.text", location = "config", visible = true)
+	public static String theme;
+
+	public static void register() {
+		LOGGER.info("Reading config");
 		try {
 			ConfigManager.getInstance().register(Config.class);
-		} catch (IOException e4) {
+
+			EventManager.getInstance().registerEventListener(LanguageRegisterEvent.class, event -> {
+				event.registerNewLanguage("GERMAN");
+				event.registerNewLanguage("ENGLISH");
+			});
+
+			EventManager.getInstance().registerEventListener(ThemeRegisterEvent.class, event -> {
+				event.registerNewTheme("DARK");
+				event.registerNewTheme("LIGHT");
+			});
+
+			EventManager.getInstance().registerEventListener(LanguageLocationSearchEvent.class, event -> {
+				switch (event.getLanguageName()) {
+					case "GERMAN": event.setLocation("/assets/language/de.properties"); break;
+					case "ENGLISH": event.setLocation("/assets/language/en.properties"); break;
+				}
+			});
+
+			EventManager.getInstance().registerEventListener(WindowUpdateEvent.class, event -> {
+				Scene s = event.getScene();
+
+				if ("DARK".equals(Config.theme) || "LIGHT".equals(Config.theme)) {
+					References.J_METRO.setScene(s);
+
+					if ("DARK".equals(Config.theme))
+						s.getStylesheets().add(References.DARK_THEME_FIXES);
+
+					s.getStylesheets().add(References.THEME_IMPROVEMENTS);
+				}
+			});
+
+			EventManager.getInstance().registerEventListener(WindowUpdateEvent.class, event -> {
+				Scene s = event.getScene();
+
+				if ("DARK".equals(Config.theme) || "LIGHT".equals(Config.theme)) {
+					References.J_METRO.setScene(s);
+
+					if ("DARK".equals(Config.theme))
+						s.getStylesheets().add(References.DARK_THEME_FIXES);
+
+					s.getStylesheets().add(References.THEME_IMPROVEMENTS);
+				}
+			});
+
+			EventManager.getInstance().registerEventListener(WindowCreatedEvent.class, event -> {
+				Scene s = event.getScene();
+
+				if ("DARK".equals(Config.theme) || "LIGHT".equals(Config.theme)) {
+					JMetro theme = new JMetro(s, "DARK".equals(Config.theme) ? Style.DARK : Style.LIGHT);
+					References.OTHER_PAGES_WITH_THEMES.add(theme);
+					event.getStage().setOnCloseRequest(event2 -> References.OTHER_PAGES_WITH_THEMES.remove(theme));
+
+					if ("DARK".equals(Config.theme))
+						s.getStylesheets().add(References.DARK_THEME_FIXES);
+
+					s.getStylesheets().add(References.THEME_IMPROVEMENTS);
+				}
+			});
+
+			Object out = EventManager.getInstance().triggerEvent(new LanguageRegisterEvent());
+			if(out instanceof List) {
+				Object[] values = ((List<?>) out).toArray();
+				String[] languages = new String[values.length];
+
+				for(int i = 0, i1 = 0; i < values.length; i++) {
+					if (values[i] instanceof String)
+						languages[i1++] = (String) values[i];
+				}
+				ConfigManager.getInstance().registerOptionParameters("language.text", languages);
+			}
+
+			out = EventManager.getInstance().triggerEvent(new ThemeRegisterEvent());
+			if(out instanceof List) {
+				Object[] values = ((List<?>) out).toArray();
+				String[] themes = new String[values.length];
+
+				for(int i = 0, i1 = 0; i < values.length; i++) {
+					if (values[i] instanceof String)
+						themes[i1++] = (String) values[i];
+				}
+				ConfigManager.getInstance().registerOptionParameters("theme.text", themes);
+			}
+
+			EventManager.getInstance().registerEventListener(ConfigEntryChangeEvent.class, event -> {
+				if(event.getEntryName().equals("language.text")) {
+
+					try {
+						InputStreamReader r;
+
+						Object location = EventManager.getInstance().triggerEvent(new LanguageLocationSearchEvent(event.getEntryValue()));
+
+						if(location == null)
+							location = EventManager.getInstance().triggerEvent(new LanguageLocationSearchEvent("GERMAN"));
+						InputStream stream = GUILoader.class.getResourceAsStream((String) location);
+
+						if(stream == null) {
+							LOGGER.log(Level.WARNING, "The requested language could not be loaded", new Exception("Language not found"));
+							return;
+						}
+
+						References.language = new PropertyResourceBundle(r = new InputStreamReader(stream, StandardCharsets.UTF_8));
+						r.close();
+					} catch (Exception e) {
+						LOGGER.log(Level.WARNING, "The requested language could not be loaded", e);
+					}
+
+					/*if (GUILoader.getPrimaryStage() != null && GuiMain.getInstance() != null) {
+						Util.updateWindow(GUILoader.getPrimaryStage(), "/assets/layouts/main.fxml");
+						GUILoader.getPrimaryStage().setTitle(Ref.language.getString("window." + Ref.PROJECT_NAME));
+					}*/
+				} else if("theme.text".equals(event.getEntryName())) {
+					References.J_METRO.setStyle("DARK".equals(Config.theme) ? Style.DARK : Style.LIGHT);
+				}
+			});
+
+			if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "config.cfg"),
+					LinkOption.NOFOLLOW_LINKS)) {
+				ConfigManager.getInstance().loadDefault();
+			} else {
+				ConfigManager.getInstance().load(References.HOME_FOLDER + "config.cfg");
+			}
+		} catch (IOException | SAXException e4) {
 			LOGGER.log(Level.SEVERE, "Error while register Configuration Elements", e4);
 		}
-		if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "config.cfg"),
-				LinkOption.NOFOLLOW_LINKS)) {
-			ConfigManager.getInstance().loadDefault();
-		}
-		else {
-			try {
-				ConfigManager.getInstance().load(References.HOME_FOLDER + "config.cfg");
-			} catch (SAXException | IOException e4) {
-				LOGGER.log(Level.SEVERE, "Error while loading Config", e4);
-			}
-		}
+
 	}
 
 }

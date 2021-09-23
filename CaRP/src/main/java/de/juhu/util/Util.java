@@ -199,10 +199,9 @@ public class Util {
 	 * @param resourceLocation
 	 * @param title
 	 * @param parent
-	 * @param theme
 	 * @return
 	 */
-	public static Stage openWindow(String resourceLocation, String title, Stage parent, Theme theme) {
+	public static Stage openWindow(String resourceLocation, String title, Stage parent) {
 		Stage primaryStage = new Stage();
 
 		Image i;

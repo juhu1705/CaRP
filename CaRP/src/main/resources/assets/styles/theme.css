@@ -6,6 +6,22 @@
 *.root {
 }
 
+*.ikonli-font-icon {
+    -fx-icon-color: black;
+}
+
+.tab:selected *.ikonli-font-icon {
+    -fx-icon-color: derive(accent_color, 30%);
+}
+
+.tab:hover *.ikonli-font-icon {
+    -fx-icon-color: derive(accent_color, 50%);
+}
+
+.table-row-cell:odd{
+    -fx-background-color: derive(background_color, -15%);
+}
+
  
  /*Menu */
 

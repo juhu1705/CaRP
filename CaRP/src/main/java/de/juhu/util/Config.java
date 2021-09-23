@@ -1,6 +1,7 @@
 package de.juhu.util;
 
 import de.juhu.guiFX.GUILoader;
+import de.juhu.guiFX.GUIManager;
 import de.juhu.util.events.*;
 import de.noisruker.config.ConfigElement;
 import de.noisruker.config.ConfigManager;
@@ -155,10 +156,10 @@ public class Config {
 				if ("DARK".equals(Config.theme) || "LIGHT".equals(Config.theme)) {
 					References.J_METRO.setScene(s);
 
+					s.getStylesheets().add(References.THEME_IMPROVEMENTS);
+
 					if ("DARK".equals(Config.theme))
 						s.getStylesheets().add(References.DARK_THEME_FIXES);
-
-					s.getStylesheets().add(References.THEME_IMPROVEMENTS);
 				}
 			});
 
@@ -168,10 +169,10 @@ public class Config {
 				if ("DARK".equals(Config.theme) || "LIGHT".equals(Config.theme)) {
 					References.J_METRO.setScene(s);
 
+					s.getStylesheets().add(References.THEME_IMPROVEMENTS);
+
 					if ("DARK".equals(Config.theme))
 						s.getStylesheets().add(References.DARK_THEME_FIXES);
-
-					s.getStylesheets().add(References.THEME_IMPROVEMENTS);
 				}
 			});
 
@@ -237,12 +238,16 @@ public class Config {
 						LOGGER.log(Level.WARNING, "The requested language could not be loaded", e);
 					}
 
-					/*if (GUILoader.getPrimaryStage() != null && GuiMain.getInstance() != null) {
-						Util.updateWindow(GUILoader.getPrimaryStage(), "/assets/layouts/main.fxml");
-						GUILoader.getPrimaryStage().setTitle(Ref.language.getString("window." + Ref.PROJECT_NAME));
-					}*/
-				} else if("theme.text".equals(event.getEntryName())) {
+					if (GUILoader.getPrimaryStage() != null && GUIManager.getInstance() != null) {
+						Util.updateWindow(GUILoader.getPrimaryStage(), "/assets/layouts/GUI.fxml");
+					}
+				} else if("theme.text".equals(event.getEntryName()) && ("DARK".equals(Config.theme) || "LIGHT".equals(Config.theme))) {
 					References.J_METRO.setStyle("DARK".equals(Config.theme) ? Style.DARK : Style.LIGHT);
+					if(!"DARK".equals(theme) && References.J_METRO.getScene() != null)
+						while (References.J_METRO.getScene().getStylesheets().contains(References.DARK_THEME_FIXES))
+							LOGGER.info("REMOVED? " + References.J_METRO.getScene().getStylesheets().remove(References.DARK_THEME_FIXES));
+					if ("DARK".equals(Config.theme) && References.J_METRO.getScene() != null && !References.J_METRO.getScene().getStylesheets().contains(References.DARK_THEME_FIXES))
+						References.J_METRO.getScene().getStylesheets().add(References.DARK_THEME_FIXES);
 				}
 			});
 

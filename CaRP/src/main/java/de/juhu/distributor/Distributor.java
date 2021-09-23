@@ -1222,7 +1222,7 @@ public class Distributor implements Runnable {
 
 								Util.openWindow("/assets/layouts/DoubleStudent.fxml",
 										References.language.getString("doubleStudent.text"),
-										GUILoader.getPrimaryStage(), GUIManager.getInstance().theme);
+										GUILoader.getPrimaryStage());
 							});
 
 							while (!GUIDoubleStudentManager.finished) {

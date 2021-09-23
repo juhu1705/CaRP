@@ -28,6 +28,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.JMetroStyleClass;
 import jfxtras.styles.jmetro.Style;
 
 /**
@@ -59,8 +60,6 @@ public class GUILoader extends Application {
 		else
 			i = new Image("/assets/textures/logo/KuFA.png");
 
-		System.out.println(References.language);
-		System.out.println(getClass().getResource("/assets/layouts/GUI.fxml"));
 		Parent root = FXMLLoader.load(getClass().getResource("/assets/layouts/GUI.fxml"), References.language);
 
 		Scene s = new Scene(root);
@@ -71,7 +70,8 @@ public class GUILoader extends Application {
 			checkbox.setSelected(false);
 		});
 
-		//GUIManager.getInstance().checks.get(GUIManager.getInstance().theme).setSelected(true);
+		if(GUIManager.getInstance().checks.get(Config.theme) != null)
+			GUIManager.getInstance().checks.get(Config.theme).setSelected(true);
 
 		primaryStage.setMinWidth(1400);
 		primaryStage.setMinHeight(580);

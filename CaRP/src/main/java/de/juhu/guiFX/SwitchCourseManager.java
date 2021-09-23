@@ -111,22 +111,22 @@ public class SwitchCourseManager implements Initializable {
 		int i = 1;
 
 		for (Course c : student.getCourses()) {
-			if (student.getActiveCourse().equals(c))
+			if (c.equals(student.getActiveCourse()))
 				courses.add("(" + i++ + ".) " + c.getSubject() + ", " + c.getTeacher() + " | "
-						+ Integer.toString(c.size()) + "/" + Integer.toString(c.getMaxStudentCount()));
+						+ c.size() + "/" + c.getMaxStudentCount());
 			else
-				courses.add(i++ + ". " + c.getSubject() + ", " + c.getTeacher() + " | " + Integer.toString(c.size())
-						+ "/" + Integer.toString(c.getMaxStudentCount()));
+				courses.add(i++ + ". " + c.getSubject() + ", " + c.getTeacher() + " | " + c.size()
+						+ "/" + c.getMaxStudentCount());
 		}
 
 		comboBox.setItems(FXCollections.observableArrayList(courses));
 
-		Course c = student.getActiveCourse();
-		i = student.getPosition(c) + 1;
-
-		if (student.getActiveCourse() != null)
+		if (student.getActiveCourse() != null) {
+			Course c = student.getActiveCourse();
+			i = student.getPosition(c) + 1;
 			comboBox.setValue("(" + i++ + ".) " + c.getSubject() + ", " + c.getTeacher() + " | "
-					+ Integer.toString(c.size()) + "/" + Integer.toString(c.getMaxStudentCount()));
+					+ c.size() + "/" + c.getMaxStudentCount());
+		}
 //		this.teacher.setCellValueFactory(s -> {
 //			return new SimpleStringProperty(s.getValue().getTeacher());
 //		});
@@ -141,6 +141,7 @@ public class SwitchCourseManager implements Initializable {
 		if (!Util.isBlank(student.getPrename()))
 			this.prename.setText(student.getPrename());
 
+		LOGGER.info("Success");
 //		this.scw = new SwitchCourseView(this.courses, student);
 //		this.scw.run();
 

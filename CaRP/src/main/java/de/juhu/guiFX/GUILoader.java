@@ -20,7 +20,9 @@ import de.juhu.util.events.WindowUpdateEvent;
 import de.noisruker.event.EventManager;
 import de.noisruker.logger.Logger;
 import de.noisruker.logger.Settings;
+import de.noisruker.logger.events.LogReceivedErrorEvent;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,6 +32,7 @@ import javafx.stage.StageStyle;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.JMetroStyleClass;
 import jfxtras.styles.jmetro.Style;
+import org.controlsfx.control.Notifications;
 
 /**
  * Diese Klasse stellt die Hauptklasse des CaRP-Assigners da. Von hier werden
@@ -48,9 +51,6 @@ public class GUILoader extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-//		LOGGER.info(getClass().getResource("/de/juhu/guiFX/GUI.fxml") + "");
-//		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI() + "");
-//		LOGGER.info(new File("./de/juhu/guiFX/GUI.fxml").toURI().toURL() + "");
 		GUILoader.primaryStage = primaryStage;
 
 		Image i;
@@ -60,7 +60,7 @@ public class GUILoader extends Application {
 		else
 			i = new Image("/assets/textures/logo/KuFA.png");
 
-		Parent root = FXMLLoader.load(getClass().getResource("/assets/layouts/GUI.fxml"), References.language);
+		Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/assets/layouts/GUI.fxml")), References.language);
 
 		Scene s = new Scene(root);
 
@@ -73,7 +73,7 @@ public class GUILoader extends Application {
 		if(GUIManager.getInstance().checks.get(Config.theme) != null)
 			GUIManager.getInstance().checks.get(Config.theme).setSelected(true);
 
-		primaryStage.setMinWidth(1400);
+		primaryStage.setMinWidth(600);
 		primaryStage.setMinHeight(580);
 		primaryStage.setTitle(PROJECT_NAME + " | " + VERSION);
 		primaryStage.setScene(s);
@@ -96,13 +96,20 @@ public class GUILoader extends Application {
 			GUIManager.getInstance().inputView.fill();
 			GUIManager.getInstance().cView.fill();
 		}
-	}
 
-	public void starting2() throws IOException {
+		EventManager.getInstance().registerEventListener(LogReceivedErrorEvent.class, errorEvent -> {
+			String message = errorEvent.getRawMessage();
+			String cause = errorEvent.getThrown() != null ? errorEvent.getThrown().getLocalizedMessage() : "";
 
-		secondaryStage.show();
-		primaryStage.close();
-		GUILoader.primaryStage = secondaryStage;
+			if(Objects.equals(cause, ""))
+				Platform.runLater(() -> Notifications.create().darkStyle().title(errorEvent.getRecord().getLevel().toString())
+						.text(message).owner(GUILoader.getPrimaryStage())
+						.showError());
+			else
+				Platform.runLater(() -> Notifications.create().darkStyle().title(message)
+						.text(cause).owner(GUILoader.getPrimaryStage())
+						.showError());
+		});
 	}
 
 	public static Stage getPrimaryStage() {

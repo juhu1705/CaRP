@@ -16,8 +16,8 @@ import java.util.concurrent.Future;
  */
 public class MergeSort<T extends Comparable> implements Callable {
 
-	private ArrayList<T> input;
-	private ExecutorService pool;
+	private final ArrayList<T> input;
+	private final ExecutorService pool;
 
 	/**
 	 * Initialisierung des Mergesorts. Aufgerufen wird der Allgorithmus durch

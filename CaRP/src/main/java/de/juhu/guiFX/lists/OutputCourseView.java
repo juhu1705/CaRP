@@ -48,7 +48,7 @@ public class OutputCourseView implements Runnable {
 			TableColumn<Course, String> prename = new TableColumn<>(References.language.getString("prename.text"));
 			TableColumn<Course, String> name = new TableColumn<>(References.language.getString("name.text"));
 			TableColumn<Course, String> student = new TableColumn<>(
-					References.language.getString("student.text") + " " + Integer.toString(i + 1));
+					References.language.getString("student.text") + " " + (i + 1));
 
 			final int position = i;
 

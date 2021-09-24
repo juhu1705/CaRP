@@ -25,7 +25,7 @@ public class Student implements Comparable<Student>, Serializable {
 	 * nach ihrer Priorität. An Position 0 steht der Kurs mit der geringsten
 	 * Priorität.
 	 */
-	private ArrayList<Course> courses = new ArrayList<>();
+	private final ArrayList<Course> courses = new ArrayList<>();
 
 	/**
 	 * Der Kurs, in dem sich der Schüler momentan befindet. Ist {@code null}, wenn
@@ -264,9 +264,7 @@ public class Student implements Comparable<Student>, Serializable {
 	public void addCourse(Course course) {
 		if (course == null)
 			return;
-		if (this.courses.contains(course)) {
-			this.courses.remove(course);
-		}
+		this.courses.remove(course);
 
 		this.courses.add(course);
 	}
@@ -284,9 +282,7 @@ public class Student implements Comparable<Student>, Serializable {
 	public void addCourse(int index, Course course) throws IndexOutOfBoundsException {
 		if (course == null)
 			return;
-		if (this.courses.contains(course)) {
-			this.courses.remove(course);
-		}
+		this.courses.remove(course);
 
 		this.courses.add(index, course);
 	}

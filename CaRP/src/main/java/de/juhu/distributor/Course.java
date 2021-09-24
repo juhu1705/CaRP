@@ -20,7 +20,7 @@ public class Course implements Comparable<Course>, Serializable {
 	/**
 	 * Alle Schüler, die dem Kurs zugeordnet sind.
 	 */
-	private ArrayList<Student> students = new ArrayList<>();
+	private final ArrayList<Student> students = new ArrayList<>();
 
 	/**
 	 * Der Lehrer des Kurses / Das Lehrerkürzel
@@ -99,10 +99,10 @@ public class Course implements Comparable<Course>, Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof String) {
-			return ((String) obj).equals(this.toString());
+			return obj.equals(this.toString());
 		}
 		if (obj instanceof Course) {
-			return ((Course) obj).toString().equals(this.toString());
+			return obj.toString().equals(this.toString());
 		}
 
 		return super.equals(obj);

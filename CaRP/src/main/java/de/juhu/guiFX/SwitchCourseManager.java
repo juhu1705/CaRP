@@ -86,7 +86,7 @@ public class SwitchCourseManager implements Initializable {
 
 		for (Course c : GUIManager.actual.getAllCoursesAsArray()) {
 			if (this.comboBox.getValue().endsWith(c.getSubject() + ", " + c.getTeacher() + " | "
-					+ Integer.toString(c.size()) + "/" + Integer.toString(c.getMaxStudentCount())))
+					+ c.size() + "/" + c.getMaxStudentCount()))
 				student.setActiveCourse(c);
 		}
 

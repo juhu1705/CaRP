@@ -68,7 +68,7 @@ public class InformationSave implements Serializable {
 	 * Alle Schüler aus dem {@link #parent zugeordneten Speicher}, die nicht
 	 * zugewiesen werden konnten.
 	 */
-	private ArrayList<Student> unallocatedStudents = new ArrayList<Student>();
+	private final ArrayList<Student> unallocatedStudents = new ArrayList<Student>();
 
 	/**
 	 * Alle Schüler aus dem {@link #parent zugeordneten Speicher}, die die

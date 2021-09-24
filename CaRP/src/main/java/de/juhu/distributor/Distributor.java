@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -203,8 +204,7 @@ public class Distributor implements Runnable {
 
 		// Fügt alle drei Speicherungen zu den Kalkulationen hinzu.
 		Distributor.calculated.add(actual);
-		for (Save s : readObject)
-			Distributor.calculated.add(s);
+		Distributor.calculated.addAll(Arrays.asList(readObject));
 	}
 
 	/**
@@ -267,10 +267,10 @@ public class Distributor implements Runnable {
 		/*
 		 * Gibt relevante Informationen in den Log aus.
 		 */
-		LOGGER.config("Distributor Started whith this specificies: ");
-		LOGGER.config("--Basic Student limit: " + Integer.toString(Config.normalStudentLimit));
-		LOGGER.config("--The chooses of the Students: " + Integer.toString(Config.maxChooses));
-		LOGGER.config("--The number of students to Calculate: " + Integer.toString(this.allStudents.size()));
+		LOGGER.config("Distributor Started with this specifies: ");
+		LOGGER.config("--Basic Student limit: " + Config.normalStudentLimit);
+		LOGGER.config("--The chooses of the Students: " + Config.maxChooses);
+		LOGGER.config("--The number of students to Calculate: " + this.allStudents.size());
 
 		calculate = true;
 
@@ -292,18 +292,18 @@ public class Distributor implements Runnable {
 
 		Platform.runLater(() -> {
 			GUIManager.getInstance().counter.setText(References.language.getString("distribution.text") + ": "
-					+ Integer.toString((Distributor.calculated.indexOf(GUIManager.actual) + 1)));
+					+ (Distributor.calculated.indexOf(GUIManager.actual) + 1));
 
 			LOGGER.config(GUIManager.getInstance().textActual + "");
 
 			GUIManager.getInstance().textActual.setText(References.language.getString("calculationgoodness.text") + ": "
-					+ Double.toString(Util.round(GUIManager.actual.getInformation().getGuete(), 3)));
+					+ Util.round(GUIManager.actual.getInformation().getGuete(), 3));
 
 			GUIManager.getInstance().b1.setDisable(true);
 			if (Distributor.calculated.size() > 1) {
 				GUIManager.getInstance().b4.setDisable(false);
 				GUIManager.getInstance().textNext.setText(References.language.getString("nextgoodness.text")
-						+ Double.toString(Util.round(Distributor.calculated.get(2).getInformation().getGuete(), 3)));
+						+ Util.round(Distributor.calculated.get(2).getInformation().getGuete(), 3));
 			} else
 				GUIManager.getInstance().b4.setDisable(true);
 
@@ -1005,8 +1005,7 @@ public class Distributor implements Runnable {
 		if (s == null)
 			return;
 
-		if (this.allStudents.contains(s))
-			this.allStudents.remove(s);
+		this.allStudents.remove(s);
 
 		if (this.allStudents.add(s))
 			LOGGER.fine("The Student with the name " + s.getPrename() + " " + s.getName() + " was added.");
@@ -1278,7 +1277,7 @@ public class Distributor implements Runnable {
 						.getOrCreateCourseByName(line[0].replaceAll(" ", "") + "|" + line[1].replaceAll(" ", ""));
 				c.setStudentMax(countStudents);
 
-				LOGGER.fine("The course " + c.toString() + " was added to the courses with the student limit "
+				LOGGER.fine("The course " + c + " was added to the courses with the student limit "
 						+ countStudents + ".");
 			}
 		});
@@ -1326,8 +1325,7 @@ public class Distributor implements Runnable {
 	 * @param c Der Kurs der eingefügt werden soll.
 	 */
 	public void addCourse(Course c) {
-		if (this.allCourses.contains(c))
-			this.allCourses.remove(c);
+		this.allCourses.remove(c);
 		if (this.allCourses.add(c))
 			LOGGER.fine("The " + c.getSubject() + "-Course teached by " + c.getTeacher() + " was added.");
 	}
@@ -1368,9 +1366,9 @@ public class Distributor implements Runnable {
 		if (student == null)
 			return;
 		if (this.allStudents.contains(student))
-			this.allStudents.remove(this.allStudents.indexOf(student));
+			this.allStudents.remove(student);
 		if (this.ignoredStudents.contains(student))
-			this.ignoredStudents.remove(this.ignoredStudents.indexOf(student));
+			this.ignoredStudents.remove(student);
 	}
 
 	/**
@@ -1382,7 +1380,7 @@ public class Distributor implements Runnable {
 		if (course == null)
 			return;
 		if (this.allCourses.contains(course))
-			this.allCourses.remove(this.allCourses.indexOf(course));
+			this.allCourses.remove(course);
 	}
 
 	/**

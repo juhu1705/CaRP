@@ -1,14 +1,44 @@
 package de.juhu.guiFX;
 
-import static de.noisruker.logger.Logger.LOGGER;
+import de.juhu.distributor.Course;
+import de.juhu.distributor.Distributor;
+import de.juhu.distributor.Save;
+import de.juhu.distributor.Student;
+import de.juhu.guiFX.lists.*;
+import de.juhu.util.Config;
+import de.juhu.util.References;
+import de.juhu.util.Util;
+import de.noisruker.config.ConfigManager;
+import de.noisruker.filemanager.CSVExporter;
+import de.noisruker.filemanager.ExcelExporter;
+import de.noisruker.logger.PrintFormat;
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Duration;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.Field;
+import java.awt.*;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -22,66 +52,7 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 
-import de.noisruker.config.ConfigElement;
-import de.noisruker.config.ConfigManager;
-import de.noisruker.event.EventManager;
-import de.noisruker.logger.PrintFormat;
-import de.noisruker.logger.events.LogReceivedMessageEvent;
-import org.xml.sax.SAXException;
-
-import de.juhu.distributor.Course;
-import de.juhu.distributor.Distributor;
-import de.juhu.distributor.Save;
-import de.juhu.distributor.Student;
-import de.noisruker.filemanager.CSVExporter;
-import de.noisruker.filemanager.ExcelExporter;
-import de.juhu.guiFX.lists.CourseView;
-import de.juhu.guiFX.lists.InputView;
-import de.juhu.guiFX.lists.OutputCourseView;
-import de.juhu.guiFX.lists.OutputInformationView;
-import de.juhu.guiFX.lists.OutputStudentsView;
-import de.juhu.util.Config;
-import de.juhu.util.References;
-import de.juhu.util.Util;
-import javafx.animation.FadeTransition;
-import javafx.animation.ScaleTransition;
-import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.CacheHint;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Menu;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeView;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.util.Duration;
+import static de.noisruker.logger.Logger.LOGGER;
 
 /**
  * Diese Klasse verwaltet alle Aktionen des Haupt-GUIs.
@@ -105,9 +76,6 @@ public class GUIManager implements Initializable {
 
 	@FXML
 	public ProgressBar p0;
-
-	@FXML
-	public TextArea ta1;
 
 	@FXML
 	public TreeView<String> configurationTree;
@@ -177,7 +145,7 @@ public class GUIManager implements Initializable {
 	public OutputInformationView outputIView;
 
 	@FXML
-	public VBox config;
+	public VBox config, loggingPage;
 
 	@FXML
 	public ListView<String> lv0;
@@ -203,7 +171,7 @@ public class GUIManager implements Initializable {
 
 		Student student = this.tv1.getSelectionModel().getSelectedItem();
 
-		this.actual.removeStudent(student);
+		actual.removeStudent(student);
 
 		GUIManager.actual.getInformation().update();
 		Platform.runLater(GUIManager.getInstance().outputSView);
@@ -217,7 +185,7 @@ public class GUIManager implements Initializable {
 
 		for (Course c : actual.getAllCoursesAsArray())
 			if (c.getStudents().isEmpty())
-				this.actual.removeCourse(c);
+				actual.removeCourse(c);
 
 		GUIManager.actual.getInformation().update();
 		Platform.runLater(GUIManager.getInstance().outputSView);
@@ -237,7 +205,7 @@ public class GUIManager implements Initializable {
 			return;
 		}
 
-		this.actual.removeCourse(course);
+		actual.removeCourse(course);
 
 		GUIManager.actual.getInformation().update();
 		Platform.runLater(GUIManager.getInstance().outputSView);
@@ -312,15 +280,15 @@ public class GUIManager implements Initializable {
 			this.textNext.setText("");
 		} else
 			this.textNext.setText(References.language.getString("nextgoodness.text")
-					+ Double.toString(Util.round(Distributor.calculated.next(actual).getInformation().getGuete(), 3)));
+					+ Util.round(Distributor.calculated.next(actual).getInformation().getGuete(), 3));
 		this.b1.setDisable(false);
 		this.textPrevious.setText(References.language.getString("previousgoodness.text")
-				+ Double.toString(Util.round(Distributor.calculated.previous(actual).getInformation().getGuete(), 3)));
+				+ Util.round(Distributor.calculated.previous(actual).getInformation().getGuete(), 3));
 
 		this.counter.setText(References.language.getString("distribution.text") + ": "
-				+ Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
+				+ (Distributor.calculated.indexOf(actual) + 1));
 		this.textActual.setText(References.language.getString("calculationgoodness.text") + ": "
-				+ Double.toString(Util.round(actual.getInformation().getGuete(), 3)));
+				+ Util.round(actual.getInformation().getGuete(), 3));
 		// INFO: Hi
 	}
 
@@ -335,16 +303,15 @@ public class GUIManager implements Initializable {
 			this.b1.setDisable(true);
 			this.textPrevious.setText("");
 		} else
-			this.textPrevious.setText(References.language.getString("previousgoodness.text") + Double
-					.toString(Util.round(Distributor.calculated.previous(actual).getInformation().getGuete(), 3)));
+			this.textPrevious.setText(References.language.getString("previousgoodness.text") + Util.round(Distributor.calculated.previous(actual).getInformation().getGuete(), 3));
 		this.b4.setDisable(false);
 		this.textNext.setText(References.language.getString("nextgoodness.text")
-				+ Double.toString(Util.round(Distributor.calculated.next(actual).getInformation().getGuete(), 3)));
+				+ Util.round(Distributor.calculated.next(actual).getInformation().getGuete(), 3));
 
 		this.counter.setText(References.language.getString("distribution.text") + ": "
-				+ Integer.toString((Distributor.calculated.indexOf(actual) + 1)));
+				+ (Distributor.calculated.indexOf(actual) + 1));
 		this.textActual.setText(References.language.getString("calculationgoodness.text") + ": "
-				+ Double.toString(Util.round(actual.getInformation().getGuete(), 3)));
+				+ Util.round(actual.getInformation().getGuete(), 3));
 	}
 
 	public void addCourse(ActionEvent event) {
@@ -730,6 +697,7 @@ public class GUIManager implements Initializable {
 
 	public void onFileTypeChanged(ActionEvent event) {
 		Config.outputFileType = cb2.getValue();
+		ConfigManager.getInstance().onConfigChanged("outputfiletype.text", Config.outputFileType);
 	}
 
 	public boolean tabS = true, tabOS = true, tabOC = false;
@@ -780,10 +748,7 @@ public class GUIManager implements Initializable {
 		if (tabStudents == null)
 			return;
 
-		if (!((Tab) event.getSource()).isSelected())
-			menuStudent.setVisible(true);
-		else
-			menuStudent.setVisible(false);
+		menuStudent.setVisible(!((Tab) event.getSource()).isSelected());
 
 	}
 
@@ -891,16 +856,17 @@ public class GUIManager implements Initializable {
 	}
 
 	public void clearConsole(ActionEvent event) {
-		// TODO: CLEAR TEXT AREA
+		References.LOGGING_AREA.setText("");
 	}
 
 	public void printFormatChanged(ActionEvent event) {
 		Config.printFormat = cb0.getValue().toString();
-		// TODO: RECHECK
+		ConfigManager.getInstance().onConfigChanged("printformat.text", Config.printFormat);
 	}
 
 	public void levelChanges(ActionEvent event) {
 		Config.maxPrintLevel = cb1.getValue().toString();
+		ConfigManager.getInstance().onConfigChanged("loglevel.text", Config.maxPrintLevel);
 	}
 
 //	@FXML
@@ -987,15 +953,7 @@ public class GUIManager implements Initializable {
 	}
 
 	public void startErrorFrame(String headline, String message) {
-
-		LOGGER.config("Starting Error Window");
-
-		ErrorGuiController.headline = headline;
-		ErrorGuiController.information = message;
-
-		Util.openWindow("/assets/layouts/Error.fxml", "ERROR", GUILoader.getPrimaryStage());
-		LOGGER.info("Error Window Started");
-
+		LOGGER.log(Level.SEVERE, message, new Exception(headline));
 	}
 
 	public void addCourseToActual(ActionEvent event) {
@@ -1015,32 +973,30 @@ public class GUIManager implements Initializable {
 	}
 
 	public void saveAction(ActionEvent event) {
-		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.save_fail.title"),
-					References.language.getString("calculation.save_fail.description"));
-			return;
-		}
+		new Thread(() -> {
+			if (Distributor.calculate) {
+				GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.save_fail.title"),
+						References.language.getString("calculation.save_fail.description"));
+				return;
+			}
 
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-		LOGGER.info("Start Saving files");
-		LOGGER.info("Try to save to " + Config.outputFile + "/calculation" + Config.outputFileType);
+			LOGGER.info("Start Saving files");
+			LOGGER.info("Try to save to " + Config.outputFile + "/calculation" + Config.outputFileType);
 
-		Save save = actual;
-		if (save == null) {
-			this.startErrorFrame(References.language.getString("calculation.no_calculation.title"),
-					References.language.getString("calculation.no_calculation.description"));
-			return;
-		}
+			Save save = actual;
+			if (save == null) {
+				this.startErrorFrame(References.language.getString("calculation.no_calculation.title"),
+						References.language.getString("calculation.no_calculation.description"));
+				return;
+			}
 
-		save.sortAll();
+			save.sortAll();
 
-		Distributor.calculate = true;
+			Distributor.calculate = true;
 
-		Platform.runLater(new Runnable() {
-
-			@Override
-			public void run() {
+			Platform.runLater(() -> {
 				p0.setVisible(true);
 
 				GUIManager.getInstance().r1.setDisable(true);
@@ -1048,18 +1004,14 @@ public class GUIManager implements Initializable {
 				GUIManager.getInstance().r3.setDisable(true);
 
 				de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
-			}
-		});
+			});
 
-		String s;
-		if (Util.isBlank((s = Config.outputFile))) {
-			this.startErrorFrame(References.language.getString("no_output_file.title"),
-					References.language.getString("no_output_file.description"));
+			String s;
+			if (Util.isBlank((s = Config.outputFile))) {
+				this.startErrorFrame(References.language.getString("no_output_file.title"),
+						References.language.getString("no_output_file.description"));
 
-			Platform.runLater(new Runnable() {
-
-				@Override
-				public void run() {
+				Platform.runLater(() -> {
 					de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
 
 					p0.setVisible(false);
@@ -1067,67 +1019,59 @@ public class GUIManager implements Initializable {
 					GUIManager.getInstance().r1.setDisable(false);
 					GUIManager.getInstance().r2.setDisable(false);
 					GUIManager.getInstance().r3.setDisable(false);
+				});
+
+				return;
+			}
+
+			if (s.endsWith("\\"))
+				s = s.substring(0, s.length() - 2);
+			else if (s.endsWith("/"))
+				s = s.substring(0, s.length() - 1);
+
+			boolean xls = false, xlsx = false, csv = false;
+
+			switch (Config.outputFileType) {
+				case ".xls":
+					xls = true;
+					break;
+				case ".xlsx":
+					xlsx = true;
+					break;
+				case ".csv":
+					csv = true;
+					break;
+				case "all":
+					xls = true;
+					csv = true;
+				default:
+					xlsx = true;
+					break;
+			}
+
+			try {
+				if (xls) {
+					ExcelExporter.writeXLS(s + "/calculation" + timestamp.getTime(), save.writeInformation());
 				}
-			});
-
-			return;
-		}
-
-		if (s.endsWith("\\"))
-			s.substring(0, s.length() - 2);
-		else if (s.endsWith("/"))
-			s.substring(0, s.length() - 1);
-
-		boolean xls = false, xlsx = false, csv = false;
-
-		switch (Config.outputFileType) {
-		case ".xls":
-			xls = true;
-			break;
-		case ".xlsx":
-			xlsx = true;
-			break;
-		case ".csv":
-			csv = true;
-			break;
-//		case "FOLDER":
-//			ExcelExporter.writeXLS(s + "/Excel_OLD", save.writeInformation());
-//			ExcelExporter.writeXLSX(s + "/KuFA-Zuweiser Ergebnisse", save.writeInformation());
-//			CSVExporter.writeCSV(s + "/course", save.writeCourseInformation());
-//			CSVExporter.writeCSV(s + "/student", save.writeStudentInformation());
-//			LogWriter.writeLog(s + "/logging");
-//			break;
-		default:
-			xlsx = true;
-			break;
-		}
-
-		try {
-			if (xls) {
-				ExcelExporter.writeXLS(s + "/calculation" + timestamp.getTime(), save.writeInformation());
+				if (xlsx) {
+					ExcelExporter.writeXLSX(s + "/calculation" + timestamp.getTime(), save.writeInformation());
+				}
+				if (csv) {
+					CSVExporter.writeCSV(s + "/course" + timestamp.getTime(), save.writeCourseInformation());
+					CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
+				}
+			} catch (IOException e) {
+				LOGGER.log(Level.SEVERE, "Error while exporting data", e);
 			}
-			if (xlsx) {
-				ExcelExporter.writeXLSX(s + "/calculation" + timestamp.getTime(), save.writeInformation());
-			}
-			if (csv) {
-				CSVExporter.writeCSV(s + "/course" + timestamp.getTime(), save.writeCourseInformation());
-				CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
-			}
-		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "Error while exporting data", e);
-		}
 
-		//LogWriter.writeLog(s + "/logging" + timestamp.getTime());
-		this.save(s + "/save" + timestamp.getTime());
+			this.writeLog(s + "/logging" + timestamp.getTime());
+			this.save(s + "/save" + timestamp.getTime());
 
-		LOGGER.info("Finished Saving files");
+			LOGGER.info("Finished Saving files");
 
-		Distributor.calculate = false;
+			Distributor.calculate = false;
 
-		Platform.runLater(new Runnable() {
-
-			@Override
-			public void run() {
+			Platform.runLater(() -> {
 				de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
 
 				p0.setVisible(false);
@@ -1135,36 +1079,64 @@ public class GUIManager implements Initializable {
 				GUIManager.getInstance().r1.setDisable(false);
 				GUIManager.getInstance().r2.setDisable(false);
 				GUIManager.getInstance().r3.setDisable(false);
-			}
+			});
 		});
+	}
 
+	public void writeLog(String pathfile) {
+		FileWriter fileWriter = null;
+		BufferedWriter writer = null;
+
+		try {
+			fileWriter = new FileWriter(new File(pathfile + ".log"));
+			writer = new BufferedWriter(fileWriter);
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, "Fehler beim Erstellen einer .log Datei", e);
+		}
+
+		String sw = References.LOGGING_AREA.getText();
+
+		String[] strings = sw.split(" \n");
+
+		try {
+			for (String s : strings) {
+				writer.write(sw);
+				writer.newLine();
+			}
+		} catch (IOException e1) {
+			LOGGER.log(Level.SEVERE, "Fehler beim Erstellen einer .log Datei", e1);
+		}
+
+		try {
+			writer.close();
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, "Fehler beim Verarbeiten einer .log Datei", e);
+		}
 	}
 
 	public void saveActualAction(ActionEvent event) {
-		if (Distributor.calculate) {
-			GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.save_fail.title"),
-					References.language.getString("calculation.save_fail.description"));
-			return;
-		}
+		new Thread(() -> {
+			if (Distributor.calculate) {
+				GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.save_fail.title"),
+						References.language.getString("calculation.save_fail.description"));
+				return;
+			}
 
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-		LOGGER.info("Start Saving files");
-		LOGGER.info("Try to save to " + Config.outputFile + Config.outputFileType);
+			LOGGER.info("Start Saving files");
+			LOGGER.info("Try to save to " + Config.outputFile + Config.outputFileType);
 
-		Save save = actual;
-		if (save == null) {
-			this.startErrorFrame(References.language.getString("calculation.no_calculation.title"),
-					References.language.getString("calculation.no_calculation.description"));
-			return;
-		}
+			Save save = actual;
+			if (save == null) {
+				this.startErrorFrame(References.language.getString("calculation.no_calculation.title"),
+						References.language.getString("calculation.no_calculation.description"));
+				return;
+			}
 
-		Distributor.calculate = true;
+			Distributor.calculate = true;
 
-		Platform.runLater(new Runnable() {
-
-			@Override
-			public void run() {
+			Platform.runLater(() -> {
 				p0.setVisible(true);
 
 				GUIManager.getInstance().r1.setDisable(true);
@@ -1172,18 +1144,14 @@ public class GUIManager implements Initializable {
 				GUIManager.getInstance().r3.setDisable(true);
 
 				de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
-			}
-		});
+			});
 
-		String s;
-		if (Util.isBlank((s = Config.outputFile))) {
-			this.startErrorFrame(References.language.getString("no_output_file.title"),
-					References.language.getString("no_output_file.description"));
+			String s;
+			if (Util.isBlank((s = Config.outputFile))) {
+				this.startErrorFrame(References.language.getString("no_output_file.title"),
+						References.language.getString("no_output_file.description"));
 
-			Platform.runLater(new Runnable() {
-
-				@Override
-				public void run() {
+				Platform.runLater(() -> {
 					de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
 
 					p0.setVisible(false);
@@ -1191,92 +1159,51 @@ public class GUIManager implements Initializable {
 					GUIManager.getInstance().r1.setDisable(false);
 					GUIManager.getInstance().r2.setDisable(false);
 					GUIManager.getInstance().r3.setDisable(false);
-				}
+				});
+
+				return;
+			}
+
+			if (s.endsWith("\\"))
+				s = s.substring(0, s.length() - 2);
+			else if (s.endsWith("/"))
+				s = s.substring(0, s.length() - 1);
+
+			this.writeLog(s + "/logging" + timestamp.getTime());
+			this.save(s + "/save" + timestamp.getTime());
+
+			LOGGER.info("Finished Saving files");
+
+			Distributor.calculate = false;
+
+			Platform.runLater(() -> {
+				de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
+
+				p0.setVisible(false);
+
+				GUIManager.getInstance().r1.setDisable(false);
+				GUIManager.getInstance().r2.setDisable(false);
+				GUIManager.getInstance().r3.setDisable(false);
 			});
-
-			return;
-		}
-
-		if (s.endsWith("\\"))
-			s.substring(0, s.length() - 2);
-		else if (s.endsWith("/"))
-			s.substring(0, s.length() - 1);
-//
-//		boolean xls = false, xlsx = false, csv = false;
-//
-//		switch (Config.outputFileType) {
-//		case ".xls":
-//			xls = true;
-//			break;
-//		case ".xlsx":
-//			xlsx = true;
-//			break;
-//		case ".csv":
-//			csv = true;
-//			break;
-//		case "FOLDER":
-//			ExcelExporter.writeXLS(s + "/Excel_OLD", save.writeInformation());
-//			ExcelExporter.writeXLSX(s + "/KuFA-Zuweiser Ergebnisse", save.writeInformation());
-//			CSVExporter.writeCSV(s + "/course", save.writeCourseInformation());
-//			CSVExporter.writeCSV(s + "/student", save.writeStudentInformation());
-//			LogWriter.writeLog(s + "/logging");
-//			break;
-//		default:
-//			xlsx = true;
-//			break;
-//		}
-//
-//		if (xls) {
-//			ExcelExporter.writeXLS(s + "/calculation" + timestamp.getTime(), save.writeInformation());
-//		}
-//		if (xlsx) {
-//			ExcelExporter.writeXLSX(s + "/calculation" + timestamp.getTime(), save.writeInformation());
-//		}
-//		if (csv) {
-//			CSVExporter.writeCSV(s + "/course" + timestamp.getTime(), save.writeCourseInformation());
-//			CSVExporter.writeCSV(s + "/student" + timestamp.getTime(), save.writeStudentInformation());
-//		}
-
-		// TODO: DID I NEED THIS
-		// LogWriter.writeLog(s + "/logging" + timestamp.getTime());
-		this.save(s + "/save" + timestamp.getTime());
-
-		LOGGER.info("Finished Saving files");
-
-		Distributor.calculate = false;
-
-		Platform.runLater(() -> {
-			de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
-
-			p0.setVisible(false);
-
-			GUIManager.getInstance().r1.setDisable(false);
-			GUIManager.getInstance().r2.setDisable(false);
-			GUIManager.getInstance().r3.setDisable(false);
 		});
-
 	}
 
 	public void runAndSaveAction(ActionEvent event) {
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				runAction(event);
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				while (Distributor.calculate) {
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				saveAction(event);
+		new Thread(() -> {
+			runAction(event);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
 			}
+			while (Distributor.calculate) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			saveAction(event);
 		}, "R and S Progress").start();
 	}
 
@@ -1296,14 +1223,11 @@ public class GUIManager implements Initializable {
 	}
 
 	public void getInformation(ActionEvent event) {
-		if (t1.isVisible())
-			t1.setVisible(false);
-		else
-			t1.setVisible(true);
+		t1.setVisible(!t1.isVisible());
 	}
 
 	public void onSaveDueToWindowChange(Event event) {
-		onSaveConfig(null);
+		//onSaveConfig(null);
 	}
 
 	public void onSaveConfig(ActionEvent event) {
@@ -1465,21 +1389,16 @@ public class GUIManager implements Initializable {
 
 		GUIManager.instance = this;
 
-		this.ta1.setCacheHint(CacheHint.SPEED);
-
 		cb0.setItems(FXCollections.observableArrayList(PrintFormat.values()));
 
 		cb1.setItems(FXCollections.observableArrayList(Level.ALL, Level.FINEST, Level.FINER, Level.FINE, Level.CONFIG,
 				Level.INFO, Level.WARNING, Level.SEVERE, Level.OFF));
-		cb2.setItems(FXCollections.observableArrayList(".csv", ".xlsx", ".xls"));
+		cb2.setItems(FXCollections.observableArrayList(ConfigManager.getInstance().getRegisteredOptions("outputfiletype.text")));
 
 		p0.progressProperty().bind(FullProgress.getInstance().progressProperty());
 		p0.setVisible(false);
 
 		// Config Stuff
-
-		// TODO: REMOVE AFTER LOADING LANGUAGE BEFORE
-		final String ignoreStudent = Config.ignoreStudent;
 
 		ConfigManager.getInstance().createMenuTree(this.configurationTree, this.config, References.language);
 
@@ -1487,7 +1406,8 @@ public class GUIManager implements Initializable {
 
 		t2.setText(Config.outputFile);
 
-		EventManager.getInstance().registerEventListener(LogReceivedMessageEvent.class, event -> Platform.runLater(() -> this.ta1.appendText(event.getConsoleMessage())));
+		this.loggingPage.getChildren().add(References.LOGGING_AREA);
+
 
 		// bp_preview.setCenter(new HTMLEditor());
 
@@ -1571,13 +1491,9 @@ public class GUIManager implements Initializable {
 
 		this.outputSView = new OutputStudentsView(this.tv1);
 
-		this.cvtc.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getPrename());
-		});
+		this.cvtc.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getPrename()));
 
-		this.cntc.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getName());
-		});
+		this.cntc.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getName()));
 
 		this.ckstc.setCellValueFactory(s -> {
 			if (s.getValue().getActiveCourse() == null)
@@ -1605,25 +1521,17 @@ public class GUIManager implements Initializable {
 
 		this.outputCView = new OutputCourseView(this.tv2);
 
-		this.oSubject.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getSubject());
-		});
+		this.oSubject.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getSubject()));
 
-		this.oTeacher.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getTeacher());
-		});
+		this.oTeacher.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getTeacher()));
 
 		// Output Information View
 
 		this.outputIView = new OutputInformationView();
 
-		this.bPrename.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getPrename());
-		});
+		this.bPrename.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getPrename()));
 
-		this.bName.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getName());
-		});
+		this.bName.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getName()));
 
 		this.bSubject.setCellValueFactory(s -> {
 			if (s.getValue().getActiveCourse() != null)
@@ -1637,36 +1545,22 @@ public class GUIManager implements Initializable {
 			return new SimpleStringProperty("-");
 		});
 
-		this.bPriority.setCellValueFactory(s -> {
-			return new SimpleStringProperty(Integer.toString(s.getValue().getPriority()));
-		});
+		this.bPriority.setCellValueFactory(s -> new SimpleStringProperty(Integer.toString(s.getValue().getPriority())));
 
-		this.rate.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getKey());
-		});
+		this.rate.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getKey()));
 
-		this.rateV.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getValue().toString());
-		});
+		this.rateV.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getValue()));
 
-		this.priority.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getKey().toString());
-		});
+		this.priority.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getKey()));
 
-		this.swpriority.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getValue().toString());
-		});
+		this.swpriority.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getValue().toString()));
 
 		this.percentualPriorities.setCellValueFactory(s -> new SimpleStringProperty(Double
 				.toString(s.getValue().getValue().doubleValue() / actual.getInformation().getStudentCount())));
 
-		this.unallocatedPrename.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getPrename());
-		});
+		this.unallocatedPrename.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getPrename()));
 
-		this.unallocatedName.setCellValueFactory(s -> {
-			return new SimpleStringProperty(s.getValue().getName());
-		});
+		this.unallocatedName.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getName()));
 
 		// Theme
 
@@ -1684,8 +1578,6 @@ public class GUIManager implements Initializable {
 				File file = new File(Config.inputFile);
 				if (file.exists()) {
 					new Distributor(Config.inputFile);
-					this.inputView.fill();
-					this.cView.fill();
 				}
 			}).start();
 		}
@@ -1701,7 +1593,49 @@ public class GUIManager implements Initializable {
 			menuCourse1.setVisible(false);
 		}
 
-		this.counter.setText(References.language.getString("distribution.text") + ": " + Integer.toString(0));
+		this.counter.setText(References.language.getString("distribution.text") + ": " + 0);
+
+		if(Distributor.getInstance() != null) {
+			this.inputView.fill();
+			this.cView.fill();
+			t1.setText(Config.inputFile);
+
+			if(Distributor.calculated != null && !Distributor.calculated.isEmpty()) {
+				Platform.runLater(() -> {
+					GUIManager.getInstance().counter.setText(References.language.getString("distribution.text") + ": "
+							+ (Distributor.calculated.indexOf(GUIManager.actual) + 1));
+
+					LOGGER.config(GUIManager.getInstance().textActual + "");
+
+					GUIManager.getInstance().textActual.setText(References.language.getString("calculationgoodness.text") + ": "
+							+ Util.round(GUIManager.actual.getInformation().getGuete(), 3));
+
+					GUIManager.getInstance().b1.setDisable(true);
+					if (Distributor.calculated.size() > 1) {
+						GUIManager.getInstance().b4.setDisable(false);
+						GUIManager.getInstance().textNext.setText(References.language.getString("nextgoodness.text")
+								+ Util.round(Distributor.calculated.get(2).getInformation().getGuete(), 3));
+					} else
+						GUIManager.getInstance().b4.setDisable(true);
+
+					// GUIManager.getInstance().masterTabPane.getSelectionModel().select(GUIManager.getInstance().tabOutput);
+				});
+
+				Platform.runLater(GUIManager.getInstance().outputSView);
+				Platform.runLater(GUIManager.getInstance().outputCView);
+				Platform.runLater(GUIManager.getInstance().outputIView);
+
+				Platform.runLater(() -> {
+					if (!GUIManager.getInstance().tabOC)
+						GUIManager.getInstance().tabOS = true;
+
+					GUIManager.getInstance().onTabOutput(
+							new Event(GUIManager.getInstance().tabOutput, GUIManager.getInstance().tabOutput, null));
+				});
+			}
+		}
+
+
 
 	}
 
@@ -1833,33 +1767,13 @@ public class GUIManager implements Initializable {
 	}
 
 	public void onSetEnglish(ActionEvent event) {
-		try {
-			if (Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"),
-					LinkOption.NOFOLLOW_LINKS))
-				Files.delete(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
-
-			Files.copy(getClass().getResourceAsStream("/assets/language/en.properties"),
-					FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		GUIManager.getInstance().startErrorFrame(References.language.getString("restart.title"),
-				References.language.getString("restart.description"));
+		Config.language = "ENGLISH";
+		ConfigManager.getInstance().onConfigChanged("language.text", Config.language);
 	}
 
 	public void onSetGerman(ActionEvent event) {
-		try {
-			if (Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"),
-					LinkOption.NOFOLLOW_LINKS))
-				Files.delete(FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
-
-			Files.copy(getClass().getResourceAsStream("/assets/language/de.properties"),
-					FileSystems.getDefault().getPath(References.HOME_FOLDER + "language.properties"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		GUIManager.getInstance().startErrorFrame(References.language.getString("restart.title"),
-				References.language.getString("restart.description"));
+		Config.language = "GERMAN";
+		ConfigManager.getInstance().onConfigChanged("language.text", Config.language);
 	}
 
 }

@@ -364,7 +364,7 @@
                               </HBox>
                            </top>
                            <bottom>
-                              <VBox prefHeight="152.0" prefWidth="998.0">
+                              <VBox prefHeight="162.0" prefWidth="998.0">
                                  <children>
                                     <Separator prefWidth="200.0" />
                                     <VBox prefHeight="74.0" prefWidth="433.0">
@@ -445,6 +445,9 @@
                                              </BorderPane.margin>
                                           </ButtonBar>
                                        </center>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
                                     </BorderPane>
                                  </children>
                               </VBox>
@@ -481,7 +484,7 @@
                      </graphic></Tab>
                   <Tab text="%log.tab">
                      <content>
-                        <VBox spacing="20.0">
+                        <VBox fx:id="loggingPage" spacing="20.0">
                            <children>
                               <HBox alignment="TOP_CENTER" spacing="20.0">
                                  <children>
@@ -497,11 +500,6 @@
                                     <Insets />
                                  </VBox.margin>
                               </HBox>
-                              <TextArea fx:id="ta1" cache="true" cacheHint="SPEED" editable="false" minHeight="-Infinity" minWidth="-Infinity" wrapText="true" VBox.vgrow="ALWAYS">
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </TextArea>
                            </children>
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -542,7 +540,7 @@
                            </accelerator></MenuItem>
                         <MenuItem mnemonicParsing="false" onAction="#onNew" text="%close.text">
                            <accelerator>
-                              <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                              <KeyCodeCombination alt="DOWN" code="DELETE" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator>
                            <graphic>
                               <FontIcon iconLiteral="fas-times" />
@@ -555,6 +553,14 @@
                            <accelerator>
                               <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#onSaveConfig" text="%saveconfig.text">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-cogs" />
+                           </graphic>
+                           <accelerator>
+                              <KeyCodeCombination alt="DOWN" code="C" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator>
+                        </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#close" text="%end.text">
                            <graphic>

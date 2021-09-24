@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 
 import de.juhu.distributor.Course;
@@ -174,7 +175,7 @@ public class Util {
 		Parent root;
 
 		try {
-			root = FXMLLoader.load(Util.class.getResource(resourceLocation), References.language);
+			root = FXMLLoader.load(Objects.requireNonNull(Util.class.getResource(resourceLocation)), References.language);
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Start new Window fail", e);
 			return stage;
@@ -184,12 +185,14 @@ public class Util {
 
 		EventManager.getInstance().triggerEvent(new WindowUpdateEvent(stage, s));
 
+
+
 		stage.setScene(s);
 
-		stage.show();
-
-		stage.setFullScreenExitHint("Press F11 to exit fullscreen");
-		stage.setFullScreenExitKeyCombination(new KeyCodeCombination(KeyCode.F11));
+		stage.centerOnScreen();
+		boolean maximized = stage.isMaximized();
+		stage.setMaximized(false);
+		stage.setMaximized(maximized);
 
 		return stage;
 	}
@@ -231,6 +234,7 @@ public class Util {
 		primaryStage.initStyle(StageStyle.DECORATED);
 
 		primaryStage.getIcons().add(i);
+		primaryStage.centerOnScreen();
 
 		primaryStage.show();
 

@@ -7,6 +7,9 @@ import de.noisruker.config.ConfigElement;
 import de.noisruker.config.ConfigManager;
 import de.noisruker.config.event.ConfigEntryChangeEvent;
 import de.noisruker.event.EventManager;
+import de.noisruker.logger.PrintFormat;
+import de.noisruker.logger.Settings;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
@@ -41,7 +44,7 @@ public class Config {
 	@ConfigElement(defaultValue = "", type = TEXT, description = "inputfile.description", name = "inputfile.text", location = "config.import", visible = false)
 	public static String inputFile;
 
-	@ConfigElement(defaultValue = ".xlsx", type = TEXT, description = "outputfiletype.description", name = "outputfiletype.text", location = "config.export", visible = false)
+	@ConfigElement(defaultValue = ".xlsx", type = CHOOSE, description = "outputfiletype.description", name = "outputfiletype.text", location = "config.export", visible = true)
 	public static String outputFileType = ".xlsx";
 
 	@ConfigElement(defaultValue = "user.home\\Local\\.CaRP", type = TEXT, description = "outputdirectory.description", name = "outputdirectory.text", location = "config.export", visible = false)
@@ -203,6 +206,8 @@ public class Config {
 				ConfigManager.getInstance().registerOptionParameters("language.text", languages);
 			}
 
+			ConfigManager.getInstance().registerOptionParameters("outputfiletype.text", ".xlsx", ".xls", ".csv", "all");
+
 			out = EventManager.getInstance().triggerEvent(new ThemeRegisterEvent());
 			if(out instanceof List) {
 				Object[] values = ((List<?>) out).toArray();
@@ -217,7 +222,6 @@ public class Config {
 
 			EventManager.getInstance().registerEventListener(ConfigEntryChangeEvent.class, event -> {
 				if(event.getEntryName().equals("language.text")) {
-
 					try {
 						InputStreamReader r;
 
@@ -237,17 +241,20 @@ public class Config {
 					} catch (Exception e) {
 						LOGGER.log(Level.WARNING, "The requested language could not be loaded", e);
 					}
-
 					if (GUILoader.getPrimaryStage() != null && GUIManager.getInstance() != null) {
-						Util.updateWindow(GUILoader.getPrimaryStage(), "/assets/layouts/GUI.fxml");
+						Platform.runLater(() -> Util.updateWindow(GUILoader.getPrimaryStage(), "/assets/layouts/GUI.fxml"));
 					}
 				} else if("theme.text".equals(event.getEntryName()) && ("DARK".equals(Config.theme) || "LIGHT".equals(Config.theme))) {
 					References.J_METRO.setStyle("DARK".equals(Config.theme) ? Style.DARK : Style.LIGHT);
 					if(!"DARK".equals(theme) && References.J_METRO.getScene() != null)
 						while (References.J_METRO.getScene().getStylesheets().contains(References.DARK_THEME_FIXES))
-							LOGGER.info("REMOVED? " + References.J_METRO.getScene().getStylesheets().remove(References.DARK_THEME_FIXES));
+							References.J_METRO.getScene().getStylesheets().remove(References.DARK_THEME_FIXES);
 					if ("DARK".equals(Config.theme) && References.J_METRO.getScene() != null && !References.J_METRO.getScene().getStylesheets().contains(References.DARK_THEME_FIXES))
 						References.J_METRO.getScene().getStylesheets().add(References.DARK_THEME_FIXES);
+				} else if("loglevel.text".equals(event.getEntryName())) {
+					LOGGER.setLevel(Level.parse(event.getEntryValue()));
+				} else if("printformat.text".equals(event.getEntryName())) {
+					Settings.PRINT_FORMAT = PrintFormat.valueOf(event.getEntryValue());
 				}
 			});
 

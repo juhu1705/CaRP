@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import de.juhu.distributor.Distributor;
 import de.juhu.distributor.Student;
-import de.juhu.util.References;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableView;
 
@@ -28,7 +27,7 @@ public class InputView {
 
 		ArrayList calcStud = Distributor.getInstance().getCalcStudents();
 		ArrayList ignStud = Distributor.getInstance().getIgnoreStudents();
-		ArrayList allStudents = new ArrayList<>(calcStud);
+		ArrayList<Object> allStudents = new ArrayList<Object>(calcStud);
 		allStudents.addAll(ignStud);
 
 		LOGGER.config("Loading Input Data to the Preview!");

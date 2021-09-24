@@ -86,7 +86,7 @@ public class AddStudentToSaveManager implements Initializable {
 
 		for (Course c : GUIManager.actual.getAllCoursesAsArray()) {
 			if (this.comboBox.getValue().equals(c.getSubject() + ", " + c.getTeacher() + " | "
-					+ Integer.toString(c.size()) + "/" + Integer.toString(c.getMaxStudentCount())))
+					+ c.size() + "/" + c.getMaxStudentCount()))
 				student.setActiveCourse(c);
 
 		}
@@ -118,8 +118,8 @@ public class AddStudentToSaveManager implements Initializable {
 		ArrayList<String> courses = new ArrayList<>();
 
 		for (Course c : GUIManager.actual.getAllCoursesAsArray()) {
-			courses.add(c.getSubject() + ", " + c.getTeacher() + " | " + Integer.toString(c.size()) + "/"
-					+ Integer.toString(c.getMaxStudentCount()));
+			courses.add(c.getSubject() + ", " + c.getTeacher() + " | " + c.size() + "/"
+					+ c.getMaxStudentCount());
 		}
 
 		comboBox.setItems(FXCollections.observableArrayList(courses));

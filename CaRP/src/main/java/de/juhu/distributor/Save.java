@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
 
 import de.juhu.util.Config;
 import de.juhu.util.MergeSort;
@@ -36,7 +37,7 @@ public class Save implements Comparable<Save>, Serializable {
 	 * Der {@link InformationSave Informationsspeicher} dieser Klasse, hier werden
 	 * interressante Zusatzinformationen hinterlegt.
 	 */
-	private InformationSave informations;
+	private final InformationSave informations;
 
 	/**
 	 * Die Liste aller Schüler einer Berechnung inklusive der ignorierten Schüler.
@@ -190,16 +191,13 @@ public class Save implements Comparable<Save>, Serializable {
 	 */
 	private static List<Course> sortCourse(List<Course> courseToSort) {
 		ExecutorService pool = Executors.newFixedThreadPool(courseToSort.size() / 2 + 10);
-		Future<ArrayList<Course>> sortedStudents = pool
-				.submit(new MergeSort<Course>((ArrayList<Course>) courseToSort, pool));
+		Future<ArrayList<Course>> sortedStudents = pool.submit(new MergeSort<Course>((ArrayList<Course>) courseToSort, pool));
 		try {
 			ArrayList<Course> compute = new ArrayList<Course>(sortedStudents.get());
 			pool.shutdownNow();
 			return compute;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
+		} catch (InterruptedException | ExecutionException e) {
+			LOGGER.log(Level.SEVERE, "No data saved", e);
 		}
 		pool.shutdownNow();
 		return null;
@@ -214,8 +212,7 @@ public class Save implements Comparable<Save>, Serializable {
 	 */
 	public static List<Student> sortStudents(List<Student> studentsToSort) {
 		ExecutorService pool = Executors.newFixedThreadPool(studentsToSort.size() / 2 + 10);
-		Future<ArrayList<Student>> sortedStudents = pool
-				.submit(new MergeSort<Student>((ArrayList<Student>) (studentsToSort), pool));
+		Future<ArrayList<Student>> sortedStudents = pool.submit(new MergeSort<Student>((ArrayList<Student>) (studentsToSort), pool));
 		try {
 			ArrayList<Student> compute = new ArrayList<Student>(sortedStudents.get());
 			pool.shutdownNow();
@@ -276,12 +273,15 @@ public class Save implements Comparable<Save>, Serializable {
 		List<WriteableContent> export = new ArrayList<WriteableContent>(3);
 
 		// Write students
+		LOGGER.info("Write Students");
 		WriteableContent students = this.writeStudentInformation();
 		export.add(students);
 
+		LOGGER.info("Write Courses");
 		WriteableContent courses = this.writeCourseInformation();
 		export.add(courses);
 
+		LOGGER.info("Write Information");
 		WriteableContent information = this.informations.write();
 		export.add(information);
 
@@ -349,15 +349,11 @@ public class Save implements Comparable<Save>, Serializable {
 		for (Course c : this.allCourses) {
 			String[] parameter = new String[c.size() + 3];
 
-			LOGGER.info("Kursname: " + c.toString() + "; Schülerzahl: " + Integer.toString(c.size())
-					+ "; Parameterlänge: " + Integer.toString(parameter.length));
-
 			parameter[0] = c.getSubject();
 			parameter[1] = c.getTeacher();
 			int lineAdd = 3;
 			int anzahl = 0;
 			for (int i = 0; i < c.size(); i++, anzahl++) {
-				LOGGER.info(i + "");
 				if (Config.firstPrename)
 					if (Config.shortNames)
 						parameter[i + lineAdd] = c.getStudent(i).getPrename().toCharArray()[0] + ". "
@@ -449,8 +445,7 @@ public class Save implements Comparable<Save>, Serializable {
 	 * @param c Der Kurs der hinzugefügt werden soll.
 	 */
 	public void addCourse(Course c) {
-		if (this.allCourses.contains(c))
-			this.allCourses.remove(c);
+		this.allCourses.remove(c);
 		this.allCourses.add(c);
 	}
 
@@ -492,7 +487,7 @@ public class Save implements Comparable<Save>, Serializable {
 			return;
 		if (this.allStudents.contains(student)) {
 			student.getActiveCourse().removeStudent(student);
-			this.allStudents.remove(this.allStudents.indexOf(student));
+			this.allStudents.remove(student);
 		}
 	}
 
@@ -510,7 +505,7 @@ public class Save implements Comparable<Save>, Serializable {
 				s.refreshPriority();
 				s.mark();
 			}
-			this.allCourses.remove(this.allCourses.indexOf(course));
+			this.allCourses.remove(course);
 		}
 	}
 

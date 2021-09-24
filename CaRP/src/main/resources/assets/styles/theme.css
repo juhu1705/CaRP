@@ -1,0 +1,233 @@
+/*
+ * Theme Texture Pack by Juhu1705
+ */
+ 
+/*Root Color*/
+*.root {
+}
+
+*.ikonli-font-icon {
+    -fx-icon-color: black;
+}
+
+.tab:selected *.ikonli-font-icon {
+    -fx-icon-color: derive(accent_color, 30%);
+}
+
+.tab:hover *.ikonli-font-icon {
+    -fx-icon-color: derive(accent_color, 50%);
+}
+
+.table-row-cell:odd{
+    -fx-background-color: derive(background_color, -15%);
+}
+
+ 
+ /*Menu */
+
+.context-menu {
+    -fx-background-radius: 0 6 6 6;
+    -fx-border-radius: 0 6 6 6;
+}
+
+.menu {
+    -fx-background-radius: 6;
+}
+
+*.menu:hover {
+    -fx-background-radius: 6;
+}
+
+*.menu:showing {
+    -fx-background-radius: 6 6 6 0;
+}
+
+
+
+/*Menu Bar */
+*.menu-bar:focused {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+ 
+/*Menu Item */
+*.menu-item>*.label {
+}
+
+*.menu-item:focused {
+    -fx-background-radius: 6;
+}
+
+*.menu-item:hover {
+    -fx-background-radius: 6;
+}
+
+/*Menu Seperator */
+*.menu-seperator:hover {
+    -fx-background-radius: 6;
+}
+
+/*Menu Button */
+*.menu-button {
+    -fx-background-radius: 6;
+}
+
+/* Checkbox */
+
+.check-box .box {
+    -fx-background-radius: 6;
+}
+
+.check-box::before {
+
+}
+
+.check-box:checked .box {
+}
+
+.check-box:checked::before {
+
+}
+
+/* Combo Box */
+
+.combo-box {
+    -fx-background-radius: 6;
+}
+
+.combo-box-base:focused {
+    -fx-background-radius: 6;
+}
+
+.combo-box-base:showing {
+    -fx-background-radius: 6 6 0 0;
+}
+
+.combo-box-popup > .list-view {
+    -fx-background-radius: 0 0 6 6;
+    -fx-border-radius: 0 0 6 6;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-radius: 6;
+}
+
+.combo-box-popup .list-view .placeholder {
+    -fx-max-height: 0;
+    visibility: false;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover {
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover {
+}
+
+/* Buttons */
+
+.button, .button:selected, .button:focused, .toggle-button, .toggle-button:focused, .toggle-button:selected {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+
+
+/* Text Field / Areas */
+
+*.text-area, .text-area:hover, .text-area:focused, .text-area:disabled {
+    -fx-background-radius: 6;
+    -fx-background-insets: 0;
+    -fx-background-size: 0;
+    -fx-padding: 0;
+    -fx-background-color: transparent
+}
+
+.text-area .content, .text-area:hover .content, .text-area:focused .content, .text-area:disabled .content {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-padding: 6;
+}
+
+*.text-field {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+}
+
+.plan-area {
+    -fx-background-radius: 6;
+    -fx-background-color: #121212;
+    -fx-border-color: #242424;
+    -fx-border-radius: 6;
+    -fx-text-fill: lightgrey;
+}
+
+.plan-area .label {
+    -fx-text-fill: lightgrey;
+}
+
+.temporary {
+    -fx-background-color: lightgrey;
+    -fx-border-color: lightgrey;
+}
+
+.temporary .label {
+    -fx-text-fill: black;
+}
+
+.in-progress {
+    -fx-background-color: #ff0000;
+    -fx-border-color: #ce0000;
+}
+
+.checked {
+    -fx-background-color: #12ff00;
+    -fx-border-color: #11ea00;
+}
+
+.popover > .content {
+    -fx-background-color: darkgrey;
+}
+
+.popover > .content *.label {
+    -fx-text-fill: white;
+}
+
+/* Spinner */
+
+.spinner {
+   -fx-background-radius: 6 6 6 6;
+   -fx-border-radius: 6;
+}
+
+.spinner .text-field {
+    -fx-background-radius: 6 0 0 6;
+}
+
+.spinner .increment-arrow-button {
+    -fx-background-radius: 0 6 0 0;
+}
+
+.spinner .decrement-arrow-button {
+    -fx-background-radius: 0 0 6 0;
+}
+
+/* Tabs */
+
+.tab-pane:left {
+    -fx-open-tab-animation: grow;
+    -fx-close-tab-animation: grow;
+    -fx-tab-min-height: 1.5em;
+    -fx-tab-max-height: 2.91666375em; /* 34 */
+}
+
+.tab-pane:left > .tab-header-area {
+    -fx-padding: 0;
+}
+
+.tab-pane:left > .tab-header-area > .headers-region > .tab {
+    -fx-padding: 0.5 18; /* 1 18 0.99 18 */
+}
+
+.toggle-switch {
+    -toggle-display: left;
+}

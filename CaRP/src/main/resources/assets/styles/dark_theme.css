@@ -1,0 +1,390 @@
+/*
+ * Dark Theme Texture Pack by Juhu1705
+ */
+ 
+/* Colors */
+* {
+    dark1: #616161;
+    default1: #9E9E9E;
+    light1: #F5F5F5;
+    text1: #212121;
+    accent1: #607D8B;
+    primary1: #212121;
+    secondary1: #757575;
+    divider1: #BDBDBD;
+    white: #FFFFFF;
+    contentbackground: #50545c;
+}
+ 
+/*Root Color*/
+*.root {
+     -fx-color: lightgrey;
+     -fx-focus-color: transparent;
+     -fx-background-color: contentbackground;
+}
+ 
+/*Tab */
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-color: transparent;
+}
+
+*.tab {
+     -fx-background-color:lightgrey;
+}
+ 
+*.tab:hover {
+     -fx-background-color:default1;
+}
+ 
+*.tab:selected {
+     -fx-background-color:dark1;
+     -fx-focus-color: divider1;
+}
+ 
+*.tab-header-background {
+    -fx-background-color:light1;
+}
+
+
+/*Tab Pane master*/
+
+#masterTabPane {
+    -fx-background-color: contentbackground;
+
+}
+
+#masterTabPane > .tab-header-area > * > .tab {
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: #2f3136;
+    
+    -fx-padding: 10 25 10 25;
+    -fx-margin: 10;
+}
+
+#masterTabPane > .tab-header-area > * > .tab > * > .tab-label, #masterTabPane > .tab-header-area > * > .tab > * > .tab-label > .glyph-icon {
+    -fx-text-fill: #8e9297;
+    -fx-fill: #8e9297;
+}
+
+#masterTabPane > .tab-header-area > * > .tab > * > .tab-label > .glyph-icon {
+    padding: 1;
+    margin: 1;
+    
+}
+
+#masterTabPane > .tab-header-area > * > .tab:hover {
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color:#35373d;
+}
+
+#masterTabPane > .tab-header-area > * > .tab:selected > * > .tab-label, #masterTabPane > .tab-header-area > * > .tab:selected > * > .tab-label > .glyph-icon {
+    -fx-text-fill: #f9dab0;
+}
+
+#masterTabPane > .tab-header-area > * > .tab:selected {
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-color: transparent;
+    -fx-background-color: #3a3c43;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    
+}
+
+#masterTabPane > .tab-header-area > .tab-header-background {
+    -fx-background-color: #2f3136;
+}
+
+/*Under Tabs */
+
+
+#inputTabPane.tab-pane, #outputTabPane {
+    -fx-background-color: contentbackground;
+}
+
+#tabStudents.tab, #tabCourses.tab, #outputTabPane > .tab-header-area > * > .tab {
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: contentbackground;
+    
+    -fx-padding: 5 20 5 20;
+    -fx-margin: 5;
+}
+
+#tabStudents.tab > * > .tab-label, #tabCourses.tab > * > .tab-label, #outputTabPane > .tab-header-area > * > .tab > * > .tab-label {
+    -fx-text-fill: #8e9297;
+}
+
+#tabStudents.tab:hover, #tabCourses.tab:hover, #outputTabPane > .tab-header-area > * > .tab:hover {
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color:#35373d;
+}
+
+#tabStudents.tab:selected .tab-label, #tabCourses.tab:selected .tab-label, #outputTabPane > .tab-header-area > * > .tab:selected > * > .tab-label {
+    -fx-text-fill: #f9dab0;
+}
+
+#tabStudents.tab:selected, #tabCourses.tab:selected, #outputTabPane > .tab-header-area > * > .tab:selected {
+    -fx-background-radius: 20 20 0 0;
+    -fx-border-color: transparent;
+    -fx-background-color: #3a3c43;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    
+}
+
+#inputTabPane > .tab-header-area >  .tab-header-background, #outputTabPane > .tab-header-area >  .tab-header-background {
+    -fx-background-color: contentbackground;
+}
+
+
+
+/* Tree View */
+
+*.tree-view {
+    -fx-color:default1;
+    
+    -fx-background-color:contentbackground;
+}
+
+*.tree-view .tree-cell {
+    -fx-background-color:contentbackground;
+    -fx-text-fill:white;
+}
+
+*.tree-view .tree-cell:focused {
+    -fx-background-color:divider1;
+    -fx-text-fill:white;
+}
+
+/* Split Pane */
+
+.split-pane {
+    -fx-background-color: transparent;
+}
+
+.split-pane-divider {
+    -fx-background-color: transparent;
+}
+
+/*Menu */
+ 
+*.menu-bar {
+    -fx-font-size:12px;
+    -fx-alignment: CENTER_LEFT;
+    
+     -fx-color: secondary;
+     -fx-background-color:default1;
+}
+ 
+*.menu:showing {
+    -fx-background-color: dark1;
+    -fx-background-radius: 6;
+}
+
+*.menu:hover {
+    -fx-color: default1;
+    -fx-font-fill: default1;
+    -fx-background-color: dark1;
+    -fx-background-radius: 6;
+}
+
+/*Menu Bar */
+*.menu-bar:focused {
+    -fx-background-color: dark1;
+    -fx-background-radius: 6;
+}
+ 
+/*Menu Item */
+*.menu-item>*.label {
+    -fx-text-fill:black;
+}
+
+*.menu-item:focused {
+    -fx-background-color: dark1;
+    -fx-background-radius: 6;
+}
+
+*.menu-item:hover {
+    -fx-color: light1;
+    -fx-background-color: default1;
+    -fx-background-radius: 6;
+}
+
+/*Menu Seperator */
+*.menu-seperator:hover {
+    -fx-background-color: default1;
+    -fx-background-radius: 6;
+}
+
+/*Menu Button */
+*.menu-button {
+    -fx-text-fill: light1;
+    -fx-background-color:default1;
+}
+
+*.menu-button>*.label {
+    -fx-text-fill: light1;
+}
+
+
+/* Combo Box */
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-background-radius: 6;
+}
+
+.combo-box-base:showing {
+    -fx-background-radius: 6 6 0 0;
+    -fx-background-color: default1;
+}
+
+.combo-box-popup {
+    -fx-background-radius: 0 0 6 6;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-radius: 0 0 6 6;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-margin: 1px;
+    -fx-background-radius: 0 0 6 6;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover {
+    -fx-background-radius: 6;
+    -fx-background-color: dark1;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover {
+    -fx-background-radius: 6;
+    -fx-background-color: default1;
+}
+
+/*Text Area */
+*.text-area {
+    -fx-text-fill: primary1;
+    -fx-highlight-text-fill: white;
+    -fx-highlight-fill: dark1;
+    -fx-focus-color: transparent;
+}
+
+*.text-field {
+    -fx-text-fill: primary1;
+    -fx-highlight-text-fill: white;
+    -fx-highlight-fill: dark1;
+    -fx-focus-color: transparent;
+}
+
+/*VBox */
+*.vbox {
+    -fx-background-color:transparent;
+}
+
+/*Scroll Pane */
+*.scroll-pane {
+    -fx-background-color: contentbackground;
+}
+
+.scroll-pane > .viewport {
+   -fx-background-color: contentbackground;
+}
+
+*.scroll-bar:vertical, *.scroll-bar:horizontal{
+    -fx-background-color:transparent;
+    -fx-background-radius: 5em;
+}
+
+*.increment-button, *.decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+*.scroll-bar:vertical *.track,
+*.scroll-bar:horizontal *.track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+*.scroll-bar:vertical *.thumb,
+*.scroll-bar:horizontal *.thumb {
+    -fx-background-color: white;
+    -fx-background-radius: 5em;
+}
+
+*.scroll-pane > *.corner {
+    -fx-background-color: contentbackground;
+}
+
+/*Label */
+*.label {
+    -fx-text-fill: white;
+}
+
+/*Table */
+.table-view{
+    -fx-base: transparent;
+   -fx-background-color: transparent;
+}
+
+
+
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(#131313 0%, #424141 100%);
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header .filler,
+.table-view > .column-header-background > .show-hide-columns-button,
+.table-view .column-header-background .filler {
+    -fx-base: transparent;
+    -fx-background-color: transparent;
+}
+
+
+
+
+.table-view .placeholder {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: white;
+}
+
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #616161;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #424242;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */  
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #005797;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+.table-view .show-hide-column-image,
+.tree-table-view .show-hide-column-image {
+    -fx-background-color: -fx-mark-color;
+    -fx-padding: 0.25em; /* 3px */
+    -fx-shape: "M398.902,298.045c0.667,0,1.333,0,2,0c0,0.667,0,1.333,0,2c0.667,0,1.333,0,2,0c0,0.667,0,1.333,0,2c-0.667,0-1.333,0-2,0c0,0.666,0,1.332,0,1.999c-0.667,0-1.333,0-2,0c0-0.667,0-1.333,0-1.999c-0.666,0-1.333,0-1.999,0c0-0.667,0-1.334,0-2c0.666,0,1.333,0,1.999,0C398.902,299.378,398.902,298.711,398.902,298.045z";
+}

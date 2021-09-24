@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="180.0" prefWidth="496.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.ErrorGuiController">
+   <children>
+      <Button defaultButton="true" layoutX="207.0" layoutY="141.0" mnemonicParsing="false" onAction="#onOK" prefHeight="25.0" prefWidth="86.0" text="OK" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="203.0" AnchorPane.topAnchor="141.0" />
+      <TextArea fx:id="tinformation" editable="false" focusTraversable="false" layoutX="15.0" layoutY="60.0" prefHeight="60.0" prefWidth="470.0" scaleShape="false" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="60.0" />
+      <TextArea fx:id="theadline" editable="false" layoutX="15.0" layoutY="14.0" prefHeight="19.0" prefWidth="470.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </TextArea>
+   </children>
+</AnchorPane>

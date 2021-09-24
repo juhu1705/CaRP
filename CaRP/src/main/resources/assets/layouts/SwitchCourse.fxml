@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="271.0" prefWidth="600.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.SwitchCourseManager">
+   <center>
+      <ComboBox fx:id="comboBox" prefWidth="150.0" promptText="%course.text" />
+   </center>
+   <bottom>
+      <StackPane prefHeight="84.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onFinished" text="%finished.text">
+               <graphic>
+                  <FontIcon iconLiteral="fas-save" />
+               </graphic></Button>
+         </children>
+      </StackPane>
+   </bottom>
+   <top>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="TOP_LEFT">
+         <children>
+            <Label text="%firstname.text" />
+            <TextField fx:id="prename" prefHeight="25.0" prefWidth="102.0">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </TextField>
+            <Label text="%familyname.text" />
+            <TextField fx:id="name" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+   </top>
+</BorderPane>

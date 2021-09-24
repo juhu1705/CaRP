@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="243.0" prefWidth="236.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.GUIDoubleStudentManager">
+   <bottom>
+      <ButtonBar prefHeight="24.0" prefWidth="236.0" BorderPane.alignment="CENTER">
+        <buttons>
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#add" text="%continue.text">
+               <graphic>
+                  <FontIcon iconLiteral="fas-caret-right" />
+               </graphic></Button>
+            <Button cancelButton="true" maxWidth="150.0" mnemonicParsing="false" onAction="#skip" prefHeight="25.0" prefWidth="150.0" text="%skip.text">
+               <graphic>
+                  <FontIcon iconLiteral="fas-minus-circle" />
+               </graphic></Button>
+        </buttons>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </ButtonBar>
+   </bottom>
+   <center>
+      <VBox prefHeight="184.0" prefWidth="236.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="%doubleStudent.text">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label text="%prename.text" />
+            <TextField fx:id="prename" editable="false" />
+            <Label text="%name.text" />
+            <TextField fx:id="name" editable="false" />
+            <CheckBox fx:id="shouldMemorice" mnemonicParsing="false" text="%rememberdecision.text" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>

@@ -75,7 +75,7 @@ mainClassName = "de.juhu.guiFX.GUILoader"
 group = 'de.juhu'
 version = '1.1.0'
 description = 'CaRP Assigner'
-sourceCompatibility = 1.15
+sourceCompatibility = 1.11
 
 application {
     mainClass = 'de.juhu.guiFX.GUILoader'

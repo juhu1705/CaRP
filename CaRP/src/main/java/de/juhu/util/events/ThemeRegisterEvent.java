@@ -13,7 +13,7 @@ public class ThemeRegisterEvent extends Event {
     }
 
     public void registerNewTheme(String name) {
-        if(super.getResult() instanceof List) {
+        if (super.getResult() instanceof List) {
             ((List) super.getResult()).add(name);
         }
     }

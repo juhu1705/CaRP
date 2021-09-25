@@ -1,19 +1,5 @@
 package de.juhu.guiFX;
 
-import static de.juhu.util.References.PROJECT_NAME;
-import static de.juhu.util.References.VERSION;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.util.Objects;
-import java.util.PropertyResourceBundle;
-
 import de.juhu.util.Config;
 import de.juhu.util.References;
 import de.juhu.util.events.WindowUpdateEvent;
@@ -29,107 +15,110 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import jfxtras.styles.jmetro.JMetro;
-import jfxtras.styles.jmetro.JMetroStyleClass;
-import jfxtras.styles.jmetro.Style;
 import org.controlsfx.control.Notifications;
+
+import java.io.File;
+import java.util.Objects;
+
+import static de.juhu.util.References.PROJECT_NAME;
+import static de.juhu.util.References.VERSION;
 
 /**
  * Diese Klasse stellt die Hauptklasse des CaRP-Assigners da. Von hier werden
  * die Startprozesse eingeleitet und die Sprache geladen.
- * 
+ *
  * @author Juhu1705
- * @category GUI
  * @version 1.0
+ * @category GUI
  */
 public class GUILoader extends Application {
 
-	private static Stage primaryStage;
-	public static Stage secondaryStage;
-	public static Scene scene;
-	private static File toLoad;
+    public static Stage secondaryStage;
+    public static Scene scene;
+    private static Stage primaryStage;
+    private static File toLoad;
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		GUILoader.primaryStage = primaryStage;
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
-		Image i;
+    public static void main(String[] args) {
+        Settings.PROGRAMM_FOLDER = "/.CaRP/";
+        Settings.LOGGER_NAME = PROJECT_NAME;
 
-		if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-			i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-		else
-			i = new Image("/assets/textures/logo/KuFA.png");
+        Logger.LOGGER.info("Starte: " + PROJECT_NAME + " | Version: " + VERSION);
 
-		Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/assets/layouts/GUI.fxml")), References.language);
+        Config.register();
 
-		Scene s = new Scene(root);
+        for (String arg : args) {
+            if (new File(arg).exists())
+                GUILoader.toLoad = new File(arg);
+        }
 
-		EventManager.getInstance().triggerEvent(new WindowUpdateEvent(primaryStage, s));
+        launch(args);
+    }
 
-		GUIManager.getInstance().checks.forEach((themes, checkbox) -> {
-			checkbox.setSelected(false);
-		});
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        GUILoader.primaryStage = primaryStage;
 
-		if(GUIManager.getInstance().checks.get(Config.theme) != null)
-			GUIManager.getInstance().checks.get(Config.theme).setSelected(true);
+        Image i;
 
-		primaryStage.setMinWidth(600);
-		primaryStage.setMinHeight(580);
-		primaryStage.setTitle(PROJECT_NAME + " | " + VERSION);
-		primaryStage.setScene(s);
-		primaryStage.setOnCloseRequest(c -> {
-			GUIManager.getInstance().close(null);
-		});
+        if (new File("./resources/assets/textures/logo/KuFA.png").exists())
+            i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
+        else
+            i = new Image("/assets/textures/logo/KuFA.png");
 
-		primaryStage.centerOnScreen();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/assets/layouts/GUI.fxml")), References.language);
 
-		primaryStage.initStyle(StageStyle.DECORATED);
+        Scene s = new Scene(root);
 
-		primaryStage.getIcons().add(i);
+        EventManager.getInstance().triggerEvent(new WindowUpdateEvent(primaryStage, s));
 
-		primaryStage.show();
+        GUIManager.getInstance().checks.forEach((themes, checkbox) -> {
+            checkbox.setSelected(false);
+        });
 
-		scene = s;
+        if (GUIManager.getInstance().checks.get(Config.theme) != null)
+            GUIManager.getInstance().checks.get(Config.theme).setSelected(true);
 
-		if (GUILoader.toLoad != null) {
-			GUIManager.getInstance().load(GUILoader.toLoad.getPath());
-			GUIManager.getInstance().inputView.fill();
-			GUIManager.getInstance().cView.fill();
-		}
+        primaryStage.setMinWidth(600);
+        primaryStage.setMinHeight(580);
+        primaryStage.setTitle(PROJECT_NAME + " | " + VERSION);
+        primaryStage.setScene(s);
+        primaryStage.setOnCloseRequest(c -> {
+            GUIManager.getInstance().close(null);
+        });
 
-		EventManager.getInstance().registerEventListener(LogReceivedErrorEvent.class, errorEvent -> {
-			String message = errorEvent.getRawMessage();
-			String cause = errorEvent.getThrown() != null ? errorEvent.getThrown().getLocalizedMessage() : "";
+        primaryStage.centerOnScreen();
 
-			if(Objects.equals(cause, ""))
-				Platform.runLater(() -> Notifications.create().darkStyle().title(errorEvent.getRecord().getLevel().toString())
-						.text(message).owner(GUILoader.getPrimaryStage())
-						.showError());
-			else
-				Platform.runLater(() -> Notifications.create().darkStyle().title(message)
-						.text(cause).owner(GUILoader.getPrimaryStage())
-						.showError());
-		});
-	}
+        primaryStage.initStyle(StageStyle.DECORATED);
 
-	public static Stage getPrimaryStage() {
-		return primaryStage;
-	}
+        primaryStage.getIcons().add(i);
 
-	public static void main(String[] args) {
-		Settings.PROGRAMM_FOLDER = "/.CaRP/";
-		Settings.LOGGER_NAME = PROJECT_NAME;
+        primaryStage.show();
 
-		Logger.LOGGER.info("Starte: " + PROJECT_NAME + " | Version: " + VERSION);
+        scene = s;
 
-		Config.register();
+        if (GUILoader.toLoad != null) {
+            GUIManager.getInstance().load(GUILoader.toLoad.getPath());
+            GUIManager.getInstance().inputView.fill();
+            GUIManager.getInstance().cView.fill();
+        }
 
-		for (String arg : args) {
-			if (new File(arg).exists())
-				GUILoader.toLoad = new File(arg);
-		}
+        EventManager.getInstance().registerEventListener(LogReceivedErrorEvent.class, errorEvent -> {
+            String message = errorEvent.getRawMessage();
+            String cause = errorEvent.getThrown() != null ? errorEvent.getThrown().getLocalizedMessage() : "";
 
-		launch(args);
-	}
+            if (Objects.equals(cause, ""))
+                Platform.runLater(() -> Notifications.create().darkStyle().title(errorEvent.getRecord().getLevel().toString())
+                        .text(message).owner(GUILoader.getPrimaryStage())
+                        .showError());
+            else
+                Platform.runLater(() -> Notifications.create().darkStyle().title(message)
+                        .text(cause).owner(GUILoader.getPrimaryStage())
+                        .showError());
+        });
+    }
 
 }

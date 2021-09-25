@@ -13,7 +13,7 @@ public class LanguageRegisterEvent extends Event {
     }
 
     public void registerNewLanguage(String name) {
-        if(super.getResult() instanceof List) {
+        if (super.getResult() instanceof List) {
             ((List) super.getResult()).add(name);
         }
     }

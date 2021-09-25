@@ -1,9 +1,5 @@
 package de.juhu.guiFX;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
 import de.juhu.distributor.Course;
 import de.juhu.distributor.Distributor;
 import de.juhu.distributor.Student;
@@ -19,30 +15,34 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import static de.noisruker.logger.Logger.LOGGER;
 
 /**
  * Behandelt alle Aktionen des Fensters zum Bearbeiten von Kursen in der
  * Verteilung.
- * 
+ *
  * @author Juhu1705
  * @category GUI
  */
 public class SwitchCourseManager implements Initializable {
 
-	public static Student student;
+    public static Student student;
 
 //	@FXML
 //	private TableView<Course> courses;
 
-	@FXML
-	private TextField prename;
+    @FXML
+    private TextField prename;
 
-	@FXML
-	private TextField name;
+    @FXML
+    private TextField name;
 
-	@FXML
-	private ComboBox<String> comboBox;
+    @FXML
+    private ComboBox<String> comboBox;
 
 //	@FXML
 //	private TableColumn<Course, String> teacher, subject;
@@ -61,72 +61,72 @@ public class SwitchCourseManager implements Initializable {
 //		this.scw.run();
 //	}
 
-	public void onFinished(ActionEvent event) {
-		boolean missingInformation = false;
-		if (this.prename.getText().isEmpty()) {
-			this.prename.setPromptText(References.language.getString("valuemissing.text"));
-			missingInformation = true;
-		}
-		if (this.name.getText().isEmpty()) {
-			this.name.setPromptText(References.language.getString("valuemissing.text"));
-			missingInformation = true;
-		}
-		if (this.comboBox.getValue() == null
-				|| this.comboBox.getValue().equals(References.language.getString("course.text"))
-				|| this.comboBox.getValue().equals(References.language.getString("valuemissing.text"))) {
-			this.comboBox.setPromptText(References.language.getString("valuemissing.text"));
-			missingInformation = true;
-		}
+    public void onFinished(ActionEvent event) {
+        boolean missingInformation = false;
+        if (this.prename.getText().isEmpty()) {
+            this.prename.setPromptText(References.language.getString("valuemissing.text"));
+            missingInformation = true;
+        }
+        if (this.name.getText().isEmpty()) {
+            this.name.setPromptText(References.language.getString("valuemissing.text"));
+            missingInformation = true;
+        }
+        if (this.comboBox.getValue() == null
+                || this.comboBox.getValue().equals(References.language.getString("course.text"))
+                || this.comboBox.getValue().equals(References.language.getString("valuemissing.text"))) {
+            this.comboBox.setPromptText(References.language.getString("valuemissing.text"));
+            missingInformation = true;
+        }
 
-		if (missingInformation)
-			return;
+        if (missingInformation)
+            return;
 
-		student.setName(this.name.getText());
-		student.setPrename(this.prename.getText());
+        student.setName(this.name.getText());
+        student.setPrename(this.prename.getText());
 
-		for (Course c : GUIManager.actual.getAllCoursesAsArray()) {
-			if (this.comboBox.getValue().endsWith(c.getSubject() + ", " + c.getTeacher() + " | "
-					+ c.size() + "/" + c.getMaxStudentCount()))
-				student.setActiveCourse(c);
-		}
+        for (Course c : GUIManager.actual.getAllCoursesAsArray()) {
+            if (this.comboBox.getValue().endsWith(c.getSubject() + ", " + c.getTeacher() + " | "
+                    + c.size() + "/" + c.getMaxStudentCount()))
+                student.setActiveCourse(c);
+        }
 
-		Distributor.calculated.peek().getInformation().update();
-		Platform.runLater(GUIManager.getInstance().outputSView);
-		Platform.runLater(GUIManager.getInstance().outputCView);
-		Platform.runLater(GUIManager.getInstance().outputIView);
+        Distributor.calculated.peek().getInformation().update();
+        Platform.runLater(GUIManager.getInstance().outputSView);
+        Platform.runLater(GUIManager.getInstance().outputCView);
+        Platform.runLater(GUIManager.getInstance().outputIView);
 
-		((Stage) ((Button) event.getSource()).getScene().getWindow()).close();
-	}
+        ((Stage) ((Button) event.getSource()).getScene().getWindow()).close();
+    }
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
-		if (student == null)
-			Thread.currentThread().interrupt();
+        if (student == null)
+            Thread.currentThread().interrupt();
 
-		LOGGER.info("Student: " + student.toString());
+        LOGGER.info("Student: " + student.toString());
 
-		ArrayList<String> courses = new ArrayList<>();
+        ArrayList<String> courses = new ArrayList<>();
 
-		int i = 1;
+        int i = 1;
 
-		for (Course c : student.getCourses()) {
-			if (c.equals(student.getActiveCourse()))
-				courses.add("(" + i++ + ".) " + c.getSubject() + ", " + c.getTeacher() + " | "
-						+ c.size() + "/" + c.getMaxStudentCount());
-			else
-				courses.add(i++ + ". " + c.getSubject() + ", " + c.getTeacher() + " | " + c.size()
-						+ "/" + c.getMaxStudentCount());
-		}
+        for (Course c : student.getCourses()) {
+            if (c.equals(student.getActiveCourse()))
+                courses.add("(" + i++ + ".) " + c.getSubject() + ", " + c.getTeacher() + " | "
+                        + c.size() + "/" + c.getMaxStudentCount());
+            else
+                courses.add(i++ + ". " + c.getSubject() + ", " + c.getTeacher() + " | " + c.size()
+                        + "/" + c.getMaxStudentCount());
+        }
 
-		comboBox.setItems(FXCollections.observableArrayList(courses));
+        comboBox.setItems(FXCollections.observableArrayList(courses));
 
-		if (student.getActiveCourse() != null) {
-			Course c = student.getActiveCourse();
-			i = student.getPosition(c) + 1;
-			comboBox.setValue("(" + i++ + ".) " + c.getSubject() + ", " + c.getTeacher() + " | "
-					+ c.size() + "/" + c.getMaxStudentCount());
-		}
+        if (student.getActiveCourse() != null) {
+            Course c = student.getActiveCourse();
+            i = student.getPosition(c) + 1;
+            comboBox.setValue("(" + i++ + ".) " + c.getSubject() + ", " + c.getTeacher() + " | "
+                    + c.size() + "/" + c.getMaxStudentCount());
+        }
 //		this.teacher.setCellValueFactory(s -> {
 //			return new SimpleStringProperty(s.getValue().getTeacher());
 //		});
@@ -135,15 +135,15 @@ public class SwitchCourseManager implements Initializable {
 //			return new SimpleStringProperty(s.getValue().getSubject());
 //		});
 
-		if (!Util.isBlank(student.getName()))
-			this.name.setText(student.getName());
+        if (!Util.isBlank(student.getName()))
+            this.name.setText(student.getName());
 
-		if (!Util.isBlank(student.getPrename()))
-			this.prename.setText(student.getPrename());
+        if (!Util.isBlank(student.getPrename()))
+            this.prename.setText(student.getPrename());
 
-		LOGGER.info("Success");
+        LOGGER.info("Success");
 //		this.scw = new SwitchCourseView(this.courses, student);
 //		this.scw.run();
 
-	}
+    }
 }

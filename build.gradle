@@ -1,0 +1,144 @@
+plugins {
+    id 'maven-publish'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'org.beryx.jlink' version '2.24.2'
+}
+
+javafx {
+    version = "17"
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.base', 'javafx.graphics', 'javafx.media', 'javafx.swing' ]
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+
+    maven {
+        url 'https://maven.pkg.github.com/juhu1705/configmanager'
+        credentials {
+            username = System.getenv('USERNAME')
+            password = System.getenv('TOKEN')
+        }
+    }
+
+    maven {
+        url 'https://maven.pkg.github.com/juhu1705/logger'
+        credentials {
+            username = System.getenv('USERNAME')
+            password = System.getenv('TOKEN')
+        }
+    }
+
+    maven {
+        url 'https://maven.pkg.github.com/juhu1705/tablefilemanager'
+        credentials {
+            username = System.getenv('USERNAME')
+            password = System.getenv('TOKEN')
+        }
+    }
+
+
+    maven {
+        url 'https://maven.pkg.github.com/juhu1705/eventmanager'
+        credentials {
+            username = System.getenv('USERNAME')
+            password = System.getenv('TOKEN')
+        }
+    }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.0'
+
+    implementation('org.kordamp.ikonli:ikonli-javafx:12.2.0') {
+        exclude group: 'org.openjfx'
+    }
+    implementation('org.kordamp.ikonli:ikonli-fontawesome5-pack:12.2.0') {
+        exclude group: 'org.openjfx'
+    }
+    implementation('org.kordamp.ikonli:ikonli-fontawesome-pack:12.2.0') {
+        exclude group: 'org.openjfx'
+    }
+    implementation('org.jfxtras:jmetro:11.6.15') {
+        exclude group: 'org.openjfx'
+    }
+    implementation('org.controlsfx:controlsfx:11.1.0') {
+        exclude group: 'org.openjfx'
+    }
+
+    implementation 'de.noisruker:logger:1.0.2'
+    implementation('de.noisruker:table-filemanager:1.0.0')  {
+        exclude group: 'org.openjfx'
+        exclude group: 'xml-apis'
+    }
+    implementation('de.noisruker:configmanager:1.0.2') {
+        exclude group: 'org.openjfx'
+    }
+    implementation 'de.noisruker:event-manager:1.0.2'
+}
+
+tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
+java { modularity.inferModulePath = true }
+modularity.disableEffectiveArgumentsAdjustment()
+
+group = 'de.juhu'
+version = '1.1.0'
+description = 'CaRP Assigner'
+sourceCompatibility = 16
+
+ext {
+    moduleName = 'de.noisruker.carp'
+    moduleLaunchPoint = 'de.juhu.guiFX.GUILoader'
+}
+
+application {
+    mainModule = 'de.noisruker.carp'
+    mainClass = 'de.juhu.guiFX.GUILoader'
+}
+
+jlink {
+    options = ['--strip-debug', '--ignore-signing-information', '--compress', '2', '--no-header-files', '--no-man-pages']
+    mergedModuleJarVersion = '16'
+
+    targetPlatform('linux-x64', 'G:\\Programme\\Java\\jdk-16.0.2')
+
+    mergedModule {
+        // additive = true  // redundant, because excludeXXX() methods are also present
+
+        excludeProvides servicePattern: 'org.codehaus.stax2.validation.XMLValidationSchemaFactory.*'
+        excludeProvides servicePattern: 'org.apache.xalan.extensions.bsf.*'
+        excludeProvides service: 'org.codehaus.stax2.validation.XMLValidationSchemaFactory.dtd'
+    }
+    launcher {
+        name = 'CaRP'
+        jvmArgs = ['-Dlog4j.configurationFile=./log4j2.xml']
+        noConsole = true
+    }
+    addExtraDependencies("javafx")
+
+    jpackage {
+        imageName = "CaRP - Assigner"
+        installerType = 'msi'
+        installerOptions = ['--win-console', '--win-menu', '--win-shortcut']
+    }
+}
+
+tasks.jlink.doLast {
+    copy {
+        from('src/main/resources')
+        into("$buildDir/image/bin")
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': "carp",
+                'Main-Class': 'de.juhu.guiFX.GUILoader'
+    }
+}
+
+mainClassName = "${moduleLaunchPoint}"

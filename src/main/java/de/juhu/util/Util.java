@@ -196,12 +196,7 @@ public class Util {
     public static Stage openWindow(String resourceLocation, String title, Stage parent) {
         Stage primaryStage = new Stage();
 
-        Image i;
-
-        if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-            i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-        else
-            i = new Image("/assets/textures/logo/KuFA.png");
+        Image i = new Image(Util.class.getResource("/assets/textures/logo/KuFA.png").toExternalForm());
         Parent root = null;
 
         try {

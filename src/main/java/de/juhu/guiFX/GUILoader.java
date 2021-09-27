@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.controlsfx.control.Notifications;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.util.Objects;
@@ -50,6 +51,8 @@ public class GUILoader extends Application {
 
         Config.register();
 
+        FontIcon icon = new FontIcon("fas-cogs");
+
         for (String arg : args) {
             if (new File(arg).exists())
                 GUILoader.toLoad = new File(arg);
@@ -62,12 +65,7 @@ public class GUILoader extends Application {
     public void start(Stage primaryStage) throws Exception {
         GUILoader.primaryStage = primaryStage;
 
-        Image i;
-
-        if (new File("./resources/assets/textures/logo/KuFA.png").exists())
-            i = new Image(new File("./resources/assets/textures/logo/KuFA.png").toURI().toString());
-        else
-            i = new Image("/assets/textures/logo/KuFA.png");
+        Image i = new Image(getClass().getResource("/assets/textures/logo/KuFA.png").toExternalForm());
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/assets/layouts/GUI.fxml")), References.language);
 
@@ -75,20 +73,18 @@ public class GUILoader extends Application {
 
         EventManager.getInstance().triggerEvent(new WindowUpdateEvent(primaryStage, s));
 
-        GUIManager.getInstance().checks.forEach((themes, checkbox) -> {
-            checkbox.setSelected(false);
-        });
+        if(GUIManager.getInstance() != null) {
+            GUIManager.getInstance().checks.forEach((themes, checkbox) -> checkbox.setSelected(false));
 
-        if (GUIManager.getInstance().checks.get(Config.theme) != null)
-            GUIManager.getInstance().checks.get(Config.theme).setSelected(true);
+            if (GUIManager.getInstance().checks.get(Config.theme) != null)
+                GUIManager.getInstance().checks.get(Config.theme).setSelected(true);
+        }
 
         primaryStage.setMinWidth(600);
         primaryStage.setMinHeight(580);
         primaryStage.setTitle(PROJECT_NAME + " | " + VERSION);
         primaryStage.setScene(s);
-        primaryStage.setOnCloseRequest(c -> {
-            GUIManager.getInstance().close(null);
-        });
+        primaryStage.setOnCloseRequest(c -> GUIManager.getInstance().close(null));
 
         primaryStage.centerOnScreen();
 

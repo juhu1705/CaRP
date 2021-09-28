@@ -25,7 +25,7 @@
          <children>
             <ImageView fitHeight="75.0" fitWidth="77.0" layoutX="26.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="315.0" AnchorPane.topAnchor="28.0">
                <image>
-                  <Image url="@../textures/logo/KuFA.png" />
+                  <Image url="@../textures/logo/CaRP.png" />
                </image>
                <viewport>
                   <Rectangle2D />

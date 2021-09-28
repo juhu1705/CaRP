@@ -65,7 +65,7 @@ public class GUILoader extends Application {
     public void start(Stage primaryStage) throws Exception {
         GUILoader.primaryStage = primaryStage;
 
-        Image i = new Image(getClass().getResource("/assets/textures/logo/KuFA.png").toExternalForm());
+        Image i = new Image(getClass().getResource("/assets/textures/logo/CaRP.png").toExternalForm());
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/assets/layouts/GUI.fxml")), References.language);
 

@@ -196,7 +196,7 @@ public class Util {
     public static Stage openWindow(String resourceLocation, String title, Stage parent) {
         Stage primaryStage = new Stage();
 
-        Image i = new Image(Util.class.getResource("/assets/textures/logo/KuFA.png").toExternalForm());
+        Image i = new Image(Util.class.getResource("/assets/textures/logo/CaRP.png").toExternalForm());
         Parent root = null;
 
         try {

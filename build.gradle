@@ -74,11 +74,19 @@ dependencies {
     implementation('de.noisruker:table-filemanager:1.0.0')  {
         exclude group: 'org.openjfx'
         exclude group: 'xml-apis'
+        exclude group: 'org.apache.xmlgraphics'
     }
     implementation('de.noisruker:configmanager:1.0.2') {
         exclude group: 'org.openjfx'
     }
     implementation 'de.noisruker:event-manager:1.0.2'
+    implementation('org.apache.xmlgraphics:batik-all:1.14') {
+        exclude group: 'org.apache.xmlgraphics'
+    }
+    implementation('org.apache.xmlgraphics:xmlgraphics-commons:2.6') {
+        exclude group: 'commons-logging'
+    }
+    implementation 'org.codehaus.woodstox:stax2-api:4.2.1'
 }
 
 tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
@@ -86,25 +94,25 @@ java { modularity.inferModulePath = true }
 modularity.disableEffectiveArgumentsAdjustment()
 
 group = 'de.juhu'
-version = '1.1.0'
+version = '1.0.3'
 description = 'CaRP Assigner'
-sourceCompatibility = 16
+sourceCompatibility = 1.11
 
 ext {
-    moduleName = 'de.noisruker.carp'
+    moduleName = 'de.juhu.carp'
     moduleLaunchPoint = 'de.juhu.guiFX.GUILoader'
 }
 
 application {
-    mainModule = 'de.noisruker.carp'
+    mainModule = 'de.juhu.carp'
     mainClass = 'de.juhu.guiFX.GUILoader'
 }
 
 jlink {
     options = ['--strip-debug', '--ignore-signing-information', '--compress', '2', '--no-header-files', '--no-man-pages']
-    mergedModuleJarVersion = '16'
+    mergedModuleJarVersion = '11'
 
-    targetPlatform('linux-x64', 'G:\\Programme\\Java\\jdk-16.0.2')
+    //targetPlatform('linux-x64', 'G:\\Programme\\Java\\jdk-16.0.2')
 
     mergedModule {
         // additive = true  // redundant, because excludeXXX() methods are also present
@@ -121,9 +129,11 @@ jlink {
     addExtraDependencies("javafx")
 
     jpackage {
-        imageName = "CaRP - Assigner"
-        installerType = 'msi'
-        installerOptions = ['--win-console', '--win-menu', '--win-shortcut']
+        if (org.gradle.internal.os.OperatingSystem.current().windows) {
+            imageName = "CaRP - Assigner"
+            icon = 'src/main/resources/assets/textures/logo/CaRP.ico'
+            installerOptions = ['--win-dir-chooser', '--win-menu']
+        }
     }
 }
 
@@ -136,8 +146,15 @@ tasks.jlink.doLast {
 
 jar {
     manifest {
-        attributes 'Implementation-Title': "carp",
-                'Main-Class': 'de.juhu.guiFX.GUILoader'
+        attributes('Main-Class': 'de.juhu.guiFX.GUILoader')
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
     }
 }
 

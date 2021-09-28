@@ -3,6 +3,7 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
     id 'org.beryx.jlink' version '2.24.2'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 javafx {
@@ -87,6 +88,7 @@ dependencies {
         exclude group: 'commons-logging'
     }
     implementation 'org.codehaus.woodstox:stax2-api:4.2.1'
+    implementation 'com.fasterxml.woodstox:woodstox-core:6.2.6'
 }
 
 tasks.withType(JavaCompile) { options.encoding = 'UTF-8' }
@@ -94,9 +96,9 @@ java { modularity.inferModulePath = true }
 modularity.disableEffectiveArgumentsAdjustment()
 
 group = 'de.juhu'
-version = '1.0.3'
+version = '1.0.4'
 description = 'CaRP Assigner'
-sourceCompatibility = 1.11
+sourceCompatibility = 16
 
 ext {
     moduleName = 'de.juhu.carp'
@@ -110,7 +112,7 @@ application {
 
 jlink {
     options = ['--strip-debug', '--ignore-signing-information', '--compress', '2', '--no-header-files', '--no-man-pages']
-    mergedModuleJarVersion = '11'
+    mergedModuleJarVersion = '16'
 
     //targetPlatform('linux-x64', 'G:\\Programme\\Java\\jdk-16.0.2')
 
@@ -146,7 +148,7 @@ tasks.jlink.doLast {
 
 jar {
     manifest {
-        attributes('Main-Class': 'de.juhu.guiFX.GUILoader')
+        attributes('Main-Class': 'de.juhu.carp/de.juhu.guiFX.GUILoader')
     }
 }
 

@@ -8,22 +8,11 @@
 <?import javafx.scene.text.*?>
 <?import org.kordamp.ikonli.javafx.*?>
 
-<BorderPane prefHeight="554.0" prefWidth="416.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.AboutManager">
-   <bottom>
-      <SplitPane dividerPositions="0.5" prefHeight="9.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <items>
-            <TextField fx:id="weg" promptText="Help" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#onHelpSearch" text="%search.text">
-               <graphic>
-                  <FontIcon iconLiteral="fas-search" />
-               </graphic></Button>
-         </items>
-      </SplitPane>
-   </bottom>
-   <center>
-      <AnchorPane prefHeight="636.0" prefWidth="416.0" styleClass="background" BorderPane.alignment="CENTER">
+<VBox spacing="10.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.AboutManager">
+   <children>
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0" spacing="20.0" VBox.vgrow="ALWAYS">
          <children>
-            <ImageView fitHeight="75.0" fitWidth="77.0" layoutX="26.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="315.0" AnchorPane.topAnchor="28.0">
+            <ImageView fitHeight="75.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../textures/logo/CaRP.png" />
                </image>
@@ -31,41 +20,66 @@
                   <Rectangle2D />
                </viewport>
             </ImageView>
-            <Label layoutX="142.0" layoutY="28.0" text="Course and Research Paper - Assigner" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="28.0">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="211.0" layoutY="49.0" prefHeight="17.0" prefWidth="97.0" text="Version: 1.0.3" AnchorPane.leftAnchor="211.0" AnchorPane.rightAnchor="108.0" AnchorPane.topAnchor="49.0" />
-            <Label layoutX="192.0" layoutY="66.0" prefHeight="17.0" prefWidth="146.0" text="Created by Fabius Mettner" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="72.0" AnchorPane.topAnchor="66.0" />
-            <Label layoutX="172.0" layoutY="85.0" text="Under Supervision of Christian Wolf" AnchorPane.leftAnchor="172.0" AnchorPane.rightAnchor="49.0" AnchorPane.topAnchor="85.0" />
-            <Label layoutX="29.0" layoutY="120.0" text="Used Libaries:" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="296.0" AnchorPane.topAnchor="120.0">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
-            <Label layoutX="29.0" layoutY="148.0" text="POI, POI-OOXML [The Apache Software Foundation]" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="95.0" AnchorPane.topAnchor="148.0" />
-            <Hyperlink layoutX="46.0" layoutY="165.0" onAction="#openLink" prefHeight="23.0" prefWidth="342.0" text="https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="165.0" />
-            <Label layoutX="24.0" layoutY="211.0" prefHeight="17.0" prefWidth="280.0" text="XMLPULL [Stefan Haustein, Aleksander Slominski]" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="211.0" />
-            <Label layoutX="18.0" layoutY="332.0" prefHeight="17.0" prefWidth="392.0" text="This is a new completely overhauled Version of the old &quot;KuFA-Zuweiser&quot; " AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="0.0" />
-            <Label layoutX="63.0" layoutY="478.0" prefHeight="17.0" prefWidth="285.0" text="by Daniel Salomon, Tobias Heuser and Christian Wolf" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="62.0" />
-            <Hyperlink layoutX="45.0" layoutY="228.0" onAction="#openLink" text="https://mvnrepository.com/artifact/xmlpull/xmlpull" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="88.0" AnchorPane.topAnchor="228.0" />
-            <Label layoutX="24.0" layoutY="251.0" text="FontAwesomeFX [Dave Gandy, Jens Deters]" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="157.0" AnchorPane.topAnchor="251.0" />
-            <Hyperlink layoutX="45.0" layoutY="268.0" onAction="#openLink" text="https://bitbucket.org/Jerady/fontawesomefx/" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="118.0" AnchorPane.topAnchor="268.0" />
-            <Label layoutX="24.0" layoutY="291.0" prefHeight="17.0" prefWidth="152.0" text="SAX [sax]" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="248.0" AnchorPane.topAnchor="291.0" />
-            <Hyperlink layoutX="45.0" layoutY="188.0" onAction="#openLink" text="https://mvnrepository.com/artifact/org.apache.poi/poi" />
-            <Hyperlink layoutX="46.0" layoutY="308.0" onAction="#openLink" prefHeight="23.0" prefWidth="303.0" text="https://mvnrepository.com/artifact/sax/sax/2.0.1" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="61.0" AnchorPane.topAnchor="308.0" />
-            <Label layoutX="24.0" layoutY="331.0" prefHeight="17.0" prefWidth="160.0" text="maven-model [Apache]" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="226.0" AnchorPane.topAnchor="331.0" />
-            <Hyperlink layoutX="45.0" layoutY="348.0" onAction="#openLink" prefHeight="23.0" prefWidth="397.0" text="https://mvnrepository.com/artifact/org.apache.maven/maven-model" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="-32.0" AnchorPane.topAnchor="348.0" />
-            <Label layoutX="21.0" layoutY="371.0" prefHeight="17.0" prefWidth="219.0" text="launch4j-maven-plugin [Lukaszenart]" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="176.0" AnchorPane.topAnchor="371.0" />
-            <Hyperlink layoutX="46.0" layoutY="388.0" onAction="#openLink" prefHeight="23.0" prefWidth="367.0" text="https://github.com/lukaszlenart/launch4j-maven-plugin" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="388.0" />
-            <Label layoutX="18.0" layoutY="391.0" prefHeight="21.0" prefWidth="74.0" text="Contact:" AnchorPane.bottomAnchor="103.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="332.0" AnchorPane.topAnchor="391.0">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
-            <Hyperlink layoutX="17.0" layoutY="410.0" onAction="#startMail" prefHeight="23.0" prefWidth="143.0" text="fabius1705@live.de" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="410.0" />
-            <ImageView fitHeight="183.0" fitWidth="239.0" layoutX="148.0" layoutY="417.0" onMouseClicked="#openLSPage" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="148.0" AnchorPane.topAnchor="417.0">
+            <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Course and Research Paper - Assigner">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="97.0" text="Version: 1.0.3" />
+                  <Label prefHeight="17.0" prefWidth="146.0" text="Created by Fabius Mettner" />
+                  <Label text="Under Supervision of Christian Wolf" />
+               </children>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+      </HBox>
+      <Label text="Used Libaries:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label maxWidth="1.7976931348623157E308" text="Java" />
+            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://www.java.com/" />
+            <Label maxWidth="1.7976931348623157E308" text="JavaFX" />
+            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://openjfx.io/" />
+            <Label maxWidth="1.7976931348623157E308" text="Ikonly" />
+            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/kordamp/ikonli" />
+            <Label maxWidth="1.7976931348623157E308" text="JMetro" />
+            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://www.pixelduke.com/java-javafx-theme-jmetro/" />
+            <Label maxWidth="1.7976931348623157E308" text="POI, POI-OOXML [The Apache Software Foundation]" />
+            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://mvnrepository.com/artifact/org.apache.poi/poi" />
+            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml" />
+            <Label maxWidth="1.7976931348623157E308" text="JLink" />
+            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/beryx/badass-jlink-plugin/" />
+            <Label maxWidth="1.7976931348623157E308" text="Noisruker Libaries" />
+            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/juhu1705/EventManager" />
+            <Hyperlink layoutX="20.0" layoutY="300.0" maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/juhu1705/Logger" />
+            <Hyperlink layoutX="20.0" layoutY="323.0" maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/juhu1705/ConfigManager" />
+            <Hyperlink layoutX="20.0" layoutY="346.0" maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/juhu1705/TableFilemanager" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label alignment="CENTER" prefHeight="21.0" prefWidth="74.0" text="Contact:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Hyperlink alignment="CENTER" onAction="#startMail" prefHeight="23.0" prefWidth="143.0" text="fabius1705@live.de" />
+               </children>
+            </VBox>
+            <ImageView fitHeight="183.0" fitWidth="239.0" onMouseClicked="#openLSPage" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../textures/logo/logo_luisenschule.png" />
                </image>
@@ -74,6 +88,28 @@
                </cursor>
             </ImageView>
          </children>
-      </AnchorPane>
-   </center>
-</BorderPane>
+      </HBox>
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="This is a new completely overhauled Version of the old &quot;KuFA-Zuweiser&quot; " VBox.vgrow="ALWAYS" />
+      <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="by Daniel Salomon, Tobias Heuser and Christian Wolf" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Label>
+      <HBox spacing="10.0">
+         <children>
+            <TextField fx:id="weg" promptText="Help" HBox.hgrow="ALWAYS" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onHelpSearch" text="%search.text">
+               <graphic>
+                  <FontIcon iconLiteral="fas-search" />
+               </graphic>
+            </Button>
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

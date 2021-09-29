@@ -5,7 +5,6 @@ import de.juhu.distributor.Distributor;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableView;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
 

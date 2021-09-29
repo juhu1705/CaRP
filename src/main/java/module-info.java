@@ -6,7 +6,6 @@ module de.juhu.carp {
     requires org.controlsfx.controls;
     requires java.logging;
     requires javafx.fxml;
-    requires java.desktop;
     requires org.jfxtras.styles.jmetro;
     requires java.sql;
     requires org.kordamp.ikonli.javafx;

@@ -73,7 +73,7 @@ dependencies {
 
     implementation 'de.noisruker:logger:1.0.2'
     implementation('de.noisruker:table-filemanager:1.0.0')  {
-        // exclude group: 'org.openjfx'
+        exclude group: 'org.openjfx'
         exclude group: 'xml-apis'
         exclude group: 'org.apache.xmlgraphics'
     }

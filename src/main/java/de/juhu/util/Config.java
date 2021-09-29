@@ -99,9 +99,9 @@ public class Config {
     @ConfigElement(defaultValue = "3", type = COUNT, description = "rateindex.description", name = "rateindex.text", location = "config.calculation", visible = true)
     public static int powValue = 3;
     @ConfigElement(defaultValue = "GERMAN", type = CHOOSE, description = "language.description", name = "language.text", location = "config", visible = true)
-    public static String language;
+    public static String language = "GERMAN";
     @ConfigElement(defaultValue = "DARK", type = CHOOSE, description = "theme.description", name = "theme.text", location = "config", visible = true)
-    public static String theme;
+    public static String theme = "DARK";
 
     static {
         outputFile = (References.HOME_FOLDER);
@@ -238,11 +238,14 @@ public class Config {
                 }
             });
 
-            if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "config.cfg"),
+            if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "/config.cfg"),
                     LinkOption.NOFOLLOW_LINKS)) {
                 ConfigManager.getInstance().loadDefault();
+                ConfigManager.getInstance().onConfigChangedGeneral();
             } else {
-                ConfigManager.getInstance().load(References.HOME_FOLDER + "config.cfg");
+                ConfigManager.getInstance().load(References.HOME_FOLDER + "/config.cfg");
+                if(References.language == null)
+                    ConfigManager.getInstance().onConfigChangedGeneral();
             }
         } catch (IOException | SAXException e4) {
             LOGGER.log(Level.SEVERE, "Error while register Configuration Elements", e4);

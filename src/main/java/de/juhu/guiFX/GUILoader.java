@@ -51,6 +51,8 @@ public class GUILoader extends Application {
 
         Config.register();
 
+        Logger.LOGGER.info("" + References.language.getKeys());
+
         FontIcon icon = new FontIcon("fas-cogs");
 
         for (String arg : args) {

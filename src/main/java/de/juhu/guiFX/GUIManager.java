@@ -1169,7 +1169,7 @@ public class GUIManager implements Initializable {
             new File(References.HOME_FOLDER).mkdir();
 
         try {
-            ConfigManager.getInstance().save(new File(References.HOME_FOLDER + "config.cfg"));
+            ConfigManager.getInstance().save(new File(References.HOME_FOLDER + "/config.cfg"));
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error due to write config data!", e);
         }

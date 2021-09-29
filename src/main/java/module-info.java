@@ -13,9 +13,6 @@ module de.juhu.carp {
     requires org.kordamp.ikonli.fontawesome5;
     requires org.kordamp.ikonli.fontawesome;
 
-    opens assets.layouts to javafx.fxml;
-    opens assets.styles to javafx.base;
-    opens assets.textures.logo to javafx.fxml;
     opens de.juhu.guiFX to javafx.fxml;
 
     exports de.juhu.guiFX to javafx.graphics, javafx.fxml;

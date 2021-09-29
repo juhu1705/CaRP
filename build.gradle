@@ -97,7 +97,7 @@ modularity.disableEffectiveArgumentsAdjustment()
 
 group = 'de.juhu'
 version = '1.0.4'
-description = 'CaRP Assigner'
+description = 'Ein Programm zur Zuweisung von Schülern in Kurse'
 sourceCompatibility = 16
 
 ext {
@@ -131,10 +131,27 @@ jlink {
     addExtraDependencies("javafx")
 
     jpackage {
+        installerOptions += [
+                '--description', project.description,
+                '--version', '1.0.4',
+                '--copyright', 'Copyrigth 2021 Fabius Mettner',
+                '--license-file', 'G://Projects/JavaProjects/CaRP/LICENSE.txt'
+        ]
         if (org.gradle.internal.os.OperatingSystem.current().windows) {
             imageName = "CaRP - Assigner"
             icon = 'src/main/resources/assets/textures/logo/CaRP.ico'
-            installerOptions = ['--win-dir-chooser', '--win-menu']
+            installerOptions = ['--win-dir-chooser',
+                                '--win-menu', '--win-menu-group', '']
+        }
+        if (org.gradle.internal.os.OperatingSystem.current().linux) {
+            icon = 'src/main/resources/assets/textures/logo/CaRP.png'
+            installerOptions += [
+                    '--linux-deb-maintainer', 'fabius.mettner@gmx.de',
+                    '--linux-menu-group', 'Office',
+                    '--linux-rpm-license-type', 'Apachev2.0',
+                    '--linux-app-category', 'Office',
+                    '--linux-shortcut'
+            ]
         }
     }
 }

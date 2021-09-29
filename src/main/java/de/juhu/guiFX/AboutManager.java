@@ -1,5 +1,6 @@
 package de.juhu.guiFX;
 
+import de.juhu.util.Util;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
@@ -31,11 +32,7 @@ public class AboutManager {
         if (event.getSource() instanceof Hyperlink) {
             Hyperlink link = (Hyperlink) event.getSource();
 
-            try {
-                Desktop.getDesktop().browse(new URI(link.getText()));
-            } catch (IOException | URISyntaxException e) {
-                LOGGER.log(Level.SEVERE, "Can not browse link!", e);
-            }
+            Util.openLink(link.getText());
         }
 
     }
@@ -53,23 +50,15 @@ public class AboutManager {
     }
 
     public void openLSPage(MouseEvent event) {
-        try {
-            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                Desktop.getDesktop().browse(new URI("https://www.luisenschule-mh.de/"));
-            }
-        } catch (IOException | URISyntaxException e) {
-            LOGGER.info("https://www.luisenschule-mh.de/");
-        }
+        Util.openLink("https://www.luisenschule-mh.de/");
     }
 
     public void onHelpSearch(ActionEvent event) {
         try {
-            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                Desktop.getDesktop().browse(new URI("https://github.com/juhu1705/CaRP/issues?utf8=%E2%9C%93&q="
-                        + URLEncoder.encode(weg.getText(), StandardCharsets.UTF_8.toString())));
-            }
-        } catch (IOException | URISyntaxException e) {
-            LOGGER.info("https://github.com/juhu1705/CaRP/issues?utf8=%E2%9C%93&q=" + weg.getText());
+            Util.openLink("https://github.com/juhu1705/CaRP/issues?utf8=%E2%9C%93&q="
+                    + URLEncoder.encode(weg.getText(), StandardCharsets.UTF_8.toString()));
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "https://github.com/juhu1705/CaRP/issues?utf8=%E2%9C%93&q=" + weg.getText(), e);
         }
     }
 }

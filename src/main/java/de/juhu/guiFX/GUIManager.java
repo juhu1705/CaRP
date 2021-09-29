@@ -1229,15 +1229,7 @@ public class GUIManager implements Initializable {
     }
 
     public void onHelp(ActionEvent event) {
-
-        try {
-            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                Desktop.getDesktop().browse(new URI("https://github.com/juhu1705/CaRP/wiki"));
-            }
-        } catch (IOException | URISyntaxException e) {
-            LOGGER.info("https://github.com/juhu1705/CaRP/wiki");
-        }
-
+        Util.openLink("https://github.com/juhu1705/CaRP/wiki");
     }
 
     public void openHelpFile(ActionEvent event) {
@@ -1254,7 +1246,7 @@ public class GUIManager implements Initializable {
                     FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf"));
 
             Desktop.getDesktop().browse(FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf").toUri());
-        } catch (IOException e) {
+        } catch (IOException ignored) {
 
         }
 
@@ -1569,7 +1561,7 @@ public class GUIManager implements Initializable {
 
         this.counter.setText(References.language.getString("distribution.text") + ": " + 0);
 
-        if (Distributor.getInstance() != null) {
+        if (Distributor.getInstance() != null && (!Distributor.getInstance().isEmpty())) {
             this.inputView.fill();
             this.cView.fill();
             t1.setText(Config.inputFile);

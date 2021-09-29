@@ -15,6 +15,8 @@ import javafx.stage.StageStyle;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -29,67 +31,44 @@ import static de.noisruker.logger.Logger.LOGGER;
  */
 public class Util {
 
-    @Deprecated
-    private static void setPositionCorrectly(Component c, double xRelation, double yRelation, double widthRelation,
-                                             double heightRelation, double newWindowWidth, double newWindowHeight) {
-        double dx = xRelation * newWindowWidth, dy = yRelation * newWindowHeight,
-                dwidth = widthRelation * newWindowWidth, dheight = heightRelation * newWindowHeight;
+    public static void openLink(String url) {
+        try {
+            Desktop.getDesktop().browse(new URI(url));
+        } catch (IOException | URISyntaxException e) {
+            String os = System.getProperty("os.name").toLowerCase();
+            Runtime rt = Runtime.getRuntime();
+            try {
 
-        int x = (int) dx, y = (int) dy, width = (int) dwidth, height = (int) dheight;
+                if (os.contains("win")) {
 
-        if (isReliable(x / newWindowWidth, xRelation) && isReliable(y / newWindowHeight, yRelation)
-                && isReliable(width / newWindowWidth, widthRelation)
-                && isReliable(height / newWindowHeight, heightRelation))
-            c.setBounds(x, y, width, height);
+                    // this doesn't support showing urls in the form of "page.html#nameLink"
+                    rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
 
-    }
+                } else if (os.contains("mac")) {
 
-    @Deprecated
-    private static boolean isReliable(double d1, double d2) {
-        return d1 == d2 || ((d1 + 2) > d2 && (d1 - 2) < d2);
-    }
+                    rt.exec("open " + url);
 
-    @Deprecated
-    public static void setPositionCorrectly(Component jC, Rectangle c, int newWindowWidth, int newWindowHeight) {
-        Util.setPositionCorrectly(jC, c.x, c.y, c.width, c.height, newWindowWidth, newWindowHeight);
-    }
+                } else if (os.contains("nix") || os.contains("nux")) {
 
-    @Deprecated
-    public static void setPositionCorrectly(Component c, Rectangle relationBounds, Rectangle windowBounds) {
-        Util.setPositionCorrectly(c, relationBounds.x, relationBounds.y, relationBounds.width, relationBounds.height,
-                windowBounds.width, windowBounds.height);
-    }
+                    // Do a best guess on unix until we get a platform independent way
+                    // Build a list of browsers to try, in this order.
+                    String[] browsers = {"epiphany", "firefox", "mozilla", "konqueror",
+                            "netscape", "opera", "links", "lynx"};
 
-    @Deprecated
-    public static void setPositionCorrectlyWithWindowSettings(Component c, Rectangle previousWindowBounds,
-                                                              Rectangle windowBounds) {
-        Rectangle unrelatedBounds = c.getBounds();
-        Util.setPositionCorrectly(c, (double) unrelatedBounds.x / (double) previousWindowBounds.width,
-                (double) unrelatedBounds.y / (double) previousWindowBounds.height,
-                (double) unrelatedBounds.width / (double) previousWindowBounds.width,
-                (double) unrelatedBounds.height / (double) previousWindowBounds.height, windowBounds.width,
-                windowBounds.height);
-    }
+                    // Build a command string which looks like "browser1 "url" || browser2 "url" ||..."
+                    StringBuilder cmd = new StringBuilder();
+                    for (int i = 0; i < browsers.length; i++)
+                        cmd.append(i == 0 ? "" : " || ").append(browsers[i]).append(" \"").append(url).append("\" ");
 
-    @Deprecated
-    public static void setPositionWithStartPosition(Component c, Rectangle startPosition, Rectangle windowPosition,
-                                                    Rectangle startWindow) {
-        double x = ((double) startPosition.x / (double) startWindow.width) * windowPosition.width,
-                y = ((double) startPosition.y / (double) startWindow.height) * windowPosition.height,
-                width = ((double) startPosition.width / (double) startWindow.width) * windowPosition.width,
-                height = ((double) startPosition.height / (double) startWindow.height) * windowPosition.height;
-        c.setBounds((int) x, (int) y, (int) width, (int) height);
-    }
+                    rt.exec(new String[]{"sh", "-c", cmd.toString()});
 
-    @Deprecated
-    public static int quad(int i, int height) {
-        if (height < 0)
-            return 1 / quad(i, Math.abs(height));
-        if (height == 0)
-            return 0;
-        if (height == 1)
-            return i;
-        return i * quad(i, height - 1);
+                } else {
+                    LOGGER.log(Level.SEVERE, "Can not browse link!", e);
+                }
+            } catch (Exception ex) {
+                LOGGER.log(Level.SEVERE, "Can not browse link!", ex);
+            }
+        }
     }
 
     /**

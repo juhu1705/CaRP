@@ -61,11 +61,11 @@ public class Distributor implements Runnable {
     /**
      * Speichert die zu berechnenden Schüler.
      */
-    ArrayList<Student> loadedallStudents = new ArrayList<>();
+    ArrayList<Student> loadedallStudents;
     /**
      * Speichert die zu berechnenden Kurse.
      */
-    ArrayList<Course> loadedallCourses = new ArrayList<>();
+    ArrayList<Course> loadedallCourses;
     /**
      * Diese Liste hält alle für die Berechnung irrelevanten Schüler fest und stellt
      * sie zum nachträglichen Einfügen in das Ergebnis bereit.
@@ -216,6 +216,10 @@ public class Distributor implements Runnable {
     public static int getStudentID() {
         // References.LOGGER.info(nextID + "");
         return Distributor.nextID++;
+    }
+
+    public boolean isEmpty() {
+        return this.allCourses.isEmpty() && this.allStudents.isEmpty() && this.ignoredStudents.isEmpty();
     }
 
     /**

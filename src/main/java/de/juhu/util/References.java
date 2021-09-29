@@ -2,6 +2,7 @@ package de.juhu.util;
 
 import de.noisruker.event.EventManager;
 import de.noisruker.logger.Settings;
+import de.noisruker.logger.events.LogReceivedErrorEvent;
 import de.noisruker.logger.events.LogReceivedMessageEvent;
 import javafx.application.Platform;
 import javafx.scene.CacheHint;
@@ -68,6 +69,7 @@ public class References {
         VBox.setVgrow(LOGGING_AREA, Priority.ALWAYS);
         LOGGING_AREA.setMaxHeight(Double.MAX_VALUE);
         EventManager.getInstance().registerEventListener(LogReceivedMessageEvent.class, event -> Platform.runLater(() -> LOGGING_AREA.appendText(event.getConsoleMessage())));
+        EventManager.getInstance().registerEventListener(LogReceivedErrorEvent.class, event -> Platform.runLater(() -> LOGGING_AREA.appendText(event.getConsoleMessage())));
     }
 
 }

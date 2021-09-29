@@ -257,23 +257,17 @@ public class Distributor implements Runnable {
             if (file.exists()) {
                 new Thread(new Distributor(Config.inputFile)).start();
 
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        GUIManager.getInstance().inputView.fill();
-                        GUIManager.getInstance().cView.fill();
-                    }
+                Platform.runLater(() -> {
+                    GUIManager.getInstance().inputView.fill();
+                    GUIManager.getInstance().cView.fill();
                 });
             } else
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        GUIManager.getInstance().startErrorFrame(References.language.getString("no_data_fail.title"),
-                                References.language.getString("no_data_fail.description"));
-                        GUIManager.getInstance().r1.setDisable(false);
-                        GUIManager.getInstance().r2.setDisable(false);
-                        GUIManager.getInstance().r3.setDisable(false);
-                    }
+                Platform.runLater(() -> {
+                    GUIManager.getInstance().startErrorFrame(References.language.getString("no_data_fail.title"),
+                            References.language.getString("no_data_fail.description"));
+                    GUIManager.getInstance().r1.setDisable(false);
+                    GUIManager.getInstance().r2.setDisable(false);
+                    GUIManager.getInstance().r3.setDisable(false);
                 });
 
             return;
@@ -309,7 +303,7 @@ public class Distributor implements Runnable {
             GUIManager.getInstance().counter.setText(References.language.getString("distribution.text") + ": "
                     + (Distributor.calculated.indexOf(GUIManager.actual) + 1));
 
-            LOGGER.config(GUIManager.getInstance().textActual + "");
+            //LOGGER.config(GUIManager.getInstance().textActual + "");
 
             GUIManager.getInstance().textActual.setText(References.language.getString("calculationgoodness.text") + ": "
                     + Util.round(GUIManager.actual.getInformation().getGuete(), 3));
@@ -353,7 +347,7 @@ public class Distributor implements Runnable {
 
         this.ignoredStudents.clear();
 
-        this.allCourses = new ArrayList<Course>(save.getAllCourses());
+        this.allCourses = new ArrayList<>(save.getAllCourses());
 
         ArrayList<Student> students = new ArrayList<>(save.getAllStudents());
 
@@ -365,7 +359,7 @@ public class Distributor implements Runnable {
 
         this.ignoredCourse.getStudents().clear();
 
-        ArrayList[] copiedData = this.copyData(students, (ArrayList) save.getAllCourses(), this.ignoredCourse);
+        ArrayList[] copiedData = this.copyData(students, (ArrayList<Course>) save.getAllCourses(), this.ignoredCourse);
 
         this.allStudents = copiedData[0];
         this.allCourses = copiedData[1];
@@ -577,8 +571,6 @@ public class Distributor implements Runnable {
 //				s.getInformation().update();
         }
         ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
-
-        LOGGER.info("Finished Calculating");
     }
 
     /**
@@ -684,9 +676,7 @@ public class Distributor implements Runnable {
      * Daten nicht mehr mit den Daten im {@link Distributor} verknüpft sind.
      */
     public void save() {
-        ArrayList<Student> students = new ArrayList();
         ArrayList<Student> ignorestudents = (ArrayList<Student>) this.ignoredStudents.clone();
-        ArrayList<Course> courses = new ArrayList();
 
         for (Student s : ignorestudents) {
             s.addCourse(this.ignore());
@@ -695,8 +685,8 @@ public class Distributor implements Runnable {
 
         ArrayList[] copiedData = this.copyData(this.allStudents, this.allCourses, ignoredCourse);
 
-        students = copiedData[0];
-        courses = copiedData[1];
+        ArrayList<Student> students = copiedData[0];
+        ArrayList<Course> courses = copiedData[1];
 
         Save save = new Save(students, ignorestudents, courses
                 /*
@@ -920,7 +910,7 @@ public class Distributor implements Runnable {
     /**
      * @return Die {@link #allStudents Liste der Schüler}.
      */
-    public ArrayList getCalcStudents() {
+    public ArrayList<Student> getCalcStudents() {
         return this.allStudents;
     }
 
@@ -930,7 +920,7 @@ public class Distributor implements Runnable {
      * @return Die {@link #ignoredStudents Liste der für die Berechnung irrelevanten
      * Schüler}
      */
-    public ArrayList getIgnoreStudents() {
+    public ArrayList<Student> getIgnoreStudents() {
         return this.ignoredStudents;
     }
 

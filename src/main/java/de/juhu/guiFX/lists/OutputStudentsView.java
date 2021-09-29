@@ -15,18 +15,18 @@ import static de.noisruker.logger.Logger.LOGGER;
  */
 public class OutputStudentsView implements Runnable {
 
-    TableView tv;
+    TableView<Student> tv;
 
     public OutputStudentsView(TableView<Student> inputTable) {
         this.tv = inputTable;
     }
 
     public void fill() {
-
         LOGGER.config("Loading Output Data to the Preview!");
 
         this.tv.setItems(FXCollections.observableArrayList(GUIManager.actual.getAllStudents()));
         this.tv.sort();
+        this.tv.refresh();
     }
 
     @Override

@@ -21,7 +21,7 @@ import static de.noisruker.logger.Logger.LOGGER;
  */
 public class OutputCourseView implements Runnable {
 
-    TableView tv;
+    TableView<Course> tv;
 
     ArrayList<TableColumn<Course, String>> students = new ArrayList<>();
 
@@ -34,6 +34,7 @@ public class OutputCourseView implements Runnable {
 
         this.tv.setItems(FXCollections.observableArrayList(GUIManager.actual.getAllCourses()));
         this.tv.sort();
+        this.tv.refresh();
     }
 
     private void loadMaxStudents() {

@@ -24,11 +24,11 @@
          <content>
             <VBox fx:id="vBox" prefHeight="298.0" prefWidth="578.0" spacing="10.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="58.0" text="%firstname.text" />
-                  <TextField fx:id="prename" />
-                  <Label text="%familyname.text" />
-                  <TextField fx:id="name" />
-                  <Label text="%course1s.text" />
+                  <Label maxWidth="1.7976931348623157E308" text="%firstname.text" />
+                  <TextField fx:id="prename" maxWidth="1.7976931348623157E308" />
+                  <Label maxWidth="1.7976931348623157E308" text="%familyname.text" />
+                  <TextField fx:id="name" maxWidth="1.7976931348623157E308" />
+                  <Label maxWidth="1.7976931348623157E308" text="%course1s.text" />
                   <HBox prefHeight="39.0" prefWidth="560.0" spacing="10.0">
                      <children>
                         <Label text="%subjects.text" />

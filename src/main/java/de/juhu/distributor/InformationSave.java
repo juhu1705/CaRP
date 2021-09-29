@@ -7,6 +7,7 @@ import de.noisruker.filemanager.WriteableContent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Diese Klasse hällt alle weiteren für eine Verteilung interressanten von dem

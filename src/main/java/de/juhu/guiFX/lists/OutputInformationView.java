@@ -26,7 +26,6 @@ public class OutputInformationView implements Runnable {
     public ArrayList<TableColumn<Student, String>> scourses = new ArrayList<>();
 
     public void fill() {
-
         GUIManager.getInstance().bStudents
                 .setItems(FXCollections.observableArrayList(GUIManager.actual.getInformation().getBStudents()));
 
@@ -62,9 +61,9 @@ public class OutputInformationView implements Runnable {
         HashMap<String, Integer> p = new HashMap<>();
 
         for (int i = 0; i < priorities.length - 1; i++)
-            p.put(Integer.toString(i + 1), Integer.valueOf(priorities[i]));
+            p.put(Integer.toString(i + 1), priorities[i]);
 
-        p.put("Inf.", Integer.valueOf(priorities[priorities.length - 1]));
+        p.put("Inf.", priorities[priorities.length - 1]);
 
         GUIManager.getInstance().priorities.setItems(FXCollections.observableArrayList(p.entrySet()));
 
@@ -113,8 +112,6 @@ public class OutputInformationView implements Runnable {
             // GUIManager.getInstance().unallocatedStudents.setItems(FXCollections.observableArrayList(new
             // ArrayList<>()));
 
-            LOGGER.fine(GUIManager.actual.getInformation().getUStudents().toString());
-
             GUIManager.getInstance().unallocatedStudents
                     .setItems(FXCollections.observableArrayList(GUIManager.actual.getInformation().getUStudents()));
 
@@ -136,11 +133,7 @@ public class OutputInformationView implements Runnable {
         GUIManager.getInstance().r2.setDisable(false);
         GUIManager.getInstance().r3.setDisable(false);
 
-        // GUIManager.getInstance().b1.setDisable(false);
-        // GUIManager.getInstance().b2.setDisable(false);
         GUIManager.getInstance().b3.setDisable(false);
-        // GUIManager.getInstance().b4.setDisable(false);
-        // GUIManager.getInstance().b5.setDisable(false);
         GUIManager.getInstance().b6.setDisable(false);
         GUIManager.getInstance().b7.setDisable(false);
     }

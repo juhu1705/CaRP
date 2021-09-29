@@ -71,7 +71,7 @@ public class AddCourseManager implements Initializable {
         GUIManager.getInstance().inputView.fill();
         GUIManager.getInstance().cView.fill();
 
-        LOGGER.info("Course was added");
+        LOGGER.info("Course was successfully added");
 
         s = null;
         t = null;

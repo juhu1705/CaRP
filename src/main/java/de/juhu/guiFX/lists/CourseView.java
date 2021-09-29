@@ -5,6 +5,10 @@ import de.juhu.distributor.Distributor;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableView;
 
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Collections;
+
 import static de.noisruker.logger.Logger.LOGGER;
 
 /**
@@ -21,10 +25,12 @@ public class CourseView {
     }
 
     public void fill() {
+        ArrayList<Course> allCourses = new ArrayList<>(Distributor.getInstance().getCourses());
 
+        Collections.sort(allCourses);
         LOGGER.config("Loading Input Data to the Preview!");
-        this.inputTable.getItems().clear();
-        this.inputTable.setItems(FXCollections.observableArrayList(Distributor.getInstance().getCourses()));
+        this.inputTable.setItems(FXCollections.observableArrayList(allCourses));
         this.inputTable.sort();
+        this.inputTable.refresh();
     }
 }

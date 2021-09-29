@@ -2,7 +2,6 @@ package de.juhu.guiFX;
 
 import de.juhu.distributor.Course;
 import de.juhu.distributor.Student;
-import de.juhu.guiFX.lists.SwitchCourseView;
 import de.juhu.util.References;
 import de.juhu.util.Util;
 import javafx.application.Platform;
@@ -46,20 +45,6 @@ public class AddStudentToSaveManager implements Initializable {
 
 //	@FXML
 //	private TableColumn<Course, String> teacher, subject;
-
-    private SwitchCourseView scw;
-
-    public void onSetActive(ActionEvent event) {
-//		Course c = this.courses.getSelectionModel().getSelectedItem();
-//
-//		if (c == null || (c.getSubject() == null || c.getTeacher() == null)
-//				|| (c.getSubject().isEmpty() && c.getTeacher().isEmpty()))
-//			return;
-//
-//		student.setActiveCourse(c);
-//
-//		this.scw.run();
-    }
 
     public void onFinished(ActionEvent event) {
         boolean missingInformation = false;
@@ -124,24 +109,12 @@ public class AddStudentToSaveManager implements Initializable {
 
         comboBox.setItems(FXCollections.observableArrayList(courses));
 
-        LOGGER.info("Student: " + student.toString());
-
-//		this.teacher.setCellValueFactory(s -> {
-//			return new SimpleStringProperty(s.getValue().getTeacher());
-//		});
-//
-//		this.subject.setCellValueFactory(s -> {
-//			return new SimpleStringProperty(s.getValue().getSubject());
-//		});
 
         if (!Util.isBlank(student.getName()))
             this.name.setText(student.getName());
 
         if (!Util.isBlank(student.getPrename()))
             this.prename.setText(student.getPrename());
-
-//		this.scw = new SwitchCourseView(this.courses, student);
-//		this.scw.run();
 
     }
 }

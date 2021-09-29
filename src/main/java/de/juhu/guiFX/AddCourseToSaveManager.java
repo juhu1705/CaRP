@@ -74,7 +74,7 @@ public class AddCourseToSaveManager implements Initializable {
         Platform.runLater(GUIManager.getInstance().outputCView);
         Platform.runLater(GUIManager.getInstance().outputIView);
 
-        LOGGER.info("Course was added");
+        LOGGER.info("Course was successfully added");
 
         s = null;
         t = null;

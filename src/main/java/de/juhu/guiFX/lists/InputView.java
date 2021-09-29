@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static de.noisruker.logger.Logger.LOGGER;
 
@@ -25,15 +26,16 @@ public class InputView {
 
     public void fill() {
 
-        ArrayList calcStud = Distributor.getInstance().getCalcStudents();
-        ArrayList ignStud = Distributor.getInstance().getIgnoreStudents();
-        ArrayList<Object> allStudents = new ArrayList<Object>(calcStud);
+        ArrayList<Student> calcStud = Distributor.getInstance().getCalcStudents();
+        ArrayList<Student> ignStud = Distributor.getInstance().getIgnoreStudents();
+        ArrayList<Student> allStudents = new ArrayList<>(calcStud);
         allStudents.addAll(ignStud);
 
+        Collections.sort(allStudents);
         LOGGER.config("Loading Input Data to the Preview!");
 
-        this.inputTable.getItems().clear();
         this.inputTable.setItems(FXCollections.observableArrayList(allStudents));
         this.inputTable.sort();
+        this.inputTable.refresh();
     }
 }

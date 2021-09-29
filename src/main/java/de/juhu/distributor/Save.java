@@ -1,7 +1,6 @@
 package de.juhu.distributor;
 
 import de.juhu.util.Config;
-import de.juhu.util.MergeSort;
 import de.juhu.util.References;
 import de.juhu.util.Util;
 import de.noisruker.filemanager.Vec2i;
@@ -9,12 +8,8 @@ import de.noisruker.filemanager.WriteableContent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.logging.Level;
 
 import static de.noisruker.logger.Logger.LOGGER;
 
@@ -64,59 +59,15 @@ public class Save implements Comparable<Save>, Serializable {
      * @param allCourses      Alle Kurse - {@link Distributor#allCourses}
      */
     public Save(List<Student> editedStudents, List<Student> ignoredStudents, List<Course> allCourses) {
-
-        this.allCourses = Save.sortCourse((allCourses));
+        Collections.sort(allCourses);
+        this.allCourses = new ArrayList<>(allCourses);
 
         this.allStudents = new ArrayList<>(editedStudents);
         this.allStudents.addAll(ignoredStudents);
 
-        this.allStudents = Save.sortStudents((this.allStudents));
+        Collections.sort(this.allStudents);
 
         (this.informations = new InformationSave(this)).update();
-    }
-
-    /**
-     * Sortiert die mitgegebende Liste der Kurse nach ihren Namen über die
-     * {@link Course#compareTo(Course)} Methode des Kurses.
-     *
-     * @param courseToSort Die Liste der Kurse, die Sortiert werden soll.
-     * @return Die sortierte Liste der Kurse.
-     */
-    private static List<Course> sortCourse(List<Course> courseToSort) {
-        ExecutorService pool = Executors.newFixedThreadPool(courseToSort.size() / 2 + 10);
-        Future<ArrayList<Course>> sortedStudents = pool.submit(new MergeSort<Course>((ArrayList<Course>) courseToSort, pool));
-        try {
-            ArrayList<Course> compute = new ArrayList<Course>(sortedStudents.get());
-            pool.shutdownNow();
-            return compute;
-        } catch (InterruptedException | ExecutionException e) {
-            LOGGER.log(Level.SEVERE, "No data saved", e);
-        }
-        pool.shutdownNow();
-        return null;
-    }
-
-    /**
-     * Sortiert die mitgegebende Liste der Schüler nach ihren Namen über die
-     * {@link Student#compareTo(Student)} Methode des Schülers.
-     *
-     * @param studentsToSort Die Liste der Schüler, die sortiert werden soll.
-     * @return Die sortierte Liste der Schüler.
-     */
-    public static List<Student> sortStudents(List<Student> studentsToSort) {
-        ExecutorService pool = Executors.newFixedThreadPool(studentsToSort.size() / 2 + 10);
-        Future<ArrayList<Student>> sortedStudents = pool.submit(new MergeSort<Student>((ArrayList<Student>) (studentsToSort), pool));
-        try {
-            ArrayList<Student> compute = new ArrayList<Student>(sortedStudents.get());
-            pool.shutdownNow();
-            return compute;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        pool.shutdownNow();
-        return null;
     }
 
     /**
@@ -509,8 +460,8 @@ public class Save implements Comparable<Save>, Serializable {
     }
 
     public void sortAll() {
-        this.allStudents = Save.sortStudents((this.allStudents));
-        this.allCourses = Save.sortCourse((this.allCourses));
+        Collections.sort(this.allStudents);
+        Collections.sort(this.allCourses);
     }
 
 }

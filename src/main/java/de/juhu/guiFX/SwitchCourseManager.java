@@ -32,8 +32,6 @@ public class SwitchCourseManager implements Initializable {
 
     public static Student student;
 
-//	@FXML
-//	private TableView<Course> courses;
 
     @FXML
     private TextField prename;
@@ -43,23 +41,6 @@ public class SwitchCourseManager implements Initializable {
 
     @FXML
     private ComboBox<String> comboBox;
-
-//	@FXML
-//	private TableColumn<Course, String> teacher, subject;
-
-//	private SwitchCourseView scw;
-//
-//	public void onSetActive(ActionEvent event) {
-//		Course c = this.courses.getSelectionModel().getSelectedItem();
-//
-//		if (c == null || (c.getSubject() == null || c.getTeacher() == null)
-//				|| (c.getSubject().isEmpty() && c.getTeacher().isEmpty()))
-//			return;
-//
-//		student.setActiveCourse(c);
-//
-//		this.scw.run();
-//	}
 
     public void onFinished(ActionEvent event) {
         boolean missingInformation = false;
@@ -104,7 +85,7 @@ public class SwitchCourseManager implements Initializable {
         if (student == null)
             Thread.currentThread().interrupt();
 
-        LOGGER.info("Student: " + student.toString());
+        LOGGER.info("Edit Student: " + student.toString());
 
         ArrayList<String> courses = new ArrayList<>();
 
@@ -141,7 +122,6 @@ public class SwitchCourseManager implements Initializable {
         if (!Util.isBlank(student.getPrename()))
             this.prename.setText(student.getPrename());
 
-        LOGGER.info("Success");
 //		this.scw = new SwitchCourseView(this.courses, student);
 //		this.scw.run();
 

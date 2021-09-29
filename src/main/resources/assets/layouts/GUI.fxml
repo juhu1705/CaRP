@@ -30,12 +30,12 @@
                                        <content>
                                           <TableView fx:id="tv0" prefHeight="263.0" prefWidth="452.0" tableMenuButtonVisible="true">
                                              <columns>
-                                                <TableColumn fx:id="vtc" prefWidth="61.0" text="%prename.text" />
-                                                <TableColumn fx:id="ntc" prefWidth="69.0" text="%name.text" />
-                                                <TableColumn fx:id="k1tc" prefWidth="90.0" text="%course1.text">
+                                                <TableColumn fx:id="vtc" minWidth="-1.0" prefWidth="-1.0" text="%prename.text" />
+                                                <TableColumn fx:id="ntc" minWidth="-1.0" prefWidth="-1.0" text="%name.text" />
+                                                <TableColumn fx:id="k1tc" minWidth="-1.0" prefWidth="-1.0" text="%course1.text">
                                                    <columns>
-                                                      <TableColumn fx:id="k1stc" prefWidth="50.0" text="%subject.text" />
-                                                      <TableColumn fx:id="k1ttc" prefWidth="58.0" text="%teacher.text" />
+                                                      <TableColumn fx:id="k1stc" minWidth="-1.0" prefWidth="-1.0" text="%subject.text" />
+                                                      <TableColumn fx:id="k1ttc" minWidth="-1.0" prefWidth="-1.0" text="%teacher.text" />
                                                    </columns>
                                                 </TableColumn>
                                              </columns>
@@ -73,9 +73,9 @@
                                        <content>
                                           <TableView fx:id="tvc" prefHeight="200.0" prefWidth="411.0" tableMenuButtonVisible="true">
                                              <columns>
-                                                <TableColumn fx:id="subject" prefWidth="61.0" text="%subject.text" />
-                                                <TableColumn fx:id="teacher" prefWidth="69.0" text="%teacher.text" />
-                                                <TableColumn fx:id="maxStudentCount" prefWidth="69.0" text="%maxstudentscount.text" />
+                                                <TableColumn fx:id="subject" minWidth="-1.0" prefWidth="-1.0" text="%subject.text" />
+                                                <TableColumn fx:id="teacher" minWidth="-1.0" prefWidth="-1.0" text="%teacher.text" />
+                                                <TableColumn fx:id="maxStudentCount" minWidth="-1.0" prefWidth="-1.0" text="%maxstudentscount.text" />
                                              </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -128,19 +128,19 @@
                                                 </Button>
                                              </children>
                                           </AnchorPane>
-                                          <SplitPane dividerPositions="0.5" focusTraversable="false" prefHeight="19.0" prefWidth="369.0">
-                                             <items>
-                                                <Button fx:id="r5" minWidth="60.0" mnemonicParsing="false" onAction="#searchActionInput" onDragDropped="#onDragDroppedInput" onDragOver="#onDragOver" text="%search.text">
+                                          <HBox spacing="10.0">
+                                             <VBox.margin>
+                                                <Insets left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                             <children>
+                                                <Button fx:id="r5" mnemonicParsing="false" onAction="#searchActionInput" onDragDropped="#onDragDroppedInput" onDragOver="#onDragOver" text="%search.text">
                                                    <graphic>
                                                       <FontIcon iconLiteral="fas-search" />
                                                    </graphic>
                                                 </Button>
-                                                <TextField fx:id="t1" editable="false" onDragDropped="#onDragDroppedInput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="289.0" />
-                                             </items>
-                                             <VBox.margin>
-                                                <Insets left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </SplitPane>
+                                                <TextField fx:id="t1" editable="false" maxWidth="1.7976931348623157E308" onDragDropped="#onDragDroppedInput" onDragOver="#onDragOver" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
                                           <StackPane>
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
@@ -204,8 +204,8 @@
                                        <content>
                                           <TableView fx:id="tv2" prefHeight="171.0" prefWidth="421.0" tableMenuButtonVisible="true">
                                              <columns>
-                                                <TableColumn fx:id="oSubject" prefWidth="75.0" text="%subject.text" />
-                                                <TableColumn fx:id="oTeacher" prefWidth="75.0" text="%teacher.text" />
+                                                <TableColumn fx:id="oSubject" minWidth="-1.0" prefWidth="-1.0" text="%subject.text" />
+                                                <TableColumn fx:id="oTeacher" minWidth="-1.0" prefWidth="-1.0" text="%teacher.text" />
                                              </columns>
                                              <contextMenu>
                                                 <ContextMenu>
@@ -374,28 +374,28 @@
                                                 <Insets left="10.0" top="10.0" />
                                              </VBox.margin>
                                           </Label>
-                                          <SplitPane dividerPositions="0.5, 0.5" focusTraversable="false" prefHeight="16.0" prefWidth="369.0">
-                                             <items>
-                                                <Button fx:id="r4" minWidth="60.0" mnemonicParsing="false" onAction="#searchActionOutput" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" text="%search.text">
+                                          <HBox spacing="10.0">
+                                             <VBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </VBox.margin>
+                                             <children>
+                                                <Button fx:id="r4" mnemonicParsing="false" onAction="#searchActionOutput" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" text="%search.text">
                                                    <graphic>
                                                       <FontIcon iconLiteral="fas-search" />
                                                    </graphic>
                                                 </Button>
-                                                <TextField fx:id="t2" editable="false" minWidth="180.0" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="200.0">
+                                                <TextField fx:id="t2" editable="false" maxWidth="1.7976931348623157E308" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" HBox.hgrow="ALWAYS">
                                                    <tooltip>
                                                       <Tooltip text="Here you can find the path of your output file" />
                                                    </tooltip>
                                                 </TextField>
-                                                <ComboBox fx:id="cb2" minWidth="65.0" onAction="#onFileTypeChanged" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" prefHeight="25.0" prefWidth="130.0" promptText=".xlsx">
+                                                <ComboBox fx:id="cb2" onAction="#onFileTypeChanged" onDragDropped="#onDragDroppedOutput" onDragOver="#onDragOver" promptText=".xlsx">
                                                    <tooltip>
                                                       <Tooltip text="Here you select the type of output file" />
                                                    </tooltip>
                                                 </ComboBox>
-                                             </items>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </VBox.margin>
-                                          </SplitPane>
+                                             </children>
+                                          </HBox>
                                        </children>
                                     </VBox>
                                     <BorderPane focusTraversable="true" prefHeight="87.0" prefWidth="998.0">

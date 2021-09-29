@@ -9,6 +9,8 @@ import de.juhu.util.Config;
 import de.juhu.util.References;
 import de.juhu.util.Util;
 import de.noisruker.config.ConfigManager;
+import de.noisruker.config.event.ConfigEntryChangeEvent;
+import de.noisruker.event.EventManager;
 import de.noisruker.filemanager.CSVExporter;
 import de.noisruker.filemanager.ExcelExporter;
 import de.noisruker.logger.PrintFormat;
@@ -37,10 +39,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Duration;
 
-import java.awt.*;
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -338,41 +337,6 @@ public class GUIManager implements Initializable {
         GUIManager.getInstance().b7.setDisable(true);
     }
 
-    @Deprecated
-    public void onThemeChange(ActionEvent event) {
-        if (last == null)
-            last = mb1;
-        if (lastSwitch == null)
-            lastSwitch = mb1;
-        last.setSelected(false);
-        if (mb0.isSelected()) {
-
-            Config.theme = "LIGHT";
-            ConfigManager.getInstance().onConfigChanged("theme.text", Config.theme);
-
-            last = mb0;
-        } else if (mb0.isSelected()) {
-            Config.theme = "DARK";
-            ConfigManager.getInstance().onConfigChanged("theme.text", Config.theme);
-            last = mb1;
-        } else {
-            if (last.equals(mb0)) {
-
-                Config.theme = "LIGHT";
-                ConfigManager.getInstance().onConfigChanged("theme.text", Config.theme);
-                last = mb0;
-                mb1.setSelected(true);
-            } else if (last.equals(mb1)) {
-
-                Config.theme = "DARK";
-                ConfigManager.getInstance().onConfigChanged("theme.text", Config.theme);
-                last = mb1;
-                mb0.setSelected(true);
-            }
-
-        }
-    }
-
     public void onSetLightTheme(ActionEvent event) {
         this.onSetTheme("LIGHT");
     }
@@ -384,12 +348,6 @@ public class GUIManager implements Initializable {
     public void onSetTheme(String theme) {
         Config.theme = theme;
         ConfigManager.getInstance().onConfigChanged("theme.text", Config.theme);
-
-        this.checks.forEach((themes, checkbox) -> {
-            checkbox.setSelected(false);
-        });
-
-        this.checks.get(theme).setSelected(true);
     }
 
     public void moveBadStudentToFirst(MouseEvent event) {
@@ -1054,7 +1012,7 @@ public class GUIManager implements Initializable {
                 GUIManager.getInstance().r2.setDisable(false);
                 GUIManager.getInstance().r3.setDisable(false);
             });
-        });
+        }).start();
     }
 
     public void writeLog(String pathfile) {
@@ -1245,7 +1203,7 @@ public class GUIManager implements Initializable {
             Files.copy(getClass().getResourceAsStream("/assets/Der Course and Research Paper Assinger.pdf"),
                     FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf"));
 
-            Desktop.getDesktop().browse(FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf").toUri());
+            Util.openLink(FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf").toUri().toString());
         } catch (IOException ignored) {
 
         }
@@ -1271,7 +1229,7 @@ public class GUIManager implements Initializable {
         try {
             ExcelExporter.writeXLSX("test", save.writeInformation());
 
-            Desktop.getDesktop().browse(new File("test.xlsx").toURI());
+            Util.openLink(new File("test.xlsx").toURI().toString());
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error due to open the preview Excel file.");
         }
@@ -1535,6 +1493,17 @@ public class GUIManager implements Initializable {
 
         // Update Config
 
+        this.updateInputView();
+
+        EventManager.getInstance().registerEventListener(ConfigEntryChangeEvent.class, event -> {
+            if("coosemaximum.text".equals(event.getEntryName()))
+                this.updateInputView();
+            if("theme.text".equals(event.getEntryName())) {
+                this.checks.forEach((themes, checkbox) -> checkbox.setSelected(false));
+                this.checks.get(event.getEntryValue()).setSelected(true);
+            }
+        });
+
         // ConfigManager.getInstance().onConfigChangedGeneral();
 
         if (Config.shouldImportAutomatic) {
@@ -1600,49 +1569,6 @@ public class GUIManager implements Initializable {
                 });
             }
         }
-
-
-    }
-
-    public void startPicture() {
-
-        if (ft == null) {
-            ft = new FadeTransition(Duration.millis(5000d / 2d), i0);
-            ft.setFromValue(0);
-            ft.setToValue(1);
-            ft.setOnFinished(e -> {
-                tt.playFromStart();
-                st.playFromStart();
-            });
-        }
-
-        if (tt == null) {
-            tt = new TranslateTransition(Duration.millis(10000d / 2d), i0);
-            tt.setFromX(0);
-            tt.setFromY(0);
-            tt.setByX(0);
-            tt.setByY(0);
-            tt.setToX(-180);
-            tt.setToY(-65);
-        }
-
-        if (st == null) {
-            st = new ScaleTransition(Duration.millis(10000d / 2d), i0);
-
-            st.setFromX(1);
-            st.setFromY(1);
-            st.setToX(0.3);
-            st.setToY(0.3);
-        }
-
-        tt.stop();
-        st.stop();
-        ft.stop();
-
-        i0.setScaleX(1);
-        i0.setScaleY(1);
-
-        ft.playFromStart();
     }
 
     public void save(String location) {
@@ -1704,14 +1630,8 @@ public class GUIManager implements Initializable {
             new Distributor((GUIManager.actual = (Save) objIn.readObject()), (Save) objIn.readObject(),
                     (Save) objIn.readObject(), (Save) objIn.readObject(), (Save) objIn.readObject());
 
-            Platform.runLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    GUIManager.getInstance().counter
-                            .setText(Integer.toString(Distributor.calculated.indexOf(GUIManager.actual)));
-                }
-            });
+            Platform.runLater(() -> GUIManager.getInstance().counter
+                    .setText(Integer.toString(Distributor.calculated.indexOf(GUIManager.actual))));
 
             Platform.runLater(GUIManager.getInstance().outputSView);
             Platform.runLater(GUIManager.getInstance().outputCView);

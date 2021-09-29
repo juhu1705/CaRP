@@ -7,7 +7,6 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -41,11 +40,7 @@ public class AboutManager {
         if (event.getSource() instanceof Hyperlink) {
             Hyperlink link = (Hyperlink) event.getSource();
 
-            try {
-                Desktop.getDesktop().mail(new URI("mailto:" + link.getText() + "?" + "Need_Help:CaRP-Assigner"));
-            } catch (IOException | URISyntaxException e) {
-                LOGGER.log(Level.SEVERE, "Can not open new mail!", e);
-            }
+            Util.openLink("mailto:" + link.getText() + "?" + "Need_Help:CaRP-Assigner");
         }
     }
 

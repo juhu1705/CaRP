@@ -11,12 +11,12 @@
          <content>
             <VBox prefHeight="205.0" prefWidth="560.0" spacing="10.0">
                <children>
-                  <Label text="%subjects.text" />
-                  <TextField fx:id="subject" />
-                  <Label text="%teachers.text" />
-                  <TextField fx:id="teacher" />
-                  <Label text="%maxstudentss.text" />
-                  <Spinner fx:id="maxStudents" prefHeight="25.0" prefWidth="597.0" />
+                  <Label maxWidth="1.7976931348623157E308" text="%subjects.text" />
+                  <TextField fx:id="subject" maxWidth="1.7976931348623157E308" />
+                  <Label maxWidth="1.7976931348623157E308" text="%teachers.text" />
+                  <TextField fx:id="teacher" maxWidth="1.7976931348623157E308" />
+                  <Label maxWidth="1.7976931348623157E308" text="%maxstudentss.text" />
+                  <Spinner fx:id="maxStudents" maxWidth="1.7976931348623157E308" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

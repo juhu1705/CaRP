@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.controlsfx.control.ToggleSwitch;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,7 +31,7 @@ public class GUIDoubleStudentManager implements Initializable {
     public TextField name, prename;
 
     @FXML
-    public CheckBox shouldMemorice;
+    public ToggleSwitch shouldMemorice;
 
     public void skip(ActionEvent event) {
         Config.rememberDecision = shouldMemorice.isSelected();

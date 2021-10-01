@@ -37,6 +37,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.*;
@@ -786,8 +787,12 @@ public class GUIManager implements Initializable {
     public void onAbout(ActionEvent event) {
         LOGGER.config("Starting About Window");
 
-        Util.openWindow("/assets/layouts/About.fxml", References.language.getString("about.text"),
-                GUILoader.getPrimaryStage()).setResizable(false);
+        Stage s = Util.openWindow("/assets/layouts/About.fxml", References.language.getString("about.text"),
+                GUILoader.getPrimaryStage());
+        if(s != null) {
+            s.setMinWidth(440);
+            s.setMaxWidth(440);
+        }
     }
 
     public void clearConsole(ActionEvent event) {
@@ -1191,19 +1196,17 @@ public class GUIManager implements Initializable {
     }
 
     public void openHelpFile(ActionEvent event) {
+        String tempFilePath = System.getProperty("java.io.tmpdir");
 
         try {
-            if (!Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER), LinkOption.NOFOLLOW_LINKS))
-                new File(References.HOME_FOLDER).mkdir();
-
-            if (Files.exists(FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf"),
+            if (Files.exists(FileSystems.getDefault().getPath(tempFilePath + "/help.pdf"),
                     LinkOption.NOFOLLOW_LINKS))
-                Files.delete(FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf"));
+                Files.delete(FileSystems.getDefault().getPath(tempFilePath + "/help.pdf"));
 
             Files.copy(getClass().getResourceAsStream("/assets/Der Course and Research Paper Assinger.pdf"),
-                    FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf"));
+                    FileSystems.getDefault().getPath(tempFilePath + "/help.pdf"));
 
-            Util.openLink(FileSystems.getDefault().getPath(References.HOME_FOLDER + "help.pdf").toUri().toString());
+            Util.openLink(FileSystems.getDefault().getPath(tempFilePath + "/help.pdf").toUri().toString());
         } catch (IOException ignored) {
 
         }
@@ -1211,6 +1214,7 @@ public class GUIManager implements Initializable {
     }
 
     public void onShowInExcel(ActionEvent event) {
+        String tempFilePath = System.getProperty("java.io.tmpdir");
 
         if (Distributor.calculate) {
             GUIManager.getInstance().startErrorFrame(References.language.getString("calculation.save_fail.title"),
@@ -1227,11 +1231,11 @@ public class GUIManager implements Initializable {
         }
 
         try {
-            ExcelExporter.writeXLSX("test", save.writeInformation());
+            ExcelExporter.writeXLSX(tempFilePath + "/test", save.writeInformation());
 
-            Util.openLink(new File("test.xlsx").toURI().toString());
+            Util.openLink(new File(tempFilePath + "/test.xlsx").toURI().toString());
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Error due to open the preview Excel file.");
+            LOGGER.log(Level.SEVERE, "Error due to open the preview Excel file.", e);
         }
     }
 

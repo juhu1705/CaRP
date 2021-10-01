@@ -42,7 +42,7 @@ public class Config {
     public static String maxPrintLevel = Level.ALL.toString();
 
     @ConfigElement(defaultValue = "", type = TEXT, description = "inputfile.description", name = "inputfile.text", location = "config.import", visible = false)
-    public static String inputFile;
+    public static String inputFile = "";
 
     @ConfigElement(defaultValue = ".xlsx", type = CHOOSE, description = "outputfiletype.description", name = "outputfiletype.text", location = "config.export", visible = true)
     public static String outputFileType = ".xlsx";
@@ -50,19 +50,19 @@ public class Config {
     @ConfigElement(defaultValue = "user.home\\Local\\.CaRP", type = TEXT, description = "outputdirectory.description", name = "outputdirectory.text", location = "config.export", visible = false)
     public static String outputFile;
     @ConfigElement(defaultValue = "PJK", type = TEXT, description = "ignoremark.description", name = "ignoremark.text", location = "config.import", visible = true)
-    public static String ignoreStudent;
+    public static String ignoreStudent = "PJK";
     @ConfigElement(defaultValue = "Kurs", type = TEXT, description = "coursemark.description", name = "coursemark.text", location = "config.import", visible = true)
-    public static String newCourse;
+    public static String newCourse = "Kurs";
     @ConfigElement(defaultValue = "Schüler", type = TEXT, description = "studentmark.description", name = "studentmark.text", location = "config.import", visible = true)
-    public static String newStudent;
+    public static String newStudent = "Schüler";
     @ConfigElement(defaultValue = "#", type = TEXT, description = "commentmark.description", name = "commentmark.text", location = "config.import", visible = true)
-    public static String commentLine;
+    public static String commentLine = "#";
     @ConfigElement(defaultValue = "ALL", type = TEXT, description = "printformat.description", name = "printformat.text", location = "config", visible = false)
-    public static String printFormat;
+    public static String printFormat = "ALL";
     @ConfigElement(defaultValue = "Lehrerliste", type = TEXT, description = "courseHeader.description", name = "courseHeader.text", location = "config.export", visible = true)
-    public static String courseHeader;
+    public static String courseHeader = "Lehrerliste";
     @ConfigElement(defaultValue = "Schülerliste", type = TEXT, description = "studentHeader.description", name = "studentHeader.text", location = "config.export", visible = true)
-    public static String studentHeader;
+    public static String studentHeader = "Schülerliste";
     @ConfigElement(defaultValue = "false", type = CHECK, description = "hasHeaderOutput.description", name = "hasHeaderOutput.text", location = "config.export", visible = true)
     public static boolean hasHeaderOutput = true;
     @ConfigElement(defaultValue = "false", type = CHECK, description = "shouldMaximize.description", name = "shouldMaximize.text", location = "config", visible = true)

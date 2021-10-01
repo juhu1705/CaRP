@@ -8,108 +8,112 @@
 <?import javafx.scene.text.*?>
 <?import org.kordamp.ikonli.javafx.*?>
 
-<VBox spacing="10.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.AboutManager">
-   <children>
-      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0" spacing="20.0" VBox.vgrow="ALWAYS">
+<ScrollPane hbarPolicy="NEVER" pannable="true" styleClass="background" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.juhu.guiFX.AboutManager">
+   <content>
+      <VBox spacing="10.0" styleClass="background">
          <children>
-            <ImageView fitHeight="75.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../textures/logo/CaRP.png" />
-               </image>
-               <viewport>
-                  <Rectangle2D />
-               </viewport>
-            </ImageView>
-            <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0" spacing="20.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Label text="Course and Research Paper - Assigner">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label text="Version: 2.0.0" />
-                  <Label text="Created by Fabius Mettner" />
-                  <Label text="Under Supervision of Christian Wolf" />
+                  <ImageView fitHeight="75.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../textures/logo/CaRP.png" />
+                     </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+                  <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Course and Research Paper - Assigner">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="version" />
+                        <Label text="Created by Fabius Mettner" />
+                        <Label text="Under Supervision of Christian Wolf" />
+                     </children>
+                  </VBox>
                </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </HBox>
+            <Label text="Used Libaries:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label maxWidth="1.7976931348623157E308" text="Java" />
+                  <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://www.java.com/" />
+                  <Label maxWidth="1.7976931348623157E308" text="JavaFX" />
+                  <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://openjfx.io/" />
+                  <Label maxWidth="1.7976931348623157E308" text="Ikonly" />
+                  <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/kordamp/ikonli" />
+                  <Label maxWidth="1.7976931348623157E308" text="JMetro" />
+                  <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://www.pixelduke.com/java-javafx-theme-jmetro/" />
+                  <Label maxWidth="1.7976931348623157E308" text="POI, POI-OOXML [The Apache Software Foundation]" />
+                  <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://mvnrepository.com/artifact/org.apache.poi/poi" />
+                  <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml" />
+                  <Label maxWidth="1.7976931348623157E308" text="JLink" />
+                  <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/beryx/badass-jlink-plugin/" />
+                  <Label maxWidth="1.7976931348623157E308" text="Noisruker Libaries" />
+                  <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/juhu1705/EventManager" />
+                  <Hyperlink layoutX="20.0" layoutY="300.0" maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/juhu1705/Logger" />
+                  <Hyperlink layoutX="20.0" layoutY="323.0" maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/juhu1705/ConfigManager" />
+                  <Hyperlink layoutX="20.0" layoutY="346.0" maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/juhu1705/TableFilemanager" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </VBox>
-         </children>
-         <VBox.margin>
-            <Insets bottom="20.0" />
-         </VBox.margin>
-      </HBox>
-      <Label text="Used Libaries:">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <VBox prefHeight="200.0" prefWidth="100.0">
-         <children>
-            <Label maxWidth="1.7976931348623157E308" text="Java" />
-            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://www.java.com/" />
-            <Label maxWidth="1.7976931348623157E308" text="JavaFX" />
-            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://openjfx.io/" />
-            <Label maxWidth="1.7976931348623157E308" text="Ikonly" />
-            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/kordamp/ikonli" />
-            <Label maxWidth="1.7976931348623157E308" text="JMetro" />
-            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://www.pixelduke.com/java-javafx-theme-jmetro/" />
-            <Label maxWidth="1.7976931348623157E308" text="POI, POI-OOXML [The Apache Software Foundation]" />
-            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://mvnrepository.com/artifact/org.apache.poi/poi" />
-            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml" />
-            <Label maxWidth="1.7976931348623157E308" text="JLink" />
-            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/beryx/badass-jlink-plugin/" />
-            <Label maxWidth="1.7976931348623157E308" text="Noisruker Libaries" />
-            <Hyperlink maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/juhu1705/EventManager" />
-            <Hyperlink layoutX="20.0" layoutY="300.0" maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/juhu1705/Logger" />
-            <Hyperlink layoutX="20.0" layoutY="323.0" maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/juhu1705/ConfigManager" />
-            <Hyperlink layoutX="20.0" layoutY="346.0" maxWidth="1.7976931348623157E308" onAction="#openLink" text="https://github.com/juhu1705/TableFilemanager" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="21.0" prefWidth="74.0" text="Contact:">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <Hyperlink alignment="CENTER" onAction="#startMail" prefHeight="23.0" prefWidth="143.0" text="fabius1705@live.de" />
+                     </children>
+                  </VBox>
+                  <ImageView fitHeight="183.0" fitWidth="239.0" onMouseClicked="#openLSPage" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../textures/logo/logo_luisenschule.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </children>
+            </HBox>
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="This is a new completely overhauled Version of the old &quot;KuFA-Zuweiser&quot; " VBox.vgrow="ALWAYS" />
+            <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="by Daniel Salomon, Tobias Heuser and Christian Wolf" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <HBox spacing="10.0">
+               <children>
+                  <TextField fx:id="weg" promptText="Help" HBox.hgrow="ALWAYS" />
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#onHelpSearch" text="%search.text">
+                     <graphic>
+                        <FontIcon iconLiteral="fas-search" />
+                     </graphic>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </HBox>
          </children>
          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
       </VBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <VBox alignment="CENTER" maxWidth="1.7976931348623157E308">
-               <children>
-                  <Label alignment="CENTER" prefHeight="21.0" prefWidth="74.0" text="Contact:">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Label>
-                  <Hyperlink alignment="CENTER" onAction="#startMail" prefHeight="23.0" prefWidth="143.0" text="fabius1705@live.de" />
-               </children>
-            </VBox>
-            <ImageView fitHeight="183.0" fitWidth="239.0" onMouseClicked="#openLSPage" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../textures/logo/logo_luisenschule.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-         </children>
-      </HBox>
-      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="This is a new completely overhauled Version of the old &quot;KuFA-Zuweiser&quot; " VBox.vgrow="ALWAYS" />
-      <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="by Daniel Salomon, Tobias Heuser and Christian Wolf" VBox.vgrow="ALWAYS">
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </Label>
-      <HBox spacing="10.0">
-         <children>
-            <TextField fx:id="weg" promptText="Help" HBox.hgrow="ALWAYS" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#onHelpSearch" text="%search.text">
-               <graphic>
-                  <FontIcon iconLiteral="fas-search" />
-               </graphic>
-            </Button>
-         </children>
-         <padding>
-            <Insets top="10.0" />
-         </padding>
-      </HBox>
-   </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-</VBox>
+   </content>
+</ScrollPane>

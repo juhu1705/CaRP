@@ -52,8 +52,8 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
     implementation('org.kordamp.ikonli:ikonli-javafx:12.2.0') {
         exclude group: 'org.openjfx'
@@ -96,8 +96,8 @@ java { modularity.inferModulePath = true }
 modularity.disableEffectiveArgumentsAdjustment()
 
 group = 'de.juhu'
-version = '2.0.0'
-description = 'Ein Programm zur Zuweisung von Schülern in Kurse'
+version = '2.0.1'
+description = 'Ein Programm zum Zuweisen von Schüler in ihre Wunschkurse'
 sourceCompatibility = 16
 
 ext {
@@ -124,7 +124,7 @@ jlink {
         excludeProvides service: 'org.codehaus.stax2.validation.XMLValidationSchemaFactory.dtd'
     }
     launcher {
-        name = 'CaRP'
+        name = rootProject.name
         jvmArgs = ['-Dlog4j.configurationFile=./log4j2.xml']
         noConsole = true
     }
@@ -138,7 +138,7 @@ jlink {
                 '--license-file', 'G://Projects/JavaProjects/CaRP/LICENSE.txt'
         ]
         if (org.gradle.internal.os.OperatingSystem.current().windows) {
-            imageName = "CaRP - Assigner"
+            imageName = rootProject.name
             icon = 'src/main/resources/assets/textures/logo/CaRP.ico'
             installerOptions = ['--win-dir-chooser',
                                 '--win-menu', '--win-menu-group', '']
@@ -175,6 +175,24 @@ publishing {
             from(components.java)
         }
     }
+}
+
+task createProperties() {
+    doLast {
+        new File("$buildDir/resources/main/version.properties").withWriter { w ->
+            Properties p = new Properties()
+            p['version'] = project.version.toString()
+            p.store w, null
+        }
+        // copy needed, otherwise the bean VersionController can't load the file at startup when running complete-app tests.
+        copy {
+            from "$buildDir/resources/main/version.properties"
+            into "bin/main/"
+        }
+    }
+}
+classes {
+    dependsOn createProperties
 }
 
 mainClassName = "${moduleLaunchPoint}"

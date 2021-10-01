@@ -12,6 +12,10 @@ import javafx.scene.layout.VBox;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -54,7 +58,28 @@ public class References {
     }
 
     static {
-        VERSION = "2.0.0";
+        String VERSION1;
+
+        InputStream inputStream = References.class.getClassLoader().getResourceAsStream("/version.properties");
+
+        if(inputStream == null) {
+            try {
+                inputStream = new FileInputStream("bin/main/version.properties");
+            } catch (FileNotFoundException ignored) {}
+        }
+        if(inputStream != null) {
+            Properties versionProperties = new Properties();
+            try {
+                versionProperties.load(inputStream);
+                VERSION1 = versionProperties.getProperty("version", "No Version");
+            } catch (IOException e) {
+                VERSION1 = "No Version";
+            }
+
+        } else {
+            VERSION1 = "No Version";
+        }
+        VERSION = VERSION1;
     }
 
     static {

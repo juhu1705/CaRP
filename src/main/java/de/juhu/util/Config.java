@@ -86,6 +86,8 @@ public class Config {
     public static boolean allowDoubleStudents = true;
     @ConfigElement(defaultValue = "100", type = COUNT, description = "runcount.description", name = "runcount.text", location = "config.calculation", visible = true)
     public static int runs = 100;
+    @ConfigElement(defaultValue = "100", type = COUNT, description = "savedcalcs.description", name = "savedcalcs.text", location = "config.calculation", visible = true)
+    public static int savedCalculations = 100;
     @ConfigElement(defaultValue = "2", type = COUNT, description = "addForUnallocatedStudents.description", name = "addForUnallocatedStudents.text", location = "config.calculation", visible = true)
     public static int addForUnallocatedStudents = 2;
     @ConfigElement(defaultValue = "5", type = COUNT, description = "newcalculating.description", name = "newcalculating.text", location = "config.calculation", visible = true)
@@ -111,6 +113,11 @@ public class Config {
         LOGGER.info("Reading config");
         try {
             ConfigManager.getInstance().register(Config.class);
+
+            ConfigManager.getInstance().registerIntegerMin("runcount.description", 10);
+            ConfigManager.getInstance().registerIntegerMin("savedcalcs.description", 10);
+            ConfigManager.getInstance().registerIntegerMin("newcalculating.description", 1);
+            ConfigManager.getInstance().registerIntegerMin("improvecalculation.description", 1);
 
             EventManager.getInstance().registerEventListener(LanguageRegisterEvent.class, event -> {
                 event.registerNewLanguage("GERMAN");

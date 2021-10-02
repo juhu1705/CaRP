@@ -122,7 +122,7 @@ public class InformationSave implements Serializable {
         information.addLine(new Vec2i(0, line++), References.language.getString("informations.text"),
                 References.language.getString("value.text"));
 
-        information.addLine(new Vec2i(0, ++line), References.language.getString("calculationgoodness.text") + ": ", Double.toString(this.guete));
+        information.addLine(new Vec2i(0, ++line), References.language.getString("calculationgoodness.text") + ": ", Double.toString((double) Math.round(this.guete * 1000d) / 1000d));
         information.addLine(new Vec2i(0, ++line),
                 References.language.getString("highestpriority.text") + ": ",
                 Integer.toString(this.parent.getHighestPriorityWhithoutIntegerMax()));
@@ -148,7 +148,7 @@ public class InformationSave implements Serializable {
         for (int i = 0; i < studentPriorities.length - 1; i++) {
             information.addLine(new Vec2i(0, line++),
                     Integer.toString(i + 1), Integer.toString(this.studentPriorities[i]),
-                    Double.toString((double) this.studentPriorities[i] / (double) this.getStudentCount()));
+                    String.format("%.2f%%", ((double) this.studentPriorities[i] / (double) this.getStudentCount()) * 100d));
         }
 
         line += 1;

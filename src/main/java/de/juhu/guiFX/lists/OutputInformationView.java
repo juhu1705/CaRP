@@ -34,7 +34,7 @@ public class OutputInformationView implements Runnable {
         Map<String, String> ratess = new LinkedHashMap<>(5);
 
         ratess.put("0 - " + References.language.getString("calculationgoodness.text"),
-                Double.toString(GUIManager.actual.getInformation().getGuete()));
+                Double.toString((double) Math.round(GUIManager.actual.getInformation().getGuete() * 1000d) / 1000d));
 
         ratess.put("1 - " + References.language.getString("highestpriority.text"),
                 GUIManager.actual.getHighestPriorityWhithoutIntegerMax() == -1 ? "Inf."
@@ -125,7 +125,7 @@ public class OutputInformationView implements Runnable {
         fill();
         GUIManager.getInstance().statistics.setDisable(false);
 
-        GUIManager.getInstance().p0.setVisible(false);
+        GUIManager.getInstance().progressContainer.setVisible(false);
 
         GUIManager.getInstance().r1.setDisable(false);
         GUIManager.getInstance().r2.setDisable(false);

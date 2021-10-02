@@ -2,8 +2,10 @@ package de.juhu.guiFX;
 
 import de.juhu.distributor.Course;
 import de.juhu.distributor.Distributor;
+import de.juhu.distributor.ProgressIndicator;
 import de.juhu.distributor.Save;
 import de.juhu.distributor.Student;
+import de.juhu.distributor.events.ProgressUpdateEvent;
 import de.juhu.guiFX.lists.*;
 import de.juhu.util.Config;
 import de.juhu.util.References;
@@ -27,7 +29,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -38,7 +39,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.*;
 import java.net.URL;
@@ -46,10 +46,8 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 import static de.noisruker.logger.Logger.LOGGER;
@@ -72,7 +70,7 @@ public class GUIManager implements Initializable {
     @FXML
     public TreeView<String> configurationTree;
     @FXML
-    public Label counter, textPrevious, textNext, textActual;
+    public Label counter, textPrevious, textNext, textActual, progressPercent;
     @FXML
     public TextField t1, t2;
     @FXML
@@ -115,7 +113,7 @@ public class GUIManager implements Initializable {
     public OutputCourseView outputCView;
     public OutputInformationView outputIView;
     @FXML
-    public VBox config, loggingPage;
+    public VBox config, loggingPage, progressContainer;
     @FXML
     public ListView<String> lv0;
     @FXML
@@ -879,7 +877,7 @@ public class GUIManager implements Initializable {
     public void runAction(ActionEvent event) {
         LOGGER.info("Start Distributor");
 
-        p0.setVisible(true);
+        progressContainer.setVisible(true);
 
         GUIManager.getInstance().r1.setDisable(true);
         GUIManager.getInstance().r2.setDisable(true);
@@ -934,13 +932,13 @@ public class GUIManager implements Initializable {
             Distributor.calculate = true;
 
             Platform.runLater(() -> {
-                p0.setVisible(true);
+                progressContainer.setVisible(true);
 
                 GUIManager.getInstance().r1.setDisable(true);
                 GUIManager.getInstance().r2.setDisable(true);
                 GUIManager.getInstance().r3.setDisable(true);
 
-                de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
+                ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
             });
 
             String s;
@@ -949,9 +947,9 @@ public class GUIManager implements Initializable {
                         References.language.getString("no_output_file.description"));
 
                 Platform.runLater(() -> {
-                    de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
+                    ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
 
-                    p0.setVisible(false);
+                    progressContainer.setVisible(false);
 
                     GUIManager.getInstance().r1.setDisable(false);
                     GUIManager.getInstance().r2.setDisable(false);
@@ -1001,17 +999,17 @@ public class GUIManager implements Initializable {
                 LOGGER.log(Level.SEVERE, "Error while exporting data", e);
             }
 
-            this.writeLog(s + "/logging" + timestamp.getTime());
-            this.save(s + "/save" + timestamp.getTime());
+            this.writeLog(s + "/carp_log" + timestamp.getTime());
+            this.save(s + "/carp_save" + timestamp.getTime());
 
             LOGGER.info("Finished Saving files");
 
             Distributor.calculate = false;
 
             Platform.runLater(() -> {
-                de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
+                ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
 
-                p0.setVisible(false);
+                progressContainer.setVisible(false);
 
                 GUIManager.getInstance().r1.setDisable(false);
                 GUIManager.getInstance().r2.setDisable(false);
@@ -1025,7 +1023,7 @@ public class GUIManager implements Initializable {
         BufferedWriter writer = null;
 
         try {
-            fileWriter = new FileWriter(new File(pathfile + ".log"));
+            fileWriter = new FileWriter(pathfile + ".log");
             writer = new BufferedWriter(fileWriter);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Fehler beim Erstellen einer .log Datei", e);
@@ -1074,13 +1072,13 @@ public class GUIManager implements Initializable {
             Distributor.calculate = true;
 
             Platform.runLater(() -> {
-                p0.setVisible(true);
+                progressContainer.setVisible(true);
 
                 GUIManager.getInstance().r1.setDisable(true);
                 GUIManager.getInstance().r2.setDisable(true);
                 GUIManager.getInstance().r3.setDisable(true);
 
-                de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
+                ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(-1);
             });
 
             String s;
@@ -1089,9 +1087,9 @@ public class GUIManager implements Initializable {
                         References.language.getString("no_output_file.description"));
 
                 Platform.runLater(() -> {
-                    de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
+                    ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
 
-                    p0.setVisible(false);
+                    progressContainer.setVisible(false);
 
                     GUIManager.getInstance().r1.setDisable(false);
                     GUIManager.getInstance().r2.setDisable(false);
@@ -1106,17 +1104,17 @@ public class GUIManager implements Initializable {
             else if (s.endsWith("/"))
                 s = s.substring(0, s.length() - 1);
 
-            this.writeLog(s + "/logging" + timestamp.getTime());
-            this.save(s + "/save" + timestamp.getTime());
+            this.writeLog(s + "/carp_log" + timestamp.getTime());
+            this.save(s + "/carp_save" + timestamp.getTime());
 
             LOGGER.info("Finished Saving files");
 
             Distributor.calculate = false;
 
             Platform.runLater(() -> {
-                de.juhu.guiFX.ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
+                ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
 
-                p0.setVisible(false);
+                progressContainer.setVisible(false);
 
                 GUIManager.getInstance().r1.setDisable(false);
                 GUIManager.getInstance().r2.setDisable(false);
@@ -1155,8 +1153,8 @@ public class GUIManager implements Initializable {
         if (selected == null)
             return;
 
-        // TODO: DO I WANT THIS
-        //LogWriter.writeLog(selected.getPath() + "/logging");
+
+        this.writeLog(selected.getPath() + "/carp_log");
     }
 
     public void getInformation(ActionEvent event) {
@@ -1196,17 +1194,13 @@ public class GUIManager implements Initializable {
     }
 
     public void openHelpFile(ActionEvent event) {
-        String tempFilePath = System.getProperty("java.io.tmpdir");
-
         try {
-            if (Files.exists(FileSystems.getDefault().getPath(tempFilePath + "/help.pdf"),
-                    LinkOption.NOFOLLOW_LINKS))
-                Files.delete(FileSystems.getDefault().getPath(tempFilePath + "/help.pdf"));
+            File tmpFile = File.createTempFile("CaRP_Help", ".pdf");
+            getClass().getResourceAsStream("/assets/Der Course and Research Paper Assinger.pdf").transferTo(new FileOutputStream(tmpFile));
 
-            Files.copy(getClass().getResourceAsStream("/assets/Der Course and Research Paper Assinger.pdf"),
-                    FileSystems.getDefault().getPath(tempFilePath + "/help.pdf"));
+            tmpFile.deleteOnExit();
 
-            Util.openLink(FileSystems.getDefault().getPath(tempFilePath + "/help.pdf").toUri().toString());
+            Util.openLink(tmpFile.getAbsolutePath());
         } catch (IOException ignored) {
 
         }
@@ -1231,9 +1225,15 @@ public class GUIManager implements Initializable {
         }
 
         try {
-            ExcelExporter.writeXLSX(tempFilePath + "/test", save.writeInformation());
+            String fileName = tempFilePath + "/Carp_test-" + Math.abs(References.RAND_GEN.nextInt());
 
-            Util.openLink(new File(tempFilePath + "/test.xlsx").toURI().toString());
+            ExcelExporter.writeXLSX(fileName, save.writeInformation());
+
+            File f = new File(fileName + ".xlsx");
+
+            f.deleteOnExit();
+
+            Util.openLink(f.getAbsolutePath());
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error due to open the preview Excel file.", e);
         }
@@ -1312,19 +1312,21 @@ public class GUIManager implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        ProgressIndicator pi = new ProgressIndicator();
-
         GUIManager.instance = this;
 
         cb0.setItems(FXCollections.observableArrayList(PrintFormat.values()));
 
+        cb0.setValue(PrintFormat.valueOf(Config.printFormat));
+
         cb1.setItems(FXCollections.observableArrayList(Level.ALL, Level.FINEST, Level.FINER, Level.FINE, Level.CONFIG,
                 Level.INFO, Level.WARNING, Level.SEVERE, Level.OFF));
+
+        cb1.setValue(Level.parse(Config.maxPrintLevel));
+
         cb2.setItems(FXCollections.observableArrayList(ConfigManager.getInstance().getRegisteredOptions("outputfiletype.text")));
 
         p0.progressProperty().bind(FullProgress.getInstance().progressProperty());
-        p0.setVisible(false);
+        progressContainer.setVisible(false);
 
         // Config Stuff
 
@@ -1335,32 +1337,6 @@ public class GUIManager implements Initializable {
         t2.setText(Config.outputFile);
 
         this.loggingPage.getChildren().add(References.LOGGING_AREA);
-
-
-        // bp_preview.setCenter(new HTMLEditor());
-
-//		PrintStream ps = new PrintStream(System.out) {
-//
-//			private StringBuilder buffer = new StringBuilder();
-//
-//			@Override
-//			public void print(String s) {
-//				if (s == null)
-//					return;
-//
-//				buffer.append(s);
-//
-//				if (buffer.length() >= 1000) {
-//					ta1.appendText(buffer.toString());
-//					ta1.end();
-//					buffer.setLength(0);
-//				}
-//
-//			}
-//		};
-//		System.setOut(ps);
-//		System.setErr(ps);
-        // this.startPicture();
 
         // INFO: Tabellen Initierung
 
@@ -1483,8 +1459,7 @@ public class GUIManager implements Initializable {
 
         this.swpriority.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getValue().toString()));
 
-        this.percentualPriorities.setCellValueFactory(s -> new SimpleStringProperty(Double
-                .toString(s.getValue().getValue().doubleValue() / actual.getInformation().getStudentCount())));
+        this.percentualPriorities.setCellValueFactory(s -> new SimpleStringProperty(String.format("%.2f%%", (s.getValue().getValue().doubleValue() / actual.getInformation().getStudentCount()) * 100)));
 
         this.unallocatedPrename.setCellValueFactory(s -> new SimpleStringProperty(s.getValue().getPrename()));
 
@@ -1502,10 +1477,17 @@ public class GUIManager implements Initializable {
         EventManager.getInstance().registerEventListener(ConfigEntryChangeEvent.class, event -> {
             if("coosemaximum.text".equals(event.getEntryName()))
                 this.updateInputView();
-            if("theme.text".equals(event.getEntryName())) {
+            else if("theme.text".equals(event.getEntryName())) {
                 this.checks.forEach((themes, checkbox) -> checkbox.setSelected(false));
                 this.checks.get(event.getEntryValue()).setSelected(true);
-            }
+            } else if("loglevel.text".equals(event.getEntryName()))
+                cb1.setValue(Level.parse(event.getEntryValue()));
+            else if("printformat.text".equals(event.getEntryName()))
+                cb0.setValue(PrintFormat.valueOf(event.getEntryValue()));
+        });
+
+        EventManager.getInstance().registerEventListener(ProgressUpdateEvent.class, event -> {
+            Platform.runLater(() -> this.progressPercent.setText(String.format("%d / %d (%d%%)", event.getValue(), event.getMax(), event.getProgressPercent())));
         });
 
         // ConfigManager.getInstance().onConfigChangedGeneral();
@@ -1517,6 +1499,10 @@ public class GUIManager implements Initializable {
                 File file = new File(Config.inputFile);
                 if (file.exists()) {
                     new Distributor(Config.inputFile);
+                    Platform.runLater(() -> {
+                        this.inputView.fill();
+                        this.cView.fill();
+                    });
                 }
             }).start();
         }

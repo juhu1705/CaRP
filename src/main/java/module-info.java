@@ -16,4 +16,6 @@ module de.juhu.carp {
 
     exports de.juhu.guiFX to javafx.graphics, javafx.fxml;
     exports de.juhu.util to de.noisruker.config;
+    exports de.juhu.distributor to javafx.fxml, javafx.graphics;
+    opens de.juhu.distributor to javafx.fxml;
 }

@@ -51,7 +51,7 @@ public class GUILoader extends Application {
 
         Config.register();
 
-        FontIcon icon = new FontIcon("fas-cogs");
+        new FontIcon("fas-cogs");
 
         for (String arg : args) {
             if (new File(arg).exists())

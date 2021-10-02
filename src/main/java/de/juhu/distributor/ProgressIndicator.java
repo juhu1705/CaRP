@@ -1,4 +1,9 @@
-package de.juhu.guiFX;
+package de.juhu.distributor;
+
+import de.juhu.distributor.events.ProgressUpdateEvent;
+import de.juhu.guiFX.FullProgress;
+import de.juhu.guiFX.PartProgress;
+import de.noisruker.event.EventManager;
 
 /**
  * Verwaltet die Fortschrittsanzeige des Prozesses.
@@ -52,10 +57,7 @@ public class ProgressIndicator {
     public ProgressIndicator setfProgressValue(int value) {
         this.fProgressValue = value;
 
-        if (this.fProgressValue == -1)
-            FullProgress.getInstance().setProgress(-1);
-        else
-            FullProgress.getInstance().setProgress((double) this.fProgressValue / (double) this.fProgressMax);
+        EventManager.getInstance().triggerEvent(new ProgressUpdateEvent(this.fProgressValue, this.fProgressMax));
 
         return this;
     }

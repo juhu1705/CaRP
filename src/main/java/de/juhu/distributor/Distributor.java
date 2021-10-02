@@ -3,7 +3,6 @@ package de.juhu.distributor;
 import de.juhu.guiFX.GUIDoubleStudentManager;
 import de.juhu.guiFX.GUILoader;
 import de.juhu.guiFX.GUIManager;
-import de.juhu.guiFX.ProgressIndicator;
 import de.juhu.util.Config;
 import de.juhu.util.PriorityQueue;
 import de.juhu.util.References;
@@ -42,7 +41,7 @@ public class Distributor implements Runnable {
     /**
      * Diese Liste stellt die besten Ergebnisse zum Auslesen bereit.
      */
-    public static PriorityQueue<Save> calculated = new PriorityQueue<Save>(100);
+    public static PriorityQueue<Save> calculated = new PriorityQueue<>(100);
 
     /**
      * Zeigt an, ob fertigberechnete Ergebnisse ausgegeben werden können.
@@ -219,6 +218,8 @@ public class Distributor implements Runnable {
     }
 
     public boolean isEmpty() {
+        if(this.allCourses == null || this.allStudents == null || this.ignoredStudents == null)
+            return true;
         return this.allCourses.isEmpty() && this.allStudents.isEmpty() && this.ignoredStudents.isEmpty();
     }
 
@@ -500,7 +501,7 @@ public class Distributor implements Runnable {
         loadedallStudents = copiedData0[0];
         loadedallCourses = copiedData0[1];
 
-        ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(0);
+        ProgressIndicator.getInstance().setfProgressMax(Config.runs).setfProgressValue(1);
         for (int ij = 0; ij < Config.runs; ij++, ProgressIndicator.getInstance().addfProgressValue(1)) {
 
             LOGGER.info("Start calculation " + ij + " of " + Config.runs);
@@ -696,6 +697,10 @@ public class Distributor implements Runnable {
                  */);
 
         Distributor.calculated.add(save);
+
+        while(Distributor.calculated.size() > Config.savedCalculations) {
+            Distributor.calculated.remove(Distributor.calculated.size() - 1);
+        }
     }
 
     /**

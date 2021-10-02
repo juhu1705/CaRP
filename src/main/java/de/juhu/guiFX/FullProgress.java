@@ -1,5 +1,8 @@
 package de.juhu.guiFX;
 
+import de.juhu.distributor.events.ProgressUpdateEvent;
+import de.noisruker.event.EventManager;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
@@ -18,12 +21,19 @@ public class FullProgress {
         return instance == null ? instance = new FullProgress() : instance;
     }
 
+    private FullProgress() {
+        EventManager.getInstance().registerEventListener(ProgressUpdateEvent.class, event -> this.setProgress(event.getProgress()));
+    }
+
     public final double getProgress() {
         return progress == null ? 0 : progress.get();
     }
 
     public final void setProgress(double progress) {
         this.progress.set(progress);
+        if(GUIManager.getInstance() != null) {
+            Platform.runLater(() -> GUIManager.getInstance().progressPercent.setText(String.valueOf(Math.round(progress * 100))));
+        }
     }
 
     public final DoubleProperty progressProperty() {

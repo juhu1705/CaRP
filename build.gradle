@@ -96,7 +96,7 @@ java { modularity.inferModulePath = true }
 modularity.disableEffectiveArgumentsAdjustment()
 
 group = 'de.juhu'
-version = '2.0.1'
+version = '2.1.0'
 description = 'Ein Programm zum Zuweisen von Schüler in ihre Wunschkurse'
 sourceCompatibility = 16
 

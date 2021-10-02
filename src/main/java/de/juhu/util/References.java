@@ -61,7 +61,7 @@ public class References {
         String version = null;
         String name = null;
 
-        InputStream inputStream = References.class.getClassLoader().getResourceAsStream("/version.properties");
+        InputStream inputStream = References.class.getResourceAsStream("/version.properties");
 
         if(inputStream == null) {
             try {

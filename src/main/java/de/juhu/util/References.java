@@ -58,7 +58,8 @@ public class References {
     }
 
     static {
-        String VERSION1;
+        String version = null;
+        String name = null;
 
         InputStream inputStream = References.class.getClassLoader().getResourceAsStream("/version.properties");
 
@@ -71,19 +72,17 @@ public class References {
             Properties versionProperties = new Properties();
             try {
                 versionProperties.load(inputStream);
-                VERSION1 = versionProperties.getProperty("version", "No Version");
-            } catch (IOException e) {
-                VERSION1 = "No Version";
-            }
-
-        } else {
-            VERSION1 = "No Version";
+                version = versionProperties.getProperty("version", "No Version");
+                name = versionProperties.getProperty("name", "CaRP-Assigner");
+            } catch (IOException ignored) {}
         }
-        VERSION = VERSION1;
-    }
+        if(version == null)
+            version = "No Version";
+        if(name == null)
+            name = "CaRP-Assigner";
 
-    static {
-        PROJECT_NAME = "CaRP Assigner";
+        VERSION = version;
+        PROJECT_NAME = name;
     }
 
     static {

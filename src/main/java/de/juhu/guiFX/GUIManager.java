@@ -788,8 +788,8 @@ public class GUIManager implements Initializable {
         Stage s = Util.openWindow("/assets/layouts/About.fxml", References.language.getString("about.text"),
                 GUILoader.getPrimaryStage());
         if(s != null) {
-            s.setMinWidth(440);
-            s.setMaxWidth(440);
+            s.setMinWidth(s.getWidth());
+            s.setMaxWidth(s.getWidth());
         }
     }
 

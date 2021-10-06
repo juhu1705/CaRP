@@ -19,6 +19,7 @@ Sollten sie Linux benutzen so finden sie für debian basierte systeme ein image 
 ## Andere Systeme
 
 Für alle weiteren Betriebssysteme können sie einfach die im Release angehängte jar-Datei ausführen. Dazu laden sie sich zunächst Java, als auch JavaFX herunter. Dann laden sie sich die jar-Datei herunter und ziehen sie diese in den von ihnen gewünschten Ordner. Hier führen sie nun folgenden Befehl aus:
+
 ```
 java -jar --module-path "PATH_TO_JAVAFX" --add-modules javafx.controls,javafx.fxml,javafx.base,javafx.media,javafx.graphics,javafx.swing JAR-DATEI
 ```

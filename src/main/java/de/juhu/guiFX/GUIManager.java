@@ -1371,24 +1371,6 @@ public class GUIManager implements Initializable {
 
         this.maxStudentCount.setCellValueFactory(c -> new SimpleStringProperty(Integer.toString(c.getValue().getMaxStudentCount())));
 
-//		this.k1tc.setCellValueFactory(s -> {
-//			if (s.getValue().getCourseNames().length < 1)
-//				return new SimpleStringProperty("-");
-//			return new SimpleStringProperty(s.getValue().getCourseNames()[0]);
-//		});
-//
-//		this.k2tc.setCellValueFactory(s -> {
-//			if (s.getValue().getCourseNames().length < 2)
-//				return new SimpleStringProperty("-");
-//			return new SimpleStringProperty(s.getValue().getCourseNames()[1]);
-//		});
-//
-//		this.k3tc.setCellValueFactory(s -> {
-//			if (s.getValue().getCourseNames().length < 3)
-//				return new SimpleStringProperty("-");
-//			return new SimpleStringProperty(s.getValue().getCourseNames()[2]);
-//		});
-
         // INFO: Output Tabellen
 
         // Output Student View
@@ -1542,8 +1524,6 @@ public class GUIManager implements Initializable {
                                 + Util.round(Distributor.calculated.get(2).getInformation().getGuete(), 3));
                     } else
                         GUIManager.getInstance().b4.setDisable(true);
-
-                    // GUIManager.getInstance().masterTabPane.getSelectionModel().select(GUIManager.getInstance().tabOutput);
                 });
 
                 Platform.runLater(GUIManager.getInstance().outputSView);
@@ -1615,7 +1595,9 @@ public class GUIManager implements Initializable {
     public void load(String location) {
         ObjectInputStream objIn;
         try {
-            objIn = new ObjectInputStream(new File(location).toURI().toURL().openConnection().getInputStream());
+            objIn = new ObjectInputStream(new FileInputStream(location));
+
+            objIn.setObjectInputFilter(ObjectInputFilter.Config.createFilter("de.juhu.distributor.Course;de.juhu.distributor.Save;de.juhu.distributor.InformationSave;de.juhu.distributor.Student;java.base/*;!*"));
 
             new Distributor((GUIManager.actual = (Save) objIn.readObject()), (Save) objIn.readObject(),
                     (Save) objIn.readObject(), (Save) objIn.readObject(), (Save) objIn.readObject());

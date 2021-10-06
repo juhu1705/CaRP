@@ -39,11 +39,6 @@ public class OutputInformationView implements Runnable {
         ratess.put("1 - " + References.language.getString("highestpriority.text"),
                 GUIManager.actual.getHighestPriorityWhithoutIntegerMax() == -1 ? "Inf."
                         : Integer.toString(GUIManager.actual.getHighestPriorityWhithoutIntegerMax()));
-//		ratess.put(References.language.getString("expectation.text"),
-//				Double.valueOf(GUIManager.actual.getInformation().getExpectation()));
-//		ratess.put(References.language.getString("standartDeviation.text"),
-//				Double.valueOf(GUIManager.actual.getInformation().getStandartDeviation()));
-
         ratess.put("2 - " + References.language.getString("studentcount.text"),
                 Integer.toString(GUIManager.actual.getAllStudents().size()));
         ratess.put("3 - " + References.language.getString("calculatedstudentcount.text"),
@@ -106,9 +101,6 @@ public class OutputInformationView implements Runnable {
             }
 
             GUIManager.getInstance().unallocatedStudents.getItems().clear();
-
-            // GUIManager.getInstance().unallocatedStudents.setItems(FXCollections.observableArrayList(new
-            // ArrayList<>()));
 
             GUIManager.getInstance().unallocatedStudents
                     .setItems(FXCollections.observableArrayList(GUIManager.actual.getInformation().getUStudents()));

@@ -1128,14 +1128,7 @@ public class Distributor implements Runnable {
 
             final boolean isCommand = this.isReaderKey(line[0]);
 
-            if (line[0].startsWith(Config.commentLine)) {
-                String information = "";
-                for (String s : line) {
-                    if (s != null)
-                        information += "|" + s;
-                }
-                LOGGER.info(
-                        "The commentation-Line was ignored. Here the information of this Commentation: " + information);
+            if (line[0].startsWith(Config.commentLine) || line[0].isBlank()) {
                 lineNumber++;
                 continue;
             }

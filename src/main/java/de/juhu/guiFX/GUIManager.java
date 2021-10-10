@@ -790,6 +790,7 @@ public class GUIManager implements Initializable {
         if(s != null) {
             s.setMinWidth(s.getWidth());
             s.setMaxWidth(s.getWidth());
+            s.setMaxHeight(s.getHeight());
         }
     }
 

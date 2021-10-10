@@ -114,8 +114,6 @@ jlink {
     options = ['--strip-debug', '--ignore-signing-information', '--compress', '2', '--no-header-files', '--no-man-pages']
     mergedModuleJarVersion = '16'
 
-    //targetPlatform('linux-x64', 'G:\\Programme\\Java\\jdk-16.0.2')
-
     mergedModule {
         // additive = true  // redundant, because excludeXXX() methods are also present
 

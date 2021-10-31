@@ -178,16 +178,21 @@ publishing {
 
 task createProperties() {
     doLast {
-        new File("$buildDir/resources/main/version.properties").withWriter { w ->
+        File f = new File("$buildDir/resources/main/version.properties");
+
+        if(f.exists()) {
+            f.withWriter { w ->
                 Properties p = new Properties()
                 p['version'] = project.version.toString()
                 p['name'] = rootProject.name.toString()
                 p.store w, null
-        }
-        // copy needed, otherwise the bean VersionController can't load the file at startup when running complete-app tests.
-        copy {
-            from "$buildDir/resources/main/version.properties"
-            into "bin/main/"
+            }
+
+            // copy needed, otherwise the bean VersionController can't load the file at startup when running complete-app tests.
+            copy {
+                from "$buildDir/resources/main/version.properties"
+                into "bin/main/"
+            }
         }
     }
 }

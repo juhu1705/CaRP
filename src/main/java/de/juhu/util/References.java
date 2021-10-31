@@ -72,7 +72,7 @@ public class References {
             Properties versionProperties = new Properties();
             try {
                 versionProperties.load(inputStream);
-                version = versionProperties.getProperty("version", "No Version");
+                version = versionProperties.getProperty("version", References.class.getPackage().getImplementationVersion());
                 name = versionProperties.getProperty("name", "CaRP-Assigner");
             } catch (IOException ignored) {}
         }

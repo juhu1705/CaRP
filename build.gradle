@@ -132,6 +132,7 @@ jlink {
         installerOptions += [
                 '--description', project.description,
                 '--version', '2.0.0',
+                '--vendor', 'Fabius Mettner',
                 '--copyright', 'Copyrigth 2021 Fabius Mettner',
                 '--license-file', 'G://Projects/JavaProjects/CaRP/LICENSE.txt'
         ]
@@ -175,22 +176,18 @@ publishing {
     }
 }
 
-task createProperties(dependsOn: processResources) {
+task createProperties() {
     doLast {
-        File f = new File("$buildDir/resources/main/version.properties")
-
-        if(f.exists()) {
-            f.withWriter { w ->
+        new File("$buildDir/resources/main/version.properties").withWriter { w ->
                 Properties p = new Properties()
                 p['version'] = project.version.toString()
                 p['name'] = rootProject.name.toString()
                 p.store w, null
-            }
-            // copy needed, otherwise the bean VersionController can't load the file at startup when running complete-app tests.
-            copy {
-                from "$buildDir/resources/main/version.properties"
-                into "bin/main/"
-            }
+        }
+        // copy needed, otherwise the bean VersionController can't load the file at startup when running complete-app tests.
+        copy {
+            from "$buildDir/resources/main/version.properties"
+            into "bin/main/"
         }
     }
 }

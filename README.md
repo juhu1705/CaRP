@@ -6,6 +6,8 @@ Der „Course and Research Paper Assinger“ (Kurs und Facharbeit Zuweiser = KuF
 
 Dieses Programm wurde im Rahmen einer besonderen Lernleistung für die Luisenschule Mülheim an der Ruhr im Abschlussjahr 2019 / 2020 entwickelt.
 
+Am Dienstag, den 9. November 2021 wurden die 200 Commits geknackt! 🥳
+
 # Installation und Benutzung
 
 ## Windows

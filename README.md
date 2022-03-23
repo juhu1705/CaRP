@@ -12,18 +12,18 @@ Am Dienstag, den 9. November 2021 wurden die 200 Commits geknackt! 🥳
 
 ## Windows
 
-Sollten sie ein Windows System benutzen, so liegen im aktuellen Release spezielle Installationsdateien bereit. Diese können sie herunterladen und dann den CaRP assigner installieren. Außerdem steht auch noch eine image datei als zip-Archiv zur installation zur Verfügung.
+Sollten Sie ein Windows-System benutzen, so liegen im aktuellen Release spezielle Installationsdateien bereit. Diese können Sie herunterladen und dann den CaRP-Assigner installieren. Außerdem steht auch noch eine Image-Datei als Zip-Archiv zur Installation zur Verfügung.
 
 ## Linux - Debian
 
-Sollten sie Linux benutzen so finden sie für debian basierte systeme ein image als zip-Datei.
+Sollten Sie Linux benutzen, so finden Sie für debianbasierte Systeme ein Image als Zip-Datei.
 
 ## Andere Systeme
 
-Für alle weiteren Betriebssysteme können sie einfach die im Release angehängte jar-Datei ausführen. Dazu laden sie sich zunächst Java, als auch JavaFX herunter. Dann laden sie sich die jar-Datei herunter und ziehen sie diese in den von ihnen gewünschten Ordner. Hier führen sie nun folgenden Befehl aus:
+Für alle weiteren Betriebssysteme können Sie einfach die im Release angehängte Jar-Datei ausführen. Dazu laden Sie sich zunächst Java, als auch JavaFX herunter. Dann laden Sie sich die Jar-Datei herunter und ziehen diese in den von Ihnen gewünschten Ordner. Hier führen Sie nun folgenden Befehl aus:
 
 ```
 java -jar --module-path "PATH_TO_JAVAFX" --add-modules javafx.controls,javafx.fxml,javafx.base,javafx.media,javafx.graphics,javafx.swing JAR-DATEI
 ```
 
-Dabei ersetzen sie PATH_TO_JAVAFX mit dem lib Verzeichnis ihrer JavaFX installation und JAR-DATEI mit der CaRP Assigner Datei die sie gerne ausführen möchten.
+Dabei ersetzen Sie PATH_TO_JAVAFX mit dem `lib`-Verzeichnis ihrer JavaFX-Installation und JAR-DATEI mit der CaRP-Assigner-Datei, die Sie ausführen möchten.
